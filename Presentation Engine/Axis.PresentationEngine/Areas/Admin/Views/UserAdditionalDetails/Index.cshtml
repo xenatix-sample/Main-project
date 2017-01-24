@@ -1,0 +1,362 @@
+﻿<div class="panel panel-main panel-light padding-xsmall padding-bottom-super">
+    <div class="panel-body">
+        <form role="form" name="ctrl.userAdditionalDetailsForm" novalidate xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="create|update" bs-modifiable="true" set-form-status>
+            @*Employee Type*@
+            <div security permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="create|update" permission-mode="readonly">
+                <h3 class="uppercase nomargin padding-xsmall border-top">Employee Type</h3>
+                <div class="row padding-top-xsmall">
+                    <div class="col-md-5 padding-top-small padding-bottom-xsmall" ng-cloak>
+                        <div class="form-group-lg padding-bottom-small">
+                            <span><xen-radio-button data-ng-model="isEmployeeTypeInternal" class="text-nowrap" data-radio-button-id="employeeInternal" data-label="Internal" data-ng-value="true" ng-click="isInternalChanged();" /></span>
+                            <span><xen-radio-button data-ng-model="isEmployeeTypeInternal" class="text-nowrap" data-radio-button-id="employeeExternal" data-label="External" data-ng-value="false" ng-click="isInternalChanged();" /></span>
+                        </div>
+                    </div>
+                    <div class="col-md-7 pull-up padding-bottom-xsmall" ng-cloak>
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-memobox label="Active Directory GUID" on-change="userAdditionalDetailsChange()" on-change-field-id="guid" ng-show="currentUser.ADFlag" rows="1" maxlength="50" ng-model="currentUser.UserGUID" id="guid" name="guid"></xen-memobox>
+                        </div>
+                    </div>
+                </div>
+
+                @*Co-Signatures*@
+                <h3 class="uppercase nomargin padding-xsmall border-top">Co-Signatures of Notes</h3>
+                <div class="row padding-top-xsmall margin-bottom-small">
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-container">
+                            <div class="fixed-table-body">
+                                <table id="coSignaturesNotesTable" data-toggle="table"
+                                       data-show-columns="false"
+                                       data-search="true"
+                                       data-minimum-count-columns="2"
+                                       data-filter-control="false"
+                                       data-mobile-responsive="true"
+                                       data-advanced-search="false"
+                                       data-show-multi-sort="false"
+                                       class="table table-strip-borders combo-table form-group-lg"
+                                       grid-arrow-selector>
+                                    <thead>
+                                        <tr>
+                                            <th data-field="CoSignatureSignedBy"
+                                                data-sortable="false">CO-SIGNED BY</th>
+                                            <th data-field="CoSignatureEffectiveDate"
+                                                data-sortable="false">EFFECTIVE DATE</th>
+                                            <th data-field="CoSignatureExpirationDate"
+                                                data-sortable="false">EXPIRATION DATE</th>
+                                            <th data-field="CoSignatureAction"
+                                                data-sortable="false"><span class="sr-only">ACTIONS</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="note in coSignatures.Notes track by $index" apply-security>
+                                            <td>
+                                                <div class="input-group" id="notesDiv{{$index}}" data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.noteSignedBy{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.noteSignedBy{{$index}}.$pristine }">
+                                                    <input type="text" ng-model="note.CoSignee" id="noteSignedBy{{$index}}" name="noteSignedBy{{$index}}"
+                                                           ng-required="false" class="form-control input-min-width" ng-change="notesInputChange($index);"
+                                                           typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                                                           typeahead-trigger
+                                                           typeahead="users as users.Name for users in getLookupsByType('Users') | filter:{Name:$viewValue}"
+                                                           typeahead-editable="false"
+                                                           typeahead-no-results="noResults" auto-focus event-focus="autoFocusSchool"
+                                                           typeahead-on-select="onSelect($item, $model, $label, 'Notes')" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-info" ng-click="triggerTypeaheadnotes($index);">
+                                                            <i class="fa fa-search" />
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                                <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.noteEffectiveDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.noteEffectiveDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('noteEffectiveDate' + $index)" opened="openedEffectiveDate" id="noteEffectiveDate{{$index}}" name="noteEffectiveDate{{$index}}" new-date="note.EffectiveDate" start-date="startDate" dob-name="'effectiveDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="note.EffectiveDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'note')" ng-blur="coSignaturesInputChange();"></mydatepicker>
+                                                <span id="effectiveDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.effectiveDateCalander.$error.date" class="error-block">Invalid Effective Date for Co-Signatures of Notes</span>
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.noteExpirationDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.noteExpirationDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('noteExpirationDate' + $index)" opened="openedExpirationDate" id="noteExpirationDate{{$index}}" name="noteExpirationDate{{$index}}" new-date="note.ExpirationDate" start-date="startDate" dob-name="'expirationDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="note.ExpirationDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'note')" ng-blur="coSignaturesInputChange();"></mydatepicker>
+                                                <span id="expirationDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.expirationDateCalander.$error.date" class="error-block">Invalid Expiration Date for Co-Signatures of Notes</span>
+                                            </td>
+                                            <td class="actions">
+                                                <a href="javascript:void(0)" data-default-no-action id="addCoSignatureNotes" name="addCredential" title="Add Co-Signature" ng-show="$last" ng-click="addCosignatureNotesRow($event);" security permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="create" title="Add" space-key-press><i class="fa fa-plus-circle margin-xsmall"></i></a>
+                                                <a href="javascript:void(0)" data-default-no-action id="deleteCoSignatureNotes" name="deleteCredential" title="Remove Co-Signature" ng-show="!$first" ng-click="deleteCosignatureNotesRow(note, $index, $event);" security permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="delete" space-key-press><i class="fa fa-minus-circle margin-xsmall" on-row-removed></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Co-Signatures*@
+                <h3 class="uppercase nomargin padding-xsmall border-top">Co-Signatures of Assessments</h3>
+                <div class="row padding-top-xsmall margin-bottom-small">
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-container">
+                            <div class="fixed-table-body">
+                                <table id="coSignaturesAssessmentsTable" data-toggle="table"
+                                       data-show-columns="false"
+                                       data-search="true"
+                                       data-minimum-count-columns="2"
+                                       data-filter-control="false"
+                                       data-mobile-responsive="true"
+                                       data-advanced-search="false"
+                                       data-show-multi-sort="false"
+                                       class="table table-strip-borders combo-table form-group-lg"
+                                       grid-arrow-selector>
+                                    <thead>
+                                        <tr>
+                                            <th data-field="CoSignatureSignedBy"
+                                                data-sortable="false">CO-SIGNED BY</th>
+                                            <th data-field="CoSignatureEffectiveDate"
+                                                data-sortable="false">EFFECTIVE DATE</th>
+                                            <th data-field="CoSignatureExpirationDate"
+                                                data-sortable="false">EXPIRATION DATE</th>
+                                            <th data-field="CoSignatureAction"
+                                                data-sortable="false"><span class="sr-only">ACTIONS</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="assessment in coSignatures.Assessments track by $index" apply-security>
+                                            <td>
+                                                <div class="input-group" id="assessmentDiv{{$index}}" data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.assessmentSignedBy{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.assessmentSignedBy{{$index}}.$pristine }">
+                                                    @*TODO: Add user lookup or method!!*@
+                                                    <input type="text" ng-model="assessment.CoSignee" id="assessmentSignedBy{{$index}}" name="assessmentSignedBy{{$index}}"
+                                                           class="form-control input-min-width" typeahead-wait-ms="500" ng-change="assessmentsInputChange($index);"
+                                                           typeahead-editable="false" auto-focus event-focus="autoFocusSchool"
+                                                           typeahead="users as users.Name for users in getLookupsByType('Users') | filter:{Name:$viewValue}"
+                                                           typeahead-on-select="onSelect($item, $model, $label, 'Assessments')"
+                                                           typeahead-trigger
+                                                           typeahead-no-results="noResults1"
+                                                           ng-required="false"
+                                                           typeahead-select-on-blur="true" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-info" ng-click="triggerTypeaheadassessments($index);">
+                                                            <i class="fa fa-search" />
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                                <p ng-show="noResults1" ng-cloak class="error-block">No Results Found!</p>
+
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.assessmentEffectiveDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.assessmentEffectiveDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('assessmentEffectiveDate' + $index)" opened="openedEffectiveDate" id="assessmentEffectiveDate{{$index}}" name="assessmentEffectiveDate{{$index}}" new-date="assessment.EffectiveDate" start-date="startDate" dob-name="'effectiveDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="assessment.EffectiveDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'assessment')" ng-blur="coSignaturesInputChange();"></mydatepicker>
+                                                <span id="effectiveDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.effectiveDateCalander.$error.date" class="error-block">Invalid Effective Date for Co-Signatures of Assessments</span>
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.assessmentExpirationDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.assessmentExpirationDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('assessmentExpirationDate' + $index)" opened="openedExpirationDate" id="assessmentExpirationDate{{$index}}" name="assessmentExpirationDate{{$index}}" new-date="assessment.ExpirationDate" start-date="startDate" dob-name="'expirationDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="assessment.ExpirationDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'assessment')" ng-blur="coSignaturesInputChange();"></mydatepicker>
+                                                <span id="expirationDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.expirationDateCalander.$error.date" class="error-block">Invalid  Expiration Date for Co-Signatures of Assessments</span>
+                                            </td>
+                                            <td class="actions">
+                                                <a href="javascript:void(0)" data-default-no-action id="addCoSignatureAssessments" name="addCoSignatureAssessments" title="Add Co-Signature Assessment" ng-show="$last" ng-click="addCosignatureAssessmentsRow($event);" security permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="create" title="Add" space-key-press><i class="fa fa-plus-circle margin-xsmall"></i></a>
+                                                <a href="javascript:void(0)" data-default-no-action id="deleteCoSignatureAssessments" name="deleteCoSignatureAssessments" title="Remove Co-Signature Assessment" ng-show="!$first" ng-click="deleteCosignatureAssessmentsRow(assessment, $index, $event);" security permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="delete" space-key-press><i class="fa fa-minus-circle margin-xsmall" on-row-removed></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Employee Information*@
+                <h3 class="uppercase nomargin padding-xsmall border-top">Employee Information</h3>
+                <div class="row padding-top-xsmall">
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-container">
+                            <div class="fixed-table-body">
+                                <table id="empInfoTable" data-toggle="table"
+                                       data-show-columns="false"
+                                       data-search="true"
+                                       data-minimum-count-columns="2"
+                                       data-filter-control="false"
+                                       data-mobile-responsive="true"
+                                       data-advanced-search="false"
+                                       data-show-multi-sort="false"
+                                       class="table table-strip-borders combo-table form-group-lg"
+                                       grid-arrow-selector>
+                                    <thead>
+                                        <tr>
+                                            <th data-field="EmployeeInfoType"
+                                                data-sortable="false">TYPE</th>
+                                            <th data-field="EmployeeInfoIdNumber"
+                                                data-sortable="false">ID NUMBER</th>
+                                            <th data-field="EmployeeInfoEffectiveDate"
+                                                data-sortable="false">EFFECTIVE DATE</th>
+                                            <th data-field="EmployeeInfoExpirationDate"
+                                                data-sortable="false">EXPIRATION DATE</th>
+                                            <th data-field="EmployeeInfoAction"
+                                                data-sortable="false"><span class="sr-only">ACTIONS</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="info in employeeInfos track by $index" apply-security>
+                                            <td>
+                                                <div class="input-group" id="employeeDiv{{$index}}" data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.employeeInfoType{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.employeeInfoType{{$index}}.$pristine }">
+                                                    <input type="text" ng-model="info.UserIdentifierType" id="employeeInfoType{{$index}}" name="employeeInfoType{{$index}}" class="form-control ellipsis input-min-width" typeahead-wait-ms="500" ng-change="employeeInputChange($index);"
+                                                           typeahead-editable="false" auto-focus event-focus="{{$first}}"
+                                                           typeahead="identifiers as identifiers.Name for identifiers in userIdentifierTypes | filter:$viewValue"
+                                                           typeahead-on-select="onSelect($item, $model, $label, 'UserIdentifierTypes')"
+                                                           typeahead-no-results="noResults2"
+                                                           typeahead-trigger />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-info" ng-click="triggerTypeaheademployeeInfoType($index)">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                                <p ng-show="noResults2" ng-cloak class="error-block">No Results Found!</p>
+
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.employeeInfoIdNumber{{$index}}.$invalid && !ctrl.userCredentialForm.employeeInfoNumIdNumber{{$index}}.$pristine }">
+                                                <input type="text" data-ng-model="info.IDNumber" class="form-control input-min-width" id="employeeInfoIdNumber{{$index}}" name="employeeInfoNumIdNumber{{$index}}" xen-maxlength="20" ng-change="userIdentifiersInputChange();" />
+                                                @*<p ng-show="ctrl.userCredentialForm.licenseNumber.$error.maxlength" class="error-block">License # is too long</p>*@
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.employeeInfoEffectiveDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.employeeInfoEffectiveDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('employeeInfoEffectiveDate' + $index)" opened="openedEffectiveDate" id="employeeInfoEffectiveDate{{$index}}" name="employeeInfoEffectiveDate{{$index}}" new-date="info.EffectiveDate" start-date="startDate" dob-name="'effectiveDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="info.EffectiveDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'employeeinfo')" ng-blur="userIdentifiersInputChange();"></mydatepicker>
+                                                <span id="effectiveDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.effectiveDateCalander.$error.date" class="error-block">Invalid Effective Date for Employee Information</span>
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.employeeInfoExpirationDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.employeeInfoExpirationDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('employeeInfoExpirationDate' + $index)" opened="openedExpirationDate" id="employeeInfoExpirationDate{{$index}}" name="employeeInfoExpirationDate{{$index}}" new-date="info.ExpirationDate" start-date="startDate" dob-name="'expirationDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="info.ExpirationDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'employeeinfo')" ng-blur="userIdentifiersInputChange();"></mydatepicker>
+                                                <span id="expirationDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.expirationDateCalander.$error.date" class="error-block">Invalid Expiration Date for Employee Information</span>
+                                            </td>
+                                            <td class="actions">
+                                                <a href="javascript:void(0)" data-default-no-action id="addEmployeeInfo" name="addEmployeeInfo" title="Add Employee Info" ng-show="$last" ng-click="addEmployeeInfoRow($event);" security permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="create" title="Add" space-key-press><i class="fa fa-plus-circle margin-xsmall"></i></a>
+                                                <a href="javascript:void(0)" data-default-no-action id="deleteEmployeeInfo" name="deleteEmployeeInfo" title="Remove Employee Info" ng-show="!$first" ng-click="deleteEmployeeInfoRow(info, $index, $event);" security permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="delete" space-key-press><i class="fa fa-minus-circle margin-xsmall" on-row-removed></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row padding-top-xsmall margin-bottom-small">
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-container">
+                            <div class="fixed-table-body">
+                                <table id="empInfoNumTable" data-toggle="table"
+                                       data-show-columns="false"
+                                       data-search="true"
+                                       data-minimum-count-columns="2"
+                                       data-filter-control="false"
+                                       data-mobile-responsive="true"
+                                       data-advanced-search="false"
+                                       data-show-multi-sort="false"
+                                       class="table table-strip-borders combo-table form-group-lg"
+                                       grid-arrow-selector>
+                                    <thead>
+                                        <tr>
+                                            <th data-field="EmployeeInfoNumType"
+                                                data-sortable="false">TYPE</th>
+                                            <th data-field="EmployeeInfoNumIdNumber"
+                                                data-sortable="false">ID NUMBER</th>
+                                            <th data-field="EmployeeInfoNumEffectiveDate"
+                                                data-sortable="false">EFFECTIVE DATE</th>
+                                            <th data-field="EmployeeInfoNumExpirationDate"
+                                                data-sortable="false">EXPIRATION DATE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="info in employeeInfoNums track by $index" apply-security>
+                                            <td><span class="fixed-width">{{info.Type}}</span></td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.employeeInfoNumIdNumber{{$index}}.$invalid && !ctrl.userCredentialForm.employeeInfoNumIdNumber{{$index}}.$pristine }">
+                                                <input type="text" data-ng-model="info.IDNumber" class="form-control input-min-width" id="employeeInfoNumIdNumber{{$index}}" name="employeeInfoNumIdNumber{{$index}}" xen-maxlength="20" ng-change="userIdentifiersInputChange();" />
+                                                @*<p ng-show="ctrl.userCredentialForm.licenseNumber.$error.maxlength" class="error-block">License # is too long</p>*@
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.employeeInfoNumEffectiveDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.employeeInfoNumEffectiveDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('employeeInfoNumEffectiveDate' + $index)" opened="openedEffectiveDate" id="employeeInfoNumEffectiveDate{{$index}}" name="employeeInfoNumEffectiveDate{{$index}}" new-date="info.EffectiveDate" start-date="startDate" dob-name="'effectiveDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="info.EffectiveDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'employeeinfonum')" ng-blur="userIdentifiersInputChange();"></mydatepicker>
+                                                <span id="effectiveDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.effectiveDateCalander.$error.date" class="error-block">Invalid Effective Date for Employee Information</span>
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.employeeInfoNumExpirationDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.employeeInfoNumExpirationDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('employeeInfoNumExpirationDate' + $index)" opened="openedExpirationDate" id="employeeInfoNumExpirationDate{{$index}}" name="employeeInfoNumExpirationDate{{$index}}" new-date="info.ExpirationDate" start-date="startDate" dob-name="'expirationDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="info.ExpirationDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'employeeinfonum')" ng-blur="userIdentifiersInputChange();"></mydatepicker>
+                                                <span id="expirationDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.expirationDateCalander.$error.date" class="error-block">Invalid Expiration Date for Employee Information</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Contract Employee*@
+                <h3 class="uppercase nomargin padding-xsmall border-top">Contract Employee</h3>
+                <div class="row padding-top-xsmall margin-bottom-small">
+                    <div class="bootstrap-table flyout-margin">
+                        <div class="fixed-table-container">
+                            <div class="fixed-table-body">
+                                <table id="contractEmpTable" data-toggle="table"
+                                       data-show-columns="false"
+                                       data-search="true"
+                                       data-minimum-count-columns="2"
+                                       data-filter-control="false"
+                                       data-mobile-responsive="true"
+                                       data-advanced-search="false"
+                                       data-show-multi-sort="false"
+                                       class="table table-strip-borders combo-table form-group-lg"
+                                       grid-arrow-selector>
+                                    <thead>
+                                        <tr>
+                                            <th data-field="ContractEmployeeEntity"
+                                                data-sortable="false">CONTRACTING ENTITY</th>
+                                            <th data-field="ContractEmployeeIdNumber"
+                                                data-sortable="false">ID NUMBER</th>
+                                            <th data-field="ContractEmployeeEffectiveDate"
+                                                data-sortable="false">EFFECTIVE DATE</th>
+                                            <th data-field="ContractEmployeeExpirationDate"
+                                                data-sortable="false">EXPIRATION DATE</th>
+                                            <th data-field="ContractEmployeeAction"
+                                                data-sortable="false"><span class="sr-only">ACTIONS</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="emp in contractEmployees track by $index" apply-security>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.contractEmployeeEntity{{$index}}.$invalid && !ctrl.userCredentialForm.contractEmployeeEntity{{$index}}.$pristine }">
+                                                <input type="text" data-ng-model="emp.ContractingEntity" class="form-control input-min-width" id="contractEmployeeEntity{{$index}}" name="contractEmployeeEntity{{$index}}" xen-maxlength="30" ng-change="userAdditionalDetailsChange();" />
+                                                @*<p ng-show="ctrl.userAdditionalDetailsForm.contractEmployeeId{{$index}}.$error.maxlength" class="error-block">License # is too long</p>*@
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.contractEmployeeId{{$index}}.$invalid && !ctrl.userCredentialForm.contractEmployeeId{{$index}}.$pristine }">
+                                                <input type="text" data-ng-model="emp.IDNumber" class="form-control input-min-width" id="contractEmployeeIdNum{{$index}}" name="contractEmployeeIdNum{{$index}}" xen-maxlength="20" ng-change="userAdditionalDetailsChange();" />
+                                                @*<p ng-show="ctrl.userAdditionalDetailsForm.contractEmployeeId{{$index}}.$error.maxlength" class="error-block">License # is too long</p>*@
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.contractEmployeeEffectiveDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.contractEmployeeEffectiveDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('contractEmployeeEffectiveDate' + $index)" opened="openedEffectiveDate" id="contractEmployeeEffectiveDate{{$index}}" name="contractEmployeeEffectiveDate{{$index}}" new-date="emp.EffectiveDate" start-date="startDate" dob-name="'effectiveDateCalander'"
+                                                              date-options="dateOptions" date-required="false" ng-model="emp.EffectiveDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'contractemployee')" ng-blur="userAdditionalDetailsChange();"></mydatepicker>
+                                                <span id="effectiveDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.effectiveDateCalander.$error.date" class="error-block">Invalid Effective Date for Contract Employee</span>
+                                            </td>
+                                            <td data-ng-class="{ 'has-error' : ctrl.userAdditionalDetailsForm.contractEmployeeExpirationDate{{$index}}.$invalid && !ctrl.userAdditionalDetailsForm.contractEmployeeExpirationDate{{$index}}.$pristine }">
+                                                <mydatepicker ng-click="reposDatepicker('contractEmployeeExpirationDate' + $index)" opened="openedExpirationDate" id="contractEmployeeExpirationDate{{$index}}" name="contractEmployeeExpirationDate{{$index}}" new-date="emp.ExpirationDate" start-date="startDate" dob-name="'expirationDateCalander'" ng-blur="userAdditionalDetailsChange();"
+                                                              date-options="dateOptions" date-required="false" ng-model="emp.ExpirationDate" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index, 'contractemployee')"></mydatepicker>
+                                                <span id="expirationDateError" ng-cloak ng-show="ctrl.userAdditionalDetailsForm.expirationDateCalander.$error.date" class="error-block">Invalid Expiration Date for Contract Employee</span>
+                                            </td>
+                                            <td class="actions">
+                                                <a href="javascript:void(0)" data-default-no-action id="addContractEmployee" name="addContractEmployee" title="Add Contract Employee" ng-show="$last" ng-click="addContractEmployeeRow($event);" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="create" title="Add" space-key-press><i class="fa fa-plus-circle margin-xsmall"></i></a>
+                                                <a href="javascript:void(0)" data-default-no-action id="deleteContractEmployee" name="deleteContractEmployee" title="Remove Contract Employee" ng-show="!$first" ng-click="deleteContractEmployeeRow(emp, $index, $event);" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="delete" space-key-press><i class="fa fa-minus-circle margin-xsmall" on-row-removed></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row padding-top-small">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 text-right">
+                    <xen-submit id="btnSave" name="btnSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="SiteAdministration-StaffManagement-AdditionalDetails" permission="create|update"></xen-submit>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

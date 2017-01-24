@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="serviceFlyoutCanvas" class="row-offcanvas row-offcanvas-right">
+    <service-flyout print-report-click="ctrl.onReportPrint({currentIndex: currentIndex})" service-recording="ctrl.flyoutModel" ng-show="ctrl.isServiceFlyout" nav-items="ctrl.navItems"></service-flyout>
+</div>
+
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        @* Date Picker / Filters *@
+        <div class="table-header-button w-daterange nomargin-left">
+            <xen-date-range-picker on-change="onDateChange(startDate,endDate)" element-id="dateRange"></xen-date-range-picker>
+        </div>
+        <div class="table-custom-filters">
+            <xen-multi-select selected-values="ctrl.selectedItems" class="pull-right xen-multi-select {{ctrl.options.length == 0 ?'disabled':''}}"  on-change="onMultiSelect()" ng-model="ctrl.options"></xen-multi-select>
+            <select class="form-control" ng-model="ctrl.selectedCriteria"
+                    name="criteria" id="criteria" auto-focus event-focus="autoFocus" ng-options="criteria.field as criteria.title for criteria in ctrl.criteria" ng-change="ctrl.onCriteriaSelect()">
+                <option value="" ng-selected="selected">All</option>
+            </select>
+        </div>
+        <div class="row padding-top-small padding-bottom-small">
+            <table id="serviceTable" data-toggle="table"
+                   data-show-columns="true"
+                   data-search="true"
+                   data-minimum-count-columns="2"
+                   data-filter-control="false"
+                   data-mobile-responsive="true"
+                   data-filter-bar
+                   data-advanced-search="false"
+                   data-show-multi-sort="true"
+                   data-classes="table table-stripe-borders"
+                   bootstrap-table="ctrl.tableoptions" grid-arrow-selector>
+                <thead>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="reportModal" role="dialog" aria-labelledby="reportModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-top: 1px;">
+                <div class="row">
+                    <div class="col-md-5 col-sm-5">
+                        <h4 class="modal-title ng-binding" id="roleHeader">{{ ctrl.reportModel.ReportHeader }}</h4>
+                    </div>
+                    <div class="col-md-5 col-sm-5">
+                        <a title="Previous Document" ng-click="ctrl.movePreviousDocument()" ng-class="{'invisible': (ctrl.currentIndex <= 1)}"><i class="fa fa-caret-left padding-right-xsmall"></i></a>
+                        <span class="small">Document {{ctrl.currentIndex}} of {{ctrl.printableNavigationItems}}</span>
+                        <a href="" title="Next Document" ng-click="ctrl.moveNextDocument()" ng-if="ctrl.currentIndex < ctrl.printableNavigationItems"><i class="fa fa-caret-right padding-left-xsmall"></i></a>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                <button type="button" id="closePopup" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div ng-show="!ctrl.reportModel.HasLoaded">
+                    <div class="loading text-center padding-top padding-bottom">
+                        <i class="fa fa-spinner fa-spin"><span class="sr-only">Report is loading</span></i>
+                    </div>
+                </div>
+                <div ng-if="ctrl.reportModel.HasLoaded" style="height: 800px;">
+                    <pdf-maker report-id="assessementReport" report-name="{{ ctrl.reportModel.ReportName }}" report-data="ctrl.reportModel" report-width="100%" report-height="100%" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

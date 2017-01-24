@@ -1,0 +1,154 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="{{permissionKey}}" permission="{{resolvePermission(ctrl.userDetail.MappingID)}}" enter-key-stop="enterKeyStop" stop-next="stopNext" save-on-enter="saveOnEnter"></keypress-events>
+<div class="jumbotron" ng-if="!ctrl.userProfile">
+    <form class="form-inline" name="searchForm" data-ng-submit="searchForm.$valid">
+        <div class="container-fluid padding-small">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg">
+                    <input type="text" name="UserSearch" id="txtUserSearch" ng-model="ctrl.searchText" auto-focus event-focus="autoFocus"
+                            placeholder="Search for Staff" tabindex="0" class="form-control" ng-keydown="($event.which === 13)? ctrl.searchStaff(ctrl.searchText) :0" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-link" ng-click="ctrl.searchStaff(ctrl.searchText)">
+                            <i class="fa fa-search fa-fw"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="modal fade" id="userListModel" tabindex="-1" role="dialog" aria-labelledby="userListModel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close" ng-click="cancelModel();"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Staff</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="usersTable" data-toggle="table"
+                               data-show-columns="true"
+                               data-search="true"
+                               data-minimum-count-columns="2"
+                               data-filter-control="false"
+                               data-mobile-responsive="true"
+                               data-filter-bar
+                               data-advanced-search="false"
+                               data-show-multi-sort="false"
+                               data-classes="table table-stripe-borders"
+                               bootstrap-table="ctrl.tableoptions" grid-arrow-selector>
+                            <thead>
+                                <tr>
+                                    <th data-field="firstName"
+                                        data-sortable="true">First Name</th>
+                                    <th data-field="lastName"
+                                        data-sortable="true">Last Name</th>
+                                    <th data-field="middlename"
+                                        data-sortable="true">MI</th>
+                                    <th data-field="birthdate"
+                                        data-sortable="true">Date Of Birth</th>
+                                    <th data-field="gender"
+                                        data-sortable="true">Gender</th>
+                                    <th data-field="program"
+                                        data-sortable="true">Program</th>
+                                    <th data-field="programunit"
+                                        data-sortable="true">Program Unit</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(ctrl.userDetail.MappingID)}}" permission-mode="readonly" dual-permission="true">
+                <form role="form" id="directReport" name="ctrl.directReportForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)"
+                      novalidate bs-modifiable="true" set-form-status set-form-mode>
+                    <div class="col-md-12 no-security" ng-if="!ctrl.userProfile">
+                        <div class="row section-block">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="UserName">User Name</label>
+                                    <input type="text" ng-disabled="true" name="UserName" id="UserName" class="form-control ellipsis" ng-model="ctrl.userDetail.FirstName" auto-focus event-focus="autoFocus"
+                                           ng-trim="true" ng-maxlength="200" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-small">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="FirstName">First Name</label>
+                                    <input type="text" ng-disabled="true" name="FirstName" id="FirstName" class="form-control ellipsis" ng-model="ctrl.userDetail.FirstName" auto-focus event-focus="autoFocus"
+                                           ng-trim="true" ng-maxlength="200" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="LastName">Last Name</label>
+                                    <input type="text" ng-disabled="true" name="LastName" id="LastName" ng-model="ctrl.userDetail.LastName" ng-maxlength="200" ng-trim="true" class="form-control ellipsis" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="Middle">Middle Name</label>
+                                    <input type="text" ng-disabled="true" id="Middle" name="Middle" class="form-control" ng-model="ctrl.userDetail.MiddleName" ng-maxlength="200" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row section-block">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="Email">Email</label>
+                                    <input type="text" ng-disabled="true" name="Email" id="Email" class="form-control ellipsis" ng-model="ctrl.userDetail.PrimaryEmail" auto-focus event-focus="autoFocus"
+                                           ng-trim="true" ng-maxlength="200" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+    </div>
+    <div class="row padding-top-small">
+        <div class="col-lg-6">
+            <p class="uppercase subtext" ng-if="!ctrl.userProfile"><sup>*</sup> Indicates a required field</p>
+        </div>
+        <div class="col-lg-6 text-right">
+            <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="{{permissionKey}}" permission="{{resolvePermission(ctrl.userDetail.MappingID)}}" ng-if="!ctrl.userProfile" dual-permission="true">SAVE</button>
+            <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" id="btnNext" name="btnNext" security permission-key="{{permissionKey}}" permission="read">NEXT</button>
+        </div>
+    </div>
+    <div class="row padding-top-small padding-bottom-small">
+        <div class="col-md-12">
+            <table id="directReportTable" data-toggle="table" tabindex="0"
+                   data-show-columns="true"
+                   data-search="true"
+                   data-minimum-count-columns="2"
+                   data-filter-control="false"
+                   data-mobile-responsive="true"
+                   data-filter-bar
+                   data-advanced-search="false"
+                   data-show-multi-sort="true"
+                   data-classes="table table-stripe-borders"
+                   bootstrap-table="ctrl.reportTableoptions" grid-arrow-selector>
+                <thead>
+                    <tr>
+                        <th data-field="name"
+                            data-sortable="true">Name</th>
+                        <th data-field="username"
+                            data-sortable="true">User Name</th>
+                        <th data-field="email"
+                            data-sortable="true">Email</th>
+                        <th data-field="role"
+                            data-sortable="true">Role</th>
+                        <th data-field="program"
+                            data-sortable="true">Program</th>
+                        <th ng-if="!ctrl.userProfile"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@model Axis.PresentationEngine.Areas.Configuration.Models.GetSettingsToCacheViewModel
+@{
+    Layout = null;
+}
+//<script>
+    (function() {
+        angular.module('xenatixApp').factory('applicationSettingService', [
+            '$http', '$q','$filter',
+            function($http, $q, $filter) {
+                var settingsJson = @Html.Raw(Model.SettingsJson);
+
+                function getSettingByID(id)
+                {
+                    return $filter('filter')(settingsJson.settingsList, function (item) {
+                        return item.settingsID == id;
+                    })[0];
+                }
+
+                function getSettingByName(name)
+                {
+                    return $filter('filter')(settingsJson.settingsList, function (item) {
+                        return item.settings == name;
+                    })[0];
+                }
+
+                return {
+                    getSettingByID: getSettingByID,
+                    getSettingByName : getSettingByName
+                };
+            }
+        ]);
+    }());
+    //</script>

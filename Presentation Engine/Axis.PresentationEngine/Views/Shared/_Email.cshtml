@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Email";
+    Layout = null;
+}
+<div class="col-md-12">
+    <div ng-repeat="email in emailItems=(Emails | filter :(EnableFilter||'') && {IsActive:true}) track by $index" ng-form="emailForm" apply-security>
+        <div class="row">
+            <!-- email -->
+            <div class="col-md-5 padding-bottom-small">             
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : emailForm.Email.$invalid && !emailForm.Email.$pristine }">
+                    <label for="email">Email <sup data-ng-if="EmailAccessCode | bitwiseAnd: EMAIL_ACCESS.ConditionalRequired">&#134</sup><sup data-ng-if="EmailAccessCode | bitwiseAnd: EMAIL_ACCESS.Required">*</sup></label>
+                    <input type="email" class="form-control ellipsis" xen-last-element-focus="Emails" id="email{{$index}}" name="Email" ng-pattern="emailPattern" ng-disabled="isReadOnlyForm"
+                           ng-model="email.Email" maxlength="125" auto-focus event-focus="emailAutoFocus" ng-required="!ShowEmailDaggerOnly && (EmailAccessCode | bitwiseAnd: EMAIL_ACCESS.Email)" />
+                    <p ng-show="emailForm.Email.$error.pattern && !emailForm.Email.$pristine" ng-cloak class="error-block">Invalid Email</p>                   
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="emailPermission">Email Permissions</label>
+                    <select ng-model="email.EmailPermissionID" id="emailPermission{{$index}}" name="emailPermission" class="form-control" ng-disabled="isReadOnlyForm"
+                            ng-options="emailPermission.ID as emailPermission.Name for emailPermission in getLookupsByType('EmailPermission')">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-2 padding-bottom-small col-inline" data-ng-show="ShowPrimaryEmailCheckbox">
+                <div class="form-group-lg padding-bottom-small">
+                    <xen-checkbox data-ng-model="email.IsPrimary" data-checkbox-id="emailIsPrimary{{$index}}" data-label="Primary" />
+                </div>
+            </div>
+            <div class="col-md-2 actions nopadding padding-top-small">
+                <div class="form-group-lg padding-top-small text-right">
+                    <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="email.ShowPlusButton" ng-click="addNewEmail()" space-key-press>
+                        <i class="fa fa-plus-circle"><span class="sr-only">Add Email</span></i>
+                    </a>
+                    <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="(email.ShowMinusButton && emailItems.length>1)" ng-click="removeEmail($index)" space-key-press>
+                        <i class="fa fa-minus-circle" on-row-removed security permission-key="{{permissionKey}}" permission="delete"><span class="sr-only">Remove Email</span></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @* Effective/Expiration Dates *@
+        <div class="row" ng-if="ShowEmailExpirationDates">
+            <div class="col-md-3">
+                <div class="form-group-lg padding-bottom-small" id="effectiveDateError" ng-class="{ 'has-error' : emailForm.effectiveDateCalander.$invalid && !emailForm.effectivedatecalander.$pristine }">
+                    <label for="effectiveDate">Effective Date</label>
+                    <xen-date-picker id="emaileffectivedate{{$index}}" data-validation-name="Effective Date" data-compare-element-name="expirationDateCalander" ng-model="email.EffectiveDate" end-date="email.ExpirationDate" greater-than-date-validation="true" name="effectiveDateCalander" date-options="dateOptions"></xen-date-picker>
+                    <p id="isEffectiveDateValidError" ng-cloak ng-show="emailForm.effectiveDateCalander.$error.date" class="error-block">Effective Date is invalid.</p>
+                    <p ng-show="emailForm.effectiveDateCalander.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : emailForm.expirationDateCalander.$invalid && !emailForm.expirationdatecalander.$pristine }">
+                    <label for="expirationDate">Expiration Date</label>
+                    <xen-date-picker id="emailexpirationDate{{$index}}" data-validation-name="Expiration Date" data-compare-element-name="effectiveDateCalander" ng-model="email.ExpirationDate" start-date="email.EffectiveDate" less-than-date-validation="true" name="expirationDateCalander" date-options="dateOptions"></xen-date-picker>
+                    <p id="isValidError" ng-cloak ng-show="emailForm.expirationDateCalander.$error.date" class="error-block">Expiration Date is invalid.</p>
+                    <p ng-show="emailForm.expirationDateCalander.$error.pastDate" ng-cloak class="error-block">Expiration date can't be past date.</p>
+                    <p ng-show="emailForm.expirationDateCalander.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

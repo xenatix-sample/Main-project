@@ -1,0 +1,465 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityCalculationID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security  permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityCalculationID)}}" permission-mode="readonly">
+            <form role="form" name="ctrl.calculationForm" novalidate ng-submit="ctrl.calculationForm.$valid" server-validate="ServerValidationErrors"
+                  bs-modifiable="true" check-form data-on-save="save(isNext, isMandatory, hasErrors)">
+                {{ctrl.calculationForm.modified ? setform(true):setform(false)}}
+                <div class="row section-block long-names">
+                    <div class="col-md-2 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="chronologicalAge">Chronological Age</label>
+                            <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.ChronologicalAge" id="chronologicalAge" name="chronologicalAge" ng-disabled="true" />
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="adjustedAge">Adjusted Age</label>
+                            <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.AdjustedAge" id="adjustedAge" name="adjustedAge" ng-disabled="true" />
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding-bottom-small" ng-show="calculation.ChronologicalAge <= 18">
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-checkbox data-ng-model="calculation.UseAdjustedAge" data-checkbox-id="useAdjustedAge" data-label="Use Adjusted Age" />
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="gestationalAge">Gestational Age </label>
+                            <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.GestationalAge" id="gestationalAge" name="gestationalAge" auto-focus event-focus="autoFocus"
+                                   ng-minlength="2" ng-maxlength="2" ng-model-options="{ debounce: 400 }" />
+                            <p ng-show="ctrl.calculationForm.gestationalAge.$error.maxlength || ctrl.calculationForm.gestationalAge.$error.minlength" ng-cloak class="error-block">Must be numeric and two digits</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="determinedAge">Determined Age</label><!--Age Used to Determine Months and &#37; Delay-->
+                            <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.DeterminedAge" id="determinedAge" name="determinedAge" ng-disabled="true" />
+                        </div>
+                    </div>
+                </div>
+
+                <!--Adaptive section of spreadsheet-->
+                <h2 class="padding-bottom-small">Adaptive <span class="subtext">(age in months)</span></h2>
+                <div class="row">
+                    <div class="col-md-5 section-block-o section-block-nested">
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.scrs.$invalid && !ctrl.calculationForm.scrs.$pristine }">
+                                    <label for="scrs">Self Care Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.SCRS" id="scrs" name="scrs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="scae">SC AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.SCAE" id="scae" name="scae" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row med-names" ng-show="calculation.ChronologicalAge >= 24">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.prrs.$invalid && !ctrl.calculationForm.prrs.$pristine }">
+                                    <label for="prrs">Personal Responsibility Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.PRRS" id="prrs" name="prrs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="prae">PR AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.PRAE" id="prae" name="prae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 section-block section-block-nested">
+                        <div class="row">
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="aae">Months of Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.AMD" id="amd" name="amd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="aae">Age Equivalent</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.AAE" id="aae" name="aae" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="apd">&#37; of Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.APD" id="apd" name="apd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!--no input fields here-->
+                        </div>
+                    </div>
+                </div>
+                <!--End of Adaptive section of spreadsheet-->
+                <!--Personal-Social section of spreadsheet-->
+                <h2 class="padding-bottom-small">Personal-Social <span class="subtext">(age in months)</span></h2>
+                <div class="row">
+                    <div class="col-md-7 section-block-o section-block-nested">
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.airs.$invalid && !ctrl.calculationForm.airs.$pristine }">
+                                    <label for="airs">Adult Interaction Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.AIRS" id="airs" name="airs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="airs">AI AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.AIAE" id="aiae" name="aiae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="calculation.ChronologicalAge >= 24">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.pirs.$invalid && !ctrl.calculationForm.pirs.$pristine }">
+                                    <label for="pirs">Peer Interaction Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.PIRS" id="pirs" name="pirs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="airs">PI AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.PIAE" id="piae" name="piae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.srrs.$invalid && !ctrl.calculationForm.srrs.$pristine }">
+                                    <label for="srrs">Self-Concept/Social Role Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.SRRS" id="srrs" name="srrs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="airs">SR AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.SRAE" id="srae" name="srae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 section-block section-block-nested">
+                        <div class="row">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="personalSocialAE">Age Equivalent</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.PersonalSocialAE" id="personalSocialAE" name="personalSocialAE" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="personalSocialMD">Months of Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.PersonalSocialMD" id="personalSocialMD" name="personalSocialMD" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="personalSocialAE">&#37; of Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.PersonalSocialPD" id="personalSocialPD" name="personalSocialPD" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Personal-Social section of spreadsheet-->
+                <!--Communication section of spreadsheet-->
+                <h2 class="padding-bottom-small">Communication <span class="subtext">(age in months)</span></h2>
+                <div class="row">
+                    <div class="col-md-5 section-block-o section-block-nested">
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.rcrs.$invalid && !ctrl.calculationForm.rcrs.$pristine }">
+                                    <label for="rcrs">Receptive Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.RCRS" id="rcrs" name="rcrs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="rcae">RC AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.RCAE" id="rcae" name="rcae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.ecrs.$invalid && !ctrl.calculationForm.ecrs.$pristine }">
+                                    <label for="ecrs">Expressive Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.ECRS" id="ecrs" name="ecrs" />
+                                    <p ng-show="ctrl.calculationForm.ecrs.$error.pattern" class="error-block">Score contains invalid characters</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="ecae">EC AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.ECAE" id="ecae" name="ecae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 section-block section-block-nested">
+                        <div class="row">
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="ecmd">EC Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.ECMD" id="ecmd" name="ecmd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="commAE">Age Equivalent</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.CommAE" id="commAE" name="commAE" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="commPD">&#37; Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.CommPD" id="commPD" name="commPD" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="ecpd">EC &#37; Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.ECPD" id="ecpd" name="ecpd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="commMD">Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.CommMD" id="commMD" name="commMD" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <!--no input fields here-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Communication section of spreadsheet-->
+                <!--Motor section of spreadsheet-->
+                <h2 class="padding-bottom-small">Motor <span class="subtext">(age in months)</span></h2>
+                <div class="row">
+                    <div class="col-md-6 section-block-o section-block-nested">
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.gmrs.$invalid && !ctrl.calculationForm.gmrs.$pristine }">
+                                    <label for="gmrs">Gross Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.GMRS" id="gmrs" name="gmrs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="gmae">GM AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.GMAE" id="gmae" name="gmae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.pmrs.$invalid && !ctrl.calculationForm.pmrs.$pristine }">
+                                    <label for="pmrs">Perceptual Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.PMRS" id="pmrs" name="pmrs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="pmae">PM AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.PMAE" id="pmae" name="pmae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.fmrs.$invalid && !ctrl.calculationForm.fmrs.$pristine }">
+                                    <label for="fmrs">Fine Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.FMRS" id="fmrs" name="fmrs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="fmae">FM AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.FMAE" id="fmae" name="fmae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 section-block section-block-nested">
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="gmd">Gross Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.GMD" id="gmd" name="gmd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="gmpd">Gross &#37; Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.GMPD" id="gmpd" name="gmpd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="fpmd">Fine / Perceptual Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.FPMD" id="fpmd" name="fpmd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="fpmpd">Fine / Perceptual &#37; Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.FPMPD" id="fpmpd" name="fpmpd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="fpmae">Fine / Perceptual Age Equivalent</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.FPMAE" id="fpmae" name="fpmae" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Motor section of spreadsheet-->
+                <!--Cognitive section of spreadsheet-->
+                <h2>Cognitive <span class="subtext">(age in months)</span></h2>
+                <div class="row padding-top-small">
+                    <div class="col-md-7 section-block-o section-block-nested">
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.amrs.$invalid && !ctrl.calculationForm.amrs.$pristine }">
+                                    <label for="amrs">Attention and Memory Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.AMRS" id="amrs" name="amrs" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="amae">AM AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.AMAE" id="amae" name="amae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.rars.$invalid && !ctrl.calculationForm.rars.$pristine }">
+                                    <label for="rars">Reasoning and Acad. Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.RARS" id="rars" name="rars" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="raae">RA AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.RAAE" id="raae" name="raae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.calculationForm.pcrs.$invalid && !ctrl.calculationForm.pcrs.$pristine }">
+                                    <label for="pcrs">Perception and Concepts Raw Score</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.PCRS" id="pcrs" name="pcrs" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="pcae">PC AE</label>
+                                    <input type="text" number class="form-control ellipsis" clean="true" ng-model="calculation.PCAE" id="pcae" name="pcae" />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 section-block section-block-nested">
+                        <div class="row">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="cognitiveAE">Age Equivalent</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.CognitiveAE" id="cognitiveAE" name="cognitiveAE" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="cd">Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.CD" id="cd" name="cd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="cpd">&#37; Delay</label>
+                                    <input type="text" class="form-control ellipsis" clean="true" ng-model="calculation.CPD" id="cpd" name="cpd" number />
+                                    <!--Add angular validations-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Cognitive section of spreadsheet-->
+            </form>
+        </div>
+        <div class="row padding-top-small">
+            <div class="col-lg-6">
+                <p class="uppercase subtext">
+                    <sup>*</sup> Indicates a required field
+                </p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" id="calculationSave" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" name="btnSave" permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityCalculationID)}}">
+                    SAVE
+                </button>
+                <button type="button" id="calculationNext" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" name="btnNext" permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityCalculationID)}}">
+                    NEXT
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿@* This first line determine if the keypress is allowed for the user or not *@
+<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="{{permissionKey}}" permission="create|update"></keypress-events>
+<div class="panel panel-light padding-xsmall" ng-cloak>
+    <div class="panel-body">
+        @* Username and Name related information needs to be readonly as per the PBI 6333 *@
+        <div security permission-key="{{permissionKey}}" permission="create|update" permission-mode="readonly">
+            <form role="form" name="ctrl.userProfileForm" novalidate server-validate="ServerValidationErrors" set-form-status
+                  bs-modifiable="true" check-form data-on-save="save(isNext, isMandatory, hasErrors)" set-form-mode>
+                {{ctrl.userProfileForm.modified ? setform(true):setform(false)}}
+                <div class="row padddinzg-bottom-small">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="userName">User Name</label>
+                            <input type="text" class="form-control ellipsis" clean="true" ng-model="userProfile.UserName" id="userName" name="userName" readonly="readonly" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row section-block margin-bottom-xsmall padding-bottom-small">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userProfileForm.firstName.$invalid && !ctrl.userProfileForm.firstName.$pristine }">
+                            <label for="firstName">First Name <sup>*</sup></label>
+                            <input type="text" class="form-control ellipsis" clean="true" ng-maxlength="30" ng-model="userProfile.FirstName" id="firstName" name="firstName" readonly="readonly" />
+                            <p ng-show="ctrl.userProfileForm.firstName.$error.maxlength" class="error-block">First name is too long</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userProfileForm.lastName.$invalid && !ctrl.userProfileForm.lastName.$pristine }">
+                            <label for="lastName">Last Name <sup>*</sup></label>
+                            <input type="text" name="lastName" class="form-control ellipsis" id="lastName" ng-model="userProfile.LastName" readonly="readonly" ng-maxlength="50" />
+                            <p ng-show="ctrl.userProfileForm.lastName.$error.maxlength" class="error-block">Last name is too long</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userProfileForm.middleName.$invalid && !ctrl.userProfileForm.middleName.$pristine }">
+                            <label for="middleName">Middle Name</label>
+                            <input type="text" name="middleName" class="form-control ellipsis" id="middleName" ng-model="userProfile.MiddleName" readonly="readonly" ng-maxlength="20" />
+                            <p ng-show="ctrl.userProfileForm.middleName.$error.maxlength" class="error-block">Middle name is too long</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding-top-small">
+                    @Html.Partial("../Shared/_Phone")
+                    @Html.Partial("../Shared/_Email")
+                </div>
+                <div class="row section-block padding-top-small">
+                    @Html.Partial("../Shared/_Address")
+                </div>
+            </form>
+        </div>
+            <div class="row padding-top-small">
+                <div class="col-lg-6">
+                    <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                </div>
+                <div class="col-lg-6 text-right">
+                    @*<button type="button" class="btn btn-default btn-lg" ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" ng-disabled="ctrl.userProfileForm.$invalid">SAVE</button>*@
+                    <button type="button" class="btn btn-default btn-lg" ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="{{permissionKey}}" permission="create|update">SAVE</button>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="safeSubmit(true, true)" id="btnNext" name="btnNext" security permission-key="{{permissionKey}}" permission="read" ng-disabled="ctrl.userProfileForm.$invalid">NEXT</button>
+                </div>
+            </div>
+        </div>
+</div>

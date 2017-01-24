@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{43C42C8E-C18D-450B-88F6-3A07681A8417}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.Service.Registration</RootNamespace>
+    <AssemblyName>Axis.Service.Registration</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp003|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp003\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admission\AdmissionService.cs" />
+    <Compile Include="Admission\IAdmissionService.cs" />
+    <Compile Include="BenefitsAssistance\BenefitsAssistanceService.cs" />
+    <Compile Include="BenefitsAssistance\IBenefitsAssistanceService.cs" />
+    <Compile Include="Common\ContactRelationshipService.cs" />
+    <Compile Include="Common\ContactRaceService.cs" />
+    <Compile Include="Common\ContactAliasService.cs" />
+    <Compile Include="Common\ContactEmailService.cs" />
+    <Compile Include="Common\ContactPhotoService.cs" />
+    <Compile Include="Common\IContactRelationshipService.cs" />
+    <Compile Include="Common\IContactRaceService.cs" />
+    <Compile Include="Common\IContactAliasService.cs" />
+    <Compile Include="Common\IContactEmailService.cs" />
+    <Compile Include="Collateral\CollateralService.cs" />
+    <Compile Include="Collateral\ICollateralService.cs" />
+    <Compile Include="Common\ContactAddressService.cs" />
+    <Compile Include="Common\IContactAddressService.cs" />
+    <Compile Include="Common\IContactPhotoService.cs" />
+    <Compile Include="Consent\ConsentService.cs" />
+    <Compile Include="Consent\IConsentService.cs" />
+    <Compile Include="ContactBenefit\ContactBenefitService.cs" />
+    <Compile Include="ContactBenefit\IContactBenefitService.cs" />
+    <Compile Include="ContactDischargeNote\ContactDischargeNoteService.cs" />
+    <Compile Include="ContactDischargeNote\IContactDischargeNoteService.cs" />
+    <Compile Include="ContactPhones\ContactPhonesService.cs" />
+    <Compile Include="ContactPhones\IContactPhonesService.cs" />
+    <Compile Include="EmergencyContact\EmergencyContactService.cs" />
+    <Compile Include="EmergencyContact\IEmergencyContactService.cs" />
+    <Compile Include="FinancialSummary\FinancialSummaryService.cs" />
+    <Compile Include="FinancialSummary\IFinancialSummaryService.cs" />
+    <Compile Include="FinancialAssessment\FinancialAssessmentService.cs" />
+    <Compile Include="FinancialAssessment\IFinancialAssessmentService.cs" />
+    <Compile Include="AdditionalDemographic\AdditionalDemographicService.cs" />
+    <Compile Include="AdditionalDemographic\IAdditionalDemographicService.cs" />
+    <Compile Include="IntakeForms\IIntakeFormsService.cs" />
+    <Compile Include="IntakeForms\IntakeFormsService.cs" />
+    <Compile Include="Letters\ILettersService.cs" />
+    <Compile Include="Letters\LettersService.cs" />
+    <Compile Include="PatientProfile\IPatientProfileService.cs" />
+    <Compile Include="PatientProfile\PatientProfileService.cs" />
+    <Compile Include="QuickRegistration\IQuickRegistrationService.cs" />
+    <Compile Include="GeneralRegistration\IRegistrationService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\..\Axis Libraries\Axis.Constant\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="QuickRegistration\QuickRegistrationService.cs" />
+    <Compile Include="GeneralRegistration\RegistrationService.cs" />
+    <Compile Include="Referrals\ClientInformation\IReferralClientInformationService.cs" />
+    <Compile Include="Referrals\ClientInformation\ReferralClientInformationService.cs" />
+    <Compile Include="Referrals\Common\IReferralAddressService.cs" />
+    <Compile Include="Referrals\Common\IReferralEmailService.cs" />
+    <Compile Include="Referrals\Common\IReferralPhoneService.cs" />
+    <Compile Include="Referrals\Common\ReferralAddressService.cs" />
+    <Compile Include="Referrals\Common\ReferralEmailService.cs" />
+    <Compile Include="Referrals\Common\ReferralPhoneService.cs" />
+    <Compile Include="Referrals\Forwarded\IReferralForwardedService.cs" />
+    <Compile Include="Referrals\Forwarded\ReferralForwardedService.cs" />
+    <Compile Include="Referrals\Information\IReferralReferredInformationService.cs" />
+    <Compile Include="Referrals\Information\ReferralReferredInformationService.cs" />
+    <Compile Include="Referrals\Disposition\IReferralDispositionService.cs" />
+    <Compile Include="Referrals\Disposition\ReferralDispositionService.cs" />
+    <Compile Include="Referrals\Followup\IReferralFollowupService.cs" />
+    <Compile Include="Referrals\Followup\ReferralFollowupService.cs" />
+    <Compile Include="Referrals\Requestor\IReferralDemographicsService.cs" />
+    <Compile Include="Referrals\Requestor\IReferralHeaderService.cs" />
+    <Compile Include="Referrals\Requestor\ReferralDemographicsService.cs" />
+    <Compile Include="Referrals\Requestor\ReferralHeaderService.cs" />
+    <Compile Include="Referrals\Search\IReferralSearchService.cs" />
+    <Compile Include="Referrals\Search\ReferralSearchService.cs" />
+    <Compile Include="Referral\IReferralAdditionalDetailService.cs" />
+    <Compile Include="Referral\IReferralConcernDetailService.cs" />
+    <Compile Include="Referral\IReferralService.cs" />
+    <Compile Include="Referral\ReferralAdditionalDetailService.cs" />
+    <Compile Include="Referral\ReferralConcernDetailService.cs" />
+    <Compile Include="Referral\ReferralService.cs" />
+    <Compile Include="SelfPay\ISelfPayService.cs" />
+    <Compile Include="SelfPay\SelfPayService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Configuration\Axis.Configuration.csproj">
+      <Project>{94e342a4-d5dd-4f1c-a838-e453a28872cc}</Project>
+      <Name>Axis.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Account\Axis.Model.Account.csproj">
+      <Project>{539e2b21-5970-4cec-b479-7b560a2d407b}</Project>
+      <Name>Axis.Model.Account</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Address\Axis.Model.Address.csproj">
+      <Project>{d5ddba0d-9bf0-497b-976d-08d39b7fe976}</Project>
+      <Name>Axis.Model.Address</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Common\Axis.Model.Common.csproj">
+      <Project>{b217d868-9cab-4e0d-a0bc-d82423e64741}</Project>
+      <Name>Axis.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Email\Axis.Model.Email.csproj">
+      <Project>{9f6f9127-fe24-4f59-9e43-3ad252360ae1}</Project>
+      <Name>Axis.Model.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Phone\Axis.Model.Phone.csproj">
+      <Project>{b0a9f6e9-6648-484c-b213-8b15b80973d3}</Project>
+      <Name>Axis.Model.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Photo\Axis.Model.Photo.csproj">
+      <Project>{cbd7d40a-d0b3-41a0-9931-1cff51d000da}</Project>
+      <Name>Axis.Model.Photo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Registration\Axis.Model.Registration.csproj">
+      <Project>{d43d18cf-2ecf-4ede-866d-7cad9e1e0096}</Project>
+      <Name>Axis.Model.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Security\Axis.Security.csproj">
+      <Project>{6add8735-4fe1-471d-991a-6dfa7d588899}</Project>
+      <Name>Axis.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Service\Axis.Service.csproj">
+      <Project>{a6be9f68-da2a-48c1-a0c7-71a62b04c9d8}</Project>
+      <Name>Axis.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

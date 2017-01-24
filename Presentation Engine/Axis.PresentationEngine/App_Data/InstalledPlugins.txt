@@ -1,0 +1,7 @@
+Axis.Plugins.Registration
+Axis.Plugins.ESignature
+Axis.Plugins.ECI
+Axis.Plugins.Scheduling
+Axis.Plugins.Clinical
+Axis.Plugins.CallCenter
+Axis.Plugins.ReportingServices

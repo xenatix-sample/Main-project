@@ -1,0 +1,34 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ "/xenatix/css/animate.min.css" | prepend: site.baseurl }}" type="text/css" media="all" />
+  <link rel="stylesheet" href="{{ "/xenatix/css/style.css?v=0.0.2" | prepend: site.baseurl }}" type="text/css" media="all" />
+  <link type="text/css" rel="stylesheet" href="http://fast.fonts.net/cssapi/0a8bccd6-2943-4274-8a17-b1bedc82d3f5.css"/>
+
+  <link rel="shortcut icon" href="{{ "/xenatix/images/favicon.ico" | prepend: site.baseurl }}" />
+
+  <script type="text/javascript" src="{{ "/xenatix/js/jquery.min.js?ver=1.11.1" | prepend: site.baseurl }}"></script>
+
+  <script type='text/javascript' src="{{ "/xenatix/js/bootstrap.min.js?ver=3.3.2" | prepend: site.baseurl }}"></script>
+  <script type='text/javascript' src="{{ "/xenatix/js/bootstrap-table.min.js?ver=1.8.1" | prepend: site.baseurl }}"></script>
+  <script type='text/javascript' src="{{ "/xenatix/js/perfect-scrollbar.jquery.min.js?ver=0.6.4" | prepend: site.baseurl }}"></script>
+
+  <script type='text/javascript' src="{{ "/xenatix/js/jquery.lazyload.js?ver=1.9.3" | prepend: site.baseurl }}"></script>
+
+  <script type='text/javascript' src="{{ "/xenatix/js/modernizr.min.js?ver=2.8.3" | prepend: site.baseurl }}"></script>
+  <script type='text/javascript' src="{{ "/xenatix/js/respondmore.min.js?ver=1.4.2" | prepend: site.baseurl }}"></script>
+  <script type='text/javascript' src="{{ "/xenatix/js/enquire.min.js?ver=2.1.2" | prepend: site.baseurl }}"></script>
+
+  <script type='text/javascript' src="{{ "/xenatix/js/waypoints/jquery.waypoints.js?ver=3.1.1" | prepend: site.baseurl }}"></script>
+  <script type='text/javascript' src="{{ "/xenatix/js/site.js?ver=0.0.1" | prepend: site.baseurl }}"></script>
+
+
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+</head>

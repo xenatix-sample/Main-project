@@ -1,0 +1,41 @@
+-----------------------------------------------------------------------------------------------------------------------
+-- Procedure:	[Core].[usp_GetServiceRecordingAttendees]
+-- Author:		Scott Martin
+-- Date:		03/23/2016
+--
+-- Purpose:		Get ServiceRecording Attendee records
+--
+-- Notes:		n/a (or any additional notes)
+--
+-- Depends:		n/a (or any dependencies such as other procs or functions)
+--
+-- REVISION HISTORY ---------------------------------------------------------------------------------------------------
+-- 03/23/2016	Scott Martin	  - Initial creation.
+-----------------------------------------------------------------------------------------------------------------------
+
+CREATE PROCEDURE [Core].[usp_GetServiceRecordingAttendees]
+	@ServiceRecordingID BIGINT,
+	@ResultCode INT OUTPUT,
+	@ResultMessage NVARCHAR(500) OUTPUT
+AS
+BEGIN
+SELECT @ResultCode = 0,
+		@ResultMessage = 'executed successfully'
+	BEGIN TRY
+	SELECT
+		ServiceRecordingAttendeeID,
+		ServiceRecordingID,
+		Name,
+		IsActive
+	FROM
+		Core.ServiceRecordingAttendee
+	WHERE
+		ServiceRecordingID = @ServiceRecordingID
+		AND IsActive = 1;		 
+ 	END TRY
+	BEGIN CATCH
+		SELECT @ResultCode = ERROR_SEVERITY(),
+			   @ResultMessage = ERROR_MESSAGE()
+	END CATCH
+END
+

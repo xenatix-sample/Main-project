@@ -1,0 +1,56 @@
+﻿<div class="panel panel-light padding-xsmall nomargin-bottom">
+    <div class="panel-body">
+        <div ng-if="!isAssessmentIntegrated">
+            <keypress-events permission-key="{{assessmentPermissionKey}}" permission="{{resolvePermission(assessmentResponeID)}}"></keypress-events>
+            <form role="form" name="ctrl.assessmentForm" xen-check-form is-default="true" data-on-save="saveData(isNext, isMandatory, hasErrors, keepForm)" data-on-print="printReport(isNext, isMandatory, hasErrors, keepForm)" is-read-only="{{ assessmentNoAccess }}" stop-next="stopnext" permission-key="{{assessmentPermissionKey}}" permission="{{resolvePermission(assessmentResponeID)}}" novalidate bs-modifiable="true" set-form-status set-form-mode>
+                <div id="hedearTemplateId">
+                    <!-- HeaderTemplate content will be injected here -->
+                    <div id="subHeaderTemplate" class="">
+                    </div>
+                </div>
+
+                <div id="aq_0" class="divtable" security permission-key="{{assessmentPermissionKey}}" permission="{{resolvePermission(assessmentResponeID)}}" is-disabled="{{assessmentNoAccess}}" permission-mode="readonly" credential-key="{{credentialKey}}">
+                    <!-- Content will be injected here -->
+                </div>
+                <br />
+                <div class="row padding-top-small margin-bottom">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <p class="uppercase subtext">
+                            <sup>*</sup> Indicates a required field
+                            <br><span ng-if="cndRequired"><sup>†</sup>  INDICATES FIELD IS REQUIRED CONDITIONALLY </span>
+                        </p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-right">
+                        <xen-submit id="saveAssessment" name="saveAssessment" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" prevent-disable="enableSave" is-disabled="disableAssessmentSave" permission-key="{{assessmentPermissionKey}}" permission="{{resolvePermission(assessmentResponeID)}}" credential-key="{{credentialKey}}"></xen-submit>
+                        <xen-submit id="nextAssessment" name="nextAssessment" value="NEXT" is-next="true" ng-if="isMandatory && allowNext"  mandatory="true" style="btn btn-default btn-lg prevent-disable no-secuirty" is-hidden="hideNextAssessment" permission-key="{{assessmentPermissionKey}}" permission="read"></xen-submit>
+                        <xen-submit id="nextAssessment" name="nextAssessment" value="NEXT" is-next="true" ng-if="!isMandatory && allowNext" mandatory="false" style="btn btn-default btn-lg prevent-disable no-secuirty" is-hidden="hideNextAssessment" permission-key="{{assessmentPermissionKey}}" permission="read"></xen-submit>
+                        <xen-submit id="printAssessment" name="printAssessment" value="PRINT" is-next="false" mandatory="false" is-print="true" style="btn btn-default btn-lg" is-hidden="!isPrintReportRequired" prevent-disable="enablePrint" permission-key="{{assessmentPermissionKey}}" permission="read"></xen-submit>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="aq_0" class="divtable" ng-if="isAssessmentIntegrated" security permission-key="{{assessmentPermissionKey}}" permission="{{resolvePermission(pkid)}}" permission-mode="readonly" credential-key="{{credentialKey}}" is-disabled="{{assessmentNoAccess}}">
+            <!-- Content will be injected here -->
+        </div>
+    </div>
+</div>
+<div ng-if="isPrintReportRequired" class="modal fade no-security prevent-disable" id="reportModal" role="dialog" aria-labelledby="reportModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-top: 1px;">
+                <button type="button" id="closePopup" class="close no-security prevent-disable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="roleHeader">{{ reportModel.ReportHeader }}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-show="!reportModel.HasLoaded">
+                    <div class="loading text-center padding-top padding-bottom">
+                        <i class="fa fa-spinner fa-spin"><span class="sr-only">Report is loading</span></i>
+                    </div>
+                </div>
+                <div ng-if="reportModel.HasLoaded" style="height: 800px;">
+                    <pdf-maker report-id="assessementReport" report-name="{{ reportModel.ReportName }}" report-data="reportModel" report-width="100%" report-height="100%" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

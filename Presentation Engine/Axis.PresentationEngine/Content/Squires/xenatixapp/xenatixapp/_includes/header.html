@@ -1,0 +1,134 @@
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid padding-left-2x padding-right-2x">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ site.baseurl }}/dashboard/">{{ site.title }}</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse text-center">
+      <ul class="nav navbar-nav yamm text-center">
+        {% assign pages = site.pages | sort:"weight" %}
+        {% for p in pages %}
+        {% if p.title %}
+        <li {% if p.url == page.url %}class="active"{% endif %}>
+          <a href="{{ p.url }}">
+            {{ p.title }}
+          </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        <li class="dropdown">
+    			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+    			<ul class="dropdown-menu">
+    				<li><a href="/index.html">Login Screen</a></li>
+    				<li role="separator" class="divider"></li>
+    				<li class="dropdown-header">Themes</li>
+    				<li><a href="/lighttheme.html">Light Theme</a></li>
+    				<li><a href="/theme.html">Dark Theme</a></li>
+    			</ul>
+    		</li>
+        <li class="dropdown yamm-fw">
+          <a href="#" class="dropdown-toggle plain font-size-xlarge" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus-circle"></i></a>
+          <ul class="dropdown-menu">
+            <li>
+              <div class="yamm-content padding-bottom-small">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-lg-4 text-center padding-top">
+                          <i class="fa fa-user fa-5x text-success"></i>
+                          <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small text-success">New Contact</span>
+                          <button class="btn btn-default btn-lg">Add</button>
+                        </div>
+                        <div class="col-lg-4 text-center padding-top">
+                          <i class="fa fa-users fa-5x"></i>
+                          <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small">Law Liason</span>
+                          <button class="btn btn-default btn-lg">Add</button>
+                        </div>
+                        <div class="col-lg-4 text-center padding-top">
+                          <i class="fa fa-ambulance fa-5x"></i>
+                          <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small">Crisis Line</span>
+                          <button class="btn btn-default btn-lg">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-right hidden" role="search">
+       <div class="form-group">
+         <input type="text" class="form-control" placeholder="Search">
+       </div>
+       <button type="submit">Submit</button>
+     </form>
+      <ul class="nav yamm navbar-nav navbar-right">
+        <li class="dropdown yamm-fw">
+          <a href="#" class="dropdown-toggle avatar padding-top-xxsmall padding-bottom-xxsmall" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="text">
+              John Richardson
+              <span class="role">Administrator</span>
+            </span>
+            <img src="{{ "/xenatix/images/ph_avatar-john.png" | prepend: site.baseurl }}" />
+            <span class="badge">15</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <div class="yamm-content padding-bottom-small">
+                <div class="row">
+                  <div class="col-md-9">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-lg-3 text-center padding-top">
+                          <i class="fa fa-refresh fa-5x text-success"></i>
+                          <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small">Sync Status: <span class="font-size-large text-success notext-transform">Online</span></span>
+                          <button class="btn btn-default btn-lg">Sync Now</button>
+                        </div>
+                        <div class="col-lg-3 text-center padding-top">
+                          <i class="fa fa-folder-open fa-5x"></i>
+                          <span class="badge badge-lg">7</span>
+                          <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small">Incomplete Tasks</span>
+                          <button class="btn btn-default btn-lg">Resolve</button>
+                        </div>
+                        <div class="col-lg-3 text-center padding-top">
+                          <i class="fa fa-list-alt fa-5x"></i>
+                          <span class="badge badge-lg">7</span>
+                          <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small">Incomplete Registrations</span>
+                          <button class="btn btn-default btn-lg">Resolve</button>
+                        </div>
+                        <div class="col-lg-3 text-center padding-top">
+                          <i class="fa fa-envelope fa-5x"></i>
+                          <span class="badge badge-lg">7</span>
+                          <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small">Unread Notifications</span>
+                          <button class="btn btn-default btn-lg">Resolve</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <ul class="list-group text-uppercase text-right">
+              				<li class="list-group-item"><a href="">Your Settings <i class="fa fa-fw fa-gear"></i></a></li>
+              				<li class="list-group-item"><a href="">Your Preferences <i class="fa fa-fw fa-th-list"></i></a></li>
+              				<li class="list-group-item"><a href="">Your Productivity <i class="fa fa-fw fa-signal"></i></a></li>
+              				<li class="list-group-item"><a href="">Help <i class="fa fa-fw fa-question-circle"></i></a></li>
+              			</ul>
+                </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#" class="plain font-size-xlarge"><i class="fa fa-search"></i></a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>

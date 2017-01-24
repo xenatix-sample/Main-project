@@ -1,0 +1,10 @@
+﻿<div class="row padding-top-small">
+    <div class="col-lg-6 col-md-6">
+        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+        <p class="uppercase subtext"><sup>†</sup> Indicates field is conditionally required</p>
+    </div>
+    <div class="col-lg-6 col-md-6 text-right nopadding-left">
+        <xen-submit id="referralSave" name="btnSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}" dual-permission="true"></xen-submit>
+        <xen-submit id="referralNext" name="btnNext" value="NEXT" is-next="true" mandatory="false" style="btn btn-default btn-lg" permission-key="{{permissionKey}}" permission="read" ng-if="!noNext"></xen-submit>
+    </div>
+</div>

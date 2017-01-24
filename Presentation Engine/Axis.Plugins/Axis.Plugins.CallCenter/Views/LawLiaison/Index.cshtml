@@ -1,0 +1,80 @@
+﻿<div class="row row-offcanvas row-offcanvas-right row-onscreen height-fix" ng-switch="displayFlyout">
+    <flyout-contact ng-switch-when="CONTACT" data-contact-model="contactModel"></flyout-contact>
+    <flyout-recorded-service-void ng-switch-when="SERVICEVOID" data-void-service="voidService()" data-void-model="voidModel"></flyout-recorded-service-void>
+    <div class="col-lg-12">
+        <keypress-events on-add="addNew()" ignore-enter="true" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="create"></keypress-events>
+
+        <div class="ng-cloak">
+            <div class="jumbotron">
+                <form class="form-inline" name="searchForm" data-ng-submit="searchForm.$valid">
+                    <div class="container-fluid padding-small">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg">
+                                <input type="text" name="CallCenterSummary" id="txtCallCenterSummary" auto-focus event-focus="autoFocus" ng-model="searchText"
+                                       placeholder="Search" tabindex="0" class="form-control" ng-keydown ="($event.which === 13) ? ctrl.searchCallCenter(searchText):0" security permission-key="LawLiaison-LawLiaison-LawLiaison" permission="read">
+                                <span class="input-group-btn">
+                                    <button type="submit" ng-click="searchForm.$valid ? ctrl.searchCallCenter(searchText) : null" class="btn btn-link">
+                                        <i class="fa fa-search fa-fw"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel panel-primary panel-main margin-bottom-2x">
+                <div class="panel-body nopadding-top">
+                    <div class="add_me">
+                        <plus-button tabindex="0" title="New Law Liaison" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="create" href="javascript: void(0)" ui-sref="callcenter.lawliaison.initlawenforcement({ReadOnly:'edit'})"></plus-button>
+                    </div>
+                    <div class="row padding-small">
+                        <table id="callCenterSummaryTable" data-toggle="table"
+                               data-show-columns="true"
+                               data-search="true"
+                               data-minimum-count-columns="2"
+                               data-filter-control="false"
+                               data-mobile-responsive="true"
+                               data-filter-bar
+                               data-advanced-search="false"
+                               data-show-multi-sort="true"
+                               data-classes="table table-stripe-borders"
+                               bootstrap-table="ctrl.tableoptions" grid-arrow-selector>
+                            <thead>
+                                <tr>
+                                    <th data-field="CallCenterID"
+                                        data-sortable="true">Call Center ID</th>
+                                    <th data-field="MRN"
+                                        data-sortable="true">MRN</th>
+                                    <th data-field="IncidentID"
+                                        data-sortable="true">Incident ID</th>
+                                    <th data-field="CallDate"
+                                        data-sortable="true">Call Date</th>
+                                    <th data-field="Caller"
+                                        data-sortable="true">Caller</th>
+                                    <th data-field="CallerContactNumber"
+                                        data-sortable="true">Caller Contact Number</th>
+                                    <th data-field="ClientFullName"
+                                        data-sortable="true">Contact Full Name</th>
+                                    <th data-field="DateofIncident"
+                                        data-sortable="true">Date of Incident</th>
+                                    <th data-field="CallStatus"
+                                        data-sortable="true">Call Status</th>
+                                    <th data-field="ProviderSubmittedBy"
+                                        data-sortable="true">Provider Submitted By</th>
+                                    <th data-field="ReferringAgency"
+                                        data-sortable="true">Referring Agency</th>
+                                    <th data-field="ProgramUnitID"
+                                        data-sortable="true">Program Unit</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("../Shared/_LawLiaisonFollowUpHistory")
+</div>

@@ -1,0 +1,56 @@
+﻿@Html.Partial("../Shared/_ReferralHeader")
+<div class="row padding-top-small">
+    <div class="col-md-5 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="ProgramUnit">Program Unit <sup>*</sup></label>
+            <select class="form-control" ng-required="true" ng-model="referralForwardedDetail.OrganizationID" ng-disabled="isReadOnlyForm"
+                    name="Program Unit" id="ProgramUnit" auto-focus event-focus="autoFocus" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('ProgramUnit', undefined, hasCompanyPermission)">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-5 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.referralForm.SendingReferralTo.$invalid && !ctrl.referralForm.SendingReferralTo.$pristine }">
+        <label for="SendingReferralTo">Sending Referral To</label>
+        <!-- type ahead combo box with staff names or location/facility -->
+        <div class="input-group">
+            <input type="text" ng-disabled="isReadOnlyForm" ng-model="SendingReferralToID" id="SendingReferralTo" name="SendingReferralTo" class="form-control ellipsis" typeahead-wait-ms="500"
+                   typeahead-editable="false" typeahead-no-results="noResults" typeahead-on-select="" typeahead-select-on-blur="true"
+                   typeahead="SendingReferralTo as SendingReferralTo.Name for SendingReferralTo in referralToList | filter:$viewValue:comparatorOnEmptyOrMatch" typeahead-trigger>
+            <span class="input-group-btn">
+                <button type="button" ng-disabled="isReadOnlyForm" class="btn btn-info" ng-click="triggerTypeahead('SendingReferralTo');">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+    </div>
+</div>
+<div class="row section-block">
+    <div class="col-md-12 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="">
+            <xen-memobox is-disabled="isReadOnlyForm" label="Comments" rows="5" maxlength="500" ng-model="referralForwardedDetail.Comments" id="referralForwardedCommentsID"></xen-memobox>        
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-5 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="UserID">Staff Name <sup>*</sup></label>
+            <select class="form-control" ng-required="true" ng-model="referralForwardedDetail.UserID" ng-disabled="true"
+                    name="userID" id="userID" ng-options="staffnames.ID as staffnames.Name for staffnames in staffList" >
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.referralForm.referralSentDateCalander.$invalid && !ctrl.referralForm.referralSentDateCalander.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="referralSentDate">Date referral Sent <sup>*</sup></label>
+            <mydatepicker is-disabled="true" opened="opened" id="referralSentDate" name="referralSentDate" new-date="referralForwardedDetail.ReferralSentDate" start-date="startDate" end-date="endDate" dob-name="'referralSentDateCalander'"
+                            date-options="dateOptions" date-required="true" call-function-on-change="validateDate()"></mydatepicker>
+            <p id="referralDateSentError" ng-show="ctrl.referralForm.referralSentDateCalander.$invalid && !ctrl.referralForm.referralSentDateCalander.$pristine" class="error-block">Invalid date</p>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,426 @@
+﻿@{
+    ViewBag.Title = "Contact Benefit";
+    Layout = null;
+}
+<keypress-events on-save="safeSubmit(false, false)" on-next="safeSubmit(true, false)" on-cancel="cancel()" data-on-save-other-method="saveMethod" enter-key-stop="enterKeyStop" stop-next="stopNext" save-on-enter="saveOnEnter" permission-key="{{permissionKey}}" permission="{{resolvePermission(contactBenefit.ContactPayorID)}}"></keypress-events>
+
+<div>
+    <div class="jumbotron">
+        <form class="form-inline" name="searchForm">
+            <div class="container-fluid padding-small">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg" security permission-key="{{permissionKey}}" permission="{{resolvePermission(contactBenefit.ContactPayorID)}}" permission-mode="readonly" dual-permission="true">
+
+                        <input type="text" name="payorSearch" id="txtPayorSearch" auto-focus event-focus="autoFocus" ng-model="searchText"
+                               placeholder="Payor Search" tabindex="0" class="form-control" ng-blur="stopEnterKey()"
+                               ng-keydown="($event.which === 13)?getPayors(searchText):0">
+                        @* added icon as button *@
+                        <span class="input-group-btn">
+
+                            <button type="submit" ng-click="getPayors(searchText)" class="btn btn-link">
+                                <i class="fa fa-search fa-fw"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel panel-main panel-light padding-xsmall">
+        <div class="panel-body">
+            <div class="modal fade" id="payorListModel" tabindex="-1" role="dialog" aria-labelledby="payorListModel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-label="Close" ng-click="closeModel()"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Payors</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table id="payorsTable" data-toggle="table"
+                                   data-show-columns="true"
+                                   data-search="true"
+                                   data-minimum-count-columns="2"
+                                   data-filter-control="false"
+                                   data-mobile-responsive="true"
+                                   data-filter-bar
+                                   data-advanced-search="false"
+                                   data-show-multi-sort="false"
+                                   data-classes="table table-stripe-borders"
+                                   bootstrap-table="payorTableoptions" grid-arrow-selector>
+                                <thead>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="policyHolderModal" tabindex="-1" role="dialog" aria-labelledby="policyHolderModal" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-label="Close" ng-click="cancelModel();"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Missing Information</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4 class="modal-title" id="myModalLabel">Policy holder must have a valid SSN and Date of Birth.</h4>
+                            <div>{{payorDemography.FirstName +' ' + payorDemography.LastName}}'s collateral record will also be updated.</div>
+                            <form name="ctrl.policyHolderForm" id="ctrl.policyHolderForm" data-ng-submit="ctrl.policyHolderForm.$valid" server-validate="ServerValidationErrors" bs-modifiable="true" set-form-status="Child" set-form-mode>
+                                <div class="row section-block">
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.policyHolderForm.SSN.$invalid && !ctrl.policyHolderForm.SSN.$pristine }">
+                                            <label for="SSN">SSN</label>
+                                            <input type="text" ng-if="!isSSNexists" class="form-control ellipsis" ui-mask="999-99-9999" ui-options="{clearOnBlur: false}" clean="true" ng-model="payorDemography.SSN" id="SSN" name="SSN" ng-change="checkSSN()" />
+                                            <span ng-if="isSSNexists">{{payorDemography.SSN|toMaskSSN}}</span>
+                                            <p ng-show="ctrl.policyHolderForm.SSN.$error.mask" ng-cloak class="error-block">Invalid SSN.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 padding-bottom-small no-security">
+                                        <div id="pdoberrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.policyHolderForm.dob.$invalid && !ctrl.policyHolderForm.dob.$pristine}">
+                                            <label for="dob">Date of Birth <sup> *</sup></label>
+                                            <mydatepicker opened="opened" is-disabled="isDOBexists" is-hidden="isDOBexists" id="dob" new-date="payorDemography.DOB" dob-name="dobName" date-options="dateOptions" date-required="true" end-date="endDate" start-date="startDate" call-function-on-change="validateAge()"></mydatepicker>
+                                            <p id="pdoberror" ng-show="ctrl.policyHolderForm.dob.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="cancelModel()" id="btnCancel" name="btnCancel">CANCEL</button>
+                                    <button type="button" class="btn btn-default btn-lg" ng-click="updatePolicyHolder()" security permission-key="{{permissionKey}}" permission="{{resolvePermission(contactBenefit.ContactPayorID)}}">SAVE</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form role="form" id="ctrl.payorDetailsForm" name="ctrl.payorDetailsForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" data-ng-submit="ctrl.payorDetailsForm.$valid" server-validate="ServerValidationErrors" bs-modifiable="true" set-form-status set-form-mode>
+                <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(contactBenefit.ContactPayorID)}}" permission-mode="readonly" dual-permission="true">
+                    <div class="row section-block no-security">
+                        <div class="col-md-4 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.Payor.$invalid && !ctrl.payorDetailsForm.Payor.$pristine }">
+                                <label for="payorId">Payor <sup>*</sup></label>
+                                <input type="text" ng-model="contactBenefit.Payor" id="payorId" name="Payor" class="form-control" auto-focus event-focus="autoFocus" data-ng-required="true" ng-disabled="true" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="payorCode">Payor Code</label>
+                                <input type="text" class="form-control ellipsis" ng-model="contactBenefit.PayorCode" name="PayorCode" ng-pattern="/^[0-9]+$/" readonly />
+                                <p ng-cloak ng-show="ctrl.payorDetailsForm.PayorCode.$error.pattern" class="error-block">Numeric Only</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="ElectronicPayorId">Electronic Payor ID </label>
+                                <input type="text" ng-model="contactBenefit.ElectronicPayorID" id="ElectronicPayorId" name="ElectronicPayorId" class="form-control" ng-disabled="true" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row padding-top-small padding-bottom-small">
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.PolicyId.$invalid && !ctrl.payorDetailsForm.PolicyId.$pristine }">
+                                <label for="policyId">Policy ID/Eligibility ID <sup>*</sup></label>
+                                <input type="text" class="form-control ellipsis" data-validation-name="Policy ID/Eligibility ID" ng-model="contactBenefit.PolicyID" name="PolicyId" id="policyId" data-ng-required="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="planName">Plan Name</label>
+                                <input type="text" class="form-control ellipsis no-security" name="PlanName" id="planName" ng-model="contactBenefit.PlanName" ng-disabled="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="planId">Plan ID</label>
+                                <input type="text" class="form-control ellipsis no-security" ng-model="contactBenefit.PlanID" name="PlanId" ng-disabled="true" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row padding-bottom-small">
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.GroupName.$invalid && !ctrl.payorDetailsForm.GroupName.$pristine }">
+                                <label for="groupName">Group Name <sup></sup></label>
+                                <input type="text" class="form-control ellipsis no-security" ng-model="contactBenefit.GroupName" name="GroupName" id="groupName" ng-disabled="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="groupId">Group ID</label>
+                                <input type="text" class="form-control ellipsis" ng-model="contactBenefit.GroupID" name="GroupId" maxlength="20" />
+                            </div>
+                        </div>
+                        <div class="col-md-4" ng-hide="true">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="payorRank">Payor Rank</label>
+                                <select ng-model="contactBenefit.ContactPayorRank" class="form-control" ng-options="PayorRank for PayorRank in payorRankList" name="PayorRank">
+                                    <option value=""> Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-bottom-small padding-top-small" ng-hide="true">
+                        <div class="col-md-3">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.CoPay.$invalid && !ctrl.payorDetailsForm.CoPay.$pristine }">
+                                <label for="coPay">Copay</label>
+                                <input type="text" class="form-control ellipsis" ng-model="contactBenefit.Copay" name="CoPay" ng-pattern="/^[0-9]{0,13}(\.[0-9]{0,2})?$/" maxlength="16" />
+                                <p ng-cloak ng-show="ctrl.payorDetailsForm.coPay.$error.pattern" class="error-block">Numeric with two decimal places</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="CoInsurance">Co-Insurance% </label>
+                                <input type="number" class="form-control ellipsis" id="CoInsurance" name="CoInsurance" ng-model="contactBenefit.CoInsurance" ng-pattern="/^[0-9]{0,3}(\.[0-9]{0,2})?$/" min="0" max="100" />
+                                <p ng-cloak ng-show="ctrl.payorDetailsForm.CoInsurance.$error.number || ctrl.payorDetailsForm.CoInsurance.$error.pattern" class="error-block">Numeric with two decimal places</p>
+                                <p ng-cloak ng-show='ctrl.payorDetailsForm.CoInsurance.$error.max' class="error-block">Max patient responsibility is 100%</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="Deductible">Deductible</label>
+                                <input type="text" class="form-control ellipsis" id="Deductible" name="Deductible" ng-model="contactBenefit.Deductible" ng-pattern="/^[0-9]{0,13}(\.[0-9]{0,2})?$/" maxlength="16" />
+                                <p ng-cloak ng-show="ctrl.payorDetailsForm.Deductible.$error.pattern" class="error-block">Numeric with two decimal places</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-bottom-small section-block">
+                        <div class="col-md-12">
+                            <div class="row form-group-lg padding-bottom-small no-security" permission-mode="readonly">
+                                @Html.Partial("../Shared/_Address")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small padding-bottom-small">
+                        <div class="col-md-4 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.effectiveDate.$invalid && !ctrl.payorDetailsForm.effectiveDate.$pristine }">
+                                <label for="effectiveDateCalander">Effective Date <sup>*</sup></label>
+                                <xen-date-picker id="effectiveDateCalander" data-validation-name="Effective Date" ng-model="contactBenefit.EffectiveDate" data-compare-element-name="expirationDate" end-date="contactBenefit.ExpirationDate" greater-than-date-validation="true" date-required="true" name="effectiveDate" ignore-time="true"></xen-date-picker>
+                                <p ng-cloak ng-show="ctrl.payorDetailsForm.effectiveDate.$error.date" class="error-block">Date is invalid</p>
+                                <p ng-show="ctrl.payorDetailsForm.effectiveDate.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.expirationDate.$invalid && !ctrl.payorDetailsForm.expirationDate.$pristine && !ctrl.payorDetailsForm.expirationDate.$error.required }">
+                                <label for="expirationDateCalander">Expiration Date</label>
+                                <xen-date-picker id="expirationDateCalander" data-validation-name="Expiration Date" ng-model="contactBenefit.ExpirationDate" data-compare-element-name="effectiveDate" less-than-date-validation="true" call-function-on-change="checkExpiration()" start-date="contactBenefit.EffectiveDate" name="expirationDate" ignore-time="true"></xen-date-picker>
+                                <p ng-cloak ng-show="ctrl.payorDetailsForm.expirationDate.$error.date" class="error-block">Date is invalid</p>
+                                <p ng-show="ctrl.payorDetailsForm.expirationDate.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 padding-bottom-small" data-ng-show="contactBenefit.ExpirationDate">
+                            <div class=" form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.payorExpirationReason.$invalid && !ctrl.payorDetailsForm.payorExpirationReason.$pristine }">
+                                <label for="payorExpirationReason">Payor Eligibility  Expiration Reason <sup>*</sup></label>
+                                <select name="payorExpirationReason" class="form-control" id="payorExpirationReason" ng-model="contactBenefit.PayorExpirationReasonID" auto-focus event-focus="autoFocus"
+                                        ng-trim="true" ng-required="contactBenefit.ExpirationDate" ng-pattern="/^[a-zA-Z0-9]*$/" data-validation-name="Payor Expiration reason"
+                                        ng-options="payorExpirationReason.ID as payorExpirationReason.Name for payorExpirationReason in getLookupsByType('PayorExpirationReason')">
+                                    <option value="" ng-selected="selected">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 padding-bottom-small" ng-cloak data-ng-show="contactBenefit.PayorExpirationReasonID == otherPayorExpirationReasonOption">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.otherPayorExpirationReason.$invalid && !ctrl.payorDetailsForm.otherPayorExpirationReason.$pristine }">
+                                <label for="otherPayorExpirationReason">Enter Other Payor Eligibility  Expiration Reason <sup>*</sup></label>
+                                <input type="text" data-ng-model="contactBenefit.ExpirationReason" data-validation-name="Enter Other Payor Eligibility  Expiration Reason" ng-required="contactBenefit.PayorExpirationReasonID == otherPayorExpirationReasonOption" maxlength="25" class="form-control" id="otherPayorExpirationReason" name="otherPayorExpirationReason" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.retroDate.$invalid && !ctrl.payorDetailsForm.retroDate.$pristine && !ctrl.payorDetailsForm.retroDateCalander.$error.required }">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="retroDate">Add / Retro Date</label>
+                                <xen-date-picker id="retroDate" data-validation-name="Retro Date" ng-model="contactBenefit.AddRetroDate" name="retroDate"></xen-date-picker>
+                                <p ng-cloak ng-show="ctrl.payorDetailsForm.retroDate.$error.date" class="error-block">Date is invalid</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-bottom-small section-block margin-bottom-small">
+                        <div class="col-md-6">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.PolicyHolder.$invalid && !ctrl.payorDetailsForm.PolicyHolder.$pristine}">
+                                <label for="policyHolder">Policy Holder<sup> *</sup></label>
+                                <select ng-model="contactBenefit.PolicyHolderID" data-validation-name="Policy Holder" class="form-control" data-ng-required="true" ng-change="populatePolicyHolder(contactBenefit.PolicyHolderID)" name="PolicyHolder"
+                                        ng-options="PolicyHolder.ID as PolicyHolder.Name for PolicyHolder in policyHolderList">
+                                    <option value=""> Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+
+                        </div>
+                        <div class="col-md-5 no-security">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="nameOfPolicyHolder">Policy Holder Relationship</label>
+                                <input type="text" class="form-control ellipsis" ng-model="contactBenefit.PolicyHolderRelationship" name="NameOfPolicyHolder" ng-disabled="enablePHolder==false" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12" ng-class="{ 'has-error' : ctrl.payorDetailsForm.PolicyHolderNameMatchTheInsuranceCard.$invalid && !ctrl.payorDetailsForm.PolicyHolderNameMatchTheInsuranceCard.$pristine}">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="PolicyHolderNameMatchTheInsuranceCard">Does the Policy Holder's Name match the insurance card? </label>
+                                <span class="input-small">
+                                    <select ng-required="true" data-validation-name="Does the Policy Holder's Name match the insurance card" ng-model="contactBenefit.HasPolicyHolderSameCardName" class="form-control" name="PolicyHolderNameMatchTheInsuranceCard" ng-change="updatePolicyHolderCardMatch(contactBenefit.HasPolicyHolderSameCardName)" id="policyHolderNameMatchTheInsuranceCard"
+                                            ng-options="SameCardName.ID as SameCardName.Name for SameCardName in cardNameMatchList"></select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </span>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.PolicyHolderFirstName.$invalid && !ctrl.payorDetailsForm.PolicyHolderFirstName.$pristine}">
+                                <label for="FirstName">Policy Holder First Name <sup> *</sup></label>
+                                <input type="text" name="PolicyHolderFirstName" data-validation-name="Policy Holder First Name" ng-disabled="contactBenefit.HasPolicyHolderSameCardName == yesID" ng-change="setBillingValues()" class="form-control  ellipsis {{contactBenefit.HasPolicyHolderSameCardName == yesID ?'no-security':' '}}" ng-model="contactBenefit.PolicyHolderFirstName"
+                                       ng-trim="true" data-ng-required="true" maxlength="200" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.PolicyHolderMiddleName.$invalid && !ctrl.payorDetailsForm.PolicyHolderMiddleName.$pristine}">
+                                <label for="Middle">Policy Holder Middle Name</label>
+                                <input type="text" id="Middle" ng-disabled="contactBenefit.HasPolicyHolderSameCardName == yesID" name="PolicyHolderMiddleName" ng-change="setBillingValues()" class="form-control {{contactBenefit.HasPolicyHolderSameCardName == yesID ?'no-security':' '}}" ng-model="contactBenefit.PolicyHolderMiddleName" maxlength="200" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.PolicyHolderLastName.$invalid && !ctrl.payorDetailsForm.PolicyHolderLastName.$pristine}">
+                                <label for="LastName">Policy Holder Last Name <sup> *</sup></label>
+                                <input type="text" data-validation-name="Policy Holder Last Name" ng-disabled="contactBenefit.HasPolicyHolderSameCardName == yesID" name="PolicyHolderLastName" ng-change="setBillingValues()" ng-model="contactBenefit.PolicyHolderLastName" maxlength="200" ng-trim="true"
+                                       data-ng-required="true" class="form-control ellipsis {{contactBenefit.HasPolicyHolderSameCardName == yesID ?'no-security':' '}}" />
+                            </div>
+                        </div>
+                        <div class="col-md-2 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="suffix">Suffix</label>
+                                <select ng-disabled="contactBenefit.HasPolicyHolderSameCardName == yesID" ng-model="contactBenefit.PolicyHolderSuffixID" id="policySuffix" ng-change="setBillingValues()" class="form-control ellipsis {{contactBenefit.HasPolicyHolderSameCardName == yesID ?'no-security':' '}}" ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.PolicyHolderEmployer.$invalid && !ctrl.payorDetailsForm.PolicyHolderEmployer.$pristine }">
+                                        <label for="POLICYHOLDER">POLICY HOLDER’S EMPLOYER</label>
+                                        <input type="text" maxlength="500" id="policyholder" name="PolicyHolderEmployer" class="form-control" ng-model="contactBenefit.PolicyHolderEmployer" />
+                                    </div>
+                                    <p class="small">Not Listed? <a ng-click="changeState()" href="">Setup Policy Holder as Collateral</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-bottom-small">
+                        <div class="col-md-12">
+                            <div class="row med-names padding-bottom-small">
+                                <div class="col-md-5" ng-class="{ 'has-error' : ctrl.payorDetailsForm.ClientNameMatchTheInsuranceCard.$invalid && !ctrl.payorDetailsForm.ClientNameMatchTheInsuranceCard.$pristine}">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="ClientNameMatchTheInsuranceCard">Does the Client (Contact) match the insurance card? <sup ng-show="contactBenefit.PolicyHolderRelationship !== 'Self'">*</sup></label>
+                                        <span class="input-small">
+                                            <select ng-model="contactBenefit.HasSameCardName" data-validation-name="Does the Client (Contact) Match The Insurance Card" class="form-control {{contactBenefit.PolicyHolderRelationship == 'Self'?'no-security':' '}}" name="ClientNameMatchTheInsuranceCard" id="hasSameCardName" ng-change="updateCardMatch(contactBenefit.HasSameCardName)"
+                                                    ng-options="SameCardName.ID as SameCardName.Name for SameCardName in cardNameMatchList" ng-required="contactBenefit.PolicyHolderRelationship !== 'Self'" ng-disabled="contactBenefit.PolicyHolderRelationship === 'Self'"></select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row med-names {{contactBenefit.HasSameCardName == yesID?'no-security':' '}}">
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.BillingContactFirstName.$invalid && !ctrl.payorDetailsForm.BillingContactFirstName.$pristine}">
+                                        <label for="FirstName">Billing Contact First Name <sup ng-show="contactBenefit.HasSameCardName == noID"> *</sup></label>
+                                        <input type="text" data-validation-name="Billing Contact First Name" name="BillingContactFirstName" id="BillingContactFirstName" class="form-control ellipsis {{contactBenefit.HasSameCardName == yesID || !enableBillingContactSection?'no-security':' '}}" ng-model="contactBenefit.BillingFirstName"
+                                               ng-trim="true" ng-required="contactBenefit.HasSameCardName == noID" maxlength="200" ng-disabled="contactBenefit.HasSameCardName == yesID || !enableBillingContactSection" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.BillingContactMiddleName.$invalid && !ctrl.payorDetailsForm.BillingContactMiddleName.$pristine }">
+                                        <label for="Middle">Billing Contact Middle Name</label>
+                                        <input type="text" id="BillingContactMiddleName" name="BillingContactMiddleName" class="form-control {{contactBenefit.HasSameCardName == yesID || !enableBillingContactSection?'no-security':' '}}" ng-model="contactBenefit.BillingMiddleName" maxlength="200" ng-disabled="contactBenefit.HasSameCardName == yesID || !enableBillingContactSection" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.BillingContactLastName.$invalid && !ctrl.payorDetailsForm.BillingContactLastName.$pristine}">
+                                        <label for="LastName">Billing Contact Last Name <sup ng-show="contactBenefit.HasSameCardName == noID"> *</sup></label>
+                                        <input type="text" data-validation-name="Billing Contact Last Name" name="BillingContactLastName" id="BillingContactLastName" ng-model="contactBenefit.BillingLastName" maxlength="200" ng-trim="true"
+                                               ng-required="contactBenefit.HasSameCardName == noID" class="form-control ellipsis {{contactBenefit.HasSameCardName == yesID || !enableBillingContactSection?'no-security':' '}}" ng-disabled="contactBenefit.HasSameCardName == yesID || !enableBillingContactSection" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="suffix">Billing Contact Suffix</label>
+                                        <select ng-model="contactBenefit.BillingSuffixID" id="billingSuffix" class="form-control ellipsis {{contactBenefit.HasSameCardName == yesID || !enableBillingContactSection?'no-security':' '}}" ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')" ng-disabled="contactBenefit.HasSameCardName == yesID || !enableBillingContactSection">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row section-block">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12 padding-bottom-small" ng-class="{ 'has-error' : ctrl.payorDetailsForm.AdditionalInformation.$invalid && !ctrl.payorDetailsForm.AdditionalInformation.$pristine }">
+                                            <div class="form-group-lg padding-bottom-small" ng-class="">
+                                                <xen-memobox label="Additional information: Co-insurance,co-pay,Deductible and Percentage" rows="5" maxlength="3000" ng-model="contactBenefit.AdditionalInformation" id="AdditionalInformation" name="AdditionalInformation"></xen-memobox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row padding-top-small">
+                    <div class="col-lg-6 col-md-6">
+                        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 text-right">
+                        <button type="button" id="payorSave" class="btn btn-default btn-lg" ng-click="safeSubmit(false, false)" security permission-key="{{permissionKey}}" permission="{{resolvePermission(contactBenefit.ContactPayorID)}}" dual-permission="true">SAVE</button>
+                        <button type="button" id="payorNext" class="btn btn-default btn-lg  no-security" ng-click="safeSubmit(true, false)" ng-keydown="($event.keyCode || $event.which)==9 ? setFocusToGrid('benefitsTable',$event) : null" security permission-key="{{permissionKey}}" permission="read" ng-show="controlsVisible">NEXT</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="add_me">
+                <plus-button title="New Benefit" permission-key="{{permissionKey}}" permission="create" save="safeSubmit(false, false)" reset="initContactBenefit()" table-id="benefitsTable"></plus-button>
+            </div>
+            <div class="row padding-top-small padding-bottom-small">
+                <div class="col-md-12">
+                    <table id="benefitsTable" data-toggle="table"
+                           data-show-columns="true"
+                           data-search="true"
+                           data-minimum-count-columns="2"
+                           data-filter-control="false"
+                           data-mobile-responsive="true"
+                           data-filter-bar
+                           data-advanced-search="false"
+                           data-show-multi-sort="true"
+                           data-classes="table table-stripe-borders"
+                           bootstrap-table="tableoptions" grid-arrow-selector>
+                        <thead>
+                            <tr>
+                                <th data-field="payor"
+                                    data-sortable="true">Payor</th>
+                                <th data-field="groupName"
+                                    data-sortable="true">Group Name</th>
+                                <th data-field="planName"
+                                    data-sortable="true">Plan Name</th>
+                                <th data-field="policyHolder"
+                                    data-sortable="true">Policy Holder</th>
+                                <th data-field="effectiveDate"
+                                    data-sortable="true">Effective Date</th>
+                                <th data-field="expirationDate"
+                                    data-sortable="true">Expiration Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

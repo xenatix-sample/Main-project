@@ -1,0 +1,99 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, false)" permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="update"></keypress-events>
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="update" permission-mode="readonly">
+            <form role="form" name="ctrl.roleManagementForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+                  bs-modifiable="true" set-form-mode>
+                {{ctrl.roleManagementForm.modified ? setform(true):setform(false)}}
+
+                <div>
+                    <h3 class="panel-title"> ---- ROLE NAME - TEST ROLE</h3>
+                </div>
+                <div>
+                    Module level will be for all the features if changes are needed at a feature level then uncheck the module <br /> and edit the features
+                </div>
+                <br />
+                <div>
+                    <table class="table table-striped table-bordered table-style table-select-grid">
+                        <thead>
+                            <tr>
+                                <th class="col-lg-3">Module</th>
+                                <th class="col-lg-3">Check All</th>
+                                <th class="col-lg-2" ng-repeat="permission in Permissions">{{ permission.Name }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-lg-3">Level of Access</td>
+                                <td class="col-lg-3">PU&nbsp;&nbsp;&nbsp;C</td>
+                                <td class="col-lg-2" ng-repeat="permission in Permissions">PU&nbsp;&nbsp;&nbsp;C</td>
+                            </tr>
+                            <tr>
+                                <td class="col-lg-3">{{ roleModules[0].Name }}</td>
+                                <td class="col-lg-3">
+                                    <input type="checkbox" ng-model="roleModules[0].PermissionLevelID" ng-true-value="1" ng-false-value="null" ng-checked="roleModules[0].PermissionLevelID==1" ng-change="CheckAll(roleModules[0].PermissionLevelID)" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" ng-model="roleModules[0].PermissionLevelID" ng-true-value="2" ng-false-value="null" ng-checked="roleModules[0].PermissionLevelID==2" ng-change="CheckAll(roleModules[0].PermissionLevelID)" />
+                                </td>
+                                <td class="col-lg-2" ng-repeat="modulePermission in roleModules[0].ModulePermissions">
+                                    <input type="checkbox" ng-model="modulePermission.PermissionLevelID" ng-true-value="1" ng-false-value="null" ng-checked="modulePermission.PermissionLevelID==1" ng-change="CheckAllColumn(modulePermission.PermissionID, modulePermission.PermissionLevelID)" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" ng-model="modulePermission.PermissionLevelID" ng-true-value="2" ng-false-value="null" ng-checked="modulePermission.PermissionLevelID==2" ng-change="CheckAllColumn(modulePermission.PermissionID, modulePermission.PermissionLevelID)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane" ng-repeat="roleModuleComponent in roleModuleComponents" apply-security>
+                    <br />
+                    <div>{{roleModuleComponent.FeatureName}} - Screen</div>
+                    <br />
+                    <table class="table table-striped table-bordered table-style table-select-grid">
+                        <thead>
+                            <tr>
+                                <th class="col-lg-3">Screen</th>
+                                <th class="col-lg-3">Check All</th>
+                                <th class="col-lg-2" ng-repeat="permission in Permissions">{{ permission.Name }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-lg-3">Level of Access</td>
+                                <td class="col-lg-3">PU&nbsp;&nbsp;&nbsp;C</td>
+                                <td class="col-lg-2" ng-repeat="permission in Permissions">PU&nbsp;&nbsp;&nbsp;C</td>
+                            </tr>
+                            <tr ng-repeat="moduleComponent in roleModuleComponent.ModuleComponents" apply-security>
+                                <td class="col-lg-3">{{ moduleComponent.ComponentName }}</td>
+                                <td class="col-lg-3">
+                                    <input type="checkbox" ng-model="moduleComponent.PermissionLevelID" ng-true-value="1" ng-false-value="null" ng-checked="moduleComponent.PermissionLevelID==1" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" ng-model="moduleComponent.PermissionLevelID" ng-true-value="2" ng-false-value="null" ng-checked="moduleComponent.PermissionLevelID==2" />
+                                </td>
+                                <td class="col-lg-2" ng-repeat="componentPermission in moduleComponent.ModuleComponentPermissions">
+                                    <input type="checkbox" ng-model="componentPermission.PermissionLevelID" ng-true-value="1" ng-false-value="null" ng-checked="componentPermission.PermissionLevelID==1" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" ng-model="componentPermission.PermissionLevelID" ng-true-value="2" ng-false-value="null" ng-checked="componentPermission.PermissionLevelID==2" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+            <div class="row padding-top-small">
+                <div class="col-lg-6">
+                    <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                </div>
+                <div class="col-lg-6 text-right">
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" data-ng-if="!inProfile" security permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="update">
+                        SAVE
+                    </button>
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, false)" id="btnNext" name="btnNext" security permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="update">
+                        NEXT
+                    </button>
+                </div>
+            </div>
+
+        </div>
+</div>

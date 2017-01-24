@@ -1,0 +1,362 @@
+﻿@model Axis.PresentationEngine.Areas.Assessment.Models.AssessmentCacheViewModel
+@{
+    Layout = null;
+}
+//<script>
+    (function() {
+        angular.module('xenatixApp').factory('assessmentService', [
+            '$http', '$q', '$rootScope', 'settings', 'offlineData','$filter','$state',
+            function($http, $q, $rootScope, settings, offlineData,$filter,$state) {
+
+                var CONFIG = {
+                    apiControllerRoot: "/data/assessment/",
+                    offlineResponseApiUrl: '/Assessment/Response/',
+                    offlineResponseDetailsApiUrl: '/Assessment/ResponseDetails/'
+                };
+
+                var editStateFunc = function editStateSettings() {
+                    return {
+                        description: 'Assessment '
+                    };
+                };
+
+                var assessments = @Html.Raw(Model.Assessments);
+                var assessmentSections = @Html.Raw(Model.AssessmentSections);
+                var assessmentQuestions = @Html.Raw(Model.AssessmentQuestions);
+                var assessmentLogicQuestion=@Html.Raw(Model.AssessmentLogicMapping);
+
+                function createNewResponse() {
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    return response;
+                };
+
+                function getAssessment(assessmentId) {
+                    var dfd = $q.defer();
+
+                    var response = createNewResponse();
+
+                    response.DataItems = assessments.filter(
+                        function(assessment, value) {
+                            return (assessmentId == undefined ? true: (assessment.AssessmentID == assessmentId));
+                        }
+                    );
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'getAssessment', { params: { assessmentId: assessmentId } })
+                        .success(function (data, status, header, config) {
+                            assessments.push(data.DataItems);
+                            dfd.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            dfd.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        dfd.resolve(response);
+                    }
+
+                    return dfd.promise;
+                };
+                function getAssessmentID(assessmentSectionID){
+                    var assessment= $filter('filter')(assessmentSections,function(item){
+                        return item.AssessmentSectionID==assessmentSectionID;
+                    });
+                    if(assessment && assessment.length>0)
+                        return assessment[0].AssessmentID;
+                    return 0;
+                };
+                function getAssessmentSections(assessmentId) {
+                    var dfd = $q.defer();
+                    var response = createNewResponse();
+                    response.DataItems = assessmentSections.filter(
+                         function(assessmentSection, value) {
+                             return (assessmentSection.AssessmentID == assessmentId);
+                         }
+                     );
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'getAssessmentSections', { params: { assessmentId: assessmentId } })
+                        .success(function (data, status, header, config) {
+                            assessmentSections.push(data.DataItems);
+                            dfd.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            dfd.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        dfd.resolve(response);
+                    }
+
+                    return dfd.promise;
+                };
+
+                function getAssessmentSectionById(sectionId) {
+                    var response = createNewResponse();
+                    response.DataItems = assessmentSections.filter(
+                         function(assessmentSection, value) {
+                             return (assessmentSection.AssessmentSectionID == sectionId);
+                         }
+                     );
+                    return response;
+                };
+
+                function getAssessmentQuestions(assessmentSectionId) {
+                    var dfd = $q.defer();
+                    var response = createNewResponse();
+                    response.DataItems = assessmentQuestions.filter(
+                        function(assessmentQuestion, value) {
+                            return (assessmentQuestion.AssessmentSectionID == assessmentSectionId);
+                        }
+                    );
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'getAssessmentQuestions', { params: { assessmentSectionId: assessmentSectionId } })
+                        .success(function (data, status, header, config) {
+                            assessmentQuestions.push(data.DataItems);
+                            dfd.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            dfd.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        dfd.resolve(response);
+                    }
+
+                    return dfd.promise;
+                };
+
+                function getAssessmentResponses(contactId, assessmentId) {
+                    var dfd = $q.defer();
+                    if(assessmentId == undefined)
+                        assessmentId = 0;
+                    $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'getAssessmentResponses', { data: offlineData.getOfflineSettings(CONFIG.offlineResponseApiUrl + contactId.toString() + '/' + assessmentId.toString(), 'ResponseID'), params: { contactId: contactId, assessmentId: assessmentId } })
+                    .success(function (data, status, header, config) {
+                        dfd.resolve(data);
+                    })
+                    .error(function (data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function getAssessmentResponse(contactId,assessmentId, responseId) {
+                    var dfd = $q.defer();
+                    if(responseId==undefined)
+                        responseId=0;
+                    $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'getAssessmentResponse', { data: offlineData.getOfflineSettings(CONFIG.offlineResponseApiUrl + contactId.toString() + '/' + assessmentId.toString() + '/' + responseId.toString(), 'ResponseID', { parentKey: 'ContactID' }), params: { responseId: responseId } })
+                    .success(function (data, status, header, config) {
+                        dfd.resolve(data);
+                    })
+                    .error(function (data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function getAssessmentResponseDetails(responseId, sectionId) {
+                    var dfd = $q.defer();
+                    $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'getAssessmentResponseDetails', { data: offlineData.getOfflineSettings(CONFIG.offlineResponseDetailsApiUrl + responseId.toString() + '/' + sectionId.toString(), 'ResponseID'), params: { responseId: responseId, sectionId: sectionId } })
+                        .then(function (response, status, header, config) {
+                            if (response && response.data && response.data.DataItems && (response.data.DataItems.length === 1) && response.data.DataItems[0].assessmentResponseDetails){
+                                $rootScope.$broadcast($state.current.name +'-'+ sectionId, { validationState: 'valid' });
+                                dfd.resolve({ data: { DataItems: response.data.DataItems[0].assessmentResponseDetails } }); //when offline
+                            }
+                            else{
+                                $rootScope.$broadcast($state.current.name  +'-' + sectionId, { validationState: (response.data.DataItems.length > 0) ? 'valid':'warning' });
+                                dfd.resolve(response);
+                            }
+                        }, function (data, status, header, config) {
+                            dfd.reject(status);
+                        }, function(notification) {
+                            dfd.notify(notification);
+                        });
+
+                    return dfd.promise;
+                };
+
+
+                function getAssessmentLogicCode(assesmentSectionId) {
+                    var dfd = $q.defer();
+                    $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'getAssessmentQuestionsLogic', { data: offlineData.getOfflineSettings(CONFIG.offlineResponseDetailsApiUrl + assesmentSectionId.toString() , 'assesmentSectionId'), params: { assesmentSectionId: assesmentSectionId} })
+                        .then(function (response, status, header, config) {
+                            if (response && response.data && response.data.DataItems && (response.data.DataItems.length === 1) && response.data.DataItems[0].assessmentResponseDetails)
+                                dfd.resolve({ data: { DataItems: response.data.DataItems[0].assessmentResponseDetails } }); //when offline
+                            else
+                                dfd.resolve(response);
+                        }, function (data, status, header, config) {
+                            dfd.reject(status);
+                        }, function(notification) {
+                            dfd.notify(notification);
+                        });
+
+                    return dfd.promise;
+                };
+
+
+                function ensureAssessmentSectionID(assessmentID){
+                    return getAssessmentSections(assessmentID).then(function (data) {
+                        return data.DataItems[0].AssessmentSectionID;
+                    });
+                };
+
+                function ensureResponseID(contactID, assessmentID){
+                    var deferred = $q.defer();
+                    getAssessmentResponses(contactID, assessmentID).then(function (response) {
+                        if (response.DataItems.length > 0) {
+                            //var filteredData=$filter('filter')(response.DataItems,function(item){
+                            //    return item.ContactID==contactID && item.AssessmentID==assessmentID;
+                            //});
+                            //if(filteredData.length>0) {
+                            //    return  deferred.resolve(filteredData[0].ResponseID);
+                            //}
+                            return deferred.resolve(response.DataItems[0].ResponseID);
+                        }
+
+                        var assessmentResponse = {
+                            ResponseID: 0,
+                            ContactID: contactID,
+                            AssessmentID: assessmentID
+                        };
+                        addAssessmentResponse(assessmentResponse).then(function (response) {
+                            if (response.data.ResultCode === 0) {
+                                deferred.resolve(response.data.ID);
+                            } else {
+                                deferred.reject();
+                            }
+                        }, function () {
+                            deferred.reject();
+                        });
+
+                    });
+                    return deferred.promise;
+                };
+
+                function addAssessmentResponse(assessmentResponse) {
+                    var dfd = $q.defer();
+                    if (!('ResponseID' in assessmentResponse))
+                        assessmentResponse.ResponseID = 0;
+                    var data = $.extend(true, {}, assessmentResponse, offlineData.getOfflineSettings(CONFIG.offlineResponseApiUrl + assessmentResponse.ContactID.toString() + '/' + assessmentResponse.AssessmentID.toString()+ '/'+ assessmentResponse.ResponseID.toString(), 'ResponseID', { parentKey: 'ContactID', editState: editStateFunc.toString() }));
+                    $http.post(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'addAssessmentResponse', data)
+                        .then(function (data, status, header, config) {
+                            dfd.resolve(data);
+                        }, function (data, status, header, config) {
+                            dfd.reject(status);
+                        }, function (notification) {
+                            dfd.notify(notification);
+                        });
+
+                    return dfd.promise;
+                };
+
+                function saveAssessmentResponseDetails(responseId, sectionId, assessmentResponseDetails) {
+                    var dfd = $q.defer();
+                    var assessmentResponseDetail = {
+                        ResponseID: responseId, 
+                        SectionID: sectionId, 
+                        ModifiedOn: $filter('formatDate')(new Date(), 'MM/DD/YYYY hh:mm A'),
+                        AssessmentDetails: assessmentResponseDetails
+                    };
+                    var data = $.extend(true, {}, assessmentResponseDetail, offlineData.getOfflineSettings(CONFIG.offlineResponseDetailsApiUrl + responseId.toString() + '/' + sectionId.toString(), 'ResponseDetailsID', { parentKey: 'ResponseID' , editState: editStateFunc.toString()}));
+                    $http.post(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'saveAssessmentResponseDetails', data)
+                        .then(function (data, status, header, config) {
+                          $rootScope.$broadcast($state.current.name +'-'+ sectionId, { validationState: 'valid' });
+                            dfd.resolve(data);
+                        }, function (data, status, header, config) {
+                            dfd.reject(status);
+                        }, function (notification) {
+                            dfd.notify(notification);
+                        });
+
+                    return dfd.promise;
+                };
+
+                function updateAssessmentResponse(assessmentResponse) {
+                    var dfd = $q.defer();
+                    var data = $.extend(true, {}, assessmentResponse, offlineData.getOfflineSettings(CONFIG.offlineResponseApiUrl + assessmentResponse.ContactID.toString() + '/' + assessmentResponse.AssessmentID.toString() + '/' + assessmentResponse.ResponseID.toString(), 'ResponseID', { parentKey: 'ContactID' , editState: editStateFunc.toString()}));
+                    $http.put(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'updateAssessmentResponse', data)
+                        .then(function (data, status, header, config) {
+                            dfd.resolve(data);
+                        }, function (data, status, header, config) {
+                            dfd.reject(status);
+                        }, function (notification) {
+                            dfd.notify(notification);
+                        });
+
+                    return dfd.promise;
+                };
+
+                function navigateToSection(state, params)
+                {
+                    getAssessmentSections(params.AssessmentID).then(function (data) {
+                        params.SectionID = data.DataItems[0].AssessmentSectionID;
+                        $rootScope.Goto(state, params);
+                    });
+                };
+
+
+                function getAssessmentResponseListByContactID(contactID){
+                    var dfd = $q.defer();
+                    $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'getAssessmentResponseListByContactID', { data: offlineData.getOfflineSettings(CONFIG.offlineResponseDetailsApiUrl + contactID.toString() , 'ContactID'), params: { contactID: contactID } })
+                        .then(function (response, status, header, config) {
+                            dfd.resolve(response);
+                        }, function (data, status, header, config) {
+                            dfd.reject(status);
+                        }, function(notification) {
+                            dfd.notify(notification);
+                        });
+
+                    return dfd.promise;
+                }
+
+                function getAssessmentDocumentTypeID(assessmentId){
+                    var dfd = $q.defer();
+                    $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetAssessmentDocumentTypeID', { data: offlineData.getOfflineSettings(CONFIG.offlineResponseDetailsApiUrl + assessmentId.toString() , 'AssessmentID'), params: { assessmentId: assessmentId } })
+                        .then(function (response, status, header, config) {
+                            dfd.resolve(response);
+                        }, function (data, status, header, config) {
+                            dfd.reject(status);
+                        }, function(notification) {
+                            dfd.notify(notification);
+                        });
+
+                    return dfd.promise;
+                }
+                return {
+                    getAssessment: getAssessment,
+                    getAssessmentSections: getAssessmentSections,
+                    getAssessmentSectionById:getAssessmentSectionById,
+                    getAssessmentQuestions : getAssessmentQuestions,
+                    getAssessmentResponses: getAssessmentResponses,
+                    getAssessmentResponse: getAssessmentResponse,
+                    getAssessmentResponseDetails : getAssessmentResponseDetails,
+                    ensureAssessmentSectionID:ensureAssessmentSectionID,
+                    ensureResponseID:ensureResponseID,
+                    addAssessmentResponse: addAssessmentResponse,
+                    updateAssessmentResponse: updateAssessmentResponse,
+                    getAssessmentResponseListByContactID:getAssessmentResponseListByContactID,
+                    saveAssessmentResponseDetails: saveAssessmentResponseDetails,
+                    navigateToSection: navigateToSection,
+                    getAssessmentID:getAssessmentID,
+                    getAssessmentLogicCode:getAssessmentLogicCode,
+                    getDocumentTypeID: getAssessmentDocumentTypeID
+                };
+            }
+        ]);
+    }());
+    //</script>

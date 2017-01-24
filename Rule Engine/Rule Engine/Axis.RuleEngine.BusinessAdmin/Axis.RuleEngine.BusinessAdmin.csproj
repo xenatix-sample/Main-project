@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{59916765-3BF0-4426-8A46-030984DC6B00}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.RuleEngine.BusinessAdmin</RootNamespace>
+    <AssemblyName>Axis.RuleEngine.BusinessAdmin</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program\ProgramRuleEngine.cs" />
+    <Compile Include="Program\IProgramRuleEngine.cs" />
+    <Compile Include="Division\DivisionRuleEngine.cs" />
+    <Compile Include="Division\IDivisionRuleEngine.cs" />
+    <Compile Include="OrganizationStructure\IOrganizationStructureRuleEngine.cs" />
+    <Compile Include="OrganizationStructure\OrganizationStructureRuleEngine.cs" />
+    <Compile Include="ServiceDetails\IServiceDetailsRuleEngine.cs" />
+    <Compile Include="ServiceDetails\ServiceDetailsRuleEngine.cs" />
+    <Compile Include="ServiceDefinition\IServiceDefinitionRuleEngine.cs" />
+    <Compile Include="ServiceDefinition\ServiceDefinitionRuleEngine.cs" />
+    <Compile Include="PlanAddresses\IPlanAddressesRuleEngine.cs" />
+    <Compile Include="PlanAddresses\PlanAddressesRuleEngine.cs" />
+    <Compile Include="PayorPlans\IPayorPlansRuleEngine.cs" />
+    <Compile Include="PayorPlans\PayorPlansRuleEngine.cs" />
+    <Compile Include="Payors\PayorsRuleEngine.cs" />
+    <Compile Include="Payors\IPayorsRuleEngine.cs" />
+    <Compile Include="ClientMerge\ClientMergeRuleEngine.cs" />
+    <Compile Include="ClientMerge\IClientMergeRuleEngine.cs" />
+    <Compile Include="HealthRecords\HealthRecordsRuleEngine.cs" />
+    <Compile Include="HealthRecords\IHealthRecordsRuleEngine.cs" />
+    <Compile Include="Company\ICompanyRuleEngine.cs" />
+    <Compile Include="Company\CompanyRuleEngine.cs" />
+    <Compile Include="ProgramUnit\IProgramUnitsRuleEngine.cs" />
+    <Compile Include="ProgramUnit\ProgramUnitsRuleEngine.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Address\Axis.Model.Address.csproj">
+      <Project>{d5ddba0d-9bf0-497b-976d-08d39b7fe976}</Project>
+      <Name>Axis.Model.Address</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.BusinessAdmin\Axis.Model.BusinessAdmin.csproj">
+      <Project>{98c863c5-af31-4a01-bff9-66c87ffff041}</Project>
+      <Name>Axis.Model.BusinessAdmin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Common\Axis.Model.Common.csproj">
+      <Project>{b217d868-9cab-4e0d-a0bc-d82423e64741}</Project>
+      <Name>Axis.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Axis.Service.BusinessAdmin\Axis.Service.BusinessAdmin.csproj">
+      <Project>{9645e28c-4d0a-433b-8cac-901029bd36e6}</Project>
+      <Name>Axis.Service.BusinessAdmin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

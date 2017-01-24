@@ -1,0 +1,134 @@
+﻿
+<div class="container-fluid nomargin nopadding">
+    <div class="row-offcanvas row-offcanvas-left offcanvas-fixed">
+
+        <div ng-show="isLoading">
+            <div class="loading text-center padding-top padding-bottom">
+                <i class="fa fa-spinner fa-spin"><span class="sr-only">Please wait...</span></i>
+            </div>
+        </div>
+
+        @* HIDDEN PANEL *@
+        <div class="sidebar-offcanvas photo-change">
+            <div class="panel panel-default nomargin-top">
+                <div class="panel-body nopadding-top">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row padding-xsmall nopadding-top">
+                                <div class="col-lg-12 section-block divtable nopadding">
+
+                                    @*Name/Close button row*@
+                                    <div class="row padding-left-small padding-right-xsmall nopadding-top nopadding-bottom">
+                                        <div class="pull-left padding-top-small">{{EditItem.EditName}}</div>
+                                        <button type="button" class="navbar-toggle pull-right nomargin-right" ng-click="closeFlyout()"><span class="sr-only">Return to group schedule</span></button>
+                                    </div>
+
+                                    @*Individual Note*@
+                                    <div class="row padding-small">
+                                        <xen-memobox label="Additional Note" rows="8" maxlength="500" ng-model="EditItem.EditNoteText" id="EditNoteText" name="EditNoteText" ng-blur="onEditInidividualNoteTextChange()"></xen-memobox>
+                                    </div>
+
+                                    @*Digital Signature*@
+                                    <div class="row padding">
+                                        <div class="col-md-6 padding-bottom-small">
+                                            <xen-checkbox data-ng-model="EditItem.EditIsDigitallySigned" data-checkbox-id="EditDigitalSignature" data-label="Digitally Signed?" data-on-click="onEditDigitalSignClick()" ng-disabled="EditItem.EditIsSignatureLocked" />
+                                        </div>
+                                        <div class="col-md-6 padding-bottom-small">
+                                            <xen-checkbox data-ng-model="EditItem.EditIsPwdMatch" data-checkbox-id="EditPasswordMatch" data-label="Password Match?" />
+                                        </div>
+                                    </div>
+
+                                    @*Draft/Submit btns*@
+                                    <div class="row nomargin padding-xsmall">
+                                        <div class="col-md-12 padding-top-xxsmall nopadding-right nopadding-left text-center">
+                                            <button type="button" class="btn btn-default" ng-click="draftIndividual(false, true)" id="btnDraftIndividual" name="btnDraftIndividual" ng-disabled="EditItem.EditIsSignatureLocked">DRAFT</button>
+                                            <button type="button" class="btn btn-default" ng-click="submitIndividual(false, true)" id="btnSaveIndividual" name="btnSaveIndividual" ng-disabled="EditItem.EditIsSignatureLocked">SUBMIT</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*Main Group Note Section*@
+        <div security permission-key="Scheduling-Appointment-GroupAppointment" permission="create" permission-mode="readonly">
+            <form role="form" name="ctrl.groupNoteForm" novalidate ng-submit="ctrl.groupNoteForm.$valid" server-validate="ServerValidationErrors"
+                  bs-modifiable="true" check-form set-form-status set-form-mode data-on-save="save(isNext, isMandatory, hasErrors)">
+
+                <div class="panel panel-light padding">
+                    <div class="panel-body">
+
+                        @*Attendees*@
+                        <div class="row">ATTENDEES</div>
+                        <div class="row padding-top-small table-responsive">
+                            <table class="table table-bordered table-responsive" id="tblBlockedTime" name="tblGroupNote">
+                                <thead>
+                                    <tr>
+                                        <th>Present&nbsp;<sup>*</sup></th>
+                                        <th>Name</th>
+                                        <th>Program Unit</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in GroupMembers">
+                                        <td data-ng-bind="item.ContactID" ng-show="false"></td>
+                                        <td>
+                                            <select class="form-control" autofocus="autofocus" ng-trim="true" ng-model="item.Present" ng-disabled="IsSignatureLocked" ng-focus="onControlFocus()" ng-click="onPresentChange(item)" ng-required="false" id="present + item.ContactID">
+                                                <option value="Select">Select</option>
+                                                <option value="Check In">Yes</option>
+                                                <option value="No Show">No Show</option>
+                                            </select>
+                                        </td>
+                                        <td data-ng-bind="item.Name"></td>
+                                        <td data-ng-bind="ProgramUnit"></td>
+                                        <td>
+                                            <a href="javascript:void(0)" security permission-key="Scheduling-Appointment-GroupAppointment" permission="update"
+                                               id="editGroupMember" name="editGroupMember" ng-click="editGroupMember(item)" title="Edit this group member">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        @*Note*@
+                        <div class="row">NOTE</div>
+                        <div class="row padding-top-small padding-bottom-small">
+                            <xen-memobox label="Group Note" rows="5" maxlength="500" ng-model="GroupNoteText" id="GroupNote" name="GroupNote" ng-blur="onGroupNoteTextChange()"></xen-memobox>
+                        </div>
+
+                        @*Digital Signature*@
+                        <div class="row section-block padding-top-small">
+                            <div class="col-md-6 padding-bottom-small">
+                                <xen-checkbox data-ng-model="IsDigitallySigned" data-checkbox-id="DigitalSignature" data-label="Digitally Signed?" data-on-click="onDigitalSignClick()" ng-disabled="IsSignatureLocked" />
+                            </div>
+                            <div class="col-md-6 padding-bottom-small">
+                                <xen-checkbox data-ng-model="IsPwdMatch" data-checkbox-id="PasswordMatch" data-label="Password Match?" />
+                            </div>
+                        </div>
+
+                        @*Draft/Submit btns*@
+                        <div class="row padding-top-small">
+                            <div class="col-lg-6">
+                                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <button type="button" class="btn btn-default btn-lg" ng-click="draft(false, true)" id="btnDraft" ng-disabled="IsSignatureLocked" name="btnDraft">DRAFT</button>
+                                <button type="button" class="btn btn-default btn-lg" ng-click="submit(false, true)" id="btnSave" ng-disabled="IsSignatureLocked" name="btnSave">SUBMIT</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        </div>
+</div>

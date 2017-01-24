@@ -1,0 +1,27 @@
+﻿<div class="add_me">
+    <plus-button title="New Note" reset="initForm()" save="safeSubmit(false, true, false)" permission-key="ECI-ProgressNote-ProgressNote" permission="create" table-id="progressNoteTable"></plus-button>
+</div>
+<div class="row padding-top-small padding-bottom-small ng-cloak">
+    <div class="col-md-12">
+        <table id="progressNoteTable" data-toggle="table"
+               data-show-columns="true"
+               data-search="true"
+               data-minimum-count-columns="2"
+               data-filter-control="false"
+               data-mobile-responsive="true"
+               data-filter-bar
+               data-advanced-search="false"
+               data-show-multi-sort="true"
+               data-classes="table table-stripe-borders"
+               bootstrap-table="tableoptions" grid-arrow-selector>
+            <thead>
+                <tr>
+                    <th data-field="IFSPMeetingDate" data-sortable="true">MeetingDate</th>
+                    <th data-field="IFSPType" data-sortable="true">IFSP Type</th>
+                    <th data-field="IFSPFamilySignedDate" data-sortable="true">Family Signed Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

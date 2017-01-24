@@ -1,0 +1,12 @@
+﻿<div class="form-group-lg">
+    <label class="description required">
+        {{param.Prompt}}
+        <span ng-if="param.Required"> *</span>
+    </label>
+    <mydatepicker new-date="param.Value"
+                  dob-name="'param.Name'"
+                  date-options="Op.DateOptions"
+                  required="param.Required"
+                  ng-blur="ValidateParams();">
+    </mydatepicker>
+</div>

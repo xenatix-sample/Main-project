@@ -1,0 +1,67 @@
+﻿
+<div class="sidebar-offcanvas" style="">
+    <div class="panel panel-default nomargin-top padding-bottom-small">
+        <div class="panel-heading">
+            <div class="border-top padding-top-xsmall"></div>
+            <div class="panel-title">
+                <a href="javascript:void(0)" data-toggle="offcanvasoff" alt="Close Panel" ng-click="closeServiceFlyout()">
+                    Service Details ({{serviceRecording.Status}})
+                    <div class="btn-group pull-right padding-right">
+                        <i class="fa fa-times-circle" data-toggle="offcanvasoff">
+                            <span class="sr-only">Close Section and Return</span>
+                        </i>
+                    </div>
+                </a>
+            </div>
+            <div class="border-bottom padding-top-xsmall"></div>
+        </div>
+        <div class="panel-body nopadding-top" id="panel-last-accessed">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="margin-top-xsmall">{{serviceRecording.Source}}</h2>
+                </div>
+            </div>
+            <div class="row padding-bottom-xsmall">
+                <div class="col-md-12">
+                    <dl>
+                        <dt>SERVICE</dt>
+                        <dd>{{serviceRecording.Service}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <dl>
+                        <dt>DATE AND TIME</dt>
+                        <dd>{{ serviceRecording.DateAndTime }}</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <dl>
+                        <dt>DURATION</dt>
+                        <dd>{{serviceRecording.CalculatedDuration}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <dl class="vertical-scrollbox vertical-scrollbox-tall padding-top-small padding-bottom-xsmall">
+                        <dt class="padding-bottom-xsmall"><b>DOCUMENTATION</b></dt>
+                        <dd ng-repeat="navItem in navItems">
+                            <a ng-click="navItem.hasPermission ? printReport(navItem.currentIndex) : ''">
+                                <i class="{{navItem.hasPermission ?  'fa fa-print padding-right-xsmall' : 'fa fa-print padding-right-xsmall invisible'}}" title="Print {{navItem.title}}"></i> {{navItem.title}}
+                            </a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer nopadding-top">
+            <div class="col-lg-12 nopadding-left text-right">
+                <button type="button" id="closeFlyout" name="close" class="btn btn-info-alt uppercase btn-lg" ng-click="closeServiceFlyout()">Close</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer" data-spy="affix" data-offset-top="10" data-offset-bottom="0"></div>
+</div>

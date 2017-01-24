@@ -1,0 +1,1070 @@
+//
+// Load core variables and mixins
+// --------------------------------------------------
+
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+//== Text Selection
+@include text-selection($white, $brand-primary);
+
+//== Padding classes
+.padding-top {
+	@include rem(padding-top, $padding-large);
+}
+.padding-top-2x {
+	@include rem(padding-top, ($padding-large * 2));
+}
+.padding-top-small {
+	@include rem(padding-top, $padding-small);
+}
+.padding-top-xsmall {
+	@include rem(padding-top, $padding-xsmall);
+}
+.padding-top-xxsmall {
+	@include rem(padding-top, $padding-xxsmall);
+}
+.padding-left {
+	@include rem(padding-left, $grid-gutter-width);
+}
+.padding-left-1_5x {
+	@include rem(padding-left, ($grid-gutter-width * 1.5));
+}
+.padding-left-2x {
+	@include rem(padding-left, ($grid-gutter-width * 2));
+}
+.padding-left-small {
+	@include rem(padding-left, ($grid-gutter-width / 2));
+}
+.padding-right {
+	@include rem(padding-right, $grid-gutter-width);
+}
+.padding-right-1_5x {
+	@include rem(padding-right, ($grid-gutter-width * 1.5));
+}
+.padding-right-small {
+	@include rem(padding-right, ($grid-gutter-width / 2));
+}
+.padding-bottom {
+	@include rem(padding-bottom, $padding-large);
+}
+.padding-bottom-2x {
+	@include rem(padding-bottom, ($padding-large * 2));
+}
+.padding-bottom-small {
+	@include rem(padding-bottom, $padding-small);
+}
+.padding-bottom-xsmall {
+	@include rem(padding-bottom, $padding-xsmall);
+}
+.padding-bottom-xxsmall {
+	@include rem(padding-bottom, $padding-xxsmall);
+}
+.nopadding{
+	padding: 0 0 0 0 !important;
+}
+.nopadding-left{
+	padding-left: 0 !important;
+}
+.nopadding-right{
+	padding-right: 0 !important;
+}
+.nopadding-top{
+	@include rem(padding-top, 0 !important);
+}
+.nopadding-bottom{
+	@include rem(padding-bottom, 0 !important);
+}
+
+//== Margin classes
+.margin-top {
+	@include rem(margin-top, $margin-large);
+}
+.margin-bottom-2x {
+	@include rem( margin-top, ( $margin-large * 2 ) );
+}
+.margin-top-small {
+	@include rem(margin-top, $margin-small);
+}
+.margin-left {
+	@include rem(margin-left, $grid-gutter-width);
+}
+.margin-left-2x {
+	@include rem(margin-left, ($grid-gutter-width * 2));
+}
+.margin-left-3x {
+	@include rem(margin-left, ($grid-gutter-width * 3));
+}
+.margin-left-small {
+	@include rem(margin-left, ($grid-gutter-width / 2));
+}
+.margin-right {
+	@include rem(margin-right, $grid-gutter-width );
+}
+.margin-right-2x {
+	@include rem(margin-right, ($grid-gutter-width * 2));
+}
+.margin-right-3x {
+	@include rem(margin-right, ($grid-gutter-width * 3));
+}
+.margin-right-small {
+	@include rem(margin-right, ($grid-gutter-width / 2) );
+}
+.margin-bottom {
+	@include rem(margin-bottom, $margin-large);
+}
+.margin-bottom-2x {
+	@include rem( margin-bottom, ( $margin-large * 2 ) );
+}
+.margin-bottom-small {
+	@include rem(margin-bottom, $margin-small);
+}
+.margin-bottom-xsmall {
+	@include rem(margin-bottom, $margin-xsmall);
+}
+.margin-bottom-xxsmall {
+	@include rem(margin-bottom, $margin-xxsmall);
+}
+.nomargin{
+	margin: 0 0 0 0 !important;
+}
+.nomargin-top{
+	margin-top: 0 !important;
+}
+.nomargin-bottom{
+	margin-bottom: 0 !important;
+}
+
+//== Borders
+.noborder{
+	border: none !important;
+}
+.border-all{
+	@include rem(border, 1px solid $light-green);
+}
+.border-left {
+	@include rem(border-left, 1px solid $light-green);
+}
+.border-right {
+	@include rem(border-right, 1px solid $light-green);
+}
+.border-top {
+	@include rem(border-top, 1px solid $light-green);
+}
+.border-bottom {
+	@include rem(border-bottom, 1px solid $light-green);
+}
+.border-left-solid {
+	@include rem(border-left, 7px solid $light-green);
+}
+.border-right-solid {
+	@include rem(border-right, 7px solid $light-green);
+}
+.border-top-solid {
+	@include rem(border-top, 7px solid $light-green);
+}
+.border-bottom-solid {
+	@include rem(border-bottom, 7px solid $light-green);
+}
+.border-bottom-none{
+	border-bottom: none !important;
+}
+
+//== Colors
+.white {
+	color: $white;
+}
+.black {
+	color: $black;
+}
+.green {
+	color: $green;
+}
+.dark-green {
+	color: $dark-green;
+}
+.light-green {
+	color: $light-green;
+}
+
+
+//== Position helpers
+.height-100{
+	@include height-100();
+}
+.parent-vertical-align{
+	@include vertical-align-parent;
+}
+.vertical-align,.vertical-align-lg{
+	@include vertical-align;
+}
+
+.position-absolute,.position-absolute-lg{
+	position: absolute !important;
+}
+.position-relative{
+	position: relative !important;
+}
+.margin-sides-auto{
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+.min-height-100 {
+	min-height: 100% !important;
+}
+.verticle-align-top{
+	vertical-align: top;
+}
+.width-50{
+	width: 50% !important;
+}
+.width-100{
+	width: 100% !important;
+}
+.hidden{
+	display: none;
+}
+.scrollbkg {
+	background-attachment: scroll !important;
+}
+.fixbkg {
+	background-attachment: fixed !important;
+}
+
+//
+// Font helpers
+// --------------------------------------------------
+.font-size-11{
+	@include font-size(11px);
+}
+.font-size-12{
+	@include font-size(12px);
+}
+.font-size-14{
+	@include font-size(14px);
+}
+.font-size-16{
+	@include font-size(16px);
+}
+.font-size-18{
+	@include font-size(18px);
+}
+.font-size-46{
+	@include font-size(46px);
+}
+.font-size-72{
+	@include font-size(72px);
+}
+
+//== Text helpers
+.uppercase{
+	text-transform: uppercase;
+}
+.notext-transform{
+	text-transform: none !important;
+}
+
+// Default heading styles
+h1,.h1{
+	@include h1();
+	text-transform: uppercase;
+	color: $green;
+}
+h2,.h2{
+	@include h2();
+	@include font-family($avenir-black);
+	text-transform: uppercase;
+}
+h3,.h3{
+	@include h3();
+	@include font-family($avenir-heavy);
+	text-transform: uppercase;
+}
+h4,.h4{
+	@include h4();
+	@include font-family($avenir-heavy);
+}
+h5,.h5{
+	@include h5();
+	@include font-family($font-family-sans-serif);
+}
+h6,.h6{
+	@include h6();
+	@include font-family($font-family-sans-serif);
+	text-transform: uppercase;
+}
+.page-header {
+	border-bottom-color: $transparent-gray;
+}
+
+//
+// Bootstrap theme start
+// --------------------------------------------------
+
+//
+// Buttons
+// --------------------------------------------------
+// Mixin for generating new styles
+@mixin btn-styles($btn-color: $green, $font-color: $white) {
+	border-radius: $border-radius-base;
+	background-color: $btn-color;
+	color: $font-color !important;
+	text-decoration: none !important;
+
+}
+
+.btn {
+	position: relative;
+	text-transform: uppercase;
+	font-family: $avenir-black;
+	@include rem(min-width, 170px);
+	@include transition(all 0.3s);
+	@include rem(padding-left, $padding-large-horizontal);
+	@include rem(padding-right, $padding-large-horizontal);
+	@include rem(padding-top, $padding-small-vertical);
+	@include rem(padding-bottom, $padding-small-vertical);
+	&.fullwidth{
+		width: 100%;
+	}
+	@include transition(all 0.3s);
+	z-index: 0;
+	&:after{
+		position: absolute;
+		@include transition(all 0.3s);
+		content: '';
+		width: 0%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: $transparent-gray;
+		z-index: -1;
+	}
+	&:hover:after,
+	&:active:after{
+		width: 100%;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+
+.btn-link {
+	&:hover,
+	&:active {
+		text-decoration: none;
+	}
+}
+
+.btn-transparent {
+	@include btn-styles($white, transparent);
+	background-color: transparent;
+	@include rem(border, 1px solid $white !important);
+	&:after{
+		background: $white;
+	}
+	&:hover{
+		color: $green !important;
+		border-color: $white;
+	}
+}
+input.btn-transparent{
+	&:hover{
+		background: $white;
+	}
+}
+
+
+//
+// Tables
+// --------------------------------------------------
+table, .table {
+	th{
+		@include font-family($avenir-heavy);
+		@include rem(font-size, $font-size-xsmall);
+		text-transform: uppercase;
+	}
+}
+
+
+//
+// Dropdowns
+// --------------------------------------------------
+.dropdown-toggle {
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration: none;
+	}
+}
+
+
+//
+// Labels
+// --------------------------------------------------
+.label {
+	text-transform: uppercase;
+}
+
+//
+// Badges
+// --------------------------------------------------
+.badge {
+	font-family: $avenir-heavy;
+}
+
+//
+// Nav
+// --------------------------------------------------
+
+// Default navbar
+.navbar {
+	@include rem(border-bottom, 7px solid $light-green);
+	@include backface-visibility(hidden);
+	background: $white;
+	border-radius: $navbar-border-radius;
+	font-family: $avenir-heavy;
+	text-transform: uppercase;
+	a {
+		text-decoration: none;
+		&:focus {
+			outline: none;
+		}
+	}
+	.navbar-brand {
+		float: left;
+		padding: $navbar-padding-vertical $navbar-padding-horizontal;
+		margin-right: $margin-large;
+		font-size: $font-size-large;
+		line-height: $line-height-computed;
+		@include rem(height, $navbar-height-collapse);
+		@include rem(width, ($navbar-height-collapse * 3));
+		background: transparent inline-image('../images/logo.png') no-repeat left center;
+		background-size: contain;
+		text-indent: -10000em;
+		&:hover,
+		&:focus {
+			text-decoration: none;
+			@include opacity(.8);
+		}
+	}
+	.navbar-nav {
+		&> li {
+			&> a {
+				@include rem(line-height, $navbar-height-collapse - ($navbar-padding-vertical * 2));
+			}
+		}
+	}
+	.navbar-toggle {
+		border: 0;
+	}
+}
+
+.navbar-inverse {
+	@include rem(border-bottom, 7px solid $white);
+	background-color: $green;
+	.navbar-brand {
+		background-image: inline-image('../images/logo-light.png');
+	}
+}
+
+.nav-tabs {
+	text-transform: uppercase;
+	font-family: $avenir-heavy;
+}
+
+.nav-pills {
+	text-transform: uppercase;
+	font-family: $avenir-heavy;
+}
+
+.navbar-fixed-top{
+	@include backface-visibility(hidden);
+	z-index: 1061;
+}
+.navbar{
+	margin-bottom: 0;
+}
+
+//
+// Panels
+// --------------------------------------------------
+
+// Mixin for generating new styles
+@mixin panel-heading-styles($color) {
+	@include gradient-vertical($start-color: $color, $end-color: darken($color, 5%));
+}
+
+.panel{
+	.panel-heading{
+		.panel-title{
+			@include h3();
+			@include nomargin-top();
+			@include nomargin-bottom();
+		}
+	}
+	.panel-body{
+		//p,ul,ol,li,blockquote{
+
+		//}
+	}
+	.panel-collapse{
+		.panel-body{
+			border: 0;
+		}
+	}
+}
+
+
+//
+// Text Carousel (not in use)
+// --------------------------------------------------
+.text-carousel {
+	.item {
+		@include rem(font-size, $font-size-small);
+		font-family: $avenir-black;
+		text-transform: uppercase;
+		a {
+			color: $white;
+			text-decoration: none;
+		}
+	}
+}
+
+
+//
+// Forms
+// --------------------------------------------------
+label {
+	text-transform: uppercase;
+	@include rem(font-size, $font-size-small);
+	font-family: $avenir-heavy;
+}
+.checkbox, .radio {
+	label {
+		text-transform: none;
+		font-family: $avenir-light;
+		@include rem(font-size, $font-size-base);
+	}
+}
+.form-control{
+	@include rem(font-size, $font-size-small);
+	font-family: $avenir-heavy;
+	@include transition(all 0.3s);
+	&:focus,
+	&:active {
+		background: darken($green, 6%);
+		color: $white !important;
+	}
+}
+.form-group,
+.checkbox,
+.radio {
+	input {
+		&:focus {
+			border-color: $light-green;
+			box-shadow: inset 0 1px 1px $light-green, 0 0 8px $light-green;
+			outline: 0 none;
+		}
+	}
+}
+textarea{
+	&.form-control{
+		@include rem(padding-top, $padding-large-vertical);
+		@include resizable(vertical);
+		@include rem(height, 150px);
+	}
+}
+.input-group-addon {
+	background-color: $light-green;
+}
+
+
+//
+// Template-specific styles
+// --------------------------------------------------
+body{
+	#content {
+		@include rem(padding-top, ($navbar-height-collapse + ($navbar-padding-vertical * 2)));
+		.container {
+			position: relative;
+		}
+	}
+	.background-green,
+	.background-dark-green,
+	.background-green-grad,
+	.background-green-grad-rad {
+		background-color: $green;
+		color: $white;
+		@include font-family($font-family-sans-serif);
+		font-weight: 300;
+		p,ul,ol,li,blockquote {
+			color: $white;
+		}
+		h1,.h1,h2,.h2, h3,.h3, h4,.h4,h5,.h5,h6,.h6{
+			color: $white;
+			&.panel-title {
+				color: inherit;
+			}
+		}
+		.page-header {
+			border-color: $light-green;
+		}
+		table,
+		.table,
+		.table-bordered,
+		.table-striped,
+		.table-condensed {
+			border-color: $light-green;
+			&> thead,
+			&> tbody,
+			&> tfoot {
+				&> tr {
+					&> th,
+					&> td {
+						border-color: $light-green;
+					}
+				}
+			}
+		}
+		.nav-tabs {
+			border-color: $light-green;
+			li {
+				a {
+
+				}
+				&.active > a {
+					border-color: $light-green;
+					border-bottom-color: transparent;
+					color: $white;
+					background-color: $green;
+				}
+			}
+		}
+		.list-group-item,
+		.panel {
+			border-color: transparent;
+		}
+		a {
+			color: $light-green;
+			&:hover{
+				color: $white;
+			}
+			&[href^=tel] {
+				text-decoration: none;
+			}
+		}
+		.dropdown-menu {
+			&> li {
+				&> a {
+					color: $dark-green;
+					&:hover {
+						color: $light-green;
+					}
+				}
+				&.active {
+					&> a {
+						color: $white;
+					}
+				}
+			}
+		}
+		.list-group-item,
+		.panel,
+		.jumbotron,
+		.well {
+			background-color: $dark-green;
+		}
+		.list-group-item:hover {
+			background-color: $dark-green;
+		}
+	}
+	.background-green-grad {
+		@include gradient-vertical($start-color: $light-green, $end-color: $grad-green);
+	}
+	.background-green-grad-rad {
+		background-color: $light-green;
+		@include gradient-radial($inner-color: $light-green, $outer-color: $green);
+		background-position: center center;
+		background-size: 200% 100%;
+		position: relative;
+		@include animation(backgroundAni 10s ease 0s infinite);
+	}
+	.background-green {
+		.btn-default,
+		.label-default,
+		.progress-bar-default {
+			background-color: darken($green, 5%);
+		}
+		.progress {
+			background-color: $dark-green;
+		}
+		.btn-link {
+			color: darken($green, 10%);
+		}
+		.list-group-item {
+			.list-group-item-heading {
+				color: $light-green;
+
+			}
+			&.active,
+			&:hover {
+				background-color: $light-green;
+				.list-group-item-heading {
+					color: $white;
+				}
+				.list-group-item-text {
+					color: $dark-green;
+				}
+			}
+		}
+		.form-control{
+			background-color: $dark-green;
+			color: $white;
+			&:focus,
+			&:active {
+				background-color: $light-green;
+				color: $green !important;
+				@include placeholder($green);
+			}
+		}
+	}
+	.background-dark-green {
+		background-color: $dark-green;
+		.nav-tabs {
+			li {
+				&.active > a {
+					background-color: $dark-green;
+				}
+			}
+		}
+		.btn-primary,
+		.label-primary,
+		.progress-bar-primary,
+		.progress {
+			background-color: darken($dark-green, 5%);
+		}
+		.list-group-item,
+		.panel,
+		.jumbotron,
+		.well {
+			background-color: $green;
+		}
+		.list-group-item {
+			.list-group-item-heading {
+				color: $light-green;
+
+			}
+			&.active,
+			&:hover {
+				background-color: $light-green;
+				.list-group-item-heading {
+					color: $white;
+				}
+				.list-group-item-text {
+					color: $dark-green;
+				}
+			}
+		}
+		.form-control{
+			background-color: $green;
+			color: $white;
+			&:focus,
+			&:active {
+				background-color: $light-green;
+				color: $green !important;
+				@include placeholder($green);
+			}
+		}
+	}
+	.background-white,
+	.background-light-green	{
+		background-color: $white;
+		color: $gray;
+		@include font-family($font-family-sans-serif);
+		font-weight: 300;
+		p,ul,ol,li,blockquote {
+
+		}
+		h1,.h1,h2,.h2, h3,.h3{
+			color: $light-green;
+			&.panel-title {
+				color: inherit;
+			}
+		}
+		.page-header {
+
+		}
+		.panel {
+			background-color: $transparent-gray;
+		}
+		a {
+			color: $dark-green;
+			&:hover{
+				color: $light-green;
+			}
+			&[href^=tel] {
+				text-decoration: none;
+			}
+		}
+		.form-control{
+			&:focus,
+			&:active {
+				background: $light-green;
+				color: $green !important;
+				@include placeholder($dark-green);
+			}
+		}
+	}
+	.background-light-green {
+		background-color: $light-green;
+		color: $dark-green;
+		@include font-family($font-family-sans-serif);
+		font-weight: 300;
+		p,ul,ol,li,blockquote {
+			color: $dark-green;
+		}
+		h1,.h1,h2,.h2, h3,.h3{
+			color: $white;
+			&.panel-title {
+				color: inherit;
+			}
+		}
+		.page-header {
+			border-color: $white;
+			h1 {
+				color: $white;
+			}
+		}
+		.btn-success,
+		.label-success,
+		.progress-bar-success {
+			background-color: darken($light-green, 10%);
+		}
+		.progress {
+			background-color: $transparent-white;
+		}
+		.alert-success {
+			background-color: $transparent-white;
+		}
+		table,
+		.table,
+		.table-bordered,
+		.table-striped,
+		.table-condensed {
+			border-color: $light-green;
+			&> thead,
+			&> tbody,
+			&> tfoot {
+				&> tr {
+					&> th,
+					&> td {
+						border-color: $green;
+					}
+				}
+			}
+		}
+		.table-striped {
+			&> tbody {
+				&> tr:nth-of-type(odd) {
+					background-color: rgba(255,255,255, 0.1);
+				}
+			}
+		}
+		.nav-tabs {
+			border-color: $green;
+			li {
+				a {
+
+				}
+				&.active > a {
+					border-color: $green;
+					border-bottom-color: transparent;
+					color: $green;
+					background-color: $light-green;
+				}
+			}
+		}
+		.nav-pills {
+			li.active a {
+				color: $light-green;
+				background-color: $dark-green;
+			}
+		}
+		.panel {
+			background-color: $transparent-white;
+		}
+		a {
+			color: $dark-green;
+			&:hover{
+				color: $white;
+			}
+			&[href^=tel] {
+				text-decoration: none;
+			}
+		}
+		.jumbotron,
+		.well {
+			background-color: $transparent-white;
+			h1{
+				color: $dark-green;
+			}
+		}
+		.form-control{
+			background-color: $transparent-white;
+			color: $dark-green;
+			@include placeholder($green);
+			&:focus,
+			&:active {
+				background: darken($green, 6%);
+				color: $white !important;
+				@include placeholder($light-green);
+			}
+
+		}
+		.input-group-addon {
+			background-color: $white;
+		}
+	}
+	.down-arrow{
+		text-align: center;
+		text-transform: uppercase;
+		position: absolute;
+		display: block;
+		@include rem(bottom, 0);
+		@include rem(font-size, 7px !important);
+		background: transparent inline-image('../images/ui/halfcircle-light-green.png') no-repeat center bottom;
+		margin: 0 auto;
+		width: 100%;
+		color: $white;
+		@include rem(padding-top, 4px);
+		@include rem(height, 32px);
+		@include rem(line-height, 28px);
+		i {
+			@include animation(fadeInOut 2s ease-in-out 0s infinite alternate);
+		}
+	}
+}
+
+
+//
+// Animations
+// --------------------------------------------------
+
+//Pre-animation
+.animateMe {
+	&.fadeInRight,
+	&.fadeInLeft,
+	&.fadeInDownBig,
+	&.fadeInDown,
+	&.fadeIn,
+	&.zoomIn{
+		@include animation-play-state(paused);
+		@include opacity(0);
+	}
+	&.withBottomBorder {
+		&:before {
+			width: 0 !important;
+		}
+	}
+}
+.animateDelay01s {
+	@include animation-delay(0.1s);
+}
+.animateDelay02s {
+	@include animation-delay(0.2s);
+}
+.animateDelay03s {
+	@include animation-delay(0.3s);
+}
+.animateDelay04s {
+	@include animation-delay(0.4s);
+}
+.animateDelay05s {
+	@include animation-delay(0.5s);
+}
+.animateDelay06s {
+	@include animation-delay(0.6s);
+}
+.animateDelay07s {
+	@include animation-delay(0.7s);
+}
+.animateDelay08s {
+	@include animation-delay(0.8s);
+}
+.animateDelay09s {
+	@include animation-delay(0.9s);
+}
+.animateDelay1s {
+	@include animation-delay(1s);
+}
+.animateDelay2s {
+	@include animation-delay(2s);
+}
+.animateDelay3s {
+	@include animation-delay(3s);
+}
+.animateDelay4s {
+	@include animation-delay(4s);
+}
+.animateDelay5s {
+	@include animation-delay(5s);
+}
+//Animating
+.animated{
+	@include animation-play-state(running);
+	&.withBottomBorder{
+		&:before{
+			@include transition(all, .6s);
+			width: 0 !important;
+		}
+	}
+}
+//After animation
+.finishedAnimation {
+	&.withBottomBorder {
+		&:before{
+			@include rem(width, 52px !important);
+			left: 0 !important;
+		}
+		&.borderWidth8{
+			&:before{
+				width: 8% !important;
+			}
+		}
+		&.borderLeft46{
+			&:before{
+				left: 46% !important;
+			}
+		}
+	}
+}
+
+//
+// Footer
+// --------------------------------------------------
+footer{
+	&#footer{
+		background-color: $white;
+		text-transform: uppercase;
+		@include font-family($avenir-heavy);
+		@include rem(letter-spacing, 1px);
+		@include rem(line-height, 40px);
+		color: $gray;
+		a{
+			color: $gray;
+			&.brand{
+				display:block;
+				@include rem(height, 40px);
+				@include rem(width, 198px);
+				background: transparent inline-image('../images/logo-footer.png') no-repeat left center;
+				text-indent: -10000em;
+				&:hover,
+				&:focus {
+					text-decoration: none;
+					@include opacity(.8);
+				}
+
+			}
+		}
+	}
+}

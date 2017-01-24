@@ -1,0 +1,213 @@
+﻿<keypress-events close-modal="true" on-cancel="true" permission-key="Benefits-SelfPay-SelfPay" permission="{{resolvePermission(selfPay.SelfPayID)}}"></keypress-events>
+<!--data entry-->
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <form role="form" name="ctrl.selfPayForm" xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" ng-submit="ctrl.selfPayForm.$valid" set-form-status>
+            <div security permission-key="Benefits-SelfPay-SelfPay" permission="{{resolvePermission(selfPay.SelfPayID)}}" permission-mode="readonly" dual-permission="true">
+                <div class="panel panel-light padding-xsmall">
+                    <div class="panel-body">
+                        <div class="row section-block margin-bottom-xsmall">
+                            <div class="col-md-2 long-names">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="adjustedGrossIncome">Adjusted Gross Income</label>
+                                    <input type="text" id="adjustedGrossIncome" readonly="readonly" class="form-control ellipsis" ng-value="financialAssessment.AdjustedGrossIncome | currency" tabindex="-1" style="text-align: right;" />
+                                </div>
+                            </div>
+                            <div class="col-md-2 long-names">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="totalIncome">Total Income</label>
+                                    <input type="text" id="totalIncome" readonly="readonly" class="form-control ellipsis" ng-value="financialAssessment.TotalIncome | currency" tabindex="-1" style="text-align: right;" />
+
+                                </div>
+                            </div>
+                            <div class="col-md-2 long-names">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="totalExpenses">Total Expenses</label>
+                                    <input type="text" id="totalExpenses" readonly="readonly" class="form-control ellipsis" ng-value="financialAssessment.TotalExpenses | currency" tabindex="-1" style="text-align: right;" />
+
+                                </div>
+                            </div>
+                            <div class="col-md-3 long-names">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="totalExtraOrdinaryExpenses">Total Extraordinary Expenses</label>
+                                    <input type="text" id="totalExtraOrdinaryExpenses" readonly="readonly" class="form-control ellipsis" ng-value="financialAssessment.TotalExtraOrdinaryExpenses | currency" tabindex="-1" style="text-align: right;" />
+
+                                </div>
+                            </div>
+                            <div class="col-md-2 long-names">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="totalOther">Total Other</label>
+                                    <input type="text" id="totalOther" readonly="readonly" class="form-control ellipsis" ng-value="financialAssessment.TotalOther | currency" tabindex="-1" style="text-align: right;" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="{{isReadOnly?'no-security':''}}">
+                            <fieldset>
+                        <h3 class="uppercase nomargin padding-top-xxsmall border-top"></h3>
+                                <div class="row padding-top-small padding-bottom-small margin-bottom-small ">
+
+                            <div class="col-md-3" ng-class="{ 'has-error' : ctrl.selfPayForm.division.$invalid && !ctrl.selfPayForm.division.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="division">Division <sup>*</sup></label>
+                                            <select auto-focus event-focus="autoFocus" ng-change="divisionChange()" ng-disabled="isReadOnly" data-validation-name="Division" class="form-control" ng-model="selfPay.OrganizationDetailID" id="division" name="division" ng-required="true"
+                                                    ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('Division',1) | securityFilter: 'Division' : 'ID': 'Benefits-SelfPay-SelfPay'">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                                  
+                            <div class="col-md-3" ng-class="{ 'has-error' : ctrl.selfPayForm.amount.$invalid && !ctrl.selfPayForm.amount.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="amount"> Amount <sup>*</sup></label>
+                                    <input type="number" id="amount" ng-disabled="isReadOnly" ng-required="true" data-validation-name="Amount" name="amount" class="form-control ellipsis" step="0.01" ng-model="selfPay.SelfPayAmount" min="{{minValue}}" max="{{maxValue}}" ng-pattern="/^[0-9]*(\.[0-9]{0,2})?$/" ng-maxlength="13" />
+                                    <p ng-show="ctrl.selfPayForm.amount.$error.number && !ctrl.selfPayForm.amount.$pristine" class="error-block">The value is not a valid number</p>
+                                    <p ng-show="ctrl.selfPayForm.amount.$error.max && !ctrl.selfPayForm.amount.$pristine" ng-cloak class="error-block">Maximum Value Exceeded </p>
+                                    <p ng-show="ctrl.selfPayForm.amount.$error.maxlength && !ctrl.selfPayForm.amount.$pristine" ng-cloak class="error-block">Maximum Length Exceeded </p>
+                                    <p ng-cloak ng-show="ctrl.selfPayForm.amount.$error.pattern && !ctrl.selfPayForm.amount.$pristine" class="error-block error-block-long">Numeric with two decimal places only</p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="eciAmountType">Amount Type </label>
+                                            <select class="form-control" ng-model="selfPay.IsPercent" id="amountType" name="amountType" ng-disabled="isReadOnly"
+                                            ng-options="amountType.value as amountType.label for amountType in amountTypes" ng-change="onAmountTypeChange(selfPay.IsPercent)">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3" ng-class="{ 'has-error' : ctrl.selfPayForm.EffectiveDate.$invalid && !ctrl.selfPayForm.EffectiveDate.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="EffectiveDate">Effective Date <sup>*</sup> </label>
+                                    <xen-date-picker date-required="true" id="EffectiveDate" data-validation-name="Effective Date" ng-model="selfPay.EffectiveDate" is-disabled="isReadOnly" name="EffectiveDate" end-date="selfPay.ExpirationDate" greater-than-date-validation="true" future-date-validate="true" data-compare-element-name="ExpirationDate" ignore-time="true"></xen-date-picker>
+                                    <p class="error-block" ng-show="ctrl.selfPayForm.EffectiveDate.$error.futureDate">Effective Date can't be future Date.</p>
+                                    <p ng-show="ctrl.selfPayForm.EffectiveDate.$error.greaterThanDate && (hasUpdatePermission && !isReadOnly)" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3" id="selfPayExpirationDiv" ng-class="{ 'has-error' : ctrl.selfPayForm.ExpirationDate.$invalid && !ctrl.selfPayForm.ExpirationDate.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="totalExtraOrdinaryExpenses">Expiration Date </label>
+                                            <xen-date-picker id="ExpirationDate" data-validation-name="Expiration Date" is-disabled="isReadOnly" data-compare-element-name="EffectiveDate" ng-model="selfPay.ExpirationDate" start-date="selfPay.EffectiveDate" less-than-date-validation="true" name="ExpirationDate" ignore-time="true"></xen-date-picker>
+                                            <p ng-show="ctrl.selfPayForm.ExpirationDate.$error.lessThanDate && (hasUpdatePermission && !isReadOnly)" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="uppercase nomargin padding-top-xxsmall border-top">Override Reasons</h3>
+                                <div class="row padding-top-small ">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                            <xen-checkbox data-ng-model="selfPay.ISChildInConservatorship" data-ng-disabled="isReadOnly" data-checkbox-id="isChildInConservatorship" data-label="Child is in the Conservatorship of the State (Includes Foster Care)" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row padding-top-small">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                            <xen-checkbox data-ng-model="selfPay.IsNotAttested" data-ng-disabled="isReadOnly" data-checkbox-id="isNotAttested" data-label="ECI Family Choice not to attest" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row padding-top-small">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                            <xen-checkbox data-ng-model="selfPay.IsEnrolledInPublicBenefits" data-ng-disabled="isReadOnly" data-checkbox-id="isNotAttested" data-label="Enrolled Public Benefits: WIC, PHC, CSHCN, CIHCP, SKIP, Medic, CHIP, SNAP, TANF" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-small">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                            <xen-checkbox data-ng-model="selfPay.IsRequestingReconsideration" data-ng-disabled="isReadOnly" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Family Choice declining consent requesting reconsideration" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row padding-top-small">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                            <xen-checkbox data-ng-model="selfPay.IsNotGivingConsent" data-ng-disabled="isReadOnly" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Family Choice not to give consent" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-small">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                            <xen-checkbox data-ng-model="selfPay.IsOtherChildEnrolled" data-ng-disabled="isReadOnly" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Family has 2nd Child Enrolled in ECI Services with a Family Cost Share Amount" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-small">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                            <xen-checkbox data-ng-model="selfPay.IsApplyingForPublicBenefits" data-ng-disabled="isReadOnly" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Family will apply for public benefits" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-small">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                            <xen-checkbox data-ng-model="selfPay.IsReconsiderationOfAdjustment" data-ng-disabled="isReadOnly" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Reconsideration of Adjustment Made by Program" class="xencheckbox" />
+                                        </div>
+                                </div>
+                            </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small">
+                        <div class="col-lg-6">
+                            <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <xen-submit id="additionalDemographicSave" name="save" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="Benefits-SelfPay-SelfPay" permission="{{resolvePermission(selfPay.SelfPayID)}}" dual-permission="true"></xen-submit>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <div class="add_me">
+                        <plus-button title="New Self pay" save="safeSubmit(false, false)" permission-key="Benefits-SelfPay-SelfPay" permission="create" reset="newSelfPay()"></plus-button>
+                    </div>
+                    <div class="row padding-top-small padding-bottom-small">
+                        <div class="col-md-12">
+                            <table id="selfPayTable" data-toggle="table"
+                                   data-show-columns="true"
+                                   data-search="true"
+                                   data-minimum-count-columns="2"
+                                   data-filter-control="false"
+                                   data-mobile-responsive="true"
+                                   data-filter-bar
+                                   data-advanced-search="false"
+                                   data-show-multi-sort="true"
+                                   data-classes="table table-stripe-borders"
+                                   bootstrap-table="tableoptions" grid-arrow-selector>
+                                <thead>
+                                    <tr>
+                                        <th data-field="OrganizationDetailID"
+                                            data-sortable="true">Program</th>
+                                        <th data-field="SelfPayAmount"
+                                            data-sortable="true">Amount</th>
+                                        <th data-field="IsPercent"
+                                            data-sortable="true">Amount TYPE</th>
+                                        <th data-field="EffectiveDate"
+                                            data-sortable="true">Effective Date</th>
+                                        <th data-field="ExpirationDate"
+                                            data-sortable="true">Expiration Date</th>
+                                        <th data-field="OverrideReason"
+                                            data-sortable="true">Override Reason</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+
+        </form>
+
+    </div>
+</div>

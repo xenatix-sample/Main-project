@@ -1,0 +1,8 @@
+﻿Group: Axis.RuleEngine.Plugins.Reporting
+FriendlyName: Axis.RuleEngine.Plugins.Reporting
+SystemName: Axis.RuleEngine.Plugins.Reporting
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 7
+FileName: Axis.RuleEngine.Plugins.Reporting.dll

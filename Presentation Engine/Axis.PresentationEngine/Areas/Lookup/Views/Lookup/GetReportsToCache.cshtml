@@ -1,0 +1,23 @@
+﻿@model Axis.PresentationEngine.Models.JsonViewModel
+@{
+    Layout = null;
+}
+//<script>
+(function() {
+    angular.module('xenatixApp').factory('reportService', [
+        function() {
+            var reports = {
+                @Html.Raw(Model.Json)
+            };
+
+            function getReport(reportName) {
+                return reports[reportName];
+            };
+
+            return {
+                getReport: getReport
+            };
+        }
+    ]);
+}());
+//</script>

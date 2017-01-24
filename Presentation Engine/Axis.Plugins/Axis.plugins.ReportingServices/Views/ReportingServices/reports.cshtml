@@ -1,0 +1,6 @@
+﻿@using System.Configuration
+@using MvcReportViewer
+@using Axis.Configuration
+<div class="panel panel-light padding-xsmall">
+    @Html.MvcReportViewerFluent((string)Session["ReportPath"] ?? ApplicationSettings.ReportPath + "/Report Template").ReportParameters(new { ReportUserID = (int)Session["UserID"] }).Attributes(new { Height = "900px", Width = "100%", style = "border: none" })
+</div>

@@ -1,0 +1,7 @@
+Axis.RuleEngine.Plugins.Registration
+Axis.RuleEngine.Plugins.Scheduling
+Axis.RuleEngine.Plugins.ESignature
+Axis.RuleEngine.Plugins.ECI
+Axis.RuleEngine.Plugins.Clinical
+Axis.RuleEngine.Plugins.CallCenter
+Axis.RuleEngine.Plugins.ReportingServices

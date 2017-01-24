@@ -1,0 +1,8 @@
+﻿Group: Axis.Plugins.Scheduling
+FriendlyName: Axis.Plugins.Scheduling
+SystemName: Axis.Plugins.Scheduling
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 5
+FileName: Axis.Plugins.Scheduling.dll

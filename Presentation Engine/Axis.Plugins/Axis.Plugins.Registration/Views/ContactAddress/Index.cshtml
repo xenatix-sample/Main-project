@@ -1,0 +1,58 @@
+﻿<keypress-events on-save="safeSubmit(false,true)" on-next="safeSubmit(false,true)" on-cancel="cancel()" on-add="reset()" enter-key-stop="enterKeyStop" table-id="addressTable" stop-next="stopNext" save-on-enter="saveOnEnter" permission-key="General-General-Address" permission="{{resolvePermission(address.ContactAddressID)}}"></keypress-events>
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <form role="form" name="ctrl.addressForm" novalidate data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" ng-submit="ctrl.addressForm.$valid" check-form set-form-status bs-modifiable="true">                  
+                <div security permission-key="General-General-Address" permission="{{resolvePermission(address.ContactAddressID)}}" permission-mode="readonly" dual-permission="true">
+                    <div class="row padding-top-small">
+                        @Html.Partial("../Shared/_Address")
+                    </div>
+                </div>
+                <div class="row padding-top-small">
+                    <div class="col-lg-6 col-md-6">
+                        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 text-right">
+                        <button type="button" class="btn btn-default btn-lg" ng-click="safeSubmit(false,true)" id="btnSave" name="btnSave" security permission-key="General-General-Address" permission="{{resolvePermission(address.ContactAddressID)}}" ng-keydown="($event.keyCode || $event.which)==9  ? setFocusToGrid('addressTable',$event) : null" dual-permission="true">SAVE</button>
+                    </div>
+                </div>
+                <div class="add_me">
+                    <plus-button title="Contact Address" permission-key="General-General-Address" permission="create" save="save()" reset="reset()" table-id="addressTable"></plus-button>
+                </div>
+                <div class="row padding-top-small padding-bottom-small">
+                    <div class="col-md-12">
+                        <table id="addressTable" data-toggle="table"
+                               data-show-columns="true"
+                               data-search="true"
+                               data-minimum-count-columns="2"
+                               data-filter-control="false"
+                               data-mobile-responsive="true"
+                               data-filter-bar
+                               data-advanced-search="false"
+                               data-show-multi-sort="true"
+                               data-classes="table table-stripe-borders"
+                               bootstrap-table="tableoptions" grid-arrow-selector>
+                            <thead>
+                                <tr>
+                                    <th data-field="AddressTypeID"
+                                        data-sortable="true">Address Type</th>
+                                    <th data-field="Line1"
+                                        data-sortable="true">Address Line1</th>
+                                    <th data-field="Line2"
+                                        data-sortable="true">Address Line2</th>
+                                    <th data-field="City"
+                                        data-sortable="true">City</th>
+                                    <th data-field="StateProvince"
+                                        data-sortable="true">State</th>
+                                    <th data-field="County"
+                                        data-sortable="true">County</th>
+                                    <th data-field="Zip"
+                                        data-sortable="true">Postal Code</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+    </div>
+</div>

@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B217D868-9CAB-4E0D-A0BC-D82423E64741}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.Model.Common</RootNamespace>
+    <AssemblyName>Axis.Model.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTstWeb003|AnyCPU'">
+    <OutputPath>bin\Release.XenTstWeb003\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp003|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp003\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Axis.Constant\ProviderFilterType.cs">
+      <Link>ProviderFilterType.cs</Link>
+    </Compile>
+    <Compile Include="Assessment\AssessmentQuestionLogicModel.cs" />
+    <Compile Include="Assessment\AssessmentQuestionModel.cs" />
+    <Compile Include="Assessment\AssessmentModel.cs" />
+    <Compile Include="Assessment\AssessmentQuestionOptionModel.cs" />
+    <Compile Include="Assessment\AssessmentResponseDetail.cs" />
+    <Compile Include="Assessment\AssessmentResponseDetailsModel.cs" />
+    <Compile Include="Assessment\AssessmentResponseList.cs" />
+    <Compile Include="Assessment\AssessmentResponseModel.cs" />
+    <Compile Include="Assessment\AssessmentSectionsModel.cs" />
+    <Compile Include="AvailabilityModel.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="ClientAudit\ScreenAuditModel.cs" />
+    <Compile Include="ClientAudit\ClientAuditModel.cs" />
+    <Compile Include="EmailTemplate\MessageTemplateModel.cs" />
+    <Compile Include="General\KeyValueModel.cs" />
+    <Compile Include="General\TileDetailsModel.cs" />
+    <Compile Include="General\TileInfoModel.cs" />
+    <Compile Include="General\TileSectionModel.cs" />
+    <Compile Include="Lookups\ServiceWorkflowType\ServiceWorkflowTypeModel.cs" />
+    <Compile Include="Lookups\ServiceConfigType\ServiceConfigTypeModel.cs" />
+    <Compile Include="Lookups\AdmissionReason\AdmissionReasonModel.cs" />
+    <Compile Include="Lookups\Allergy\AllergyModel.cs" />
+    <Compile Include="Lookups\Allergy\AllergySeverityModel.cs" />
+    <Compile Include="Lookups\Allergy\AllergySymptomModel.cs" />
+    <Compile Include="Lookups\Allergy\AllergyTypeModel.cs" />
+    <Compile Include="Lookups\Assessment\AssessmentModel.cs" />
+    <Compile Include="Lookups\AttendanceStatus\AttendanceStatusModel.cs" />
+    <Compile Include="Lookups\BehavioralCategory\BehavioralCategoryModel.cs" />
+    <Compile Include="Lookups\BPMethod\BPMethodModel.cs" />
+    <Compile Include="Lookups\CallStatus\CallStatusModel.cs" />
+    <Compile Include="Lookups\CallType\CallTypeModel.cs" />
+    <Compile Include="Lookups\CauseOfDeath\CauseOfDeathModel.cs" />
+    <Compile Include="Lookups\CCPriority\CCPriorityModel.cs" />
+    <Compile Include="Lookups\ClientIdentifierType\ClientIdentifierTypeModel.cs" />
+    <Compile Include="Lookups\ClientStatus\ClientStatusModel.cs" />
+    <Compile Include="Lookups\CollateralType\CollateralTypeModel.cs" />
+    <Compile Include="Lookups\ConfirmationStatement\ConfirmationStatementGroupModel.cs" />
+    <Compile Include="Lookups\ConfirmationStatement\ConfirmationStatementModel.cs" />
+    <Compile Include="Lookups\ConversionStatus\ConversionStatusModel.cs" />
+    <Compile Include="Lookups\DayOfWeek\DayOfWeekModel.cs" />
+    <Compile Include="Lookups\DeliveryMethod\DeliveryMethodModel.cs" />
+    <Compile Include="Lookups\DocumentTypeGroup\DocumentTypeModel.cs" />
+    <Compile Include="Lookups\PayorType\PayorTypeModel.cs" />
+    <Compile Include="Lookups\LetterOutcome\LetterOutcomeModel.cs" />
+    <Compile Include="Lookups\Organizations\OrganizationsModel.cs" />
+    <Compile Include="Lookups\DischargeReason\DischargeReasonModel.cs" />
+    <Compile Include="Lookups\CancelReason\CancelReasonModel.cs" />
+    <Compile Include="Lookups\DocumentType\DocumentTypeModel.cs" />
+    <Compile Include="Lookups\Drug\DrugModel.cs" />
+    <Compile Include="Lookups\Duration\DurationModel.cs" />
+    <Compile Include="Lookups\EligibilityCategory\EligibilityCategoryModel.cs" />
+    <Compile Include="Lookups\EligibilityType\EligibilityTypeModel.cs" />
+    <Compile Include="Lookups\EntityType\EntityTypeModel.cs" />
+    <Compile Include="Lookups\Facility\FacilityModel.cs" />
+    <Compile Include="Lookups\FamilyRelationship\FamilyRelationshipModel.cs" />
+    <Compile Include="Lookups\FinanceCategory\FinanceCategoryTypeModel.cs" />
+    <Compile Include="Lookups\Credential\CredentialModel.cs" />
+    <Compile Include="Lookups\EmailPermission\EmailPermissionModel.cs" />
+    <Compile Include="Lookups\ExpirationReason\ExpirationReasonModel.cs" />
+    <Compile Include="Lookups\County\CountyModel.cs" />
+    <Compile Include="Lookups\FinanceCategory\FinanceCategoryModel.cs" />
+    <Compile Include="Lookups\FinanceFrequency\FinanceFrequencyModel.cs" />
+    <Compile Include="Lookups\GroupService\GroupServiceModel.cs" />
+    <Compile Include="Lookups\GroupType\GroupTypeModel.cs" />
+    <Compile Include="Lookups\IFSPType\IFSPTypeModel.cs" />
+    <Compile Include="Lookups\ImmunizationStatus\ImmunizationStatusModel.cs" />
+    <Compile Include="Lookups\Language\LanguageModel.cs" />
+    <Compile Include="Lookups\DirectiveType\AdvancedDirectiveTypeModel.cs" />
+    <Compile Include="Lookups\LivingStatus\LivingStatusModel.cs" />
+    <Compile Include="Lookups\LookupType.cs" />
+    <Compile Include="Lookups\MailPermission\MailPermissionModel.cs" />
+    <Compile Include="Lookups\MedicalCondition\MedicalConditionModel.cs" />
+    <Compile Include="Lookups\Month\MonthModel.cs" />
+    <Compile Include="Lookups\NoteStatus\NoteStatusModel.cs" />
+    <Compile Include="Lookups\NoteType\NoteTypeModel.cs" />
+    <Compile Include="Lookups\NoteType\ReferenceNoteTypeModel.cs" />
+    <Compile Include="Lookups\PayorExpirationReason\PayorExpirationReasonModel.cs" />
+    <Compile Include="Lookups\PreferredNoteType\PreferredNoteTypeModel.cs" />
+    <Compile Include="Lookups\PresentingProblemType\PresentingProblemTypeModel.cs" />
+    <Compile Include="Lookups\ProgramClientIdentifier\ProgramClientIdentifierModel.cs" />
+    <Compile Include="Lookups\ProgramUnit\ProgramUnitModel.cs" />
+    <Compile Include="Lookups\Program\ProgramModel.cs" />
+    <Compile Include="Lookups\ReasonForDelay\ReasonForDelayModel.cs" />
+    <Compile Include="Lookups\RecipientCode\RecipientCodeModel.cs" />
+    <Compile Include="Lookups\ReferralAgency\ReferralAgencyModel.cs" />
+    <Compile Include="Lookups\ReferralCategorySource\ReferralCategorySourceModel.cs" />
+    <Compile Include="Lookups\ReferralOrganization\ReferralOrganizationModel.cs" />
+    <Compile Include="Lookups\ReferralCategory\ReferralCategoryModel.cs" />
+    <Compile Include="Lookups\ReferralConcernType\ReferralConcernTypeModel.cs" />
+    <Compile Include="Lookups\ReferralDispositionOutcomeType\ReferralDispositionOutcomeTypeModel.cs" />
+    <Compile Include="Lookups\ReferralDispositionStatus\ReferralDispositionStatusTypeModel.cs" />
+    <Compile Include="Lookups\ReferralDispositionType\ReferralDispositionTypeModel.cs" />
+    <Compile Include="Lookups\ReferralOrigin\ReferralOriginModel.cs" />
+    <Compile Include="Lookups\ReferralPriority\ReferralPriorityModel.cs" />
+    <Compile Include="Lookups\ReferralResourceType\ReferralResourceTypeModel.cs" />
+    <Compile Include="Lookups\ReferralType\ReferralTypeModel.cs" />
+    <Compile Include="Lookups\Reports\ReportsModel.cs" />
+    <Compile Include="Lookups\Reports\ReportType.cs" />
+    <Compile Include="Lookups\ResourceType\ResourceTypeModel.cs" />
+    <Compile Include="Lookups\ScheduleType\ScheduleTypeModel.cs" />
+    <Compile Include="Lookups\ScreeningResult\ScreeningResultModel.cs" />
+    <Compile Include="Lookups\ScreeningName\ScreeningNameModel.cs" />
+    <Compile Include="Lookups\ScreeningType\ScreeningTypeModel.cs" />
+    <Compile Include="Lookups\ServiceDuration\ServiceDurationModel.cs" />
+    <Compile Include="Lookups\ServiceCoordinator\ServiceCoordinatorModel.cs" />
+    <Compile Include="Lookups\PayorPlanGroup\PayorPlanGroup.cs" />
+    <Compile Include="Lookups\PayorPlan\PayorPlan.cs" />
+    <Compile Include="Lookups\Payor\PayorModel.cs" />
+    <Compile Include="Lookups\PhoneType\PhoneTypeModel.cs" />
+    <Compile Include="Lookups\PolicyHolder\PolicyHolderModel.cs" />
+    <Compile Include="Lookups\ReceiveCorrespondence\ReceiveCorrespondenceModel.cs" />
+    <Compile Include="Lookups\SecurityQuestion\SecurityQuestionModel.cs" />
+    <Compile Include="Lookups\ServiceItem\ServiceItemModel.cs" />
+    <Compile Include="Lookups\ServiceLocation\ServiceLocationModel.cs" />
+    <Compile Include="Lookups\ServiceRecordingSource\ServiceRecordingSourceModel.cs" />
+    <Compile Include="Lookups\ServiceStatus\ServiceStatusModel.cs" />
+    <Compile Include="Lookups\Services\ServicesModel.cs" />
+    <Compile Include="Lookups\Signature Status\SignatureStatusModel.cs" />
+    <Compile Include="Lookups\TrackingField\TrackingFieldModel.cs" />
+    <Compile Include="Lookups\UserIdentifierType\UserIdentifierTypeModel.cs" />
+    <Compile Include="Lookups\VoidRecordedServiceReason\VoidRecordedServiceReasonModel.cs" />
+    <Compile Include="Lookups\ServiceType\ServiceTypeModel.cs" />
+    <Compile Include="Lookups\Service\ServiceModel.cs" />
+    <Compile Include="Lookups\SuicidalHomicidal\SuicidalHomicidalModel.cs" />
+    <Compile Include="Lookups\Title\TitleModel.cs" />
+    <Compile Include="Lookups\RegistrationType\RegistrationTypeModel.cs" />
+    <Compile Include="Lookups\SchoolDistrict\SchoolDistrictModel.cs" />
+    <Compile Include="Lookups\StateProvince\StateProvinceModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Lookups\UserFacility\UserFacilityModel.cs" />
+    <Compile Include="Lookups\Users\UsersModel.cs" />
+    <Compile Include="Lookups\ReferralStatus\ReferralStatusModel.cs" />
+    <Compile Include="Lookups\WeekOfMonth\WeekOfMonthModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\..\Axis Libraries\Axis.Constant\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Lookups\RelationshipType\RelationshipTypeModel.cs" />
+    <Compile Include="ProvidersModel.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="Response\Response.cs" />
+    <Compile Include="Response\ServerValidationError.cs" />
+    <Compile Include="ScalarResult.cs" />
+    <Compile Include="ServiceRecording\ServiceRecordingAdditionalUserModel.cs" />
+    <Compile Include="ServiceRecording\ServiceRecordingAttendeeModel.cs" />
+    <Compile Include="ServiceRecording\ServiceRecordingModel.cs" />
+    <Compile Include="SortOrder.cs" />
+    <Compile Include="Lookups\ContactMethod\ContactMethodModel.cs" />
+    <Compile Include="Lookups\ContactType\ContactTypeModel.cs" />
+    <Compile Include="Lookups\DOBStatus\DOBStatusModel.cs" />
+    <Compile Include="Lookups\Citizenship\CitizenshipModel.cs" />
+    <Compile Include="Lookups\EducationStatus\EducationStatusModel.cs" />
+    <Compile Include="Lookups\EmploymentStatus\EmploymentStatusModel.cs" />
+    <Compile Include="Lookups\Ethnicity\EthnicityModel.cs" />
+    <Compile Include="Lookups\Religion\ReligionModel.cs" />
+    <Compile Include="Lookups\ReferralSource\ReferralSourceModel.cs" />
+    <Compile Include="Lookups\Race\RaceModel.cs" />
+    <Compile Include="Lookups\PhonePermission\PhonePermissionModel.cs" />
+    <Compile Include="Lookups\MaritalStatus\MaritalStatusModel.cs" />
+    <Compile Include="Lookups\LivingArrangement\LivingArrangementModel.cs" />
+    <Compile Include="Lookups\LegalStatus\LegalStatusModel.cs" />
+    <Compile Include="Lookups\Suffix\SuffixModel.cs" />
+    <Compile Include="Lookups\VeteranStatus\VeteranStatusModel.cs" />
+    <Compile Include="Lookups\SSNStatus\SSNStatusModel.cs" />
+    <Compile Include="Lookups\SmokingStatus\SmokingStatusModel.cs" />
+    <Compile Include="Lookups\Gender\GenderModel.cs" />
+    <Compile Include="Lookups\ClientType\ClientTypeModel.cs" />
+    <Compile Include="Lookups\AddressTypes\AddressTypeModel.cs" />
+    <Compile Include="User\UserProgramFacilityModel.cs" />
+    <Compile Include="User\UserSecurityQuestionModel.cs" />
+    <Compile Include="WorkflowHeader\WorkflowHeaderModel.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

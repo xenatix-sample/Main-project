@@ -1,0 +1,112 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" ignore-enter="true" permission-key="Scheduling-Appointment-GroupAppointment" permission="{{resolvePermission(groupID)}}"></keypress-events>
+<div class="ng-cloak">
+    <div class="jumbotron">
+        <div security permission-key="Scheduling-Appointment-GroupAppointment" permission="{{resolvePermission(groupID)}}" permission-mode="readonly">
+            <form class="form-inline" name="searchForm" data-ng-submit="searchForm.$valid">
+                <div class="container-fluid padding-small">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg">
+                            <input type="text" name="GroupScheduleSearch" id="GroupScheduleSearch" auto-focus event-focus="autoFocus" ng-change="searchForm.$valid ? searchGroupSchedule(searchText) : null" ng-model="searchText"
+                                   ng-model-options="{ debounce: 1000 }" placeholder="Search" tabindex="0" class="form-control">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-link">
+                                    <i class="fa fa-search fa-fw"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-body nopadding-top">
+
+            <div class="modal fade" id="cancelGroupScheduleModel" tabindex="-1" role="dialog" aria-labelledby="cancelGroupScheduleModel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-label="Close" ng-click="cancelModal();"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Cancel Group Schedule</h4>
+                        </div>
+                        <div security permission-key="Scheduling-Appointment-GroupAppointment" permission="{{resolvePermission(groupID)}}" permission-mode="readonly">
+                            <form role="form" id="cancelGroupScheduleForm" name="ctrl.cancelGroupScheduleForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" novalidate bs-modifiable="true" set-form-status set-form-mode>
+                                {{ctrl.cancelGroupScheduleForm.modified ? setform(true):setform(false)}}
+                                <div class="modal-body" ng-hide="Recurrence.IsRecurring">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <span><xen-radio-button data-ng-model="groupScheduleToCancel.IsCancelAllAppoitment" data-radio-button-id="appointmentAll" data-label="All Appointments" data-ng-value="true" /></span>
+                                        <span><xen-radio-button data-ng-model="groupScheduleToCancel.IsCancelAllAppoitment" data-radio-button-id="appointmentSelected" data-label="Selected Appointments" data-ng-value="false" /></span>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5 padding-bottom-small">
+                                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.cancelGroupScheduleForm.appointmentCancelReason.$invalid && !ctrl.cancelGroupScheduleForm.appointmentCancelReason.$pristine }">
+                                                <label for="Program">Cancel Reason <sup>*</sup></label>
+                                                <select data-ng-model="groupScheduleToCancel.CancelReasonID" class="form-control prevent-disable" id="appointmentCancelReason" name="appointmentCancelReason" ng-required="true"
+                                                        ng-options="reason.ID as reason.Name for reason in getLookupsByType('CancelReason')">
+                                                    <option value="">Select</option>
+                                                </select>
+                                                <span class="select-btn"><i class="xen-select"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12 padding-bottom-small">
+                                            <div class="form-group-lg padding-bottom-small" ng-class="">
+                                                <xen-memobox label="Comment" rows="5" maxlength="400" ng-model="groupScheduleToCancel.CancelComment" name="cancelComment" id="cancelComment"></xen-memobox>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row text-right nopadding-left padding-right-small">
+                                        <button type="button" id="cancelAppointmentSave" class="btn btn-default btn-lg" name="btnSave" ng-click="safeSubmit(false, true)" security permission-key="Scheduling-Appointment-GroupAppointment" permission="create">SAVE</button>
+                                    </div>
+                                </div>
+                            </form>
+                         </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="add_me">
+                <plus-button tabindex="0" title="New Group" permission-key="Scheduling-Appointment-GroupAppointment" permission="create" href="javascript: void(0)" ui-sref="scheduling.groupscheduling.details.groupschedule({GroupID:0,ReadOnly:'edit',IsRecurringAptEdit: 'true'})"></plus-button>
+            </div>
+
+            <div class="row padding-small">
+                <table id="groupSchedulingTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       cdata-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector class="table table-stripe-borders table-hover">
+                    <thead>
+                        <tr>
+                            <th data-field="GroupName"
+                                data-sortable="true">GROUP NAME</th>
+                            <th data-field="GroupTypeID"
+                                data-sortable="true">GROUP TYPE</th>
+                            <th data-field="ProgramName"
+                                data-sortable="true">PROGRAM UNIT</th>
+                            <th data-field="FacilityName"
+                                data-sortable="true">Location</th>
+                            <th data-field="AppointmentDate"
+                                data-sortable="true">DATE</th>
+                            <th data-field="AppointmentStartTime"
+                                data-sortable="true">START TIME</th>
+                            <th data-field="Recurring"
+                                data-sortable="true">RECURRING</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

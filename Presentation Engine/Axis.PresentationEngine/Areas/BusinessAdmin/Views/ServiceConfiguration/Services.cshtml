@@ -1,0 +1,52 @@
+﻿
+<div class="panel panel-light padding-x-small">
+    <keypress-events on-add="addNew()" ignore-enter="true" permission-key="{{permissionKey}}" permission="create"></keypress-events>
+    <div class="panel-body">
+        @* Table Search *@
+        <div class="table-custom-search">
+            <form class="form-inline ng-pristine ng-valid" name="" data-ng-submit="">
+                <div class="form-group-lg">
+                    <input type="text" name="serviceSearch" id="serviceSearch" auto-focus event-focus="autoFocus" ng-model="searchText"
+                           placeholder="Search Services" tabindex="0" class="form-control" ng-keydown="($event.which === 13) ? getServices(searchText):0"
+                           security permission-key="{{permissionKey}}" permission="read" />
+                    @* added icon as button *@
+                    <span class="input-group-btn">
+                        <button type="submit" ng-click="getServices(searchText)" class="btn btn-link">
+                            <i class="fa fa-search fa-fw"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        @* Standard (+) Button *@
+        <div class="add_me">
+            <plus-button title="New Service" permission-key="{{permissionKey}}" permission="create" href="javascript:void(0);" ui-sref="servicedefinitioninitial"></plus-button>
+        </div>
+
+        @* Table Grid *@
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+
+                @* Bootstrap Table Grid *@
+                <table id="servicesTable" data-toggle="table"
+                       data-sort-order="desc"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                    </thead>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>

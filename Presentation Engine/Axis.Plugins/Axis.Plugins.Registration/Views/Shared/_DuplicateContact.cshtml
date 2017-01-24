@@ -1,0 +1,52 @@
+﻿<div class="modal fade" id="duplicateContactListModel" tabindex="-1" role="dialog" aria-labelledby="duplicateContactListModel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="closePopup" class="close" ng-click="cancelModal();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myDuplicatesModalLabel">Potential Duplicates Found</h4>
+            </div>
+            <div class="modal-body">
+                Select an existing potential duplicate contact to edit below:<br /><br />
+                <small>
+                    Note: Selecting an existing potential contact will abandon the registration process and will allow you to edit the record.
+                    Any information previously entered on the Registration screen will be lost.
+                </small>
+                <table id="duplicateContactsTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="fName"
+                                data-sortable="true">First Name</th>
+                            <th data-field="lName"
+                                data-sortable="true">Last Name</th>
+                            <th data-field="mname"
+                                data-sortable="true">Middle Name</th>
+                            <th data-field="gender"
+                                data-sortable="true">Gender</th>
+                            <th data-field="birthdate"
+                                data-sortable="true">DOB</th>
+                            <th data-field="ssn"
+                                data-sortable="true">SSN</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="row">
+                    <div class="col-md-12 padding-right-small">
+                        <button type="button" class="btn btn-info btn-info-alt btn-sm pull-right" ng-click="continueWithRegistration()" id="btnContinueWithRegistration" name="btnContinueWithRegistration" security permission-key="Registration-Registration-Demographics || ECI-Registration-Demographics" permission="{{resolvePermission(newDemography.ContactID)}}">Not a Duplicate</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>

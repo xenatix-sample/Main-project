@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B4701714-EF73-4D51-918E-886DF6F36A8C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.Model.Scheduling</RootNamespace>
+    <AssemblyName>Axis.Model.Scheduling</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTstWeb003|AnyCPU'">
+    <OutputPath>bin\Release.XenTstWeb003\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp003|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp003\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppointmentContactModel.cs" />
+    <Compile Include="AppointmentDetailModel.cs" />
+    <Compile Include="AppointmentNoteModel.cs" />
+    <Compile Include="AppointmentResourceModel.cs" />
+    <Compile Include="AppointmentLengthModel.cs" />
+    <Compile Include="AppointmentModel.cs" />
+    <Compile Include="AppointmentCredentialModel.cs" />
+    <Compile Include="AppointmentStatusDetailModel.cs" />
+    <Compile Include="AppointmentStatusModel.cs" />
+    <Compile Include="AppointmentTypeModel.cs" />
+    <Compile Include="CalendarModel.cs" />
+    <Compile Include="GroupSchedulingDetailModel.cs" />
+    <Compile Include="GroupSchedulingModel.cs" />
+    <Compile Include="GroupSchedulingResourceModel.cs" />
+    <Compile Include="GroupSchedulingSearchModel.cs" />
+    <Compile Include="ProviderModel.cs" />
+    <Compile Include="ResourceOverridesModel.cs" />
+    <Compile Include="SchedulingFrequencyModel.cs" />
+    <Compile Include="SchedulingOccurrenceModel.cs" />
+    <Compile Include="ResourceModel.cs" />
+    <Compile Include="ResourceAvailabilityModel.cs" />
+    <Compile Include="RoomModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\..\Axis Libraries\Axis.Constant\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Axis.Model.Common\Axis.Model.Common.csproj">
+      <Project>{b217d868-9cab-4e0d-a0bc-d82423e64741}</Project>
+      <Name>Axis.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.Model.Recurrence\Axis.Model.Recurrence.csproj">
+      <Project>{3e900884-d562-4917-af79-0f0e9acf1029}</Project>
+      <Name>Axis.Model.Recurrence</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

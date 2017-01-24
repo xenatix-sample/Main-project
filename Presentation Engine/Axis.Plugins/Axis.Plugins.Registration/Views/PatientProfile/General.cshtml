@@ -1,0 +1,42 @@
+﻿<div class="panel nopadding profile" ng-cloak>
+    <div class="panel-body">
+        <!--Patient Header-->
+        @Html.Partial("../Shared/_PatientHeader")
+        <!--Filter Box and Tile/List View Toggle-->
+        <div class="row filter-box pull-right">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="filterContent"><span class="sr-only">Filter content by keyword</span></label>
+                <div class="input-group">
+                    <input type="text" id="filterContent" name="filterContent" class="form-control ng-pristine ng-invalid ng-invalid-required ng-not-modified ng-touched"/>
+                    <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" ng-click="">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                </div>
+                <!--Tile/List View Toggle Placeholder-->
+                <a class="btn"><i class="fa fa-fw fa-list-ul"></i></a>
+            </div>
+        </div>
+        <!--Tiles or List View-->
+        <div class="row tile-view">
+            <div class="col-lg-12 col-md-12">
+                <h2>Profile</h2>
+            </div>
+            <!--Tile 1-->
+            <div class="section-group" ng-repeat="section in sections">
+                <div class="section-header">
+                    <a>{{section.SectionName}}</a>
+                    <a>{{section.AlertText}} <i class="fa fa-alert"></i></a>
+                </div>
+                <div class="section-content">
+                    <p>{{section.Body}}</p>
+                </div>
+                <div class="section-footer">
+                    <p><span>Last Updated: </span>{{section.LastUpdated}}</p>
+                    <button>Bookmark <i class="fa fa-bookmark"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

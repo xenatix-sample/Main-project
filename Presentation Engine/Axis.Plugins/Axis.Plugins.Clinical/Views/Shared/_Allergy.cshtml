@@ -1,0 +1,56 @@
+﻿@Html.Partial("../Shared/_TakenDetails")
+<div class="row padding-top-small">
+    <div class="col-md-1 padding-bottom-small form-group-lg">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-checkbox data-ng-model="allergy.NoKnownAllergy" auto-focus event-focus="autoFocus" data-checkbox-id="nka" data-label="NKA" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.allergyForm.allergy.$invalid && !ctrl.allergyForm.allergy.$pristine }">
+        <label for="allergy">{{allergyLabel}} <sup ng-show="allergy.NoKnownAllergy != true">*</sup></label>
+        <div class="input-group">
+            <input type="text" ng-model="allergyDetails.AllergyModel" id="allergy" name="allergy" class="form-control ellipsis" typeahead-wait-ms="500" ng-required="allergy.NoKnownAllergy != true"
+                   typeahead-editable="false" typeahead-no-results="noAllergyResults" ng-disabled="allergy.NoKnownAllergy == true" typeahead-on-select="validateAllergy($item);" typeahead-select-on-blur="true"
+                   typeahead="allergy as allergy.Name for allergy in {{allergyLookupName}}List | filter:$viewValue:comparatorOnEmptyOrMatch" typeahead-trigger />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="triggerTypeahead('allergy');" ng-disabled="allergy.NoKnownAllergy == true">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <p ng-show="noAllergyResults" ng-cloak class="error-block">No Results Found!</p>
+    </div>
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.allergyForm.allergySeverity.$invalid && !ctrl.allergyForm.allergySeverity.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="allergySeverity">Severity <sup ng-show="allergy.NoKnownAllergy != true">*</sup></label>
+            <select class="form-control" ng-model="allergyDetails.SeverityID" ng-required="allergy.NoKnownAllergy != true" ng-disabled="allergy.NoKnownAllergy == true"
+                    name="allergySeverity" id="allergySeverity" ng-options="severity.ID as severity.Name for severity in getLookupsByType('AllergySeverity')">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.allergyForm.allergySymptom.$invalid && !ctrl.allergyForm.allergySymptom.$pristine && selectedSymptoms.length < 1 }">
+        <label for="allergySymptom">Related Symptoms <sup ng-show="allergy.NoKnownAllergy != true">*</sup></label>
+        <div class="input-group">
+            <input type="text" ng-model="AllergySymptoms[0].Name" id="allergySymptom" name="allergySymptom" class="form-control ellipsis" typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                   typeahead-editable="false" typeahead-no-results="noAllergySymptomResults" typeahead-on-select="selectSymptom($item); asyncSelected = '';" ng-disabled="allergy.NoKnownAllergy == true"
+                   typeahead="symptom as symptom.Name for symptom in getLookupsByType('AllergySymptom') | filter:$viewValue:comparatorOnEmptyOrMatch" typeahead-trigger />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="triggerTypeahead('allergySymptom');" ng-disabled="allergy.NoKnownAllergy == true">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <p ng-show="noAllergySymptomResults" ng-cloak class="error-block">No Results Found!</p>
+    </div>
+</div>
+<div class="row pod-group pod-group-sm padding-top-small">
+    <div class="pod" ng-repeat="symptom in selectedSymptoms" ng-show="{{symptom.AllergySymptomID > 0}}">
+        <div>
+            <p><strong>{{symptom.Name}}</strong></p>
+        </div>
+        <a class="text-info close" href="javascript:void(0)" ng-click="removeSymptom(symptom)" title="Remove Symptom" space-key-press><span class="sr-only"></span>x</a>
+    </div>
+</div>

@@ -1,0 +1,171 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, true, true)" enter-key-stop="enterKeyStop" close-modal="true" on-cancel="CancelReferral()" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}"></keypress-events>
+<!--data entry-->
+<div class="row">
+    <breadcrumbs min-breadcrumbs="2" goto="referralsearch" />
+</div>
+<div class="row padding-right-small">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}" permission-mode="readonly">
+                <form role="form" name="ctrl.referralMainForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" set-form-status>
+                    <ng-form name="ctrl.referralMainForm.referralHeaderForm" novalidate bs-modifiable="true" set-form-status="child">
+                        @Html.Partial("../Shared/_ReferralHeader")
+                        <div class="row padding-top-small">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralHeaderForm.referralType.$invalid && !ctrl.referralMainForm.referralHeaderForm.referralType.$pristine }">
+                                            <label for="referralType">Referral Type <sup>*</sup></label>
+                                            <select ng-disabled="isReadOnlyForm" ng-model="Header.ReferralTypeID" id="referralType" name="referralType" class="form-control" ng-options="type.ID as type.Name for type in getLookupsByType('ReferralType')"
+                                                    ng-required="true" ng-change="changeReferralSource()">
+                                                <option value="">Select</option>
+                                            </select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="referralResType">Resource Type</label>
+                                            <select ng-disabled="isReadOnlyForm" ng-model="Header.ResourceTypeID" id="referralResourceType" class="form-control" ng-options="resourceType.ID as resourceType.Name for resourceType in getLookupsByType('ReferralResourceType')">
+                                                <option value="">Select</option>
+                                            </select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 padding-bottom-small" ng-class="{ 'has-error' : noResults && ReferralSource }">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="referralSource">Referral Source</label>
+                                            <div class="input-group">
+                                                <input type="text" ng-model="ReferralSource" id="ReferralSourceID"
+                                                       name="ReferralSourceID" ng-disabled="isReadOnlyForm"
+                                                       class="form-control"
+                                                       typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                                                       typeahead-no-results="noResults"
+                                                       typeahead-trigger
+                                                       typeahead="ReferralSource as ReferralSource.Name for ReferralSource in getLookupsByType(referralSourceLookUpType) | filter:{Name:$viewValue}:comparatorOnEmptyOrMatch" />
+                                                @* Added button. *@
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-info" ng-click="triggerTypeahead('ReferralSourceID');" ng-disabled="isReadOnlyForm">
+                                                        <i class="fa fa-search" />
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 padding-bottom-small" ng-if="Header.ReferralTypeID === referralTypeExternal && ReferralSource.ID === otherReferralSourceOption"
+                                         ng-class="{ 'has-error' : ctrl.referralMainForm.referralHeaderForm.otherReferralSource.$invalid && !ctrl.referralMainForm.referralHeaderForm.otherReferralSource.$pristine }">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="otherReferralSource">Other Referral Source</label>
+                                            <input type="text" data-ng-model="Header.OtherSource" class="form-control" ng-required="Header.ReferralTypeID === referralTypeExternal && ReferralSource.ID === otherReferralSourceOption" id="otherReferralSource" name="otherReferralSource" maxlength="100" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ng-form>
+                    <ng-form name="ctrl.referralMainForm.referralBottomForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row section-block margin-bottom-small med-names">
+                            <!-- How did they hear? -->
+                            <div class="col-md-7 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralBottomForm.referralHowHeard.$invalid && !ctrl.referralMainForm.referralBottomForm.referralHowHeard.$pristine }">
+                                    <!-- -->
+                                    <label for="referralHowHeard">How did the referrer hear about the Center/Program? <sup ng-show="Header.ReferralTypeID === referralTypeExternal">*</sup></label>
+                                    <select ng-disabled="isReadOnlyForm" id="referralHowHeard" name="referralHowHeard" class="form-control" ng-required="Header.ReferralTypeID === referralTypeExternal" ng-model="Header.ReferralOriginID"
+                                            ng-options="origin.ID as origin.Name for origin in getLookupsByType('ReferralOrigin')">
+                                        <!--uses set values from the referral source lsixent - see work item attachement for full list-->
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    <!--Name of contact -->
+                    <ng-form name="ctrl.referralMainForm.referralDemographicsForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <h3 class="uppercase nomargin padding-xsmall padding-bottom-small border-top">Referrer Contact Information <sup>*</sup></h3>
+                        <div class="row section-block margin-bottom-small">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDemographicsForm.FirstName.$invalid &amp;&amp; !ctrl.referralMainForm.referralDemographicsForm.FirstName.$pristine}">
+                                    <label for="FirstName">First Name<sup> *</sup></label>
+                                    <input ng-disabled="isReadOnlyForm" type="text" name="FirstName" id="FirstName" class="form-control ellipsis ng-pristine ng-valid-maxlength ng-touched ng-valid ng-valid-required ng-not-modified" ng-model="Demographics.FirstName" ng-trim="true" ng-required="true" ng-maxlength="200" required="required">
+                                    <p ng-show="ctrl.referralMainForm.referralDemographicsForm.FirstName.$error.maxlength" class="error-block ng-hide">First Name is too long</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDemographicsForm.LastName.$invalid &amp;&amp; !ctrl.referralMainForm.referralDemographicsForm.LastName.$pristine}">
+                                    <label for="LastName">Last Name<sup> *</sup></label>
+                                    <input ng-disabled="isReadOnlyForm" type="text" name="LastName" id="LastName" ng-model="Demographics.LastName" ng-maxlength="200" ng-trim="true" ng-required="true" class="form-control ellipsis ng-pristine ng-untouched ng-valid-maxlength ng-valid ng-valid-required ng-not-modified" required="required">
+                                    <p ng-show="ctrl.referralMainForm.referralDemographicsForm.LastName.$error.maxlength" class="error-block ng-hide">Last Name is too long</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDemographicsForm.Middle.$invalid &amp;&amp; !ctrl.referralMainForm.referralDemographicsForm.Middle.$pristine }">
+                                    <label for="Middle">Middle Name</label>
+                                    <input ng-disabled="isReadOnlyForm" type="text" id="Middle" name="Middle" class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength ng-not-modified" ng-model="Demographics.Middle" ng-maxlength="200">
+                                    <p ng-show="ctrl.referralMainForm.referralDemographicsForm.Middle.$error.maxlength" ng-cloak class="error-block">Middle Name is too long</p>
+                                </div>
+                            </div>
+                            <!-- prefix / suffix -->
+                            <div class="col-md-2 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="prefix">Prefix</label>
+                                    <select ng-disabled="isReadOnlyForm" class="form-control ellipsis ng-pristine ng-valid ng-not-modified ng-touched" ng-model="Demographics.TitleID" id="prefix" ng-options="prefix.ID as prefix.Name for prefix in getLookupsByType('PrefixType')"><option value="">Select</option><option value="0" label="Miss.">Miss.</option><option value="1" label="Mr.">Mr.</option><option value="2" label="Mrs.">Mrs.</option><option value="3" label="Ms.">Ms.</option></select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="suffix">Suffix</label>
+                                    <select ng-disabled="isReadOnlyForm" ng-model="Demographics.SuffixID" id="suffix" class="form-control ellipsis ng-pristine ng-untouched ng-valid ng-not-modified" ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')"><option value="">Select</option><option value="0" label="I">I</option><option value="1" label="II">II</option><option value="2" label="III">III</option><option value="3" label="IV">IV</option><option value="4" label="Jr.">Jr.</option><option value="5" label="Sr.">Sr.</option></select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="otherOrganization">Name of Organization</label>
+                                    <input ng-disabled="isReadOnlyForm" type="text" data-ng-model="Header.OtherOrganization" class="form-control" id="otherOrganization" name="otherOrganization" maxlength="100" />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    <!--Contact Methods-->
+                    <ng-form name="ctrl.referralMainForm.referralPhoneForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class=" uppercase nomargin padding-xsmall border-top">
+                                    Referrer Contact Method
+                                </h3>
+                            </div>
+                        </div>
+                        <!--Phone-->
+                        <div class="row padding-top-small ">
+                            @Html.Partial("../Shared/_Phone")
+                        </div>
+                    </ng-form>
+                    <ng-form name="ctrl.referralMainForm.referralEmailForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <!--EMail-->
+                        <div class="row section-block">
+                            @Html.Partial("../Shared/_Email")
+                        </div>
+                    </ng-form>
+                    <ng-form name="ctrl.referralMainForm.referralAddressForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <!--Address-->
+                        <div class="row padding-top-small">
+                            @Html.Partial("../Shared/_Address")
+                        </div>
+                    </ng-form>
+                </form>
+            </div>
+            <!-- Save and Next -->
+            @Html.Partial("../Shared/_ReferralActionControl")
+        </div>
+    </div>
+</div>
+<span ng-init="init()"></span>

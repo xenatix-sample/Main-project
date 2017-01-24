@@ -1,0 +1,256 @@
+﻿<keypress-events close-modal="true" on-cancel="CancelReferral()" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionId)}}"></keypress-events>
+<div security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionId)}}" permission-mode="readonly" dual-permission="true">
+    <contact-search contact-type="1,4,7,8" search-title="Referrer" on-contact-select="onContactSelect(contactID)" set-shortcut-key="setShortcutKey(enterKeyStop, stopNext, saveOnEnter, stopSave)" set-focus="setFocus(autoFocus)" set-cancel-function="setCancelFunction(cancelFunction)"></contact-search>
+    <!--data entry-->
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <div>
+                <form role="form" name="ctrl.referralMainForm" xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionId)}}" novalidate bs-modifiable="true" set-form-status>
+                    <ng-form name="ctrl.referralMainForm.referralDetailForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row section-block">
+                            <div class="col-md-4 padding-bottom-small">
+                                <div id="referralDetailDateErrorBlock" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.referralDate.$invalid && !ctrl.referralMainForm.referralDetailForm.referralDate.$pristine }">
+                                    <label for="referralDate">Referral Date <sup>*</sup></label>
+                                    <mydatepicker name="referralDate" data-validation-name="Referral Date" id="referralDate" opened="opened" new-date="ReferralDetail.ReferralDate" end-date="endDate" dob-name="referralDate" date-options="dateOptions" date-required="true" call-function-on-change="validateReferralDetailDate()" event-focus="true"></mydatepicker>
+                                    <p id="referralDetailDateError" ng-show="ctrl.referralMainForm.referralDetailForm.referralDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group-lg padding-bottom-small" ng-cloak ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.referralOrganization.$invalid && !ctrl.referralMainForm.referralDetailForm.referralOrganization.$pristine }">
+                                <label for="ReferralSource"><span ng-hide="isECI">Referral Source</span><span ng-show="isECI">Contact Organization</span>  <sup>*</sup></label>
+                                <div class="input-group">
+                                    <input type="text" ng-model="ReferralOrganization" data-validation-name="{{ isECI ? 'Contact Organization' : 'Referral Source' }}" id="referralOrganization" name="referralOrganization"
+                                           ng-required="true" class="form-control"
+                                           typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                                           typeahead-trigger typeahead="contactOrganisation as contactOrganisation.Name for contactOrganisation in getLookupsByType('ReferralSource')| filter:{Name: $viewValue}:comparatorOnEmptyOrMatch"
+                                           typeahead-editable="false"
+                                           typeahead-no-results="noResults" auto-focus event-focus="autoFocusEdit" />
+                                    @* Added button. *@
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-info" ng-click="triggerTypeahead('referralOrganization');">
+                                            <i class="fa fa-search" />
+                                        </button>
+                                    </span>
+                                </div>
+                                <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small"
+                                 ng-show="ReferralOrganization.Name===OtherContactOrganisationOption"
+                                 ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.otherReferralOrganisation.$invalid && !ctrl.referralMainForm.referralDetailForm.otherReferralOrganisation.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="referralOrganisation">Other <span ng-hide="isECI">Referral Source</span><span ng-show="isECI">Contact Organization</span><sup>*</sup></label>
+                                    <input type="text" style="margin-top:4px;" data-validation-name="{{ isECI ? 'Other Contact Organization' : 'Other Referral Source' }}" data-ng-model="ReferralDetail.OtherSource" class="form-control" id="otherReferralOrganisation"
+                                           ng-required="ReferralOrganization.Name===OtherContactOrganisationOption" name="otherReferralOrganisation" maxlength="100" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-small">
+                            <div id="referralConcernErrorBlock" class="col-md-8 padding-bottom-small form-group-lg" ng-show="isECI">
+                                <div class="row">
+                                    <div class="col-md-4 padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.referralConcernHidden.$invalid && !ctrl.referralMainForm.referralDetailForm.referralConcernHidden.$pristine }">
+                                        <label for="referralConcern">Referral Concern<sup> *</sup></label>
+                                        <div class="input-group">
+                                            <input type="text" ng-model="ReferralConcernDetail" id="referralConcern" data-validation-name="Referral Concern" name="referralConcern"
+                                                   class="form-control ellipsis"
+                                                   typeahead-wait-ms="500"
+                                                   typeahead-select-on-blur="true"
+                                                   typeahead-on-select="selectReferralConcernDetail($item); asyncSelected = '';"
+                                                   typeahead-editable="false"
+                                                   typeahead-no-results="noReferralConcernDetailResults"
+                                                   typeahead="ReferralConcernDetail as ReferralConcernDetail.Name for ReferralConcernDetail in ReferralConcernTypeLookUpData | filter:{Name: $viewValue}:comparatorOnEmptyOrMatch"
+                                                   typeahead-trigger />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-info" ng-click="triggerTypeahead('referralConcern');ctrl.referralMainForm.referralDetailForm.referralConcern.$invalid=false;ctrl.referralMainForm.referralDetailForm.referralConcern.$valid=true">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <p ng-show="noReferralConcernDetailResults" ng-cloak class="error-block">No Results Found!</p>
+                                    </div>
+                                </div>
+                                <div class="row pod-group pod-group-sm">
+                                    <div class="pod" ng-repeat="ReferralConcernDetail in selectedReferralConcernDetails | filter: { IsActive : true }" ng-show="{{ReferralConcernDetail.ReferralConcernID > 0}}">
+                                        <div>
+                                            <p><strong>{{ReferralConcernDetail.ReferralConcern}}</strong></p>
+                                        </div>
+                                        <a class="text-info close" href="javascript:void(0)" ng-click="hasEditPermission ? removeReferralConcernDetail(ReferralConcernDetail) : ''" title="Remove ReferralConcernDetail" space-key-press><span class="sr-only"></span>x</a>
+                                    </div>
+                                    <div ng-hide="true">
+                                        {{selectedReferralConcernName=(selectedReferralConcernDetails | filter: { IsActive : true }| map:'ReferralConcern').join(',')}}
+                                        <input type="text" class="form-control" ng-model="selectedReferralConcernName" id="referralConcernHidden" name="referralConcernHidden" data-validation-name="Referral Concern" ng-required="isECI" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row section-block">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    @*<label for="referralResType">Referral Concerns/Comments</label>*@
+                                    @*<textarea style="margin-top:4px;" data-ng-model="ReferralAdditionalDetails.AdditionalConcerns" class="form-control" id="Comments" name="Comments"></textarea>*@
+                                    <xen-memobox label="Referral Concerns/Comments" rows="5" maxlength="500" ng-model="ReferralAdditionalDetails.AdditionalConcerns" id="Comments" name="Comments"></xen-memobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-small" ng-if="isECI">
+                            @RenderPage("~/Plugins/Axis.Plugins.ECI/Views/Shared/_Category.cshtml", null)
+                        </div>
+                        <div class="row padding-top-small">
+                            @* How did they hear? *@
+                            <div class="col-md-7 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.referralHowHeard.$invalid && !ctrl.referralMainForm.referralDetailForm.referralHowHeard.$pristine }">
+                                    <label for="referralHowHeard">How did the referrer hear about the center/program ? <sup>*</sup></label>
+                                    <select id="referralHowHeard" name="referralHowHeard" data-validation-name="How did the referrer hear about the center/program" class="form-control" ng-required="true" ng-model="ReferralDetail.ReferralOriginID"
+                                            ng-options="origin.ID as origin.Name for origin in getLookupsByType('ReferralOrigin')">
+                                        <!--uses set values from the referral source lsixent - see work item attachement for full list-->
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-xsmall padding-bottom-small border-top">
+                            <div class="col-md-8">
+                                <h3 class="uppercase nomargin ">Referrer Contact Information</h3>
+                            </div>
+                            <div class="col-md-4 form-group-lg form-inline" ng-if="LinkedContactID">
+                                <xen-checkbox ng-model="ReferralDetail.IsLinkedToContact" data-checkbox-id="LinkedToContact" data-label="Linked to existing contact" data-on-click="GetLinkedContact()" />
+                            </div>
+                        </div>
+                        <div class="row section-block">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.FirstName.$invalid &amp;&amp; !ctrl.referralMainForm.referralDetailForm.FirstName.$pristine}">
+                                            <label for="FirstName">First Name<sup data-ng-if="isECI"> *</sup></label>
+                                            <input type="text" name="FirstName" id="FirstName" data-validation-name="First Name" class="form-control ellipsis ng-pristine ng-valid-maxlength ng-touched ng-valid ng-valid-required ng-not-modified" ng-model="ReferralDetail.FirstName" ng-required="isECI" ng-maxlength="200">
+                                            <p ng-show="ctrl.referralMainForm.referralDetailForm.FirstName.$error.maxlength" ng-cloak class="error-block">First Name is too long</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.LastName.$invalid &amp;&amp; !ctrl.referralMainForm.referralDetailForm.LastName.$pristine}">
+                                            <label for="LastName">Last Name<sup data-ng-if="isECI"> *</sup></label>
+                                            <input type="text" name="LastName" id="LastName" data-validation-name="Last Name" ng-model="ReferralDetail.LastName" class="form-control ellipsis ng-pristine ng-untouched ng-valid-maxlength ng-valid ng-valid-required ng-not-modified" ng-required="isECI" ng-maxlength="200">
+                                            <p ng-show="ctrl.referralMainForm.referralDetailForm.LastName.$error.maxlength" ng-cloak class="error-block">Last Name is too long</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.Middle.$invalid &amp;&amp; !ctrl.referralMainForm.referralDetailForm.Middle.$pristine }">
+                                            <label for="Middle">Middle Name</label>
+                                            <input ng-disabled="isReadOnlyForm" type="text" id="Middle" name="Middle" class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength ng-not-modified" ng-model="ReferralDetail.Middle" ng-maxlength="200">
+                                            <p ng-show="ctrl.referralMainForm.referralDetailForm.Middle.$error.maxlength" ng-cloak class="error-block">Middle Name is too long</p>
+                                        </div>
+                                    </div>
+                                    <!-- prefix / suffix -->
+                                    <div class="col-md-2 margin-left-small padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="prefix">Prefix</label>
+                                            <select ng-disabled="isReadOnlyForm" class="form-control ellipsis ng-pristine ng-valid ng-not-modified ng-touched" ng-model="ReferralDetail.TitleID" id="prefix" ng-options="prefix.ID as prefix.Name for prefix in getLookupsByType('PrefixType')"><option value="">Select</option><option value="0" label="Miss.">Miss.</option><option value="1" label="Mr.">Mr.</option><option value="2" label="Mrs.">Mrs.</option><option value="3" label="Ms.">Ms.</option></select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="suffix">Suffix</label>
+                                            <select ng-disabled="isReadOnlyForm" ng-model="ReferralDetail.SuffixID" id="suffix" class="form-control ellipsis ng-pristine ng-untouched ng-valid ng-not-modified" ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')"><option value="">Select</option><option value="0" label="I">I</option><option value="1" label="II">II</option><option value="2" label="III">III</option><option value="3" label="IV">IV</option><option value="4" label="Jr.">Jr.</option><option value="5" label="Sr.">Sr.</option></select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="referralOrganisation">Name of Organization</label>
+                                            <input type="text" style="margin-top:4px;" data-ng-model="ReferralDetail.OtherOrganization" class="form-control" id="referralOrganisation" name="referralOrganisation" maxlength="100" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group-lg form-inline" ng-if="convertToCollateral">
+                                        <xen-checkbox ng-model="ReferralDetail.IsReferrerConvertedToCollateral" ng-disabled="ReferralDetail.disableCollateralToReferral" data-checkbox-id="ConvertReferrertoCollateral" data-label="Convert Referrer to Collateral" data-on-click="resetCollateralInformation()" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="ReferralDetail.IsReferrerConvertedToCollateral" class="padding-top-small ">
+                            <h3 class="uppercase nomargin padding-xsmall border-top">Additional Collateral Information</h3>
+                            <p class="instructional">At least one form of unique identification is required: Driver License, Phone Number or Email</p>
+                            <ng-form name="ctrl.referralMainForm.ContactRelationshipForm" novalidate bs-modifiable="true" set-form-status="child">
+                                @Html.Partial("../Shared/_ContactRelationship")
+                                <div class="row" apply-security>
+                                    <div class="col-md-3 padding-bottom-small col-inline">
+                                        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.referralMainForm.ContactRelationshipForm.LivingWithCollateral.$invalid && !ctrl.referralMainForm.ContactRelationshipForm.LivingWithCollateral.$pristine}">
+                                            <label for="LivingWithCollateral">Living with <span class="text-nowrap">Contact <sup>*</sup></span></label>
+                                            <select data-ng-model="ReferralDetail.ContactRelationShip.LivingWithClientStatus" data-ng-required="true" id="LivingWithCollateral" name="LivingWithCollateral" class="form-control" data-validation-name="Living With Contact"
+                                                    data-ng-options="livingCol.Value as livingCol.Name for livingCol in policyHolderValues">
+                                                <option value="">Select</option>
+                                            </select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="DL">Driver License <sup> †</sup></label>
+                                            <input type="text" data-ng-model="ReferralDetail.DriverLicense" class="InputB form-control ellipsis" id="DL" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="DriverLicenseState">Driver License State</label>
+                                            <select ng-model="ReferralDetail.DriverLicenseStateID" id="DriverLicenseState" name="DriverLicenseState" class="form-control"
+                                                    ng-options="driverLicenseState.ID as driverLicenseState.Name for driverLicenseState in getLookupsByType('StateProvince')">
+                                                <option value="">Select</option>
+                                            </select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </ng-form>
+                        </div>
+                    </ng-form>
+                    @*--Contact Methods *@
+                    <div class="padding-top-small ">
+                        <h3 class="uppercase nomargin padding-xsmall border-top">Referrer Contact Method</h3>
+                    </div>
+                    <ng-form name="ctrl.referralMainForm.referralPhoneForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <!--Phone-->
+                        <div class="row padding-top-small ">
+                            @Html.Partial("../Shared/_Phone")
+                        </div>
+                    </ng-form>
+                    <ng-form name="ctrl.referralMainForm.referralEmailForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <!--EMail-->
+                        <div class="row section-block">
+                            @Html.Partial("../Shared/_Email")
+                        </div>
+                    </ng-form>
+                    <ng-form name="ctrl.referralMainForm.referralAddressForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <!--Address-->
+                        <div class="row padding-top-small">
+                            @Html.Partial("../Shared/_Address")
+                        </div>
+                    </ng-form>
+
+                    @* Save and Next *@
+                    @Html.Partial("../Shared/_ReferralActionControl")
+                    <div class="add_me">
+                        <plus-button tabindex="0" title="New Referral" reset="init();" table-id="reffralSummaryTable" iddpermission-key="{{permissionKey}}" permission="create"></plus-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row padding-small">
+            <table id="reffralSummaryTable" data-toggle="table"
+                   data-sort-order="desc"
+                   data-search="true"
+                   data-minimum-count-columns="2"
+                   data-filter-control="false"
+                   data-mobile-responsive="true"
+                   data-filter-bar
+                   data-advanced-search="false"
+                   data-classes="table table-stripe-borders"
+                   bootstrap-table="tableoptions" grid-arrow-selector>
+                <thead>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

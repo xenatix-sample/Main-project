@@ -1,0 +1,195 @@
+﻿<div class="row padding-right-small margin-bottom-3x padding-left-small">
+    <div class="program-flyout row-offcanvas-right row-offcanvas">
+        @Html.Partial("_ProgramUnit")
+    </div>
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form role="form" id="serviceDefinitionForm" name="serviceDefinitionForm" xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors)" bs-modifiable="true" set-form-status novalidate set-form-mode permission="{{resolvePermission(pageSecurity)}}" permission-key="{{permissionKey}}">
+                <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(pageSecurity)}}" permission-mode="readonly">
+                    <ng-form name="serviceDefinitionForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row section-block margin-bottom-xsmall">
+                            <div class="col-md-3 padding-bottom-small clear">
+                                <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : serviceDefinitionForm.ServiceCode.$invalid && !serviceDefinitionForm.ServiceCode.$pristine}">
+                                    <label for="ServiceCode">Service Code <sup>*</sup></label>
+                                    <input type="text" class="form-control ellipsis" id="ServiceCode" autofocus="autofocus" data-ng-model="serviceDefinition.ServiceCode" auto-focus
+                                           data-ng-trim="true" data-ng-required="true" name="ServiceCode" data-ng-maxlength="20" data-validation-name="Service Code" />
+                                    <p data-ng-show="serviceDefinitionForm.ServiceCode.$error.maxlength" data-ng-cloak class="error-block">Maximum 20 characters are allowed.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : serviceDefinitionForm.ServiceName.$invalid && !serviceDefinitionForm.ServiceName.$pristine}">
+                                    <label for="ServiceName">Service Name <sup>*</sup></label>
+                                    <input type="text" class="form-control ellipsis" id="ServiceName" autofocus="autofocus" data-ng-model="serviceDefinition.ServiceName" auto-focus
+                                           data-ng-trim="true" data-ng-required="true" name="ServiceName" data-ng-maxlength="100" data-validation-name="Service Name" />
+                                    <p data-ng-show="serviceDefinitionForm.ServiceName.$error.maxlength" data-ng-cloak class="error-block">Maximum 100 characters are allowed.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="ServiceType">Service Type</label>
+                                    <select data-ng-model="serviceDefinition.ServiceConfigServiceTypeID" id="ServiceType" class="form-control" data-ng-options="service.ID as service.Name for service in getLookupsByType('ServiceConfigType')">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row padding-top-small padding-bottom-small">
+                                <div class="col-md-12">
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : serviceDefinitionForm.effectiveDate.$invalid && !serviceDefinitionForm.effectiveDate.$pristine}">
+                                            <label for="effectiveDate">Effective Date</label>
+                                            <xen-date-picker id="effectiveDate" data-validation-name="Effective Date" data-compare-element-name="expirationDate" ng-model="serviceDefinition.EffectiveDate" end-date="serviceDefinition.ExpirationDate" greater-than-date-validation="true" name="effectiveDate" date-options="dateOptions" ignore-time="true"></xen-date-picker>
+                                            <p id="effectiveDateError" ng-cloak ng-show="serviceDefinitionForm.effectiveDate.$error.date" class="error-block">Effective Date is invalid.</p>
+                                            <p ng-show="serviceDefinitionForm.effectiveDate.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div id="expirationDateErrorId" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : serviceDefinitionForm.expirationDate.$invalid && !serviceDefinitionForm.expirationDate.$pristine}">
+                                            <label for="expirationDate">Expiration Date</label>
+                                            <xen-date-picker id="expirationDate" data-validation-name="Expiration Date" data-compare-element-name="effectiveDate" ng-model="serviceDefinition.ExpirationDate" start-date="serviceDefinition.EffectiveDate" less-than-date-validation="true" name="expirationDate" date-options="dateOptions" ignore-time="true"></xen-date-picker>
+                                            <p id="effectiveExpirationDateError" ng-cloak ng-show="serviceDefinitionForm.expirationDate.$error.date" class="error-block">Expiration Date is invalid.</p>
+                                            <p ng-show="serviceDefinitionForm.expirationDate.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : serviceDefinitionForm.ExpirationReason.$invalid && !serviceDefinitionForm.ExpirationReason.$pristine}">
+                                            <label for="ExpirationReason">Expiration Reason</label>
+                                            <input type="text" class="form-control ellipsis" id="ExpirationReason" autofocus="autofocus" data-ng-model="serviceDefinition.ExpirationReason" auto-focus event-focus="autoFocusEdit"
+                                                   data-ng-trim="true" name="ExpirationReason" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 nopadding-left padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <xen-checkbox ng-model="serviceDefinition.EncounterReportable" data-label="Encounter Reportable" ng-disabled="isReadOnlyForm " />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row section-block margin-bottom-xsmall">
+                            <div class="col-md-12 padding-bottom-small" ng-class="{ 'has-error' : serviceDefinitionForm.ServiceDefinition.$invalid && !serviceDefinitionForm.ServiceDefinition.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <xen-memobox label="Service Definition" rows="7" maxlength="500" ng-model="serviceDefinition.ServiceDefinition" id="ServiceDefinition" name="ServiceDefinition"></xen-memobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div>&nbsp;</div>
+                        <h3 class="uppercase nomargin padding-xsmall border-top">PROGRAM UNITS</h3>
+                        <!--Table start-->
+                        <div class="row margin-top-xsmall padding-left-xsmall">
+                            <a href="javascript:void(0)" title="Program Units" data-ng-click="openProgramFlyOut()" class="plain font-size-xlarge" role="button"><i class="fa fa-plus-circle"></i></a>
+                        </div>
+                        <div class="row padding-top-xsmall">
+                            <div class="col-md-12">
+                                <div class="bootstrap-table">
+                                    <div class="fixed-table-container">
+                                        <div class="fixed-table-body">
+                                            <table data-toggle="table"
+                                                   data-show-columns="false"
+                                                   data-search="true"
+                                                   data-minimum-count-columns="2"
+                                                   data-filter-control="false"
+                                                   data-mobile-responsive="true"
+                                                   data-advanced-search="false"
+                                                   class="table table-strip-borders combo-table form-group-lg"
+                                                   grid-arrow-selector>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Program Unit</th>
+                                                        <th>Eff. Date</th>
+                                                        <th>Exp. Date</th>
+                                                        @*Hidden for now as it isn't mentioned in the PBI 14007 and as per Bug 22095*@
+                                                        <th ng-hide="true">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="programUnit in serviceDefinition.ProgramUnitHierarchies">
+                                                        <td>
+                                                            {{ programUnit.Name }}
+                                                        </td>
+                                                        <td>
+                                                            <div ng-class="{ 'has-error' : serviceDefinitionForm.programUnitEffective{{$index}}.$invalid && !serviceDefinitionForm.programUnitEffective{{$index}}.$pristine }">
+                                                                <xen-date-picker id="programUnitEffective{{$index}}"
+                                                                                 name="programUnitEffective{{$index}}"
+                                                                                 ng-click="repositionDatepicker('programUnitEffective' + $index)"
+                                                                                 ng-model="programUnit.EffectiveDate"
+                                                                                 data-validation-name="Program Unit Effective Date for row {{$index+1}}"
+                                                                                 greater-than-date-validation="true"
+                                                                                 ignore-time="true"
+                                                                                 end-date="programUnit.ExpirationDate"
+                                                                                 data-compare-element-name="programUnitExpiration{{$index}}"
+                                                                                 past-date-validate="true">
+                                                                </xen-date-picker>
+                                                                <p ng-show="serviceDefinitionForm.programUnitEffective{{$index}}.$error.date" ng-cloak class="error-block">Effective date is invalid.</p>
+                                                                <p ng-show="serviceDefinitionForm.programUnitEffective{{$index}}.$error.pastDate" ng-cloak class="error-block">Effective date can't be Past Date.</p>
+                                                                <p ng-show="serviceDefinitionForm.programUnitEffective{{$index}}.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <div ng-class="{ 'has-error' : serviceDefinitionForm.programUnitExpiration{{$index}}.$invalid && !serviceDefinitionForm.programUnitExpiration{{$index}}.$pristine }">
+                                                                <xen-date-picker id="programUnitExpiration{{$index}}"
+                                                                                 name="programUnitExpiration{{$index}}"
+                                                                                 ng-click="repositionDatepicker('programUnitExpiration' + $index)"
+                                                                                 ng-model="programUnit.ExpirationDate"
+                                                                                 data-validation-name="Program Unit Expiration Date for row {{$index+1}}"
+                                                                                 less-than-date-validation="true"
+                                                                                 start-date="programUnit.EffectiveDate"
+                                                                                 ignore-time="true"
+                                                                                 data-compare-element-name="programUnitEffective{{$index}}"
+                                                                                 past-date-validate="true">
+                                                                </xen-date-picker>
+                                                                <p ng-show="serviceDefinitionForm.programUnitExpiration{{$index}}.$error.date" ng-cloak class="error-block">Expiration date is invalid.</p>
+                                                                <p ng-show="serviceDefinitionForm.programUnitExpiration{{$index}}.$error.pastDate" ng-cloak class="error-block">Expiration date can't be Past Date.</p>
+                                                                <p ng-show="serviceDefinitionForm.programUnitExpiration{{$index}}.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                                                            </div>
+                                                        </td>
+                                                        <td ng-hide="true" class="text-right">
+                                                            <a href="javascript:void(0);" class="font-size-xlarge" ng-if="!programUnit.ServiceID" ng-click="removeHierarchyAssignment($index)">
+                                                                <i class="fa fa-minus-circle"><span class="sr-only">Remove Hierarchy Assignment</span></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr ng-if="serviceDefinition.ProgramUnitHierarchies.length==0">
+                                                        <td colspan="4" style="text-align:center;font-size:large">
+                                                            No matching records found.
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>&nbsp</div>
+                        <h3 class="uppercase nomargin padding-xsmall border-top">NOTES</h3>
+                        <div>&nbsp</div>
+                        <div class="col-md-12 padding-bottom-small" ng-class="{ 'has-error' : serviceDefinitionForm.Note.$invalid && !serviceDefinitionForm.Note.$pristine }">
+                            <div class="form-group-lg padding-bottom-small">
+                                <xen-memobox label="Note" rows="7" maxlength="500" ng-model="serviceDefinition.Notes" id="Note" name="Note"></xen-memobox>
+                            </div>
+                        </div>
+                    </ng-form>
+                </div>
+                <div class="row padding-top-small">
+                    <div class="col-lg-6 col-md-6">
+                        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                        <xen-submit id="serviceDefinitionSave" name="serviceDefinitionSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="{{permissionKey}}" permission="{{resolvePermission(pageSecurity)}}"></xen-submit>
+                        <xen-submit id="serviceDefinitionNext" name="serviceDefinitionNext" value="NEXT" is-next="true" mandatory="true" style="btn btn-default btn-lg prevent-disable" permission-key="{{permissionKey}}" permission="read" no-secuirty></xen-submit>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+<ng-form set-form-status="child" name="signatureForm">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : signatureForm.StaffName.$invalid && !signatureForm.StaffName.$pristine }">
+                <label for="StaffName">Staff Name</label>
+                <input type="text" id="StaffName" name="StaffName" ng-model="signature.UserFullName" ng-required="false" clean="true" ng-disabled="true" class="form-control ellipsis" />
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : signatureForm.Credentail.$invalid && !signatureForm.Credentail.$pristine }">
+                    <label for="Credentail"><span class="text-nowrap">Credential <sup>{{ isDigitalSignatureConditionallyRequired ? '&#134' : '*'}}</sup></span> </label>
+                    <table ng-show="isInactive">
+                        <tr ng-repeat="userCredential in userCredentials | filter: {CredentialID: signature.CredentialID}">
+                            <td>
+                                <p class="readonly-text">{{userCredential.CredentialName}}</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <select ng-hide="isInactive" ng-disabled="isCredentialReadonly || isReadOnlyForm" ng-model="signature.CredentialID" id="idCredential" name="ServiceType" class="form-control" ng-required="false"
+                            ng-options="creden.CredentialID as creden.CredentialName for creden in userCredentials | orderBy:'CredentialName'" ng-change="checkPermission()">
+                        <option value="">Select</option>
+                    </select>
+                    <span ng-hide="isInactive" class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 padding-bottom-small" ng-hide="isPasswordHide">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : signatureForm.DigitalPassword.$invalid && !signatureForm.DigitalPassword.$pristine }">
+                    <label for="DigitalPassword">Digital <span class="text-nowrap">Password <sup>{{ isDigitalSignatureConditionallyRequired ? '&#134' : '*'}}</sup></span></label>
+                    <input type="password" id="DigitalPassword" name="Password" ng-model="signature.Password" ng-required="false" clean="true" ng-disabled="isPasswordReadonly" class="form-control ellipsis" />
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 padding-bottom-small">
+                <div id="signedDateErrortd" class="form-group-lg padding-bottom-small">
+                    <label for="DateSigned">Date Signed</label>
+                    <input type="text" id="idDateSigned" name="DateSigned" ng-model="signature.DateSigned" ng-required="false" clean="true" ng-disabled="true" class="form-control ellipsis" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 padding-bottom-small" ng-if="!isSigned">
+                <div class="form-group-lg padding-top-xsmall padding-bottom-small">
+                    <span ng-show="!hasPermission" class="small text-center error-block">This Credential <span class="text-nowrap">cannot sign</span></span>
+                    <button type="button" id="callCenterSave" ng-disabled="isReadOnlyForm" ng-hide="(isSigned || !hasPermission)" class="btn btn-default btn-inline btn-sm uppercase" ng-click="verifySignature()" name="btnSign">
+                        Sign
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+ <ng-form />

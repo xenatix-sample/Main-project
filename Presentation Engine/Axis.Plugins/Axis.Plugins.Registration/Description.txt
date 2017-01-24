@@ -1,0 +1,8 @@
+﻿Group: Axis.Plugins.Registration
+FriendlyName: Axis.Plugins.Registration
+SystemName: Axis.Plugins.Registration
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 1
+FileName: Axis.Plugins.Registration.dll

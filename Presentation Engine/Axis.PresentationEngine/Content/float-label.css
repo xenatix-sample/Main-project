@@ -1,0 +1,33 @@
+﻿
+/*  Directive: Float Label  */
+
+.input-label {
+    color: #777;
+    font-size: 16px;
+    font-weight: bold;
+    left: 12px;
+    pointer-events: none;
+    position: absolute;
+    top: 7px;
+    transition: 0.4s ease all;
+    z-index: 20;
+}
+
+.input-label.shrink {
+    color: #EEE;
+    font-size: 10px;
+    left: 5px;
+    top: -14px;
+}
+
+/*.form-control:focus ~ .input-label,
+.form-control:not(.empty) ~ .input-label {
+    top: -15px;
+    left: 0;
+    font-size: 11px;
+    opacity: 1;
+}
+
+.form-control.empty ~ .input-label  {
+    opacity: 1;
+}*/

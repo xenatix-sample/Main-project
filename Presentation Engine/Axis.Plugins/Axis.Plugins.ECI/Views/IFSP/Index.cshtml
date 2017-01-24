@@ -1,0 +1,56 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)" enter-key-stop=" enterkeystop" permission-key="ECI-IFSP-IFSP" permission="{{resolvePermission(ifsp.IFSPID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+
+        <form role="form" id="ifspForm" name="ctrl.ifspForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate data-ng-submit="ctrl.ifspForm.$valid" bs-modifiable="true">
+            {{ctrl.ifspForm.modified ? setform(true):setform(false)}}
+
+            <div class="col-md-12">
+                <div security permission-key="ECI-IFSP-IFSP" permission="{{resolvePermission(ifsp.IFSPID)}}" permission-mode="readonly">
+                    <div ui-view>
+                    </div>
+                    @Html.Partial("../Shared/_IFSPHeader")
+                </div>
+            </div>
+        </form>
+        <div class="row padding-top-small">
+            <div class="col-lg-6 col-md-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, false, false)" id="ifspSave" name="btnSave" security permission-key="ECI-IFSP-IFSP" permission="{{resolvePermission(ifsp.IFSPID)}}">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, false, true)" id="btnNext" name="btnNext" security permission-key="ECI-IFSP-IFSP" permission="{{resolvePermission(ifsp.IFSPID)}}">NEXT</button>
+            </div>
+        </div>
+        <div class="add_me">
+            <plus-button title="New IFSP" reset="newIFSP()" save="safeSubmit(false, true, false)" permission-key="ECI-IFSP-IFSP" permission="create" table-id="ifspTable"></plus-button>
+        </div>
+        <div class="row padding-top-small padding-bottom-small ng-cloak">
+            <div class="col-md-12">
+                <table id="ifspTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="IFSPMeetingDate" data-sortable="true">MeetingDate</th>
+                            <th data-field="IFSPType" data-sortable="true">IFSP Type</th>
+                            <th data-field="IFSPFamilySignedDate" data-sortable="true">Family Signed Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="topazModel.b64ImageData.length > 1" style="display: none;">
+    <pdf-maker report-id="ifspReport" report-name="RiskFactors" report-data="reportModel" report-width="550px" report-height="700px" />
+</div>

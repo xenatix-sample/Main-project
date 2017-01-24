@@ -1,0 +1,109 @@
+﻿<div class="row row-offcanvas row-offcanvas-right row-onscreen height-fix" ng-switch="displayFlyout">
+    <flyout-contact ng-switch-when="CONTACT" data-contact-model="contactModel"></flyout-contact>
+    <flyout-recorded-service-void ng-switch-when="SERVICEVOID" data-void-service="voidService()" data-void-model="voidModel"></flyout-recorded-service-void>
+
+    <div class="col-lg-12">
+        <keypress-events on-add="addNew()" ignore-enter="true" permission-key="CrisisLine-CrisisLine-CrisisLine" permission="create"></keypress-events>
+
+        <div class="ng-cloak">
+            <div class="jumbotron">
+                <form class="form-inline" name="searchForm" data-ng-submit="searchForm.$valid">
+                    <div class="container-fluid padding-small">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg">
+                                <input type="text" name="CallCenterSummary" id="txtCallCenterSummary" auto-focus event-focus="autoFocus" ng-model="searchText"
+                                        placeholder="Search" tabindex="0" class="form-control" ng-keydown ="($event.which === 13) ? ctrl.searchCallCenter(searchText):0" security permission-key="CrisisLine-CrisisLine-CrisisLine" permission="read">
+                                <span class="input-group-btn">
+                                    <button type="submit" ng-click="searchForm.$valid ? ctrl.searchCallCenter(searchText) : null" class="btn btn-link">
+                                        <i class="fa fa-search fa-fw"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel panel-primary panel-main margin-bottom-2x">
+                <div class="panel-body nopadding-top">
+                    <div class="add_me w-header-button">
+                        <plus-button title="New Crisis" permission-key="CrisisLine-CrisisLine-CrisisLine" permission="create" href="javascript:void(0);" ui-sref="callcenter.crisisline.initialcallerinformation({ReadOnly:'edit'})"></plus-button>
+                    </div>
+                    <div class="table-header-button">
+                        <button type="button"
+                                class="btn btn-default btn-sm"
+                                ng-click="ctrl.changeView(!ctrl.isNormalView)"
+                                security
+                                permission-key="CrisisLine-CrisisLine-Approver"
+                                permission="create">
+                            <span class="icon-{{ctrl.btnCaption}}">{{ctrl.btnCaption}}</span>
+                        </button>
+                    </div>
+                    <div class="table-custom-filters">
+                        <select ng-disabled="isReadOnlyForm"
+                                ng-model="CallStatusID"
+                                id="CallStatus"
+                                name="CallStatus"
+                                class="form-control"
+                                ng-options="callStatus.ID as callStatus.Name for callStatus in ctrl.statusFilter()"
+                                ng-change="ctrl.filterData()">
+                            <option value="" ng-selected="selected">Call Status (all)</option>
+                        </select>
+                        <select ng-disabled="isReadOnlyForm"
+                                ng-show="!ctrl.isNormalView"
+                                ng-model="ProviderSubmittedBy"
+                                id="Provider"
+                                name="Provider"
+                                class="form-control"
+                                ng-options="users.Name for users in getLookupsByType('Users') | orderBy:'Name'"
+                                ng-change="ctrl.filterData()">
+                            <option value="" ng-selected="selected">Provider (all)</option>
+                        </select>
+                    </div>
+
+                    <div class="row padding-small">
+                        <table id="callCenterSummaryTable" data-toggle="table"
+                               data-sort-name="EndDate"
+                               data-sort-order="desc"
+                               data-show-columns="true"
+                               data-search="true"
+                               data-minimum-count-columns="2"
+                               data-filter-control="false"
+                               data-mobile-responsive="true"
+                               data-filter-bar
+                               data-advanced-search="false"
+                               data-show-multi-sort="true"
+                               data-classes="table table-stripe-borders"
+                               bootstrap-table="ctrl.tableoptions" grid-arrow-selector>
+                            <thead>
+                            </thead>
+                        </table>
+                        <div class="table-footer-buttons col-md-12 nopadding-left padding-top-xsmall" ng-if="!ctrl.isNormalView">
+                            <button type="button"
+                                    class="btn btn-default btn-sm"
+                                    ng-click="ctrl.reviewSelected()"
+                                    security
+                                    permission-key="CrisisLine-CrisisLine-CrisisLine"
+                                    permission="update">
+                                <i class="fa fa-search"></i> Review Selected
+                            </button>
+                            <button type="button"
+                                    class="btn btn-default btn-sm"
+                                    id="approve"
+                                    ng-click="ctrl.confirm()"
+                                    security
+                                    permission-key="CrisisLine-CrisisLine-CrisisLine"
+                                    permission="update">
+                                <i class="fa fa-check"></i> Approve Selected
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("../Shared/_FollowUpHistory")
+</div>

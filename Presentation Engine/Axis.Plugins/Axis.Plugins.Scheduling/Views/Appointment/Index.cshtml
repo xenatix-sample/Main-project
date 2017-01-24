@@ -1,0 +1,127 @@
+﻿<keypress-events on-add="addNew()" on-save="save()" on-next="save(1)" on-cancel="cancel()" permission-key="Scheduling-Appointment-SingleAppointment" permission="create" permission-mode="readonly"></keypress-events>
+
+<keypress-events on-save="safeSubmit(false, true)" ignore-enter="true"></keypress-events>
+<div class="row padding-left-small">
+    <breadcrumbs min-breadcrumbs="2" goto="patientprofile" />
+</div>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+
+        <div class="modal fade" id="cancelGroupScheduleModel" tabindex="-1" role="dialog" aria-labelledby="cancelGroupScheduleModel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close" ng-click="cancelModal();"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Cancel Appointment(s)</h4>
+                    </div>
+                    <div security permission-key="Scheduling-Appointment-SingleAppointment" permission="delete" permission-mode="readonly">
+                        <form role="form" id="cancelAppointmentForm" name="ctrl.cancelAppointmentForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" novalidate bs-modifiable="true" set-form-status set-form-mode>
+                            {{ctrl.cancelAppointmentForm.modified ? setform(true):setform(false)}}
+                            <div class="modal-body">
+                                <div class="form-group-lg padding-bottom-small" ng-if="appointmentToCancel.RecurrenceID !== null">
+                                    <span><xen-radio-button data-ng-model="appointmentToCancel.IsCancelAllAppoitment" data-radio-button-id="appointmentAll" data-label="All Appointments" data-ng-value="true" /></span>
+                                    <span><xen-radio-button data-ng-model="appointmentToCancel.IsCancelAllAppoitment" data-radio-button-id="appointmentSelected" data-label="Selected Appointments" data-ng-value="false" /></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.cancelAppointmentForm.appointmentCancelReason.$invalid && !ctrl.cancelAppointmentForm.appointmentCancelReason.$pristine }">
+                                            <label for="Program">Cancel Reason <sup>*</sup></label>
+                                            <select data-ng-model="appointmentToCancel.CancelReasonID" class="form-control prevent-disable" id="appointmentCancelReason" name="appointmentCancelReason" ng-required="true"
+                                                    ng-options="reason.ID as reason.Name for reason in getLookupsByType('CancelReason')">
+                                                <option value="">Select</option>
+                                            </select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="">
+                                            <xen-memobox label="Comment" rows="5" maxlength="400" ng-model="appointmentToCancel.CancelComment" name="cancelComment" id="cancelComment"></xen-memobox>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row text-right nopadding-left padding-right-small">
+                                    <button type="button" id="cancelAppointmentSave" class="btn btn-default btn-lg" name="btnSave" ng-click="save(false, true)" security permission-key="Scheduling-Appointment-SingleAppointment" permission="delete">SAVE</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editSingleOrRecurrentAptModal" tabindex="-1" role="dialog" aria-labelledby="editSingleOrRecurrentAptModal" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close" ng-click="cancelSingleOrRecurrentModal();"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Open Recurring Appointment</h4>
+                    </div>
+                    <form role="form" id="editSingleOrRecurrentAptForm" name="ctrl.editSingleOrRecurrentAptForm" check-form novalidate bs-modifiable="true" set-form-status set-form-mode>
+                        {{ctrl.cancelAppointmentForm.modified ? setform(true):setform(false)}}
+                        <div class="modal-body">
+                            <div class="form-group-lg padding-bottom-small">
+                                <span><xen-radio-button data-ng-model="appointmentToEdit.IsRecurrentAppointment" data-radio-button-id="appointmentAll" data-label="All Appointments" data-ng-value="true" /></span>
+                                <span><xen-radio-button data-ng-model="appointmentToEdit.IsRecurrentAppointment" data-radio-button-id="appointmentSelected" data-label="Selected Appointment" data-ng-value="false" /></span>
+                            </div>
+
+                            <div class="row text-right nopadding-left padding-right-small">
+                                <button type="button" id="editSingleOrRecurrentAptOpen" class="btn btn-default btn-lg" name="editSingleOrRecurrentAptOpen" ng-click="editSingleOrRecurrigAppt()" security permission-key="Scheduling-Appointment-SingleAppointment" permission="update">OPEN</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="add_me">
+            <div class="icon-label">
+                <a ng-hide="" href="unsafe:javascript: void(0) javascript:void(0)" class="plain font-size-xlarge" role="button" security permission-key="Scheduling-Appointment-SingleAppointment" permission="create" title="Single Appointment" ng-click="addNew()" style="display: block;"><i class="fa fa-plus-circle"></i> <span>Single Appointment</span></a>
+
+                <a ng-hide="" href="unsafe:javascript: void(0) javascript:void(0)" class="plain font-size-xlarge" role="button" security permission-key="Scheduling-Appointment-GroupAppointment" permission="create" title="Group Scheduling" ng-click="Goto('scheduling.groupschedulingsearch')" style="display: block;"><i class="fa fa-plus-circle"></i> <span>Group Appointment</span></a>
+            </div>
+        </div>
+
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+                <table id="appointmentTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="AppointmentStatusID"
+                                data-sortable="true">Status</th>
+                            <th data-field="AppointmentDate"
+                                data-sortable="true">Day</th>
+                            <th data-field="AppointmentDate"
+                                data-sortable="true">Date</th>
+                            <th data-field="Start"
+                                data-sortable="true">Start</th>
+                            <th data-field="End"
+                                data-sortable="false">End</th>
+                            <th data-field="AppointmentType"
+                                data-sortable="false">Appointment Type</th>
+                            <th data-field="ProviderName"
+                                data-sortable="false">Provider</th>
+                            <th data-field="LocationName"
+                                data-sortable="false">Location</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

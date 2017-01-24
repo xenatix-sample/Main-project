@@ -1,0 +1,54 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)" on-add="newReferralFollowup()" enter-key-stop="enterKeyStop" stop-next="stopNext" save-on-enter="saveOnEnter" close-modal="true" stop-save="stopSave" on-cancel="CancelReferral()" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}"></keypress-events>
+<div class="row">
+    <breadcrumbs min-breadcrumbs="2" goto="referralsearch" />
+</div>
+<div class="row padding-right-small">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form role="form" name="ctrl.referralForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" set-form-status>
+                <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}" permission-mode="readonly">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div ui-view>
+                            </div>
+                            @Html.Partial("_Intake")
+                        </div>
+                    </div>
+                </div>
+                @Html.Partial("../Shared/_ReferralActionControl")
+                <div class="add_me">
+                    <plus-button is-disabled="{{isReadOnlyForm}}" title="New referral follow up" save="safeSubmit(false, false)"  permission-key="Registration-Registration-Referral" permission="create" reset="newReferralFollowup()"></plus-button>
+                </div>
+                <div class="row padding-top-small padding-bottom-small">
+                    <div class="col-md-12">
+                        <table id="referralFollowupTable" data-toggle="table"
+                               data-show-columns="true"
+                               data-search="true"
+                               data-minimum-count-columns="2"
+                               data-filter-control="false"
+                               data-mobile-responsive="true"
+                               data-filter-bar
+                               data-advanced-search="false"
+                               data-show-multi-sort="true"
+                               data-classes="table table-stripe-borders"
+                               bootstrap-table="tableoptions" grid-arrow-selector>
+                            <thead>
+                                <tr>
+                                    <th data-field="FollowupExpected"
+                                        data-sortable="true">Follow Up Expected</th>
+                                    <th data-field="FollowupProviderID"
+                                        data-sortable="true">Provider</th>
+                                    <th data-field="FollowupDate"
+                                        data-sortable="true">Followup Date</th>
+                                    <th data-field="IsAppointmentNotified"
+                                        data-sortable="true">Client Notified</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

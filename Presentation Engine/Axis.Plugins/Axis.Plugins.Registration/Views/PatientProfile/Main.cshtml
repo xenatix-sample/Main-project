@@ -1,0 +1,67 @@
+﻿<div class="container-fluid">
+    <!-- adding row-offcanvas -class for both photo and void layout -->
+    <div id="patientProfileFlyout" ng-class="{'row-offcanvas-left': true, 'row-offcanvas offcanvas-fixed' : isPhotoChangeFlyout, 'row-offcanvas':isVoidedFlyout };">
+        <flyout-recorded-service-void ng-show="isVoidedFlyout" data-void-model="voidModel" data-reload-grid="reloadGrid(callCenterHeaderID,isCreateCopy)"></flyout-recorded-service-void>
+
+        @* upload photo slideout panel *@
+        <form role="form" name="ctrl.photoForm" novalidate xen-check-form data-on-save="save(isNext, isMandatory, hasErrors)" stop-save="stopSave" stop-next="stopNext" permission-key="Registration-Registration-Demographics" permission="create" server-validate="ServerValidationErrors" set-form-status bs-modifiable="true" set-form-mode>
+            <div security permission-key="{{permissionKey}}" permission="create" permission-mode="readonly">
+                <div id="divPhotoView" ng-show="isPhotoChangeFlyout">
+                    <div class="sidebar-offcanvas photo-change">
+                        <div class="panel panel-default nomargin-top">
+                            <div class="row nopadding-right">
+                                <div class="col-lg-12">
+                                    <h2>Change Photo</h2>
+                                    <button type="button" class="navbar-toggle nopadding-right" ng-click="closePhotoChange($event)"><span class="sr-only">Toggle panel</span></button>
+                                </div>
+                            </div>
+                            <photo-profile output-height="185"
+                                           output-width="356"
+                                           viewer-height="105"
+                                           viewer-width="275"
+                                           image-format="jpeg"
+                                           jpeg-quality="100"
+                                           flash-fallback-url="~/Scripts/plugins/camera media/webcam.swf"
+                                           overlay-url="~/Scripts/plugins/camera media/overlay.png"
+                                           shutter-url="~/Scripts/plugins/camera media/shutter.mp3"
+                                           module="Contact"
+                                           picture="picture"
+                                           photos="contactPhotos"
+                                           preview="preview"
+                                           on-delete="delete(contactPhotoId)"
+                                           on-set-as-photo="setAsPhoto(contactPhotoId)"
+                                           on-set-preview-as-photo="setPreviewAsPhoto()"
+                                           on-donot-use-photo="donotUsePhoto()">
+                            </photo-profile>
+
+                            <div class="row nomargin padding-xsmall">
+                                <div class="col-md-12 border-top padding-top-xxsmall nopadding-right nopadding-left">
+                                    <button type="button" id="photoClose" name="photoClose" class="btn btn-default" ng-click="closePhotoChange($event)">CLOSE</button>
+                                    <xen-submit id="photoSave" name="save" value="SAVE" is-next="false" mandatory="true" style="btn btn-default" permission-key="Registration-Registration-Demographics" permission="create"></xen-submit>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12">
+        <div class="col-lg-9 col-md-9 nopadding-left nopadding-right">
+            <div class="panel nopadding profile" ng-cloak>
+                <div class="panel-body">
+                    <load-view data="viewURL" data-callback="viewLoaded"></load-view>
+
+                    <div class="row">
+                        <breadcrumbs min-breadcrumbs="3" />
+                    </div>
+                    <div ui-view class="row padding-right-small tiles">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 right-nav" ui-view="navigation">
+            @Html.Partial("../Shared/_PatientProfileNavigation")
+        </div>
+    </div>
+</div>

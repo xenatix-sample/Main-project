@@ -1,0 +1,52 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" on-add="init()" permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="{{resolvePermission(medicalHistory.MedicalHistoryID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="{{resolvePermission(medicalHistory.MedicalHistoryID)}}" permission-mode="readonly">
+            <form role="form" name="ctrl.medicalHistoryForm" novalidate ng-submit="ctrl.medicalHistoryForm.$valid" server-validate="ServerValidationErrors"
+                  bs-modifiable="true" check-form data-on-save="save(isNext, isMandatory, hasErrors)">
+                {{ctrl.medicalHistoryForm.modified ? setform(true):setform(false)}}
+                @Html.Partial("../Shared/_TakenDetails")
+            </form>
+        </div>
+        <div class="row padding-top-small">
+            <div class="col-lg-6 col-md-6">
+                <p class="uppercase subtext">
+                    <sup>*</sup> Indicates a required field
+                </p>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+                <button type="button" id="medicalHistorySave" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" name="btnSave" security permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="{{resolvePermission(medicalHistory.MedicalHistoryID)}}">SAVE</button>
+                <button type="button" id="medicalHistoryNext" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" name="btnNext" security permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="{{resolvePermission(medicalHistory.MedicalHistoryID)}}">NEXT</button>
+            </div>
+        </div>
+        <div class="add_me">
+            <plus-button title="New Medical History" permission-key="Clinical-MedicalHistory-MedicalHistory" permission="create" save="safeSubmit(false, true)" reset="init()" table-id="medicalHistoryTable"></plus-button>
+        </div>
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+                <table id="medicalHistoryTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+
+                            <th data-field="TakenBy"
+                                data-sortable="true">Taken By</th>
+                            <th data-field="TakenTime"
+                                data-sortable="true">Taken Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+﻿@{
+    Layout = null;
+}
+<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)"></keypress-events>
+<div class="panel panel-light padding-xsmall margin-bottom-3x">
+    <div class="panel-body">
+        <div class="row padding-small nopadding-top consent">
+            <form role="form" name="ctrl.assessmentForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" set-form-status set-form-mode>
+
+                <div id="aseHeader">
+                    <!-- HeaderTemplate content will be injected here -->
+                    <div id="aseSubHeader" class="">
+                        <numbering>
+                            <h1>{{assessmentQuestions[0].Question}}</h1>
+                        </numbering>
+                    </div>
+                </div>
+
+                <div id="aq_0" class="divtable">
+                    <div class="row">
+                        <p>{{assessmentQuestions[1].Question}}</p>
+                        <ul class="fa-ul">
+                            <li class="ng-scope"><i class="fa-li fa fa-check-square"></i>{{assessmentQuestions[2].Question}}</li>
+                            <li class="ng-scope"><i class="fa-li fa fa-check-square"></i>{{assessmentQuestions[4].Question}}</li>
+                            <li class="ng-scope"><i class="fa-li fa fa-check-square"></i>{{assessmentQuestions[3].Question}}</li>
+                        </ul>
+                    </div>
+                    @*Individual's Signature: Block*@
+                    <div class="row padding-top-small">
+                        <div class="col-md-8 col-sm-6 col-xs-6">
+                            <p>{{assessmentQuestions[6].Question}}</p>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <p>{{assessmentQuestions[7].Question}}</p>
+                        </div>
+
+                        <div class="col-md-8 col-sm-6 col-xs-6 clear">
+                            <label>{{contactName}}</label>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <input type="text" ng-model="responses[857][17]" ng-disabled="true" />
+                        </div>
+
+                    </div>
+
+                    <div class="row ase-signature padding-bottom">
+                        <p>{{assessmentQuestions[8].Question}}</p>
+                        <div class="row">
+                            <e-signature data-topaz-model="eSignature[SIGN_TYPE.Individual].topazModel" data-topaz-ready="isTopazReady"  />
+                        </div>
+                    </div>
+                    @*Legally Authorized Representative Signature: Block*@
+
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-6">
+                            <p>{{assessmentQuestions[9].Question}}</p>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <p>{{assessmentQuestions[10].Question}}</p>
+                        </div>
+
+                        <div class="col-md-8 col-sm-6 col-xs-6 padding-bottom-small clear">
+                            <input type="text" data-ng-model="responses[859][17]" />
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6 padding-bottom-small">
+                            <input type="text" ng-model="responses[860][17]" ng-disabled="true" />
+                        </div>
+                    </div>
+
+                    <div class="row ase-signature">
+                        <p>{{assessmentQuestions[11].Question}}</p>
+                        <div class="row">
+                            <e-signature data-topaz-model="eSignature[SIGN_TYPE.Authorized].topazModel" data-topaz-ready="isTopazReady"  />
+                        </div>
+                    </div>
+
+                    <div class="row padding-top-xsmall padding-bottom border-top">
+                        <p>{{assessmentQuestions[16].Question}}</p>
+                        <p>{{assessmentQuestions[12].Question}}</p>
+                        <xen-memobox data-ng-model="responses[862][17]" row="5" maxlength="500" name="{{assessmentQuestions[12].Question}}" />
+                    </div>
+                    @*STAFF*@
+
+                    <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-6">
+                            <p>{{assessmentQuestions[13].Question}}</p>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <p>{{assessmentQuestions[14].Question}}</p>
+                        </div>
+
+                        <div class="col-md-8 col-sm-6 col-xs-6 clear">
+                            <label>{{CurrentUser}}</label>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <input type="text" ng-model="responses[864][17]" ng-disabled="true" />
+                        </div>
+                    </div>
+                    <div class="row ase-signature">
+                        <p>{{assessmentQuestions[15].Question}}</p>
+                        <div class="row">
+                            <e-signature data-topaz-model="eSignature[SIGN_TYPE.Staff].topazModel" data-topaz-ready="isTopazReady"  />
+                        </div>
+                    </div>
+
+                    <div class="row padding-top-xsmall border-top">
+                        <div class="col-md-12 padding-bottom-small"><p></p> </div>
+                        <div class="col-md-12 padding-bottom-small"><p>{{assessmentQuestions[17].Question}} </p></div>
+                        <div class="col-md-12"><p>{{assessmentQuestions[18].Question}}</p> </div>
+                        <div class="col-md-12 padding-bottom-small"><input type="text" data-ng-model="responses[868][17]" /> </div>
+                    </div>
+                    <div class="row padding-top-small">
+                        <div class="col-md-8 col-sm-6 col-xs-6">
+                            <p>{{assessmentQuestions[19].Question}}</p>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <p>{{assessmentQuestions[20].Question}}</p>
+                        </div>
+
+                        <div class="col-md-8 col-sm-6 col-xs-6 clear">
+                            <label>{{CurrentUser}}</label>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <input type="text" ng-model="responses[870][17]" ng-disabled="true" />
+                        </div>
+                    </div>
+                    <div class="row padding-top-small">
+                        <p>{{assessmentQuestions[21].Question}}</p>
+                        <div class="row ase-signature">
+                            <e-signature data-topaz-model="eSignature[SIGN_TYPE.StaffLast].topazModel" data-topaz-ready="isTopazReady"  />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row padding-top-small">
+                    <div class="col-lg-6">
+                        <p class="uppercase subtext">
+                            <sup>*</sup> Indicates a required field
+                        </p>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button type="button" id="saveAssessment" name="saveAssessment" class="btn btn-default btn-lg" ng-click="safeSubmit(false, false, false)" >SAVE</button>
+                        @*<button type="button" id="nextAssessment" name="nextAssessment" class="btn btn-default btn-lg prevent-disable" ng-click="safeSubmit(true, false, true)">NEXT</button>*@
+                        <button type="button" id="printAssessment" name="printAssessment" ng-click="onPrintReport()" class="btn btn-default btn-lg" ng-if="isPrintReportRequired" >PRINT</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div ng-if="isPrintReportRequired" class="modal fade" id="reportModal" role="dialog" aria-labelledby="reportModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-top: 1px;">
+                <button type="button" id="closePopup" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="roleHeader">{{ reportModel.ReportHeader }}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-show="!reportModel.HasLoaded">
+                    <div class="loading text-center padding-top padding-bottom">
+                        <i class="fa fa-spinner fa-spin"><span class="sr-only">Report is loading</span></i>
+                    </div>
+                </div>
+                <div ng-if="reportModel.HasLoaded" style="height: 800px;">
+                    <pdf-maker report-id="assessementReport" report-name="{{ reportModel.ReportName }}" report-data="reportModel" report-width="100%" report-height="100%" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

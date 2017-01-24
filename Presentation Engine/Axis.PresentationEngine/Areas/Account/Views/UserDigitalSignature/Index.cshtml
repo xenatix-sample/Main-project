@@ -1,0 +1,119 @@
+﻿<div class="panel panel-light padding-xsmall">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form role="form" id="userDigitalSignatureForm" name="ctrl.userDigitalSignatureForm" novalidate xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status="ctrl.userSecurityForm" bs-modifiable="true" set-form-mode>
+                <h3 class="uppercase nomargin padding-xsmall border-top">Digital Signature</h3>
+                @*Print Signature block*@
+                <div class="row padding-top-small">
+                    <div class="col-lg-12">
+                        <div class="col-md-6 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="printSignature">My Signature</label>
+                                <input type="text" class="form-control ellipsis" clean="true" ng-model="userProfile.PrintSignature" id="printSignature" name="printSignature"
+                                       data-validation-name="My Signature" data-ng-maxlength="100" data-ng-trim="true" />
+                                <p data-ng-show="ctrl.userDigitalSignatureForm.printSignature.$error.maxlength" class="error-block">My Signature is too long</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Topaz Signature block*@
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="uppercase subtext padding-left-small">My Electronic Signature</p>
+                    </div>
+                </div>
+                <ng-form name="ctrl.userDigitalSignatureForm.signatureCanvasForm" novalidate bs-modifiable="true" set-form-status="child">
+                    <div class="row padding-left-small padding-bottom-small">
+                        <e-signature data-topaz-model="topazModel" data-topaz-ready="isTopazReady" />
+                    </div>
+                </ng-form>
+
+                @*Digital Password block*@
+                <div class="row section-block margin-top-small">
+                    <div class="row padding-left">
+                        <div class="col-md-4 col-lg-3 padding-bottom-small" ng-show="(userProfile.PrintSignature != '' && topazModel.b64ImageData != '')">
+                            <div class="form-group-lg padding-bottom-small">
+                                <button type="button" class="btn btn-default btn-inline btn-sm" ng-click="enableDigitalPasswordFields()" id="btnchangeDigitalPassword" name="btnchangeDigitalPassword" readonly="readonly">
+                                    Create/Change Digital Password
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-left">
+                        <div class="col-md-4 col-lg-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userDigitalSignatureForm.newDigitalPassword.$invalid && !ctrl.userDigitalSignatureForm.newDigitalPassword.$pristine }">
+                                <label for="newDigitalPassword">New Digital Password <sup ng-show="!enableDigitalPasswordsButton">*</sup></label>
+                                <input type="password" class="form-control ellipsis" data-validation-name="New Digital Password" clean="true" ng-model="userProfile.NewDigitalPasswordNonEncrypt" id="newDigitalPassword" name="newDigitalPassword" data-validation-name="new digital password" ng-minlength="6" ng-maxlength="20"
+                                       ng-disabled="enableDigitalPasswordsButton" ng-required="!enableDigitalPasswordsButton" />
+                                <p ng-show="ctrl.userDigitalSignatureForm.newDigitalPassword.$error.minlength" class="error-block">Digital Password must be at least 6 characters long</p>
+                                <p ng-show="ctrl.userDigitalSignatureForm.newDigitalPassword.$error.maxlength" class="error-block">Digital Password cannot be longer than 20 characters</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userDigitalSignatureForm.confirmDigitalPassword.$invalid && !ctrl.userDigitalSignatureForm.confirmDigitalPassword.$pristine }">
+                                <label for="confirmDigitalPassword">Confirm Digital Password <sup ng-show="!enableDigitalPasswordsButton">*</sup></label>
+                                <input type="password" class="form-control ellipsis" data-validation-name="Confirm Digital Password" clean="true" ng-model="userProfile.ConfirmDigitalPasswordNonEncrypt" id="confirmDigitalPassword" name="confirmDigitalPassword" data-validation-name="confirm digital password"
+                                       ng-minlength="6" ng-maxlength="20" ng-disabled="enableDigitalPasswordsButton" ng-required="!enableDigitalPasswordsButton" />
+                                <p ng-show="ctrl.userDigitalSignatureForm.confirmDigitalPassword.$error.minlength" class="error-block">Digital Password must be at least 6 characters long</p>
+                                <p ng-show="ctrl.userDigitalSignatureForm.confirmDigitalPassword.$error.maxlength" class="error-block">Digital Password cannot be longer than 20 characters</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding-top-small">
+                    <div class="col-lg-6">
+                        <p class="uppercase subtext">
+                            <sup>*</sup> Indicates a required field
+                        </p>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <xen-submit id="btnSave" name="btnSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg"></xen-submit>
+                        <xen-submit id="btnNext" name="btnNext" value="NEXT" is-next="true" mandatory="true" style="btn btn-default btn-lg"></xen-submit>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="securityQestionVerifyModal" role="dialog" aria-labelledby="securityQestionVerifyModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <form role="form" name="ctrl.roleForm" id="ctrl.roleForm" data-on-save="save(isNext, isMandatory, hasErrors)" xen-check-form novalidate set-form-status bs-modifiable="true" set-form-mode>
+                <div class="modal-header" style="margin-top:1px;">
+                    <button type="button" id="closePopup" class="close" ng-click="cancelSecurityVerification()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="roleHeader">Security Verification</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="selectedSecurityQuestion">Security Question</label>
+                                <input type="text" name="selectedSecurityQuestion" ng-disabled="true" class="form-control ellipsis" id="selectedSecurityQuestion" ng-model="selectedSecurityQuestion" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="selectedSecurityAnswer">Your Answer</label>
+                                <input type="password" name="selectedSecurityAnswer" ng-disabled="false" class="form-control ellipsis" id="selectedSecurityAnswer" ng-model="selectedSecurityAnswer" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="row padding-top-small">
+                        <div class="col-lg-6">
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <xen-submit id="save" name="save" value="VERIFY" is-next="false" mandatory="true" style="btn btn-default btn-lg"></xen-submit>
+                            <button type="button" class="btn btn-default btn-lg" id="close" ng-click="cancelSecurityVerification()">CLOSE</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-bottom-small"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

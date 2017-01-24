@@ -1,0 +1,274 @@
+﻿<keypress-events close-modal="true" on-cancel="CancelCallerInformation()" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="{{resolvePermission(headerDetails.CallCenterHeaderID)}}"></keypress-events>
+<!--data entry-->
+<div class="row padding-left-small">
+    <breadcrumbs min-breadcrumbs="2" goto="lawliaison" />
+</div>
+<div class="row padding-right-small padding-left-small">
+    <contact-search ng-hide="isContactSearch" contact-type="1,2,3,4,5" search-title="Contact" on-contact-select="onContactSearch(contactID)" set-shortcut-key="setShortcutKey(enterKeyStop, stopNext, saveOnEnter, stopSave)" set-focus="setFocus(autoFocus)" set-cancel-function="setCancelFunction(cancelFunction)" is-disabled="isReadOnly || isFollowup || isLinkToExistingContact"></contact-search>
+</div>
+<div class="row padding-right-small margin-bottom-xsmall padding-left-small">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form role="form" id="lawEnforcementForm" name="ctrl.lawEnforcementForm" xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" stop-save="stopSave" stop-next="stopNext" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="{{resolvePermission(headerDetails.CallCenterHeaderID)}}" novalidate bs-modifiable="true" set-form-status>
+                <div security permission-key="LawLiaison-LawLiaison-LawLiaison" permission="{{resolvePermission($stateParams.CallCenterHeaderID)}}" permission-mode="readonly" is-disabled="{{ isReadOnly  || isFollowup }}">
+
+                    <div class="row padding-xsmall padding-bottom-small border-top">
+                        <div class="col-md-8">
+                            <h3 class="uppercase nomargin">LAW ENFORCEMENT CONTACT</h3>
+                        </div>
+                    </div>
+                    <ng-form name="ctrl.lawEnforcementForm.AgencyForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row padding-top-small">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-cloak ng-class="{ 'has-error' : ctrl.lawEnforcementForm.AgencyForm.ReferralAgency.$invalid && !ctrl.lawEnforcementForm.AgencyForm.ReferralAgency.$pristine }">
+                                    <label for="ReferralAgency">Referral Agency <sup>&nbsp;*</sup></label>
+                                    <div class="input-group">
+                                        <input type="text" ng-model="headerDetails.ReferralAgencyName" 
+                                               id="ReferralAgency" 
+                                               name="ReferralAgency"
+                                               data-validation-name="Referral Agency"
+                                               ng-required="true"
+                                               class="form-control"
+                                               ng-change="changeAgency()"
+                                               typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                                               typeahead-on-select="checkOther($item)" 
+                                               validation-name="Referral Agency"
+                                               typeahead-trigger
+                                               typeahead="referralAgency as referralAgency.Name for referralAgency in getLookupsByType('ReferralAgency') 
+                                               | filter:{Name: $viewValue}:comparatorOnEmptyOrMatch | orderBy:orderByPriority"
+                                               typeahead-editable="false"
+                                               typeahead-no-results="noResults" 
+                                               auto-focus 
+                                               event-focus="autoFocusReferralAgency" />
+                                        @* Added button. *@
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-info" ng-click="triggerTypeahead('ReferralAgency');">
+                                                <i class="fa fa-search" />
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div ng-class="{ 'has-error' : ctrl.lawEnforcementForm.AgencyForm.otherReferralAgency.$invalid && !ctrl.lawEnforcementForm.AgencyForm.otherReferralAgency.$pristine}" ng-cloak data-ng-show="isOther">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="otherReferralAgency">Other Referral Agency <sup>&nbsp;*</sup></label>
+                                        <input type="text" style="margin-top:4px;" data-ng-model="headerDetails.OtherReferralAgency" ng-required="isOther" class="form-control" id="otherReferralAgency" name="otherReferralAgency" ng-maxlength="500" data-validation-name="Other Referral Agency" />
+                                        <p data-ng-show="ctrl.lawEnforcementForm.AgencyForm.otherReferralAgency.$error.maxlength" class="error-block">Maximum 500 Characters permitted.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    <ng-form name="ctrl.lawEnforcementForm.CallerForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.CallerForm.FirstName.$invalid && !ctrl.lawEnforcementForm.CallerForm.FirstName.$pristine}">
+                                    <label for="FirstName">First Name</label>
+                                    <input type="text" name="FirstName" id="FirstName" class="form-control ellipsis" placeholder="Anonymous" ng-model="callerDetails.FirstName"
+                                           ng-trim="true" ng-maxlength="200" data-validation-name="First Name" />
+                                    <p ng-show="ctrl.lawEnforcementForm.CallerForm.FirstName.$error.maxlength" ng-cloak class="error-block">First Name is too long (Max Allowed 200)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.CallerForm.LastName.$invalid && !ctrl.lawEnforcementForm.CallerForm.LastName.$pristine}">
+                                    <label for="LastName">Last Name</label>
+                                    <input type="text" name="LastName" id="LastName" placeholder="Anonymous" ng-model="callerDetails.LastName" ng-maxlength="200" ng-trim="true" class="form-control ellipsis" data-validation-name="Last Name" />
+                                    <p ng-show="ctrl.lawEnforcementForm.CallerForm.LastName.$error.maxlength" ng-cloak class="error-block">Last Name is too long (Max Allowed 200)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.CallerForm.Middle.$invalid && !ctrl.lawEnforcementForm.CallerForm.Middle.$pristine }">
+                                    <label for="Middle">Middle Name</label>
+                                    <input type="text" id="Middle" name="Middle" class="form-control" ng-model="callerDetails.Middle" ng-maxlength="200" data-validation-name="Middle Name" />
+                                    <p ng-show="ctrl.lawEnforcementForm.CallerForm.Middle.$error.maxlength" ng-cloak class="error-block">Middle Name is too long (Max Allowed 200)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.CallerForm.PreferredName.$invalid && !ctrl.lawEnforcementForm.CallerForm.PreferredName.$pristine }">
+                                    <label for="suffix">Preferred Name</label>
+                                    <input type="text" ng-model="callerDetails.PreferredName" id="PreferredName" name="PreferredName" class="form-control ellipsis" data-validation-name="Preferred Name" ng-maxlength="200" />
+                                    <p ng-show="ctrl.lawEnforcementForm.CallerForm.PreferredName.$error.maxlength" ng-cloak class="error-block">Preferred Name is too long (Max Allowed 200)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+
+                    <ng-form name="ctrl.lawEnforcementForm.CallerPhoneForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row padding-top-small">
+                            <!-- phone -->
+                            <div class="col-md-2 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="phoneType">Phone Type</label>
+                                    <select ng-model="callerPhone.PhoneTypeID" id="phoneType" xen-last-element-focus="Phones" class="form-control"
+                                            ng-options="phoneType.ID as phoneType.Name for phoneType in getLookupsByType('PhoneType')">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.CallerPhoneForm.PhoneNumber.$invalid && !ctrl.lawEnforcementForm.CallerPhoneForm.PhoneNumber.$pristine }">
+                                    <label for="phoneNum">Phone Number</label>
+                                    <input type="text" id="phoneNum" name="PhoneNumber" ng-model="callerPhone.Number" ui-mask="999-999-9999" data-validation-name="Phone Number" clean="true" ng-disabled="isReadOnlyForm || ctrl.disableControl || ctrl.callerDetails.IsCallerClientSame" class="form-control ellipsis" ng-blur="phoneThreeDigits()" />
+                                    <p ng-show="ctrl.lawEnforcementForm.CallerPhoneForm.PhoneNumber.$error.mask" ng-cloak class="error-block">Invalid phone number.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="phonePermission">Phone Permissions</label>
+                                    <select ng-model="callerPhone.PhonePermissionID" id="phonePermission" class="form-control" ng-disabled="isReadOnlyForm || ctrl.disableControl || ctrl.callerDetails.IsCallerClientSame"
+                                            ng-options="phonePermission.ID as phonePermission.Name for phonePermission in getLookupsByType('PhonePermission')" data-validation-name="Phone Permissions">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+
+
+                    <div class="row padding-xsmall padding-bottom-small border-top">
+                        <div class="col-md-12">
+                            <h3 class="uppercase nomargin">CONTACT</h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ng-form name="ctrl.lawEnforcementForm.ContactTypeForm" novalidate bs-modifiable="true" set-form-status="child">
+                            <div class="col-md-3 padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ContactTypeForm.ContactType.$invalid && !ctrl.lawEnforcementForm.ContactTypeForm.ContactType.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="clientID">Contact Type<sup> *</sup></label>
+                                    <select ng-disabled="isNotExisting && (isReadOnlyForm || DisableLinkedDetails) " ng-model="headerDetails.ContactTypeID" id="ContactType" name="ContactType" data-validation-name="Contact Type" class="form-control" ng-required="true"
+                                            ng-options="clientID.ID as clientID.Name for clientID in getLookupsByType('ContactTypeCallCenter')" ng-change="changeContactType()">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                        </ng-form>
+                        <ng-form name="ctrl.lawEnforcementForm.ClientForm" novalidate bs-modifiable="true" set-form-status="child">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ClientForm.FirstName.$invalid && !ctrl.lawEnforcementForm.ClientForm.FirstName.$pristine}">
+                                    <label for="FirstName">First Name</label>
+                                    <input ng-disabled="isReadOnlyForm" type="text" placeholder="Anonymous" name="FirstName" id="FirstName" ng-model="clientDetails.FirstName"
+                                           class="form-control ellipsis" ng-trim="true" ng-maxlength="200">
+                                    <p ng-show="ctrl.lawEnforcementForm.ClientForm.FirstName.$error.maxlength" class="error-block ng-hide">First Name is too long</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ClientForm.LastName.$invalid && !ctrl.lawEnforcementForm.ClientForm.LastName.$pristine}">
+                                    <label for="LastName">Last Name</label>
+                                    <input ng-disabled="isReadOnlyForm" placeholder="Anonymous" type="text" name="LastName" id="LastName" ng-model="clientDetails.LastName" ng-maxlength="200"
+                                           ng-trim="true" class="form-control ellipsis">
+                                    <p ng-show="ctrl.lawEnforcementForm.ClientForm.LastName.$error.maxlength" class="error-block ng-hide">Last Name is too long</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ClientForm.Middle.$invalid && !ctrl.lawEnforcementForm.ClientForm.Middle.$pristine }">
+                                    <label for="Middle">Middle Name</label>
+                                    <input type="text" id="Middle" name="Middle" class="form-control" ng-model="clientDetails.Middle" ng-maxlength="200" data-validation-name="Middle Name" />
+                                    <p ng-show="ctrl.lawEnforcementForm.ClientForm.Middle.$error.maxlength" ng-cloak class="error-block">Middle Name is too long (Max Allowed 200)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ClientForm.PreferredName.$invalid && !ctrl.lawEnforcementForm.ClientForm.PreferredName.$pristine }">
+                                <div class="form-group-lg">
+                                    <label for="suffix">Preferred Name</label>
+                                    <input type="text" ng-model="clientDetails.PreferredName" id="PreferredName" name="PreferredName" class="form-control ellipsis" ng-maxlength="200" data-validation-name="Preferred Name" />
+                                    <p ng-show="ctrl.lawEnforcementForm.ClientForm.PreferredName.$error.maxlength" ng-cloak class="error-block">Preferred Name is too long (Max Allowed 200)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ClientForm.gender.$invalid && !ctrl.lawEnforcementForm.ClientForm.gender.$pristine }">
+                                    <label>Gender </label>
+                                    <select id="gender" name="gender" ng-model="clientDetails.GenderID" ng-disabled="isReadOnlyForm ||DisableLinkedDetails" class="form-control ellipsis" ng-options="gender.ID as gender.Name for gender in getLookupsByType('Gender')">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div id="doberrortd" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ClientForm.dobDateName.$invalid && !ctrl.lawEnforcementForm.ClientForm.dobDateName.$pristine }">
+                                    <label for="dob">Date of Birth </label>
+                                    <xen-date-picker id="dob" future-date-validate="true" data-validation-name="Date Of Birth" ng-model="clientDetails.DOB"
+                                                     end-date="endDate" name="dobDateName" date-options="dateOptions" start-date="startDate" max-limit="120"></xen-date-picker>
+                                    <p id="doberror" ng-show="ctrl.lawEnforcementForm.ClientForm.dobDateName.$error.date || ctrl.lawEnforcementForm.ClientForm.dobDateName.$error.futureDate || ctrl.lawEnforcementForm.ClientForm.dobDateName.$error.maxLimit" class="error-block">Please select valid date.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ClientForm.SSN.$invalid && !ctrl.lawEnforcementForm.ClientForm.SSN.$pristine }">
+                                    <label for="SSN">SSN</label>
+                                    <input type="text" class="form-control ellipsis" ui-mask="999-99-9999" ui-options="{clearOnBlur: false}" clean="true" ng-model="clientDetails.SSN" id="SSN" name="SSN" ng-disabled="isReadOnlyForm ||DisableLinkedDetails" />
+                                    <p ng-show="ctrl.lawEnforcementForm.ClientForm.SSN.$error.mask && !ctrl.lawEnforcementForm.ClientForm.SSN.$pristine" ng-cloak class="error-block">Invalid SSN.</p>
+                                </div>
+                            </div>
+                        </ng-form>
+                    </div>
+
+
+                    <ng-form name="ctrl.lawEnforcementForm.ClientAddressForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row padding-top-small">
+                            @Html.Partial("../Shared/_Address")
+                        </div>
+                    </ng-form>
+
+                    <ng-form name="ctrl.lawEnforcementForm.ClientPhoneForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row padding-top-small">
+                            <div class="col-md-2 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="phoneType">Phone Type</label>
+                                    <select ng-model="clientPhone.PhoneTypeID" id="phoneType" class="form-control" name="PhoneTypeID" data-validation-name="Phone Type"
+                                            ng-options="phoneType.ID as phoneType.Name for phoneType in getLookupsByType('PhoneType')">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.ClientPhoneForm.PhoneNumber.$invalid && !ctrl.lawEnforcementForm.ClientPhoneForm.PhoneNumber.$pristine }">
+                                    <label for="phoneNum">Phone Number</label>
+                                    <input type="text" id="phoneNum" name="PhoneNumber" ng-model="clientPhone.Number" ui-mask="999-999-9999" clean="true" class="form-control ellipsis" ng-blur="phoneThreeDigits()" data-validation-name="Phone Number" />
+                                    <p ng-show="ctrl.lawEnforcementForm.ClientPhoneForm.PhoneNumber.$error.mask" ng-cloak class="error-block">Invalid phone number.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="phonePermission">Phone Permissions</label>
+                                    <select ng-model="clientPhone.PhonePermissionID" id="phonePermission" class="form-control" data-validation-name="Phone Permissions"
+                                            ng-options="phonePermission.ID as phonePermission.Name for phonePermission in getLookupsByType('PhonePermission')">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    <div class="row padding-top-small section-block">
+                        <div class="col-md-10 padding-bottom-small" ng-class="{ 'has-error' : ctrl.lawEnforcementForm.HeaderForm.Disposition.$invalid && !ctrl.lawEnforcementForm.HeaderForm.Disposition.$pristine }">
+                            <div class="form-group-lg padding-bottom-small">
+                                <xen-memobox label="Reason called" rows="5" maxlength="4000" ng-model="headerDetails.ReasonCalled" id="ReasonCalled" name="ReasonCalled"></xen-memobox>
+                            </div>
+                            </div>
+                        <div class="col-md-2 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <xen-checkbox ng-model="headerDetails.FollowUpRequired" data-checkbox-id="FollowUpRequired" data-label="Follow-up Required" class-name="{{ ctrl.enableFollowUpFields?'prevent-disable':'' }}" />
+                            </div>
+                        </div>
+                        </div>
+                    <!-- Save and Next -->
+                    <div class="row padding-top-small">
+                        <div class="col-lg-6 col-md-6">
+                            <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                            <xen-submit id="callCenterSave" name="callCenterSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="{{resolvePermission(headerDetails.CallCenterHeaderID)}}" is-disabled="isReadOnly || isFollowup"></xen-submit>
+                            <xen-submit id="callCenterNext" name="callCenterNext" value="NEXT" is-next="true" mandatory="true" is-hidden="noNext" style="btn btn-default btn-lg no-security" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="read"></xen-submit>
+                    </div>
+                    </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<duplicate-contact-detection call-duplicate-contact-list="callDuplicateContactList" call-back-not-duplicate="saveDetails()" call-back-duplicate="callBackDuplicate(contactID)"></duplicate-contact-detection>

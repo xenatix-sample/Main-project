@@ -1,0 +1,110 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)" enter-key-stop="enterkeystop" permission-key="ECI-ProgressNote-ProgressNote" permission="{{resolvePermission(noteHeader.ProgressNote.ProgressNoteID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="row">
+            <div class="panel panel-light padding-xsmall">
+                <div class="panel-body">
+                    <div security permission-key="ECI-ProgressNote-ProgressNote" permission="{{resolvePermission(noteHeader.ProgressNote.ProgressNoteID)}}" permission-mode="readonly">
+                        <form role="form" name="ctrl.progressNoteForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true">
+                            {{ setform(ctrl.progressNoteForm.modified) }}
+                            @Html.Partial("../Shared/_ProgressNoteHeader")
+                            <div class="row section-block margin-bottom-xsmall">
+                                <div class="col-md-12 padding-bottom-small" ng-class="{ 'has-error' : noResults && ReferralSource }">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <xen-memobox is-disabled="isReadOnlyForm" label="Summary of Initial Contact" rows="5" maxlength="1000" ng-model="noteHeader.ProgressNote.Summary" id="summary"></xen-memobox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row padding-top-small">
+                                <div class="col-md-6 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <xen-checkbox data-ng-model="noteHeader.ProgressNote.ReviewedSourceConcerns" data-checkbox-id="reviewedsourceconcerns" data-label="I reviewed the referral source and referral concerns" class="xencheckbox-jumbo" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <xen-checkbox data-ng-model="noteHeader.ProgressNote.ReviewedECIProcess" data-checkbox-id="reviewedeciprocess" data-label="I explained the ECI process for determining eligibility and enrollment, including the evaluation and assessment process." class="xencheckbox-jumbo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row padding-top-small">
+                                <div class="col-md-6 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <xen-checkbox data-ng-model="noteHeader.ProgressNote.ReviewedECIServices" data-checkbox-id="reviewedeciservices" data-label="I explained the types of ECI services that may be delivered and how they may be provided." class="xencheckbox-jumbo" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <xen-checkbox data-ng-model="noteHeader.ProgressNote.ReviewedECIRequirements" data-checkbox-id="reviewedecirequirements" data-label="I explained the requirement to provide ECI services in the natural environment." class="xencheckbox-jumbo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row padding-top-small">
+                                <div class="col-md-6 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <xen-checkbox data-ng-model="noteHeader.ProgressNote.IsSurrogateParentNeeded" data-checkbox-id="issurrogateparentneeded" data-label="I determined if there was a need for appointing a surrogate parent, and I will have surrogate parent consent at initial visit, if this is the case." class="xencheckbox-jumbo" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row section-block margin-bottom-xsmall">
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.progressNoteForm.FirstName.$invalid && !ctrl.progressNoteForm.FirstName.$pristine}">
+                                        <label for="notedate">Date</label>
+                                        <mydatepicker opened="opened" id="dob" new-date="noteHeader.ProgressNoteAssessment.NoteAssessmentDate" end-date="endDate" start-date="startDate" dob-name="notedate" date-options="dateOptions"></mydatepicker>
+                                        <p id="notedateerror" ng-show="ctrl.progressNoteForm.notedate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.progressNoteForm.LastName.$invalid && !ctrl.progressNoteForm.LastName.$pristine}">
+                                        <label for="notetime">Time</label>
+                                        <div class="bootstrap-timepicker timepicker">
+                                            <input type="text" class="form-control ellipsis" ng-model="noteHeader.ProgressNoteAssessment.NoteAssessmentTime" id="notetime" name="notetime" />
+                                        </div>
+                                        <p id="notetimeError" data-ng-show="ctrl.progressNoteForm.notetime.$error.date  && !ctrl.progressNoteForm.notetime.$pristine" data-ng-cloak class="error-block">Please select a valid time.</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="locationId">Location</label>
+                                        <select ng-model="noteHeader.ProgressNoteAssessment.LocationID" id="locationId" name="locationId" class="form-control" ng-options="loc.ID as loc.Name for loc in getLookupsByType('ServiceLocation')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 padding-bottom-small" ng-show="noteHeader.ProgressNoteAssessment.LocationID">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="location">Location Details</label>
+                                        <input type="text" class="form-control ellipsis" ng-model="noteHeader.ProgressNoteAssessment.Location" id="location" name="location" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row padding-top-small">
+                                <div class="col-lg-4 col-md-5 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.progressNoteForm.provider.$invalid && !ctrl.progressNoteForm.provider.$pristine }">
+                                        <label for="provider"> Which ECI providers will attend?</label>
+                                        <select ng-model="noteHeader.ProgressNoteAssessment.ProviderID" id="provider" name="provider" class="form-control" ng-options="users.ID as users.Name for users in getLookupsByType('Users')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-7 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="members">Who else would family like to invite?</label>
+                                        <input type="text" ng-model="noteHeader.ProgressNoteAssessment.MembersInvited" id="members" name="members" class="form-control ellipsis" />
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Partial("../Shared/_ProgressNoteFooter")
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Save and Next -->
+        @Html.Partial("../Shared/_ReferralActionControl")
+        <!-- Grid Control -->
+        @Html.Partial("../Shared/_ProgressNoteGrid")
+    </div>
+</div>

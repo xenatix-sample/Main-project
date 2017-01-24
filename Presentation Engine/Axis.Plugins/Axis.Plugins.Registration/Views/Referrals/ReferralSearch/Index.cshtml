@@ -1,0 +1,275 @@
+﻿<keypress-events on-add="addNew()" ignore-enter="true"></keypress-events>
+@* New CSS associated with this page has already been checked into TFS *@
+
+@* look at the contacts screen for comparison - you will not use the col-lg-3 side column for this view *@
+
+<div class="ng-cloak">
+    @* Search referrals *@
+    @* Expected Behavior -- search should work like our contact search, with one important exception. The list of referrals should ALWAYS load on screen even if no search has taken place. Search is just a way to narrow down results in the grid. *@
+    <div class="jumbotron">
+        <form class="form-inline" name="searchForm" data-ng-submit="searchForm.$valid">
+            <div class="container-fluid padding-small">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg">
+                        <input type="text" name="ReferralSearch" id="txtReferralSearch" auto-focus event-focus="autoFocus" ng-change="searchForm.$valid ? get(searchText) : null" ng-model="searchText"
+                               ng-model-options="{ debounce: 1000 }" placeholder="Search" tabindex="0" class="form-control" security permission-key="Referrals-Referral-Referrer" permission="read">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-link">
+                                <i class="fa fa-search fa-fw"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal fade" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="deleteModel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" ng-form="referraldeleteForm">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" ng-click="cancelModel();"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Referral</h4>
+                </div>
+                <div class="modal-body">
+                    <sup>*</sup> Why do you want to remove the referral ? Selected referral will be removed <br />
+                    <input type="text" name="reasonForDelete" auto-focus event-focus="autoFocus" class="form-control ellipsis" id="reasonForDelete" ng-model="reasonForDelete" ng-required="true" maxlength="100" ng-change="checkReasonforDelete()" ng-trim="true" /><br/>
+                    <div class="text-right">
+                        <button type="button" class="btn btn-default btn-lg" data-ng-click="deleteReferral(deleteId, reasonForDelete)" id="btnSave" name="btnDelete" security permission-key="Referrals-Referral-Referrer" permission="delete">DELETE</button>
+                        <button type="button" class="btn btn-default btn-lg" name="btnCancel" ng-hide="noCancel" ng-click="cancelModel();">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="panel panel-primary">
+            <div class="panel-body nopadding-top">
+                <div class="add_me">
+                    <plus-button tabindex="0" title="New Referral" permission-key="Referrals-Referral-Referrer" permission="create" href="javascript: void(0)" ui-sref="referrals.main({ ReadOnly: 'edit' })"></plus-button>
+                    @* The add me flyout menu is missing? This is just the plus without the flyout. (rachel 12-18) *@
+
+
+                </div>
+                <div class="table-custom-filters">
+                    <select ng-model="searchType" id="searchType" name="searchType" class="form-control" ng-change="get(searchText)">
+                        <option value="1">Incoming</option>
+                        <option value="2">Outgoing</option>
+                    </select>
+                </div>
+                <div class="row padding-small">
+                    <table id="referralsTable" data-toggle="table"
+                            data-show-columns="true"
+                            data-search="true"
+                            data-minimum-count-columns="2"
+                            data-filter-control="false"
+                            data-mobile-responsive="true"
+                            data-filter-bar
+                            data-advanced-search="false"
+                            data-show-multi-sort="true"
+                            data-classes="table table-stripe-borders"
+                            bootstrap-table="tableoptions" grid-arrow-selector>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th data-field="mrn"
+                                    data-sortable="true">MRN</th>
+                                <th data-field="FirstName"
+                                    data-sortable="true">First Name</th>
+                                <th data-field="LastName"
+                                    data-sortable="true">Last Name</th>
+                                <th data-field="Contact"
+                                    data-sortable="true">Client Contact</th>
+                                <th data-field="RequestorName"
+                                    data-sortable="true">Referrer Name</th>
+                                <th data-field="RequestorContact"
+                                    data-sortable="true">Referrer Contact</th>
+                                <th data-field="TransferReferralDate"
+                                    data-sortable="true">Referral Date</th>
+                                <th data-field="ReferralStatus"
+                                    data-sortable="true">Referral Status</th>
+                                <th data-field="ProgramUnit"
+                                    data-sortable="true">Program Unit</th>
+                                <th data-field="ForwardedTo"
+                                    data-sortable="true">Forwarded To</th>
+                                <th data-field="SubmittedBy"
+                                    data-sortable="true">Submitted By</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@* Initial View *@
+@* When users click on the 'referrals' tab in the top navigation, this is the page that loads. This page will be full screen - no side nav, but all of the screens that come after WILL have a side navigation. *@
+@*<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="add_me">*@
+@* When the inset menu is open, please add class "active" to the plus circle 'a' tag *@
+@*<a class="font-size-xlarge" ui-sref="" role="button" title="Add Referral" ng-keydown="" auto-focus="" event-focus="autoFocus" space-key-press="" href="javascript: void(0)" ng-click="Goto('referrals.requestor','',true)">
+        <i class="fa fa-plus-circle"></i>
+    </a>*@
+@* This menu is patterned after our tile flyout (+) menu. It's a simpler version. In this case, it only needs to show/hide a single menu instance.
+        The javascript for this has not been created.
+    <div class="inset_menu">
+        @* When a user clicks on either Internal or External, they should be taken to step (1) - the requestor information view.
+                       If they select Internal, the internal type should be pre-selected for them on that view and only fields related to
+                        internal should display.
+                       If they select External, the external type shoudl be pre-selected for them on that view and only fields related to
+                        external should display.
+                    <ul>
+                       <li><a href="">Internal</a></li>
+                       <li><a href="">External</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row padding-top-small padding-bottom-small">
+                <div class="col-md-12">
+
+                    @* Please create a bootstrap table similar to the way our contacts table is created.
+                       The code here is only intended as an example to show the columns that are needed.
+                       You will also need to add the fixed-width span for two of the columns in the td, as shown below
+                       The table should display in oldest to newest order by default - with the oldest entries at the top *@
+@*<div class="bootstrap-table">
+    <div class="fixed-table-toolbar">
+        <div class="columns columns-right btn-group pull-right">
+            <div class="keep-open btn-group" title="Columns">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-th"></i>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><label><input type="checkbox" data-field="AppointmentDate" value="0" checked="checked"> Day</label></li>
+                    <li><label><input type="checkbox" data-field="AppointmentDate" value="1" checked="checked"> Date</label></li>
+                    <li><label><input type="checkbox" data-field="AppointmentStartTime" value="2" checked="checked"> Start</label></li>
+                    <li><label><input type="checkbox" data-field="AppointmentLength" value="3" checked="checked"> End</label></li>
+                    <li><label><input type="checkbox" data-field="AppointmentType" value="4" checked="checked"> Appointment Type</label></li>
+                    <li><label><input type="checkbox" data-field="ProviderName" value="5" checked="checked"> Provider</label></li>
+                    <li><label><input type="checkbox" data-field="LocationName" value="6" checked="checked"> Location</label></li>
+                </ul>
+            </div>
+            <button class="multi-sort btn btn-default" type="button" data-toggle="modal" data-target="#sortModal" title="Multiple Sort">
+                <i class="fa fa-sort-alpha-asc"></i>
+            </button>
+        </div>
+    </div>
+    <div class="fixed-table-container" style="padding-bottom: 0px;">
+        <div class="fixed-table-header" style="display: none;">
+            <table></table>
+        </div>
+        <div class="fixed-table-body">
+            <div class="fixed-table-loading" style="top: 37px;">Loading, please wait...</div>
+
+            <table id="queueTable" data-toggle="table" data-show-columns="true" data-search="true" data-minimum-count-columns="2" data-filter-control="false" data-mobile-responsive="true" data-filter-bar="" data-advanced-search="false" data-show-multi-sort="true" data-classes="table table-stripe-borders" bootstrap-table="tableoptions" grid-arrow-selector="" class="table table-stripe-borders">
+                <thead>
+                    <tr>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">MRN</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">TKIDS ID</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">First Name</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">Last Name</div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner ">Contact</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">Date of Birth</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">Referral Type</div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">Requestor Name</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">Referred Program</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">Transfer</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">Referral Date</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner sortable" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAclBMVEUAAADc3Nzd3d3c3Nzc3Nzc3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzd3d3c3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzd3d3d3d3d3d3d3d3d3d3d3d3d3d3c3Nzc3Nzd3d0AAACHOATgAAAAI3RSTlMAJm8ld3U56OY4EaenEWBgIuTjIgibml/9qvf3ql+aCOM45rPR69EAAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAjklEQVQY032PbQ+CMAyEy7sCKihIGSpq7///RrtEYJuJty/Lk2t7R/RVFCcUKpUsRHmB3d5HZQVIffDYUQTAyUVNq0xwvmyo6yEWyrVb2cA6aCEPKxvZTPqM4ZH+afFNfHP22au6kO/b3Yclqn528j3VB2mboIdavR5U1jpc+X3p9ZYiD/NkSH8yJnG0fD/ZdA1zQcmvIgAAAABJRU5ErkJggg==&quot;);">Referral Status</div>
+                            <div class="fht-cell"></div>
+                        </th>
+                        <th style="">
+                            <div class="th-inner "></div>
+                            <div class="fht-cell"></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-index="0">
+                        <td>22</td>
+                        <td>na</td> @* Need to confirm with BA's, but need a way to declare not applicable for non-ECI referrals *@
+@*<td>Irene</td>
+    <td>Addler</td>
+    <td><span class="fixed-width">817-543-9762</span></td> @* ADD fixed-width
+    <td>11/12/1945</td>
+    <td>Internal</td>
+    <td>James Moriarty</td>
+    <td>Mental Health</td>
+    <td></td>
+    <td>09/15/2015</td>
+    <td></td>
+    <td>
+        <span class="fixed-width">*@
+@* ADD fixed-width *@
+@*<a href="javascript:void(0)" data-default-action="" id="editAppointment" name="editPhone" data-toggle="modal" ng-click="Goto('patientprofile.appointments.editAppointment', { AppointmentID:1 })" title="Edit" space-key-press=""><i class="fa fa-pencil fa-fw"></i></a>
+                                        <a href="javascript:void(0)" data-default-action="" id="editAppointment" name="editPhone" data-toggle="modal" ng-click="Goto('patientprofile.appointments.editAppointment', { AppointmentID:1 })" title="View" space-key-press=""><i class="fa fa-eye fa-fw"></i></a>
+                                        <a href="javascript:void(0)" data-default-action="" id="editAppointment" name="editPhone" data-toggle="modal" ng-click="Goto('patientprofile.appointments.editAppointment', { AppointmentID:1 })" title="Convert to Registration" space-key-press=""><i class="fa fa-sign-in fa-fw"></i></a>
+                                        <a href="javascript:void(0)" data-default-action="" id="editAppointment" name="editPhone" data-toggle="modal" ng-click="Goto('patientprofile.appointments.editAppointment', { AppointmentID:1 })" title="Send Email" space-key-press=""><i class="fa fa-envelope fa-fw"></i></a><a href="javascript:void(0)" data-default-no-action="" ng-click="cancelAppointment(1)" id="deactivateAppointment" name="deactivatePhone" title="Delete" space-key-press=""><i class="fa fa-trash fa-fw"></i></a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="fixed-table-footer" style="display: none;">
+                    <table><tbody><tr></tr></tbody></table>
+                </div>
+                <div class="fixed-table-pagination" style="display: block;">
+                    <div class="pull-left pagination-detail">
+                        <span class="pagination-info">Showing 1 to 1 of 1 rows</span>
+                        <span class="page-list" style="display: none;"><span class="btn-group dropup"><button type="button" class="btn btn-default  dropdown-toggle" data-toggle="dropdown"><span class="page-size">10</span> <span class="caret"></span></button><ul class="dropdown-menu" role="menu"><li class="active"><a href="javascript:void(0)">10</a></li></ul></span> records per page</span>
+                    </div>
+                    <div class="pull-right pagination" style="display:none;">
+                        <ul class="pagination">
+                            <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
+                            <li class="page-pre disabled"><a href="javascript:void(0)">‹</a></li>
+                            <li class="page-number active"><a href="javascript:void(0)">1</a></li>
+                            <li class="page-next disabled"><a href="javascript:void(0)">›</a></li>
+                            <li class="page-last disabled"><a href="javascript:void(0)">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>*@
+@*</div>
+        </div>
+    </div>*@

@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+<div ng-form="relationshipForm">
+    <div class="row margin-bottom padding-top-xsmall" ng-class="{'border-bottom': !isReferral}" ng-repeat="relationship in relationshipItems=(ContactRelationships | filter : {IsActive:true}) track by $index" security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionId)}}" permission-mode="readonly" dual-permission="true">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : relationshipForm.CollateralType{{($index+1)}}.$invalid && !relationshipForm.CollateralType{{($index+1)}}.$pristine}">
+                        <label for="CollateralType">Collateral <span class="text-nowrap">Type <sup>*</sup></span></label>
+                        <select data-ng-model="relationship.RelationshipGroupID" xen-last-element-focus="ContactRelationships" data-ng-required="true" id="CollateralType" name="CollateralType{{($index+1)}}" class="form-control"
+                                data-ng-options="collateralType.RelationshipGroupID as collateralType.Name for collateralType in getLookupsByType('CollateralType')" ng-change="validateCollateralType();relationship.IsPolicyHolder=''"
+                                data-validation-name="Collateral Type">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-2 padding-bottom-small" data-ng-show="relationship.RelationshipGroupID==collateralTypeFamily">
+                    <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : relationshipForm.PolicyHolder{{($index+1)}}.$invalid && !relationshipForm.PolicyHolder{{($index+1)}}.$pristine}">
+                        <label for="PolicyHolder">Policy Holder <sup>*</sup></label>
+                        <select data-ng-model="relationship.IsPolicyHolder" data-ng-required="relationship.RelationshipGroupID==collateralTypeFamily" id="PolicyHolder" name="PolicyHolder{{($index+1)}}" class="form-control"
+                                data-ng-options="policyHolder.Value as policyHolder.Name for policyHolder in policyHolderValues" ng-change="validatePolicyHolder(relationship)"
+                                data-validation-name="Policy Holder">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : relationshipForm.relationship{{($index+1)}}.$invalid && !relationshipForm.relationship{{($index+1)}}.$pristine}">
+                        <label for="relationship">Collateral <span class="text-nowrap">Relationship <sup>*</sup></span></label>
+                        <select data-ng-model="relationship.RelationshipTypeID" data-ng-change="clearOther($index)" data-ng-required="true" id="relationship" name="relationship{{($index+1)}}" class="form-control"
+                                data-ng-options="relation.ID as relation.Name for relation in getLookupsByType('RelationshipType') | filter: { RelationshipGroupID : relationship.RelationshipGroupID ? relationship.RelationshipGroupID : -1 } :true | orderBy: 'Name'"
+                                data-validation-name="Collateral Relationship">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small" data-ng-if="relationship.RelationshipTypeID==otherRelationship || relationship.RelationshipTypeID==otherPhysician || relationship.RelationshipTypeID==otherProvider">
+                    <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : relationshipForm.OtherRelationship.$invalid && !relationshipForm.OtherRelationship.$pristine}">
+                        <label for="OtherRelationship">Other <span class="text-nowrap">Relationship <sup>*</sup></span></label>
+                        <input type="text" class="form-control ellipsis" id="OtherRelationship" autofocus="autofocus" data-ng-model="relationship.OtherRelationship" auto-focus event-focus="autoFocusEdit" data-ng-maxlength="200"
+                               data-ng-required="relationship.RelationshipTypeID==otherRelationship || relationship.RelationshipTypeID==otherPhysician || relationship.RelationshipTypeID==otherProvider" name="OtherRelationship" data-validation-name="Other Relationship" />
+                        <p data-ng-show="relationshipForm.OtherRelationship.$error.maxlength" class="error-block">Maximum 200 Characters permitted.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="!hideRelationshipRange">
+                <div class="col-md-3 padding-bottom-small">
+                    <div id="effectiveDateErrortd{{$index+1}}" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : relationshipForm.effectiveDate{{($index+1)}}.$invalid && !relationshipForm.effectiveDate{{($index+1)}}.$pristine}">
+                        <label for="effectiveDate{{$index+1}}">Effective Date</label>
+                        <xen-date-picker id="effectiveDate{{$index+1}}" data-validation-name="Effective Date" data-compare-element-name="expirationDate{{$index+1}}" ng-model="relationship.EffectiveDate" end-date="relationship.ExpirationDate" future-date-validate="true" greater-than-date-validation="true" name="effectiveDate{{$index+1}}" date-options="dateOptions" ignore-time="true"></xen-date-picker>
+                        <p id="effectiveDateError{{$index+1}}" ng-cloak ng-show="relationshipForm.effectiveDate{{($index+1)}}.$error.date" class="error-block">Effective Date is invalid.</p>
+                        <p ng-show="relationshipForm.effectiveDate{{($index+1)}}.$error.futureDate" ng-cloak class="error-block">Effective date can't be future date.</p>
+                        <p ng-show="relationshipForm.effectiveDate{{($index+1)}}.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small">
+                    <div id="expirationDateErrorId{{$index+1}}" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : relationshipForm.expirationDate{{$index+1}}.$invalid && !relationshipForm.expirationDate{{$index}}.$pristine}">
+                        <label for="expirationDate{{$index+1}}">Expiration Date</label>
+                        <xen-date-picker id="expirationDate{{$index+1}}" data-validation-name="Expiration Date" data-compare-element-name="effectiveDate{{$index+1}}" ng-model="relationship.ExpirationDate" start-date="relationship.EffectiveDate" less-than-date-validation="true" name="expirationDate{{$index+1}}" call-function-on-change="checkCollateralAsPayor(relationship.ExpirationDate)" date-options="dateOptions" ignore-time="true"></xen-date-picker>
+                        <p id="effectiveExpirationDateError{{$index+1}}" ng-cloak ng-show="relationshipForm.expirationDate{{($index+1)}}.$error.date" class="error-block">Expiration Date is invalid.</p>
+                        <p ng-show="relationshipForm.expirationDate{{($index+1)}}.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                    </div>
+                </div>
+                <div class="col-md-1 actions nopadding padding-bottom-small">
+                    <div class="form-group-lg margin-right-small padding-top-small text-right">
+                        <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="relationship.ShowPlusButton" ng-click="addNewRelationship()" space-key-press>
+                            <i class="fa fa-plus-circle"><span class="sr-only">Add Relationship</span></i>
+                        </a>
+                        <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="(relationship.ShowMinusButton && relationshipItems.length>1)" ng-click="removeRelationship($index)" space-key-press>
+                            <i class="fa fa-minus-circle" on-row-removed security permission-key="{{permissionKey}}" permission="delete"><span class="sr-only">Remove Relationship</span></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)" enter-key-stop=" enterkeystop" permission-key="ECI-ProgressNote-ProgressNote" permission="{{resolvePermission(noteHeader.ProgressNote.ProgressNoteID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="row padding-right-small">
+            <div class="panel panel-light padding-xsmall">
+                <div class="panel-body">
+                    <div security permission-key="ECI-ProgressNote-ProgressNote" permission="{{resolvePermission(noteHeader.ProgressNote.ProgressNoteID)}}" permission-mode="readonly">
+                        <form role="form" name="ctrl.progressNoteForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true">
+                            {{ setform(ctrl.progressNoteForm.modified) }}
+                            @Html.Partial("../Shared/_ProgressNoteHeader")
+                            @Html.Partial("../Shared/_ProgressNoteFooter")
+                        </form>
+                    </div>
+                </div>
+                <!-- Save and Next -->
+                @Html.Partial("../Shared/_ReferralActionControl")
+                <!-- Grid Control -->
+                @Html.Partial("../Shared/_ProgressNoteGrid")
+            </div>
+        </div>
+    </div>
+</div>

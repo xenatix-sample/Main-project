@@ -1,0 +1,38 @@
+﻿
+<div>
+    <div class="input-group">
+        <input type="text"
+               name="{{::name}}"
+               ng-model="search.text"
+               class="form-control ellipsis"
+               typeahead-wait-ms="Op.AnimSpeed"
+               typeahead-select-on-blur="Op.SelectOnBlur"
+               typeahead-on-select="SelectItem($item)"
+               typeahead-editable="Op.Editable"
+               typeahead-no-results="NoResults"
+               typeahead="item as item[Op.Fields.Text] for item in items | filterBy: (Op.Fields.Text || 'x'):$viewValue"
+               typeahead-trigger />
+
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-info" ng-click="triggerTypeahead('{{::name}}')">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+
+    <p ng-show="NoResults" ng-cloak class="error-block">No Results Found!</p>
+
+    <div class="row pod-group pod-group-sm">
+        <div class="pod" ng-repeat="item in selected" ng-show="selected.length > 0">
+            <div>
+                <p><strong>{{::item[Op.Fields.Text]}}</strong></p>
+            </div>
+            <a class="text-info close" href="javascript:void(0)"
+               ng-click="DeselectItem(item)"
+               title="Remove" space-key-press>
+                <span class="sr-only"></span>
+                x
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D3E689AE-8044-4F7B-8369-9C6C32D10732}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.DataEngine.Tests</RootNamespace>
+    <AssemblyName>Axis.DataEngine.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Local\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDev|AnyCPU'">
+    <OutputPath>bin\ReleaseDev\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseTest|AnyCPU'">
+    <OutputPath>bin\ReleaseTest\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp001|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp001\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp002|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp002\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp001|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp001\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp002|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp002\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp002Holding|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp002Holding\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp003|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp003\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=__MvcPagesVersion__, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\Account\UserSecurity\UserSecurityLiveTest.cs" />
+    <Compile Include="Controllers\Admin\DivisionProgram\DivisionProgramControllerLiveTest.cs" />
+    <Compile Include="Controllers\Admin\UserDirectReports\UserDirectReportsControllerLiveTest.cs" />
+    <Compile Include="Controllers\Admin\UserPhoto\UserPhotoControllerLiveTest.cs" />
+    <Compile Include="Controllers\Admin\UserSchedulingLiveTest.cs" />
+    <Compile Include="Controllers\Assessment\AssessmentLiveTest.cs" />
+    <Compile Include="Controllers\BusinessAdmin\ClientMerge\ClientMergeControllerLiveTest.cs" />
+    <Compile Include="Controllers\CallCenter\CallCenterProgressNote\CallCenterProgressNoteLiveTest.cs" />
+    <Compile Include="Controllers\CallCenter\CallCenterSummary\CallCenterSummaryLiveTest.cs" />
+    <Compile Include="Controllers\CallCenter\CallerInformation\CallerInformationLiveTest.cs" />
+    <Compile Include="Controllers\CallCenter\ServiceRecording\ServiceRecordingLiveTest.cs" />
+    <Compile Include="Controllers\ClientAudit\ClientAuditTest.cs" />
+    <Compile Include="Controllers\ClientAudit\ClientAuditLiveTest.cs" />
+    <Compile Include="Controllers\Clinical\ClinicalAssessmentLiveTest.cs" />
+    <Compile Include="Controllers\Clinical\PresentIllness\PresentIllnessTest.cs" />
+    <Compile Include="Controllers\Clinical\PresentIllness\PresentIllnessLiveTest.cs" />
+    <Compile Include="Controllers\Clinical\PresentIllness\PresentIllnessDetailsLiveTest.cs" />
+    <Compile Include="Controllers\Clinical\PresentIllness\PresentIllnessDetailsTest.cs" />
+    <Compile Include="Controllers\Clinical\ReviewOfSystems\ReviewOfSystemsLiveTest.cs" />
+    <Compile Include="Controllers\Clinical\Note\NoteLiveTest.cs" />
+    <Compile Include="Controllers\Clinical\Note\NoteTest.cs" />
+    <Compile Include="Controllers\Clinical\SocialRelationship\SocialRelationshipHistoryLiveTest.cs" />
+    <Compile Include="Controllers\Clinical\SocialRelationship\SocialRelationshipHistoryTest.cs" />
+    <Compile Include="Controllers\Clinical\SocialRelationship\SocialRelationshipLiveTest.cs" />
+    <Compile Include="Controllers\Clinical\SocialRelationship\SocialRelationshipTest.cs" />
+    <Compile Include="Controllers\ECI\ECIControllerLiveTest.cs" />
+    <Compile Include="Controllers\ECI\IFSP\IFSPLiveTest.cs" />
+    <Compile Include="Controllers\ECI\IFSP\IFSPTest.cs" />
+    <Compile Include="Controllers\ForgotPassword\ForgotPasswordControllerTest.cs" />
+    <Compile Include="Controllers\ForgotPassword\ForgotPasswordControllerLiveTest.cs" />
+    <Compile Include="Controllers\Login\AccountControllerTest.cs" />
+    <Compile Include="Controllers\Login\AccountControllerLiveTest.cs" />
+    <Compile Include="Controllers\BaseTestController.cs" />
+    <Compile Include="Controllers\BaseLiveTestController.cs" />
+    <Compile Include="Controllers\RecordedServices\VoidServiceControllerLiveTest.cs" />
+    <Compile Include="Controllers\RecordedServices\VoidServiceControllerTest.cs" />
+    <Compile Include="Controllers\Registration\Admission\AdmissionLiveTest.cs" />
+    <Compile Include="Controllers\Registration\AdditionalDemography\AdditionalDemographicTest.cs" />
+    <Compile Include="Controllers\Registration\Collateral\CollateralLiveTest.cs" />
+    <Compile Include="Controllers\Registration\Collateral\CollateralTest.cs" />
+    <Compile Include="Controllers\Registration\Consent\ConsentLiveTest.cs" />
+    <Compile Include="Controllers\Registration\ContactBenefit\ContactBenefitTest.cs" />
+    <Compile Include="Controllers\Registration\ContactBenefit\ContactBenefitLiveTest.cs" />
+    <Compile Include="Controllers\Registration\ContactDischargeNote\ContactDischargeNoteLiveTest.cs" />
+    <Compile Include="Controllers\Registration\ContactDischargeNote\ContactDischargeNoteTest.cs" />
+    <Compile Include="Controllers\Registration\EmergencyContact\EmergencyContactLiveTest.cs" />
+    <Compile Include="Controllers\Registration\EmergencyContact\EmergencyContactTest.cs" />
+    <Compile Include="Controllers\Registration\FinancialAssessment\FinancialAssessmentLiveTest.cs" />
+    <Compile Include="Controllers\Registration\FinancialAssessment\FinancialAssessmentTest.cs" />
+    <Compile Include="Controllers\Registration\FinancialSummary\FinancialSummaryLiveTest.cs" />
+    <Compile Include="Controllers\Registration\GeneralRegistration\RegistrationControllerLiveTest.cs" />
+    <Compile Include="Controllers\Admin\AdminControllerLiveTest.cs" />
+    <Compile Include="Controllers\Admin\AdminControllerTest.cs" />
+    <Compile Include="Controllers\Registration\PatientProfile\PatientProfileLiveTest.cs" />
+    <Compile Include="Controllers\Registration\PatientProfile\PatientProfileTest.cs" />
+    <Compile Include="Controllers\Registration\Referrals\Disposition\ReferralDispositionDetailLiveTest.cs" />
+    <Compile Include="Controllers\Registration\Referrals\Followup\ReferralFollowupLiveTest.cs" />
+    <Compile Include="Controllers\Registration\Referrals\ClientInformation\ClientInformationLiveTest.cs" />
+    <Compile Include="Controllers\Registration\Referrals\Forwarded\ReferralForwardedLiveTest.cs" />
+    <Compile Include="Controllers\Registration\Referrals\Requestor\ReferralRequestorLiveTest.cs" />
+    <Compile Include="Controllers\Registration\Referrals\Search\ReferralSearchLiveTest.cs" />
+    <Compile Include="Controllers\Scheduling\Appointment\AppointmentLiveTest.cs" />
+    <Compile Include="Controllers\Scheduling\GroupScheduling\GroupSchedulingSearchLiveTest.cs" />
+    <Compile Include="Controllers\Scheduling\Resource\ResourceLiveTest.cs" />
+    <Compile Include="Controllers\Security\FeatureSecurityControllerLiveTest.cs" />
+    <Compile Include="Controllers\Security\FeatureSecurityControllerTest.cs" />
+    <Compile Include="Controllers\Security\SecurityControllerLiveTest.cs" />
+    <Compile Include="Controllers\Security\SecurityControllerTest.cs" />
+    <Compile Include="Controllers\Registration\GeneralRegistration\RegistrationControllerTest.cs" />
+    <Compile Include="Controllers\Security\RoleManagementControllerLiveTest.cs" />
+    <Compile Include="Controllers\Settings\SettingsControllerLiveTest.cs" />
+    <Compile Include="Controllers\Settings\SettingsControllerTest.cs" />
+    <Compile Include="Controllers\Registration\AdditionalDemography\AdditionalDemographyLiveTest.cs" />
+    <Compile Include="Controllers\WorkflowHeader\WorkflowHeaderLiveTest.cs" />
+    <Compile Include="Controllers\WorkflowHeader\WorkflowHeaderTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\HomeControllerTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Constant\Axis.Constant.csproj">
+      <Project>{f3eab25a-9ffe-4dda-9236-71f76ffbd908}</Project>
+      <Name>Axis.Constant</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Account\Axis.Model.Account.csproj">
+      <Project>{539e2b21-5970-4cec-b479-7b560a2d407b}</Project>
+      <Name>Axis.Model.Account</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Address\Axis.Model.Address.csproj">
+      <Project>{d5ddba0d-9bf0-497b-976d-08d39b7fe976}</Project>
+      <Name>Axis.Model.Address</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Admin\Axis.Model.Admin.csproj">
+      <Project>{0e7ca3f1-0db1-4b38-8a29-663f710b0e0f}</Project>
+      <Name>Axis.Model.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.BusinessAdmin\Axis.Model.BusinessAdmin.csproj">
+      <Project>{98c863c5-af31-4a01-bff9-66c87ffff041}</Project>
+      <Name>Axis.Model.BusinessAdmin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.CallCenter\Axis.Model.CallCenter.csproj">
+      <Project>{4d36e5f3-23a7-4764-946f-399472fe1c0d}</Project>
+      <Name>Axis.Model.CallCenter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Clinical\Axis.Model.Clinical.csproj">
+      <Project>{5b294bd2-4aa3-4178-ada1-7d9a2e027f5f}</Project>
+      <Name>Axis.Model.Clinical</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Common\Axis.Model.Common.csproj">
+      <Project>{b217d868-9cab-4e0d-a0bc-d82423e64741}</Project>
+      <Name>Axis.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.ECI\Axis.Model.ECI.csproj">
+      <Project>{a58c5eda-c318-4322-b2af-795ec3a5c9a4}</Project>
+      <Name>Axis.Model.ECI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Email\Axis.Model.Email.csproj">
+      <Project>{9f6f9127-fe24-4f59-9e43-3ad252360ae1}</Project>
+      <Name>Axis.Model.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Phone\Axis.Model.Phone.csproj">
+      <Project>{b0a9f6e9-6648-484c-b213-8b15b80973d3}</Project>
+      <Name>Axis.Model.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Photo\Axis.Model.Photo.csproj">
+      <Project>{cbd7d40a-d0b3-41a0-9931-1cff51d000da}</Project>
+      <Name>Axis.Model.Photo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.RecordedServices\Axis.Model.RecordedServices.csproj">
+      <Project>{ef878ea5-5fd6-48f4-825c-f58ef325ebc6}</Project>
+      <Name>Axis.Model.RecordedServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Registration\Axis.Model.Registration.csproj">
+      <Project>{d43d18cf-2ecf-4ede-866d-7cad9e1e0096}</Project>
+      <Name>Axis.Model.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Scheduling\Axis.Model.Scheduling.csproj">
+      <Project>{b4701714-ef73-4d51-918e-886df6f36a8c}</Project>
+      <Name>Axis.Model.Scheduling</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Security\Axis.Model.Security.csproj">
+      <Project>{9bf54dd3-d68a-451a-a9ff-16d457ef4457}</Project>
+      <Name>Axis.Model.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Setting\Axis.Model.Setting.csproj">
+      <Project>{798aafb3-6a50-4990-8c52-ede71c589fc8}</Project>
+      <Name>Axis.Model.Setting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Service\Axis.Service.csproj">
+      <Project>{a6be9f68-da2a-48c1-a0c7-71a62b04c9d8}</Project>
+      <Name>Axis.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataEngine.Helpers\Axis.DataEngine.Helpers.csproj">
+      <Project>{86c17df6-535d-4ed7-aaff-575fc9de6e85}</Project>
+      <Name>Axis.DataEngine.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataEngine.Plugins\Axis.DataEngine.Plugins.Clinical\Axis.DataEngine.Plugins.Clinical.csproj">
+      <Project>{248eb0a6-b39d-46f9-b6c4-ef4a19a442ee}</Project>
+      <Name>Axis.DataEngine.Plugins.Clinical</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataEngine.Plugins\Axis.DataEngine.Plugins.ECI\Axis.DataEngine.Plugins.ECI.csproj">
+      <Project>{8e23359a-36e2-457f-910b-c13255c5f30b}</Project>
+      <Name>Axis.DataEngine.Plugins.ECI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataEngine.Plugins\Axis.DataEngine.Plugins.Registration\Axis.DataEngine.Plugins.Registration.csproj">
+      <Project>{788bd352-1d84-4c15-88d6-6797d4bd4841}</Project>
+      <Name>Axis.DataEngine.Plugins.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataEngine\Axis.DataEngine.Service.csproj">
+      <Project>{386edd38-a033-4f59-90c5-85108d6ab4ce}</Project>
+      <Name>Axis.DataEngine.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.Account\Axis.DataProvider.Account.csproj">
+      <Project>{3a0df0b8-7c86-48f0-a30e-a7c70ac344ea}</Project>
+      <Name>Axis.DataProvider.Account</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.Admin\Axis.DataProvider.Admin.csproj">
+      <Project>{0b67e6fb-ea44-46c0-a06e-4d93ee9ee960}</Project>
+      <Name>Axis.DataProvider.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.BusinessAdmin\Axis.DataProvider.BusinessAdmin.csproj">
+      <Project>{8f29c148-4b0a-41c0-9d4c-5615ff2b0c2c}</Project>
+      <Name>Axis.DataProvider.BusinessAdmin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.Clinical\Axis.DataProvider.Clinical.csproj">
+      <Project>{4be0870a-b022-4f46-a4a9-2b60bdaafd46}</Project>
+      <Name>Axis.DataProvider.Clinical</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.Common\Axis.DataProvider.Common.csproj">
+      <Project>{4BB86B3D-131E-4C06-BA39-59A9F589CC41}</Project>
+      <Name>Axis.DataProvider.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.ECI\Axis.DataProvider.ECI.csproj">
+      <Project>{597885ff-ef29-4c96-bd98-4c67a0e3baab}</Project>
+      <Name>Axis.DataProvider.ECI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.RecordedServices\Axis.DataProvider.RecordedServices.csproj">
+      <Project>{19760f0a-21a9-4b53-9aca-3852c8372567}</Project>
+      <Name>Axis.DataProvider.RecordedServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.Registration\Axis.DataProvider.Registration.csproj">
+      <Project>{035e466f-48c4-40b3-a758-0523fd69f725}</Project>
+      <Name>Axis.DataProvider.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.Security\Axis.DataProvider.Security.csproj">
+      <Project>{c3dd0649-d8bb-41c2-aace-1a479c1ed51c}</Project>
+      <Name>Axis.DataProvider.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataProvider\Axis.DataProvider.Settings\Axis.DataProvider.Settings.csproj">
+      <Project>{198d16f0-9ff4-45fb-8c60-5ad94d6c00b6}</Project>
+      <Name>Axis.DataProvider.Settings</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

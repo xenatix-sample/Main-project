@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]>   <html lang="en-US" prefix="og: http://ogp.me/ns#" class="no-js iem7"> <![endif]-->
+<!--[if lt IE 7]>       <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 7]>          <html class="no-js lt-ie9 lt-ie8" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if IE 8]>          <html class="no-js lt-ie9" lang="en-US" prefix="og: http://ogp.me/ns#"> <![endif]-->
+<!--[if (gte IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!-->
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns#">
+<!--<![endif]-->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link rel="shortcut icon" href="~/favicon.ico" />
+
+    @Styles.Render("~/Content/css")
+
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/anonymous")
+    @Scripts.Render("~/bundles/angular-ui")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/resize")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/site")
+    @Scripts.Render("~/bundles/offline")    
+
+    @RenderSection("scripts", required: false)
+    <script src="~/Home/Settings"></script>
+    <script src="~/Scripts/app/helpers/common.js"></script>
+    <script src="~/Scripts/app/directives/password.js"></script>
+
+    @*Canonical is useful to use. Not sure if we'll need the feed. Leaving it in for now. (rwq)*@
+    @*<link rel="canonical" href="http://xenatix.cloudapp.net">*@
+    @*<link rel="alternate" type="application/rss+xml" title="XenatiX" href="http://xenatix.cloudapp.net/feed.xml" />*@
+</head>
+<body class="dark full-pattern">
+
+    <div id="main-container" class="main-container-outer">
+        <div class="row main-row">
+            <!-- begin: header -->
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid padding-left-2x padding-right-2x">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="~/dashboard/"><span class="bug"></span><span class="logotype">XenatiX</span></a> @*Logo- linked to home*@
+                    </div>
+                </div>
+            </nav>
+            <!-- end: header -->
+
+            <div class="container-outer">
+                <!-- begin: content -->
+                @RenderBody()
+
+                <!-- end: content -->
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar-fixed-bottom">
+        <div class="container">
+            Copyright © @DateTime.Now.Year, aXis -- v@(typeof(Axis.PresentationEngine.Startup).Assembly.GetName().Version.ToString(3))
+        </div>
+    </div>
+</body>
+</html>

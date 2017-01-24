@@ -1,0 +1,40 @@
+﻿<div class="modal fade" id="eligibilityFormModal" name="eligibilityFormFormModal" role="dialog" aria-labelledby="eligibilityFormFormModal" aria-hidden="true" data-backdrop="static" data-keyboard="true" tabindex="-1">
+    <div class="modal-dialog modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" ng-click="$event.stopPropagation();closePrintModal();"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Print Preview</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)" permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall consent" ng-init="initSignature()">
+    <div class="panel-body">
+        <form role="form" name="ctrl.screeningsForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" novalidate bs-modifiable="true">
+            {{ setform(ctrl.eligibilityForm.modified, ctrl.eligibilityForm.name) }}
+            <div class="row" ng-if="topazModel.b64ImageData.length > 1">
+                <div class="col-md-12 col-sm-12">
+                    <img ng-src="data:image/png;base64, {{topazModel.b64ImageData}}" alt="signature" style="vertical-align: middle;" />&nbsp;&nbsp;<a href="javascript:void(0)" ng-click="openPrintModal()" class="plain font-size-xlarge" role="button" title="Print Preview Eligibility Statement" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#eligibilityFormModal"><i class="fa fa-print fa-fw"></i></a>
+                </div>
+            </div>
+            <div class="row" ng-show="topazModel.modelNumber != '' && topazModel.b64ImageData === ''">
+                <!--ng-show="topazModel.modelNumber != '' && topazModel.b64ImageData === ''"-->
+                <div class="col-md-7 col-sm-12">
+                    <strong ng-bind="topazModel.modelNumber"></strong>
+                    <div class="row padding-bottom">
+                        <!--Load the topaz signature template-->
+                        <topaz-signature data-topaz-model="topazModel" data-topaz-ready="isTopazReady" />
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="topazModel.modelNumber === '' && topazModel.b64ImageData === ''">
+                <div class="col-md-4 col-sm-4">
+                    <span class="error-block" ng-bind="topazModel.DeviceMessage"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

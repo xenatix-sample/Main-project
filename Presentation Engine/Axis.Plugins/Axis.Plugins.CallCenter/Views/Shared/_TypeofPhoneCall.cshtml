@@ -1,0 +1,20 @@
+﻿<div class="row section-block  margin-bottom-small" ng-form="phoneCallForm">
+    <div class="col-md-3  padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : phoneCallForm.PhoneCallType.$invalid && !phoneCallForm.PhoneCallType.$pristine }">
+            <label for="PhoneCallType">{{ $state.current.name.indexOf('crisisline') > -1 ? 'Type of Phone Call' : 'Reported by' }}</label>
+            <select ng-disabled="isReadOnly" ng-model="ctrl.ProgressNoteDetails.CallTypeID" id="PhoneCallType" name="PhoneCallType" class="form-control"
+                    ng-options="callType.ID as callType.Name for callType in getLookupsByType('CallType')" ng-change="ctrl.clearDescribeOther(ctrl.ProgressNoteDetails.CallTypeID)">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-if="ctrl.ProgressNoteDetails.CallTypeID == ctrl.phoneTypeOtherId">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : phoneCallForm.DescribeOther.$invalid && !phoneCallForm.DescribeOther.$pristine}">
+            <label for="DescribeOther">Describe Other</label>
+            <input ng-disabled="isReadOnly" type="text" name="DescribeOther" id="DescribeOther" ng-model="ctrl.ProgressNoteDetails.CallTypeOther"
+                   class="form-control ellipsis" auto-focus event-focus="autoFocus" ng-trim="true" ng-maxlength="100">
+            <p ng-show="phoneCallForm.DescribeOther.$error.maxlength" class="error-block ng-hide">Describe Other is too long</p>
+        </div>
+    </div>
+</div>

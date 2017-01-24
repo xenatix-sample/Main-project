@@ -1,0 +1,13 @@
+﻿<div apply-security>
+    <select class="form-control {{elementClass}}"
+            ng-required="isRequired"
+            ng-model="providerModel"
+            name="{{elementName}}"
+            data-validation-name="{{validationName}}"
+            id="{{elementId}}"
+            ng-options="provider.ID as provider.Name for provider in providers"
+            ng-disabled="isDisabled">
+        <option value="" ng-selected="selected">Select</option>
+    </select>
+    <span class="select-btn"><i class="xen-select"></i></span>
+</div>

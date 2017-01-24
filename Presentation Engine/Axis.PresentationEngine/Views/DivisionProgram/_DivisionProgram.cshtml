@@ -1,0 +1,145 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, false)" permission-key="{{permissionKey}}" permission="{{resolvePermission(userDivisionProgramID)}}"></keypress-events>
+<div security permission-key="{{permissionKey}}" permission="{{resolvePermission(userDivisionProgramID)}}" permission-mode="readonly" dual-permission="true">
+
+    <form role="form" name="ctrl.divisionProgramForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+          bs-modifiable="true" set-form-mode>
+        {{ctrl.divisionProgramForm.modified ? setform(true):setform(false)}}
+        <div class="row padding-top-small padding-bottom-small no-security" data-ng-if="!inProfile">
+            <div class="col-md-3 padding-bottom-small form-group-lg">
+                <label for="company">Company <sup>*</sup></label>
+                <input type="text" ng-disabled="true" class="form-control ellipsis" clean="true" data-validation-name="Company" data-ng-model="Company" id="company" name="company" />
+            </div>
+        </div>
+        <div class="row section-block margin-bottom-xsmall" data-ng-if="!inProfile">
+            <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.divisionProgramForm.divison.$invalid && !ctrl.divisionProgramForm.divison.$pristine }">
+                <label for="divison">Division <sup>*</sup></label>
+                <div class="input-group">
+                    <input type="text" ng-model="Division.Name" id="divison" name="divison" data-validation-name="Division" ng-disabled="IsEdit || inProfile"
+                           class="form-control ellipsis" typeahead-wait-ms="500" typeahead-trigger typeahead-select-on-blur="true" ng-required="true"
+                           typeahead-on-select="selectDivision($item)"
+                           typeahead="organization as organization.Name for organization in getOrganizationByDataKey('Division') | securityFilter: 'Division' : 'ID': '{{permissionKey}}'| filter:{Name: $viewValue}:comparatorOnEmptyOrMatch"
+                           typeahead-editable="false" typeahead-no-results="noResultsDivision" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" ng-disabled="IsEdit || inProfile" ng-click="triggerTypeahead('divison');">
+                            <i class="fa fa-search" />
+                        </button>
+                    </span>
+                </div>
+                <p ng-show="noResultsDivision" ng-cloak class="error-block">No Results Found!</p>
+            </div>
+        </div>
+        <div class="row padding-top-small" data-ng-if="!inProfile">
+            <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.divisionProgramForm.program.$invalid && !ctrl.divisionProgramForm.program.$pristine }">
+                <label for="divison">Program <sup>*</sup></label>
+                <div class="input-group">
+                    <input type="text" ng-model="Program.Name" id="program" name="program" 
+                           ng-disabled="IsEdit || inProfile" data-validation-name="Program"
+                           class="form-control ellipsis" 
+                           typeahead-wait-ms="500" 
+                           typeahead-trigger typeahead-select-on-blur="true" 
+                           ng-required="true"
+                           typeahead-on-select="selectProgram($item); asyncSelected = '';"
+                           typeahead="organization as organization.Name for organization in getOrganizationByDataKey('Program',Division.ID)| securityFilter: 'Program' : 'ID': '{{permissionKey}}'| filter:{Name:$viewValue}:comparatorOnEmptyOrMatch"
+                           typeahead-editable="false"
+                           typeahead-no-results="noResultsProgram" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" ng-disabled="IsEdit || inProfile" ng-click="triggerTypeahead('program');">
+                            <i class="fa fa-search" />
+                        </button>
+                    </span>
+                </div>
+                <p ng-show="noResultsProgram" ng-cloak class="error-block">No Results Found!</p>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.divisionProgramForm.programUnit.$invalid && !ctrl.divisionProgramForm.programUnit.$pristine }">
+                    <label for="divison">Program Unit <sup>*</sup></label>
+                    <div class="input-group">
+                        <input type="text" ng-model="ProgramUnit.Name" id="programUnit" data-validation-name="Program Unit" name="programUnit" ng-required="true"
+                               class="form-control ellipsis" typeahead-wait-ms="500" typeahead-trigger typeahead-select-on-blur="true"
+                               typeahead-on-select="selectProgramUnit($item)"
+                               typeahead="organization as organization.Name for organization in getOrganizationByDataKey('ProgramUnit',Program.ID)| securityFilter: 'ProgramUnit' : 'ID': '{{permissionKey}}'| filter:{Name:$viewValue}:comparatorOnEmptyOrMatch"
+                               typeahead-editable="false" typeahead-no-results="noResultsProgramUnit" data-ng-disabled="isReadOnlyForm || inProfile" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" ng-click="triggerTypeahead('programUnit');" data-ng-disabled="isReadOnlyForm || inProfile">
+                                <i class="fa fa-search" />
+                            </button>
+                        </span>
+                    </div>
+                    <p ng-show="noResultsProgramUnit" ng-cloak class="error-block">No Results Found!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pod-group pod-group-sm">
+            <div class="pod" ng-repeat="programUnit in selectedProgramUnits | filter: { IsActive : true }">
+                <div>
+                    <p><strong>{{programUnit.Name}}</strong></p>
+                </div>
+                <a class="text-info close" href="javascript:void(0)" ng-click="removeProgramUnit(programUnit)" title="Remove Program Unit" space-key-press><span class="sr-only"></span>x</a>
+            </div>
+            <div ng-hide="true">
+                {{selectedProgramName=(selectedProgramUnits | filter: { IsActive : true }| map:'Name').join(',')}}
+                <input type="text" class="form-control" ng-model="selectedProgramName" />
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row padding-top-small">
+    <div class="col-lg-6">
+        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+    </div>
+    <div class="col-lg-6 text-right">
+        <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="{{permissionKey}}" permission="{{resolvePermission(userDivisionProgramID)}}" data-ng-if="!inProfile" dual-permission="true">SAVE</button>
+        <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, false)" id="btnNext" name="btnNext" security permission-key="{{permissionKey}}" permission="read">NEXT</button>
+    </div>
+</div>
+
+@*Plus button*@
+<div class="row">
+    <plus-button title="New Division & Program" permission-key="{{permissionKey}}" permission="create" save="" reset="addNew()" table-id="divisionProgramTable"></plus-button>
+</div>
+
+<div class="row padding-top-small">
+    <div class="bootstrap-table">
+        <div class="fixed-table-container">
+            <div class="fixed-table-body">
+                <table id="divisionProgramTable" data-toggle="table"
+                       data-show-columns="false"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-advanced-search="false"
+                       class="table table-bordered table-style combo-table form-group-sm"
+                       grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field=""
+                                data-sortable="false">Division</th>
+                            <th data-field=""
+                                data-sortable="false">Program</th>
+                            <th data-field=""
+                                data-sortable="false">Program Unit</th>
+                            <th data-field="FacilityID" data-ng-if="!inProfile"
+                                data-sortable="false">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="userDivision in userProgramDivisions track by $index">
+                        <tr ng-if="0" ng-repeat-start="userProgram in userDivision.Programs"></tr>
+                        <tr ng-repeat="userProgramUnit in userProgram.ProgramUnits track by $index">
+                            <td rowspan="{{userDivision.RowCount}}" ng-show="userProgram.IsFirst && userProgramUnit.IsFirst">{{userDivision.Name}}</td>
+                            <td rowspan="{{userProgram.RowCount}}" ng-show="userProgramUnit.IsFirst">{{userProgram.Name}}</td>
+                            <td>{{userProgramUnit.Name}}</td>
+                            <td class="actions" rowspan="{{userProgram.RowCount}}" data-ng-show="userProgramUnit.IsFirst" data-ng-if="!inProfile">
+                                <a href="javascript:void(0)" data-default-no-action ng-click="editUserDivisionProgram(userDivision.MappingID,userProgram.MappingID);" security permission-key="{{permissionKey}}" permission="update"><i class="fa fa-pencil fa-fw  margin-left padding-left-small padding-right-small"></i></a>
+                                <a href="javascript:void(0)" class="margin-left" data-default-no-action ng-click="deleteUserDivisionProgram(userDivision.MappingID,userProgram.MappingID);" security permission-key="{{permissionKey}}" permission="delete"><i class="fa fa-trash fa-fw"></i></a>
+                            </td>
+                        </tr>
+                        <tr ng-if="0" ng-repeat-end></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

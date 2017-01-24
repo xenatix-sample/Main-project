@@ -1,0 +1,10 @@
+﻿<div ng-init="initReport()">
+    <div ng-show="!isReportReady">
+        <div class="loading text-center padding-top padding-bottom">
+            <i class="fa fa-spinner fa-spin"><span class="sr-only">Report is loading</span></i>
+        </div>
+    </div>
+    <div ng-if="isReportReady" style="height: 800px;">
+        <pdf-maker report-id="ifspReport" report-name="IFSP" report-data="reportModel" report-width="100%" report-height="100%" />
+    </div>
+</div>

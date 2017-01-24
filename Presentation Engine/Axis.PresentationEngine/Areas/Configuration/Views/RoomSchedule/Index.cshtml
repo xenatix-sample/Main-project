@@ -1,0 +1,64 @@
+﻿<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div ng-show="isLoading">
+            <div class="loading text-center padding-top padding-bottom">
+                <i class="fa fa-spinner fa-spin"><span class="sr-only">Please wait...</span></i>
+            </div>
+        </div>
+        <form role="form" name="ctrl.roomScheduleForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+              bs-modifiable="true" set-form-mode>
+
+            <div class="panel panel-light padding-xsmall">
+                <div class="panel-body">
+                    <div class="row padding-top-small padding-bottom-small">
+                        <div class="col-md-12">
+                            <table id="roomScheduleTable" data-toggle="table"
+                                   data-show-columns="true"
+                                   data-search="true"
+                                   data-minimum-count-columns="2"
+                                   data-filter-control="false"
+                                   data-mobile-responsive="true"
+                                   data-filter-bar
+                                   data-advanced-search="false"
+                                   data-show-multi-sort="true"
+                                   data-classes="table table-bordered"
+                                   bootstrap-table="tableoptions" grid-arrow-selector>
+                                <thead>
+                                    <tr>
+                                        <th data-field="roomSelect"
+                                            data-sortable="false"></th>
+                                        <th data-field="roomName"
+                                            data-sortable="true">Room</th>
+                                        <th data-field="scheduleType"
+                                            data-sortable="false">Schedule Type</th>
+                                        <th data-field="day"
+                                            data-sortable="false">Day</th>
+                                        <th data-field="startTime"
+                                            data-sortable="false">Start Time</th>
+                                        <th data-field="startAm"
+                                            data-sortable="false"></th>
+                                        <th data-field="endTime"
+                                            data-sortable="false">End Time</th>
+                                        <th data-field="endAm"
+                                            data-sortable="false"></th>
+                                        <th data-field="addRemove"
+                                            data-sortable="false"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row padding-top-small">
+            <div class="col-lg-6 col-md-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="save(false, false)" id="btnSave" name="brnSave" security permission-key="SiteAdministration-StaffManagement-Scheduling" permission="update">SAVE</button>
+            </div>
+        </div>
+    </div>
+</div>

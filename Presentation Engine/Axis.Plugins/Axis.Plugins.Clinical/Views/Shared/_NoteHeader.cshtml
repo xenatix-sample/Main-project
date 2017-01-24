@@ -1,0 +1,32 @@
+﻿<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.noteForm.NoteDate.$invalid && !ctrl.contactForm.NoteDate.$pristine}">
+            <label for="relationship">Note Date<sup>*</sup></label>
+            <mydatepicker opened="opened" id="NoteDate" new-date="note.TakenTime"
+                          dob-name="'NoteDate'" date-options="dateOptions" date-required="true" auto-focus event-focus="autoFocusNoteDate"></mydatepicker>
+            <p id="doberror" data-ng-show="ctrl.noteForm.NoteDate.$error.date  && !ctrl.NoteDate.takenTime.$pristine" data-ng-cloak class="error-block">Please select valid date.</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.noteForm.NoteOwner.$invalid && !ctrl.noteForm.NoteOwner.$pristine }">
+            <label for="race">Note Owner <sup>*</sup></label>
+            <select name="NoteOwner" class="form-control" id="NoteOwner" ng-model="note.TakenBy" auto-focus event-focus="autoFocus"
+                    ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/"
+                    ng-options="owner.ID as owner.Name for owner in UserList">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.noteForm.NoteType.$invalid && !ctrl.noteForm.NoteType.$pristine }">
+            <label for="race">Note Type <sup>*</sup></label>
+            <select name="NoteType" class="form-control" id="NoteType" ng-model="note.NoteTypeID" auto-focus event-focus="autoFocus"
+                    ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/"
+                    ng-options="noteType.ID as noteType.Name for noteType in NoteTypeList">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <form role="form" name="ctrl.eligibilityForm" check-form data-on-save="saveEligibilityNote(isNext, isMandatory, hasErrors)" novalidate bs-modifiable="true">
+            {{ setform(ctrl.eligibilityForm.modified, ctrl.eligibilityForm.name) }}
+            <div class="col-md-12" ng-init="initNotes()">
+                <div class="row padding-top-small">
+                    <div class="col-md-12 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.eligibilityForm.notes.$invalid && !ctrl.eligibilityForm.notes.$pristine }">
+                        <xen-memobox label="Notes *" rows="10" maxlength="500" ng-model="eligibility.Notes" id="notes" name="notes" ng-required="true"></xen-memobox>
+                    </div>
+                </div>
+            </div>
+            <div class="row padding-top-small">
+                <div class="col-lg-5">
+                    <p class="uppercase subtext">
+                        <sup>*</sup> Indicates a required field
+                    </p>
+                </div>
+                <div class="col-lg-7 text-right">
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityID)}}">SAVE</button>
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" id="btnNext" name="btnNext" security permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityID)}}">NEXT</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

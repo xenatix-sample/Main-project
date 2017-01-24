@@ -1,0 +1,185 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)" enter-key-stop="enterKeyStop" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}"></keypress-events>
+
+<!--data entry-->
+<div class="row">
+    <breadcrumbs min-breadcrumbs="2" goto="referralsearch" />
+</div>
+<div class="row padding-right-small">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form role="form" name="ctrl.referralClientForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" set-form-status>
+                <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}" permission-mode="readonly">
+                    @Html.Partial("../Shared/_ReferralHeader")
+                    <div class="row padding-top-small">
+                        <div class="col-md-12">
+
+                            <!-- Client Identity -->
+                            <div class="row padding-top-small">
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralClientForm.FirstName.$invalid && !ctrl.referralClientForm.FirstName.$pristine}">
+                                        <label for="FirstName">First Name<sup> *</sup></label>
+                                        <input ng-disabled="isReadOnlyForm" type="text" name="FirstName" id="FirstName" ng-model="Demographics.FirstName" class="form-control ellipsis" auto-focus event-focus="autoFocus" ng-trim="true" ng-required="true" ng-maxlength="200">
+                                        <p ng-show="ctrl.referralClientForm.FirstName.$error.maxlength" class="error-block ng-hide">First Name is too long</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralClientForm.LastName.$invalid && !ctrl.referralClientForm.LastName.$pristine}">
+                                        <label for="LastName">Last Name<sup> *</sup></label>
+                                        <input ng-disabled="isReadOnlyForm" type="text" name="LastName" id="LastName" ng-model="Demographics.LastName" ng-maxlength="200" ng-trim="true" ng-required="true" class="form-control ellipsis" required="required">
+                                        <p ng-show="ctrl.referralClientForm.LastName.$error.maxlength" class="error-block ng-hide">Last Name is too long</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralClientForm.Middle.$invalid &amp;&amp; !ctrl.referralClientForm.Middle.$pristine }">
+                                        <label for="Middle">Middle Name</label>
+                                        <input ng-disabled="isReadOnlyForm" type="text" id="Middle" name="Middle" class="form-control" ng-model="Demographics.Middle" ng-maxlength="200">
+                                        <p ng-show="ctrl.referralClientForm.Middle.$error.maxlength" ng-cloak class="error-block">Middle Name is too long</p>
+                                    </div>
+                                </div>
+                                <!-- prefix / suffix -->
+                                <div class="col-md-2 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="prefix">Prefix</label>
+                                        <select ng-disabled="isReadOnlyForm" class="form-control ellipsis" ng-model="Demographics.TitleID" id="prefix" name="Prefix" ng-options="prefix.ID as prefix.Name for prefix in getLookupsByType('PrefixType')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="suffix">Suffix</label>
+                                        <select ng-disabled="isReadOnlyForm" ng-model="Demographics.SuffixID" id="suffix" name="Suffix" class="form-control ellipsis" ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Contact Methods -->
+                            <h3 class="uppercase nomargin padding-xsmall border-top">Contact Method</h3>
+                            <!--Phone-->
+                            <div class="row padding-top-small ">
+                                @Html.Partial("../Shared/_Phone")
+                            </div>
+
+                            <!--Address-->
+                            <div class="row section-block">
+                                @Html.Partial("../Shared/_Address")
+                            </div>
+
+                            <div class="row padding-top-small">
+                                <div class="col-md-12 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-xsmall" ng-class="{ 'has-error' : ctrl.referralClientForm.ReasonforCare.$invalid && !ctrl.referralClientForm.ReasonforCare.$pristine}">
+                                        <xen-memobox is-disabled="isReadOnlyForm" label="Reason for Care? *" rows="5" maxlength="200" ng-model="AdditionalDetails.ReasonforCare" name="ReasonforCare" id="ReasonforCare" ng-required="true"></xen-memobox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- display this row IF 'clientTransferYes' above is selected -->
+                            <div class="row padding-top-small">
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-xsmall">
+                                        <!-- Yes / No radio buttons - triggers whether or not next two questions display -->
+                                        <label for="Transfer">Is this a transfer?</label>
+                                        <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsTransferred" data-radio-button-id="clientTransferYes" data-label="Yes" data-ng-value="true" /></span>
+                                        <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsTransferred" data-radio-button-id="clientTransferNo" data-label="No" data-ng-value="false" /></span>
+                                    </div>
+                                </div>
+                                <div ng-if="AdditionalDetails.IsTransferred">
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <!-- Yes / No radio buttons - if 'yes' show describe box -->
+                                            <label for="Housing">Housing Program?</label>
+                                            <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsHousingProgram" data-radio-button-id="clientHousingYes" data-label="Yes" data-ng-value="true" /></span>
+                                            <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsHousingProgram" data-radio-button-id="clientHousingNo" data-label="No" data-ng-value="false" /></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 paddding-bottom-small" ng-if="AdditionalDetails.IsHousingProgram">
+                                        <!-- display this IF 'clientHousingYes' is selected above -->
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <label for="clientHousingDesc">Housing Description</label>
+                                            <input ng-disabled="isReadOnlyForm" type="text" name="clientHousingDesc" id="clientHousingDesc" ng-model="AdditionalDetails.HousingDescription" ng-maxlength="200" ng-trim="true" class="form-control ellipsis">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small">
+                                            <!-- Yes / No radio buttons -->
+                                            <label for="Furlough">Eligible for Furlough?</label>
+                                            <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsEligibleforFurlough" data-radio-button-id="clientFurloughYes" data-label="Yes" data-ng-value="true" /></span>
+                                            <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsEligibleforFurlough" data-radio-button-id="clientFurloughNo" data-label="No" data-ng-value="false" /></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row padding-top-small med-names">
+                                <div class="col-md-5 padding-bottom-xsmall">
+                                    <div class="form-group-lg">
+                                        <!-- Yes / No radio buttons -->
+                                        <label for="DischargeTransfer">Is this referral for a Discharge/Transfer?</label>
+                                        <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsReferralDischargeOrTransfer" data-radio-button-id="clientDischargeYes" data-label="Yes" data-ng-value="true" /></span>
+                                        <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsReferralDischargeOrTransfer" data-radio-button-id="clientDischargeNo" data-label="No" data-ng-value="false" /></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 padding-bottom-xsmall">
+                                    <div class="form-group-lg">
+                                        <!-- Yes / No radio buttons -->
+                                        <label for="Consent">Is consent required for this referral?</label>
+                                        <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsConsentRequired" data-radio-button-id="clientConsentYes" data-label="Yes" data-ng-value="true" /></span>
+                                        <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="AdditionalDetails.IsConsentRequired" data-radio-button-id="clientConsentNo" data-label="No" data-ng-value="false" /></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row section-block">
+                                <div class="col-md-4 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="clientReferralConcern">Referral Problem/Type</label> <!-- append "sr-only" class to label for every phone row after the first -->
+                                        <select ng-disabled="isReadOnlyForm" ng-model="Concern.ReferralConcernID" id="clientReferralConcern" class="form-control" ng-options="referralConcernType.ID as referralConcernType.Name for referralConcernType in referralConcernTypes">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="clientReferralPriority">Priority</label> <!-- append "sr-only" class to label for every phone row after the first -->
+                                        <select ng-disabled="isReadOnlyForm" ng-model="Concern.ReferralPriorityID" id="clientReferralPriority" class="form-control" ng-options="referralPriority.ID as referralPriority.Name for referralPriority in referralPriorities">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 actions nopadding padding-top-small padding-bottom-small">
+                                    <div class="form-group-lg padding-top-small margin-right-small text-right">
+                                        <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="concern.ShowPlusButton" ng-click="addNewConcern()">
+                                            <i class="fa fa-plus-circle"><span class="sr-only">Add Concernr</span></i>
+                                        </a>
+                                        <a href="javascript:void(0);" class="font-size-xlarge" ng-if="concern.ShowMinusButton && concernItems.length>1" ng-click="removeConcern($index)">
+                                            <i class="fa fa-minus-circle" on-row-removed><span class="sr-only">Remove Concern</span></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row padding-top-small">
+                                <div class="col-md-12 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="">
+                                        <xen-memobox is-disabled="isReadOnlyForm" label="Comments" rows="5" maxlength="250" ng-model="AdditionalDetails.Comments" name="clientReferralComment" id="clientCommentsID"></xen-memobox>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save and Next -->
+                @Html.Partial("../Shared/_ReferralActionControl")
+            </form>
+        </div>
+    </div>
+</div>

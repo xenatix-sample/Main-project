@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Photo";
+    Layout = null;
+}
+
+<div class="jumbotron">
+    <form class="form-inline" name="searchForm" data-ng-submit="searchForm.$valid" set-form-mode>
+        <div class="container-fluid padding-small">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg">
+                    <input type="text" name="ClientSearch" id="txtClientSearch" ng-model="searchText" auto-focus event-focus="searchAutoFocus"
+                           ng-blur="allowFocusEvent?enableShortcuts():null"
+                           placeholder="Search for {{ searchTitle }}" tabindex="0" class="form-control" ng-disabled="isDisabled" ng-keydown ="($event.which === 13)?searchContact(searchText,true):0"/>
+                    @* added icon as button *@
+                    <span class="input-group-btn">
+                        <button type="submit" ng-click="searchContact(searchText,true)" class="btn btn-link">
+                            <i class="fa fa-search fa-fw"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="contactListModel" tabindex="-1" role="dialog" aria-labelledby="contactListModel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" ng-click="cancelModel();"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Contacts</h4>
+            </div>
+            <div class="modal-body">
+                <table id="contactsTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="fName"
+                                data-sortable="true">First Name</th>
+                            <th data-field="lName"
+                                data-sortable="true">Last Name</th>
+                            <th data-field="mname"
+                                data-sortable="true">Middle Name</th>
+                            <th data-field="birthdate"
+                                data-sortable="true">Date Of Birth</th>
+                            <th data-field="gender"
+                                data-sortable="true">Gender</th>
+                            <th data-field="ssn"
+                                data-sortable="true">SSN</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

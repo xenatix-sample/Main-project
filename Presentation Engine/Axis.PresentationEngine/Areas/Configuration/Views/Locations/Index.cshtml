@@ -1,0 +1,18 @@
+﻿<div class="container-fluid nomargin nopadding" locationsindexmain>
+    <div>
+        <div class="col-md-12">
+            @*<div class="col-lg-9 col-md-9 ng-cloak">
+                    <breadcrumbs min-breadcrumbs="3" />
+                </div>*@
+
+            <div class="col-lg-9 col-md-9 ng-cloak" locationsindexuiview ui-view="body">
+                <div locationsindexcontent>
+                    <p><a href="javascript:void()" ng-click="Goto('siteadministration.configuration.locations.details.general', { LocationID: 1 })">Click to go to Location 1</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 right-nav" ui-view="navigation">
+            @*@Html.Partial("../Config/Navigation")*@
+        </div>
+    </div>
+</div>

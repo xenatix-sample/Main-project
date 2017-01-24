@@ -1,0 +1,151 @@
+﻿
+<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, false)" permission-key="{{permissionKey}}" permission="{{resolvePermission(userSchedulingID)}}"></keypress-events>
+<form role="form" name="ctrl.schedulingForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+      bs-modifiable="true" set-form-mode>
+    {{ctrl.schedulingForm.modified ? setform(true):setform(false)}}
+    <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(userSchedulingID)}}" permission-mode="readonly" dual-permission="true">
+        <div class="row padding-top-small" data-ng-if="!inProfile">
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="facility">Facility <sup>*</sup></label>
+                    <select ng-model="facilityID" id="facility" name="facility" data-validation-name="Facility"  class="form-control" ng-required="true" ng-options="facility.ID as facility.Name for facility in facilities"
+                            ng-change="getUserFacilitySchedule(facilityID)" auto-focus event-focus="autofocus" data-ng-disabled="isReadOnlyForm || inProfile">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+
+            <div class="col-md-3 padding-bottom-small form-group-lg">
+                <xen-checkbox ng-model="userData.sameAsFacility" ng-hide="facilityID === undefined" data-on-click="SetSameAsFacility()" data-label="Same As Facility" data-ng-disabled="inProfile || userData.sameAsFacility" />
+            </div>
+        </div>
+
+        <div class="row padding-top-xsmall">
+            <div class="bootstrap-table {{preventDisable}}">
+                <div class="fixed-table-container">
+                    <div class="fixed-table-body">
+                        <table id="userSchedule" data-toggle="table"
+                               data-show-columns="false"
+                               data-search="true"
+                               data-minimum-count-columns="2"
+                               data-filter-control="false"
+                               data-mobile-responsive="true"
+                               data-advanced-search="false"
+                               data-show-multi-sort="false"
+                               class="table table-bordered table-style combo-table form-group-sm"
+                               grid-arrow-selector>
+                            <thead>
+                                <tr>
+                                    <th data-field="" data-ng-if="!inProfile"
+                                        data-sortable="false"><span class="sr-only">Please select all that apply</span></th>
+                                    <th data-field=""
+                                        data-sortable="false">DAY</th>
+                                    <th data-field=""
+                                        data-sortable="false">SCHEDULE TYPE</th>
+                                    <th data-field=""
+                                        data-sortable="false">START TIME</th>
+                                    <th data-field=""
+                                        data-sortable="false"></th>
+                                    <th data-field=""
+                                        data-sortable="false">END TIME</th>
+                                    <th data-field=""
+                                        data-sortable="false"></th>
+                                    <th data-field="" data-ng-if="!inProfile"
+                                        data-sortable="false"></th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="userDaySchedule in userWeekSchedule" ng-init="parentIndex = $index" ng-form="userscheduleform[{{$index}}]">
+                                <tr ng-repeat="userSchedule in userDaySchedule.UserFacilityTimeSchedule" ng-show="userSchedule.IsActive">
+                                    <td data-ng-if="!inProfile"><xen-checkbox data-ng-model="userSchedule.IsChecked" data-checkbox-id="cbIsChecked" data-on-click="CBClicked()" data-ng-disabled="inProfile" /></td>
+                                    <td rowspan="{{userDaySchedule.RowCount}}" ng-show="userSchedule.IsFirst">{{userDaySchedule.Days}}</td>
+                                    <td rowspan="{{userDaySchedule.RowCount}}" ng-show="userSchedule.IsFirst">
+                                        <select name="scheduletype" id="scheduleType" ng-change="scheduleTypeChanged(userDaySchedule)" class="form-control" data-ng-model="userDaySchedule.ScheduleTypeID" ng-trim="true" ng-options="scheduleType.ID as scheduleType.Label for scheduleType in scheduleTypeOptions" data-ng-disabled="inProfile || isReadOnlyForm"></select>
+                                    </td>
+                                    <td>
+                                        <div ng-class="{'has-error': userSchedule.StartTimeInvalid}">
+                                            <input type="text" ng-disabled="!userSchedule.IsChecked || userDaySchedule.ScheduleTypeID==1 || inProfile" ng-change="validateTime(userSchedule)" ui-mask="99:99" placeholder="hh:mm" data-ng-model="userSchedule.AvailabilityStartTime" class="form-control" id="AvailabilityStartTime[{{$parent.$index}}][{{$index}}]" name="AvailabilityStartTime[{{$parent.$index}}][{{$index}}]" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="xen-input-small"><xen-radio-button ng-disabled="!userSchedule.IsChecked || userDaySchedule.ScheduleTypeID==1 || inProfile" data-on-click="validateStartTime(userSchedule,'AM')" data-ng-model="userSchedule.startTimeAmPm" data-radio-button-id="startTimeAM" data-label="AM" data-ng-value='"AM"' /></span>
+                                        <span class="xen-input-small"><xen-radio-button ng-disabled="!userSchedule.IsChecked || userDaySchedule.ScheduleTypeID==1 || inProfile" data-on-click="validateStartTime(userSchedule,'PM')" data-ng-model="userSchedule.startTimeAmPm" data-radio-button-id="startTimePM" data-label="PM" data-ng-value='"PM"' /></span>
+                                    </td>
+                                    <td>
+                                        <div ng-class="{'has-error': userSchedule.EndTimeInvalid}">
+                                            <input type="text" ng-disabled="!userSchedule.IsChecked || userDaySchedule.ScheduleTypeID==1 || inProfile" ng-change="validateTime(userSchedule)" ui-mask="99:99" placeholder="hh:mm" data-ng-model="userSchedule.AvailabilityEndTime" class="form-control" id="AvailabilityEndTime[{{$parent.$index}}][{{$index}}]" name="AvailabilityEndTime[{{$parent.$index}}][{{$index}}]" />
+                                        </div>
+                                    </td>
+                                    <td ng-disabled="!userSchedule.IsChecked">
+                                        <span class="xen-input-small"><xen-radio-button ng-disabled="!userSchedule.IsChecked || userDaySchedule.ScheduleTypeID==1 || inProfile" data-on-click="validateEndTime(userSchedule,'AM')" data-ng-model="userSchedule.endTimeAmPm" data-radio-button-id="endTimeAM" data-label="AM" data-ng-value='"AM"' /></span>
+                                        <span class="xen-input-small"><xen-radio-button ng-disabled="!userSchedule.IsChecked || userDaySchedule.ScheduleTypeID==1 || inProfile" data-on-click="validateEndTime(userSchedule,'PM')" data-ng-model="userSchedule.endTimeAmPm" data-radio-button-id="endTimePM" data-label="PM" data-ng-value='"PM"' /></span>
+                                    </td>
+                                    <td class="actions" data-ng-if="!inProfile">
+                                        <a href="javascript:void(0)" data-default-no-action id="addDaySchedule" name="addDaySchedule" ng-show="userSchedule.IsLast && userDaySchedule.ScheduleTypeID != 1" ng-click="addDaySchedule(userDaySchedule.DayOfWeekID);" title="Add" space-key-press><i class="fa fa-plus-circle margin-xsmall"></i></a>
+                                        <a href="javascript:void(0)" data-default-no-action id="deleteDaySchedule" name="deleteDaySchedule" ng-show="userDaySchedule.ScheduleTypeID != 1" ng-click="deleteDaySchedule(userDaySchedule.DayOfWeekID, userSchedule.RowNumber)" title="Delete" space-key-press><i class="fa fa-minus-circle margin-xsmall" on-row-removed></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<div class="row margin-bottom padding-top-small">
+    <div class="col-lg-6">
+        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+    </div>
+    <div class="col-lg-6 text-right">
+        <button type="button" class="btn btn-default btn-lg" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="{{permissionKey}}" permission="{{resolvePermission(userSchedulingID)}}" data-ng-if="!inProfile" dual-permission="true">SAVE</button>
+        <button type="button" class="btn btn-default btn-lg no-security" data-ng-click="safeSubmit(true, false)" id="btnNext" name="btnNext" security permission-key="{{permissionKey}}" permission="read">NEXT</button>
+    </div>
+</div>
+
+<h3 class="uppercase nomargin padding-xsmall border-top">Schedule Summary</h3>
+<div class="row">
+    <div class="bootstrap-table">
+        <div class="fixed-table-container">
+            <div class="fixed-table-body">
+                <table id="scheduleSummaryTable" data-toggle="table"
+                       data-show-columns="false"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-advanced-search="false"
+                       class="table table-bordered table-style combo-table form-group-sm"
+                       grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="FacilityID"
+                                data-sortable="false">Location</th>
+                            <th data-field="Days"
+                                data-sortable="false">Day</th>
+                            <th data-field="AvailabilityStartTime"
+                                data-sortable="false">Time</th>
+                            <th data-field="FacilityID" data-ng-if="!inProfile"
+                                data-sortable="false"></th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="userFacility in userFacilities track by $index">
+                        <tr ng-if="0" ng-repeat-start="userFacilitySchedule in userFacility.UserFacilitySchedule"></tr>
+                        <tr ng-repeat="userFacilityTimeSchedule in userFacilitySchedule.UserFacilityTimeSchedule track by $index">
+                            <td rowspan="{{userFacility.RowCount}}" ng-show="userFacilitySchedule.IsFirst && userFacilityTimeSchedule.IsFirst">{{::getFacilityName(userFacility.FacilityID, facilities)}}</td>
+                            <td data-ng-model="userFacilitySchedule.Days">{{userFacilitySchedule.Days}}</td>
+                            <td>{{userFacilityTimeSchedule.AvailabilityStartTime}} {{userFacilityTimeSchedule.startTimeAmPm}} to {{userFacilityTimeSchedule.AvailabilityEndTime}} {{userFacilityTimeSchedule.endTimeAmPm}}</td>
+                            <td class="actions" rowspan="{{userFacility.RowCount}}" ng-show="userFacilitySchedule.IsFirst && userFacilityTimeSchedule.IsFirst && !inProfile">
+                                <a href="javascript:void(0)" data-default-no-action ng-click="editUserFacilitySchedule(userFacility.FacilityID);" security permission-key="{{permissionKey}}" permission="update"><i class="fa fa-pencil fa-fw"></i></a>
+                            </td>
+                        </tr>
+                        <tr ng-if="0" ng-repeat-end></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

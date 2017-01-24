@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Setting Details";
+    Layout = null;
+}
+
+<!-- Modal -->
+<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" on-cancel="cancel();" close-modal="true" permission-key="SiteAdministration-Settings-Settings" permission="{{resolvePermission(newSetting.SettingID)}}"></keypress-events>
+<div class="modal fade" id="settingModel" tabindex="-1" role="dialog" aria-labelledby="settingModel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form role="form" name="ctrl.settingsForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" ng-submit="ctrl.settingsForm.$valid" novalidate bs-modifiable="true">
+                {{ctrl.settingsForm.modified ? setform(true):setform(false)}}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Setting Details</h4>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#settingdetails" aria-controls="settingdetails" role="tab" data-toggle="tab">Setting Details</a></li>
+                    </ul>
+                    <div security permission-key="SiteAdministration-Settings-Settings" permission="{{resolvePermission(newSetting.SettingID)}}" permission-mode="readonly">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="userdetails">
+
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.settingsForm.settingname.$invalid && !ctrl.settingsForm.settingname.$pristine }">
+                                    <label for="settingname">Name</label>
+                                    <input type="text" name="settingname" class="form-control ellipsis" id="settingname" ng-model="newSetting.SettingName" ng-minlength="2"
+                                           ng-maxlength="50" ng-trim="true" ng-required="true" readonly="readonly" />
+                                    <p ng-show="ctrl.settingsForm.settingname.$error.minlength" class="error-block">Name is too short</p>
+                                    <p ng-show="ctrl.settingsForm.settingname.$error.maxlength" class="error-block">Name is too long</p>
+                                </div>
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.settingsForm.settingvalue.$invalid && !ctrl.settingsForm.settingvalue.$pristine }">
+                                    <label for="settingvalue">Value <sup>*</sup></label>
+                                    <input type="text" name="settingvalue" class="form-control ellipsis" id="settingvalue" ng-model="newSetting.SettingValue" ng-minlength="1"
+                                           ng-maxlength="50" ng-trim="true" ng-required="true" auto-focus event-focus="autoFocus" />
+                                    <p ng-show="ctrl.settingsForm.settingvalue.$error.minlength" class="error-block">Setting value is too short</p>
+                                    <p ng-show="ctrl.settingsForm.settingvalue.$error.maxlength" class="error-block">Setting value is too long</p>
+                                </div>
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="settingtype">Type</label>
+                                    <input type="text" name="settingtype" class="form-control ellipsis" id="lastname" ng-model="newSetting.SettingType" ng-required="true" readonly="readonly" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-lg" id="btnclose" name="btnclose" ng-click="cancel()">CLOSE</button>
+                    <button type="button" class="btn btn-default btn-lg" id="btnsave" name="btnsave" data-dismiss="modal" ng-click="safeSubmit(false, true)" ng-disabled="ctrl.settingsForm.$invalid" security permission-key="SiteAdministration-Settings-Settings" permission="{{resolvePermission(newSetting.SettingID)}}">SAVE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

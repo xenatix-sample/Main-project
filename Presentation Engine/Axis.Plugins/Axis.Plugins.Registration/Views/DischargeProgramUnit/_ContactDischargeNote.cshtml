@@ -1,0 +1,122 @@
+﻿<div class="modal fade" id="contactDischargeNoteModel" role="dialog" aria-labelledby="contactDischargeNoteModel" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-top:1px;">
+                <button type="button" id="closePopup" class="close" ng-click="cancel()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="contactDischargeNoteHeader">Discharge Note</h4>
+            </div>
+
+            <div class="modal-body">
+                <div ng-if="!isInactive">Please enter a discharge note.<br /><br /></div>
+                <div class="row">
+                    <div class="col-md-4 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : dischargeNoteForm.dischargeNoteReason.$invalid && !dischargeNoteForm.dischargeNoteReason.$pristine }">
+                            <label>REASON FOR DISCHARGE/TRANSFER <sup>*</sup></label>
+                            <select id="dischargeNoteReason" ng-disabled="isInactive" name="dischargeNoteReason" class="form-control" data-validation-name="REASON FOR DISCHARGE/TRANSFER" ng-model="dischargeNote.DischargeReasonID" required
+                                    ng-options="dischargeReason.ID as dischargeReason.Name for dischargeReason in getLookupsByType('DischargeReason')" ng-change="dischargeReasonChange(dischargeReason.Name)">
+                                <option value=""> Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-bottom-small">
+                        <div id="dischargeDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : dischargeNoteForm.dischargeDate.$invalid && !dischargeNoteForm.dischargeDate.$pristine }">
+                            <label for="dischargeDate">DATE OF DISCHARGE/TRANSFER <sup>*</sup></label>
+                            <xen-date-picker id="dischargeDate"
+                                             start-date="dischargeNote.ContactAdmissionDate"
+                                             name="dischargeDate"
+                                             data-validation-name="Discharge Date"
+                                             data-compare-element-name="Admission Date"
+                                             is-disabled="isInactive"
+                                             is-hidden="isInactive"
+                                             future-date-validate="true"
+                                             less-than-date-validation="true"
+                                             date-required="true"
+                                             ng-model="dischargeNote.DischargeDate"
+                                             date-options="dateOptions"></xen-date-picker>
+                            <p id="doberror" ng-cloak ng-show="dischargeNoteForm.dischargeDate.$error.date" class="error-block">Date is invalid</p>
+                            <p id="dischargeDateError" ng-cloak ng-show="dischargeNoteForm.dischargeDate.$error.lessThanDate" class="error-block">Date can't be less than admission</p>
+                            <p id="dischargeFutureDateError" ng-cloak ng-show="dischargeNoteForm.dischargeDate.$error.futureDate" class="error-block">Discharge date can't be future date</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 padding-bottom-small" ng-show="IsDeceased">
+                        <div id="deceasedDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : dischargeNoteForm.deceasedDate.$invalid && !dischargeNoteForm.deceasedDate.$pristine }">
+                            <label for="deceasedDate">DATE OF DEATH <sup>*</sup></label>
+                            <xen-date-picker id="deceasedDate"
+                                             start-date="dischargeProgramUnit.DOB"
+                                             name="deceasedDate"
+                                             data-compare-element-name="Date Of Birth"
+                                             data-validation-name="Date Of Death"
+                                             is-disabled="isInactive"
+                                             is-hidden="isInactive"
+                                             future-date-validate="true"
+                                             less-than-date-validation="true"
+                                             ng-model="dischargeNote.DeceasedDate"
+                                             date-options="dateOptions"
+                                             date-required="IsDeceased"
+                                             ignore-time="true"></xen-date-picker>
+                            <p id="doberror" ng-cloak ng-show="dischargeNoteForm.deceasedDate.$error.date" class="error-block">Date is invalid</p>
+                            <p id="deceasedDateError" ng-cloak ng-show="dischargeNoteForm.deceasedDate.$error.lessThanDate" class="error-block">Date can't be less than Date of birth</p>
+                            <p id="deceasedDateError" ng-cloak ng-show="dischargeNoteForm.deceasedDate.$error.futureDate" class="error-block">Date of death date can't be future date</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 padding-bottom-small">
+                        <div class="form-group-lg" ng-class="{ 'has-error' : dischargeNoteForm.Comments.$invalid && !dischargeNoteForm.Comments.$pristine }">
+                            <xen-memobox is-disabled="isInactive" label="COMMENTS *" rows="8" maxlength="1000" ng-model="dischargeNote.NoteText" id="Comments" name="Comments" required></xen-memobox>
+                        </div>
+                    </div>
+                </div>
+                <div class="row med-names" ng-show="hasSignatureFirst">
+                    <div class="col-md-12 padding-bottom-small">
+                        <div class="form-group-lg">
+                            <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : signatureForm.StaffName.$invalid && !signatureForm.StaffName.$pristine }">
+                                <label for="StaffName">Staff Name</label>
+                                <input type="text" id="StaffName" name="StaffName" ng-model="signatureFirst.UserFullName" clean="true" ng-disabled="true" class="form-control ellipsis" />
+                            </div>
+                            <div class="col-md-{{isInactive ? 6 : 3}} padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : signatureForm.Credentail.$invalid && !signatureForm.Credentail.$pristine }">
+                                    <label for="Credentail">Credential <sup> *</sup></label>
+                                    <table ng-show="isInactive">
+                                        <tr ng-repeat="userCredential in userCredentials | filter: {CredentialID: signatureFirst.CredentialID}">
+                                            <td>
+                                                <input type="text" id="StaffName" name="credentialName" ng-model="userCredential.CredentialName" ng-disabled="true" class="form-control ellipsis" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <select ng-hide="isInactive" ng-disabled="true" ng-model="signatureFirst.CredentialID" id="idCredential" name="ServiceType" class="form-control"
+                                            ng-options="creden.CredentialID as creden.CredentialName for creden in userCredentials">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span ng-hide="isInactive" class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div id="signedDateErrortd" class="form-group-lg padding-bottom-small">
+                                    <label for="DateSigned">Date Signed</label>
+                                    <input type="text" id="DigitalPassword" name="DateSigned" ng-model="signatureFirst.DateSigned" ng-required="false" clean="true" ng-disabled="true" class="form-control ellipsis" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row med-names" ng-hide="hasSignatureFirst">
+                    <xen-signature></xen-signature>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row padding-top-small">
+                    <div class="col-lg-6">
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button type="button" class="btn btn-default btn-lg" id="close" ng-click="cancel()">CANCEL</button>
+                        <button type="button" class="btn btn-success btn-lg" id="save" ng-click="safeSubmit(false, true)" ng-disabled="!signatureVerified" ng-hide="isInactive" security permission-key="General-General-ProgramUnitDischarge" permission="{{resolvePermission(dischargeProgramUnit.ContactDischargeNoteID)}}">DISCHARGE</button>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-bottom-small"></div>
+            </div>
+        </div>
+    </div>
+</div>

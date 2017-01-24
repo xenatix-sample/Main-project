@@ -1,0 +1,72 @@
+﻿<div class="row section-block margin-bottom-xsmall">
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.progressNoteForm.progressnotedate.$invalid && !ctrl.progressNoteForm.progressnotedate.$pristine}">
+            <label for="progressnotedate">Date</label>
+            <mydatepicker id="progressnotedate" event-focus="true" new-date="noteHeader.TakenTime" end-date="endDate" start-date="startDate" dob-name="Date" date-options="dateOptions"></mydatepicker>
+            <p id="progressnotedateerror" ng-show="ctrl.progressNoteForm.TakenTime.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.progressNoteForm.starttime.$invalid && !ctrl.progressNoteForm.starttime.$pristine }">
+            <label for="starttime">Start Time</label>
+            <div class="form-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control ellipsis" ng-model="noteHeader.ProgressNote.StartTime" id="starttime" name="starttime" ng-change="calcDuration()" />
+            </div>
+            <p id="startTimeError" data-ng-show="ctrl.progressNoteForm.starttime.$error.date  && !ctrl.progressNoteForm.starttime.$pristine" data-ng-cloak class="error-block">Please select a valid time.</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.progressNoteForm.endtime.$invalid && !ctrl.progressNoteForm.endtime.$pristine}">
+            <label for="endtime">End Time</label>
+            <div class="form-group bootstrap-timepicker timepicker">
+                <input type="text" class="form-control ellipsis" ng-model="noteHeader.ProgressNote.EndTime" id="endtime" name="endtime" ng-change="calcDuration(this)" />
+            </div>
+            <p id="endTimeError" data-ng-show="ctrl.progressNoteForm.endtime.$error.date  && !ctrl.progressNoteForm.endtime.$pristine" data-ng-cloak class="error-block">Please select a valid time.</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg">
+            <label for="duration">Duration</label>
+            <input type="text" ng-model="noteHeader.ProgressNote.Duration" id="duration" name="duration" class="form-control ellipsis" ng-disabled="true" />
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small med-names">
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.progressNoteForm.referralType.$invalid && !ctrl.progressNoteForm.referralType.$pristine }">
+            <label for="contactmethod" ng-if="NoteTypeID==2">Method of attempted contact</label>
+            <label for="contactmethod" ng-if="NoteTypeID!=2">Contact Method</label>
+            <select ng-model="noteHeader.ProgressNote.ContactMethodID" id="contactmethod" name="contactmethod" class="form-control" ng-options="method.ID as method.Name for method in getLookupsByType('ContactMethod') | orderBy:'ID'">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="firstname">First Name</label>
+            <input type="text" ng-model="noteHeader.ProgressNote.FirstName" id="firstname" name="firstname" class="form-control ellipsis" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="lastname">Last Name</label>
+            <input type="text" ng-model="noteHeader.ProgressNote.LastName" id="lastname" name="lastname" class="form-control ellipsis" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="relationshiptype">Relationship to Child</label>
+            <select ng-model="noteHeader.ProgressNote.RelationshipTypeID" id="relationshiptype" name="relationshiptype" class="form-control" ng-options="method.ID as method.Name for method in RelationshipTypeList">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+        <p ng-show="noResults && ReferralSource" ng-cloak class="error-block">No Results Found!</p>
+    </div>   
+    <div class="col-lg-4 col-md-6 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-memobox ng-show="showOtherContact" label="Contact Method Details" rows="1" maxlength="50" ng-model="noteHeader.ProgressNote.ContactMethodOther" id="contactmethodother"></xen-memobox>
+        </div>
+    </div> 
+</div>

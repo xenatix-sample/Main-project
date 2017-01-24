@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- jasmine -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/1.3.1/jasmine.js"></script>
+
+    <!-- jasmine's html reporting code and css -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasmine/1.3.1/jasmine-html.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasmine/1.3.1/jasmine.css" />
+
+    <!-- angular itself -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.17/angular.js"></script>
+    <script src="../../../../../Scripts/library/angular/angular-route.js"></script>
+
+    <!-- angular's testing helpers -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.17/angular-mocks.js"></script>
+    <script src="//code.angularjs.org/1.3.17/angular-animate.min.js"></script>
+    <!-- your angular app code -->
+    <script src="../../../../../Scripts/app/app.js"></script>
+    <script src="../controllers/registrationController.js"></script>
+    <script src="../services/registrationService.js"></script>
+    <script src="../../../../../Scripts/app/services/alertService.js"></script>
+    <script src="../../../../../Scripts/app/services/securityService.js"></script>
+    <script src="../../../../../Scripts/app/filters/toDateFilters.js"></script>
+    <script src="../../../../../Scripts/library/angular-ui/ui-bootstrap-tpls.js"></script>
+
+    <!-- your Jasmine specs (tests) -->
+    <script src="registrationControllerBackendTest.js"></script>
+</head>
+<body>
+    <!-- bootstrap jasmine! -->
+    <script type="text/javascript">
+        var jasmineEnv = jasmine.getEnv();
+
+        // Tell it to add an Html Reporter
+        // this will add detailed HTML-formatted results
+        // for each spec ran.
+        jasmineEnv.addReporter(new jasmine.HtmlReporter());
+
+        // Execute the tests!
+        jasmineEnv.execute();
+    </script>
+</body>
+</html>

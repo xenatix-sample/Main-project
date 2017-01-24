@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Add";
+    Layout = null;
+}
+<!-- Modal -->
+
+<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" on-cancel="cancel();" close-modal="true" stop-save="stopSave" enter-key-stop="enterKeyStop" on-add="add();setShortCutKeys(false);" permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="create"></keypress-events>
+<div class="modal fade" id="roleModel" role="dialog" aria-labelledby="roleModel" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div security permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="create" permission-mode="readonly">
+                <form role="form" name="ctrl.roleForm" id="ctrl.roleForm" data-on-save="save(isNext, isMandatory, hasErrors)" check-form novalidate bs-modifiable="true">
+                    {{ctrl.roleForm.modified ? setform(true):setform(false)}}
+                    <div class="modal-header" style="margin-top:1px;">
+                        <button type="button" id="closePopup" class="close" ng-click="cancel()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="roleHeader">Role Details</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a id="roleDetails" href="#role-details" aria-controls="details" ng-click="setAction('roleDetails', action.Role);autoFocusEdit[detailsIndex] = true;" role="tab" data-toggle="tab">Details</a></li>
+                            <li role="presentation"><a id="assignModule" href="#assign-module" aria-controls="assignModule" ng-click="setAction('assignModule', action.AssignModule);autoFocusEdit[assignmoduleIndex] = true;" data-toggle="{{ roleId == 0 ? '' : 'tab' }}" role="tab">Assign Modules</a></li>
+                            @*Generate tabs using angular loop*@
+                            <li ng-repeat="module in modulesAssignedToRole | filter:{ Selected: true }">
+                                <a ng-attr-id="{{ 'assignModulePermission-' + module.ModuleId }}" ng-attr-href="{{ '#assign-module-permission-' + module.ModuleId }}" ng-click="setAction('assignModulePermission-' + module.ModuleId, action.AssignPermission);$parent.autoFocusEdit[restIndex] = true;" role="tab" data-toggle="tab">{{ module.ModuleName }}</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="role-details">
+                                <div class="seperator"></div>
+
+                                <div class="col-md-12 padding-bottom-small"></div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.roleForm.name.$invalid && !ctrl.roleForm.name.$pristine }">
+                                        <label for="race">Role Name <sup>*</sup></label>
+                                        <input type="text" name="name" class="form-control ellipsis" id="name" data-validation-name="Role Name" ng-model="newRole.Name" ng-minlength="3" auto-focus-modal event-focus="autoFocusEdit[detailsIndex]"
+                                               ng-maxlength="100" ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9\s]*$/" autofocus />
+                                        <span ng-show="ctrl.roleForm.name.$error.minlength" class="error-block">Role Name is too short</span>
+                                        <span ng-show="ctrl.roleForm.name.$error.maxlength" class="error-block">Role Name is too long</span>
+                                        <span ng-show="ctrl.roleForm.name.$error.pattern" class="error-block">Role Name only allows alphanumeric characters with no spaces</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="ethnicity">Description</label>
+                                        <input type="text" name="description" class="form-control ellipsis" id="description" ng-model="newRole.Description" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 padding-bottom-small"></div>
+
+                                <div class="seperator"></div>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="assign-module">
+                                <div class="seperator"></div>
+                                <div class="col-md-12 padding-bottom-small"></div>
+                                <div class="row" ng-repeat="module in modules">
+
+                                    <div class="col-sm-2">{{module.ModuleName}}</div>
+                                    <div class="col-sm-3 text-left"><input type="checkbox" id="assignModuleName" ng-model="module.Selected" ng-attr-auto-focus-modal="{{$index == 0? '' : undefined}}" event-focus="$parent.autoFocusEdit[assignmoduleIndex]" /></div>
+                                </div>
+                            </div>
+
+                            @*Generate tabs using angular loop*@
+                            <div role="tabpanel" class="tab-pane" ng-attr-id="{{ 'assign-module-permission-' + module.ModuleId }}" ng-repeat="module in modulesAssignedToRole">
+                                @*-- Display Feature and applicable permissions---*@
+                                <br />
+                                <table id="featureNameAndPermissionTable" class="table table-striped table-bordered table-style table-select-grid">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-lg-3">Feature</th>
+                                            <th class="col-lg-2" ng-repeat="name in featurePermissionNames | filter:{ ModuleID : module.ModuleId }">{{ name.Name }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="moduleFeature in moduleFeatures | filter:{ ModuleId : module.ModuleId }">
+                                            <td class="col-lg-3">{{ moduleFeature.FeatureName }}</td>
+                                            <td class="col-lg-2" ng-repeat="permission in moduleFeature.Permissions"><input type="checkbox" id="featurePermission" ng-show="permission.NotMapped==null" ng-model="permission.Selected" ng-attr-auto-focus-modal="{{$index == 0 && $parent.$index == 0? '' : undefined}}" event-focus="$parent.$parent.$parent.autoFocusEdit[restIndex]" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <b>Assign Privileges to Module :</b>
+                                <div class="col-md-12 padding-bottom-small"></div>
+                                <div ng-repeat="module in modulePermissions | filter:{ ModuleID : module.ModuleId }">
+                                    <div class="row" ng-repeat="modulePermission in module.Permissions">
+                                        <div class="col-sm-2 control-label">{{ modulePermission.Name }}</div>
+                                        <div class="col-sm-1"><input type="checkbox" id="modulePermission" ng-model="modulePermission.Selected" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row padding-top-small">
+                    <div class="col-lg-6">
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button type="button" class="btn btn-success btn-lg" id="save" ng-click="safeSubmit(false, true)" ng-disabled="ctrl.roleForm.$invalid" security permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="create">SAVE</button>
+                        <button type="button" class="btn btn-success btn-lg" id="next" ng-click="safeSubmit(true, true)" ng-disabled="ctrl.roleForm.$invalid" security permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="read">{{ currentWizardStep > 1 && currentWizardStep === wizardSteps.length - 1 ? 'FINISH' : 'NEXT' }}</button>
+                        <button type="button" class="btn btn-default btn-lg" id="close" ng-click="cancel()">CLOSE</button>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-bottom-small"></div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('#roleModel').on('shown.bs.modal', function () {
+        $(this).find('#name').focus();
+    });
+</script>
+

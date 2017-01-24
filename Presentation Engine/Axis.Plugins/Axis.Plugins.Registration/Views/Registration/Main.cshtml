@@ -1,0 +1,16 @@
+﻿<div class="container-fluid nopadding nomargin">
+    <div>
+        <div class="col-md-12">
+            <div class="col-lg-9 col-md-9 nopadding-right ng-cloak">
+                <div class="row padding-right-small tiles">
+                    @Html.Partial("../Shared/_MiniPatientHeader")
+                </div>
+                <div class="row padding-right-small tiles" ui-view>                    
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 right-nav">
+                @Html.Partial("../Shared/_RegistrationNavigation")
+            </div>
+        </div>
+    </div>
+</div>

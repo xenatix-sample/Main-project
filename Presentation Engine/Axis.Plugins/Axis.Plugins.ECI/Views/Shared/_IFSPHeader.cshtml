@@ -1,0 +1,93 @@
+﻿<div class="row section-block">
+    <div class="col-md-3 padding-bottom-small">
+        <div id="meetingDate" class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.ifspForm.IFSPMeetingDate.$invalid && !ctrl.ifspForm.IFSPMeetingDate.$pristine }">
+            <label for="ifspMeetingDate">IFSP Meeting Date <sup>*</sup></label>
+            <mydatepicker opened="opened" id="ifspMeetingDate" new-date="ifsp.IFSPMeetingDate"
+                          dob-name="'IFSPMeetingDate'" date-options="dateOptions" date-required="true" event-focus="true" futuredatevalidate="true"></mydatepicker>
+            <p id="doberror" data-ng-show="ctrl.ifspForm.IFSPMeetingDate.$error.date  && !ctrl.ifspForm.IFSPMeetingDate.$pristine" data-ng-cloak class="error-block">Please select valid date.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.ifspForm.IFSPType.$invalid && !ctrl.ifspForm.IFSPType.$pristine }">
+            <label>IFSP Type <sup>*</sup></label>
+            <select id="ifspType" name="IFSPType" data-ng-model="ifsp.IFSPTypeID" class="form-control ellipsis" data-ng-required="true"
+                    data-ng-options="ifspType.ID as ifspType.Name for ifspType in IFSPTypeList">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("../Shared/_TeamMember")
+
+<div class="row section-block">
+    <div class="col-lg-12 col-md-12">
+        <div class="row">
+            <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : noParentGuardianResults && !ctrl.ifspForm.parentGuardian.$pristine }">
+                <label for="parentGuardian">Parent/Guardian</label>
+                <div class="input-group">
+                    <input type="text" ng-model="ParentGuardians[0].Name" id="parentGuardian" name="parentGuardian" class="form-control ellipsis" typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                           typeahead-on-select="selectParentGuardian($item); asyncSelected = '';" typeahead-editable="true" typeahead-no-results="noParentGuardianResults"
+                           typeahead="parentGuardian as parentGuardian.Name for parentGuardian in collaterals | filter:$viewValue" typeahead-trigger />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" ng-click="triggerTypeahead('parentGuardian')">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                <p ng-show="noParentGuardianResults" ng-cloak class="error-block">No Results Found!</p>
+            </div>
+        </div>
+        <div class="row pod-group pod-group-sm">
+            <div class="pod" ng-repeat="parentGuardian in selectedParentGuardians" ng-show="{{parentGuardian.ContactID != 0}}">
+                <div>
+                    <p><strong>{{parentGuardian.Name}}</strong></p>
+                </div>
+                <a class="text-info close" href="javascript:void(0)" ng-click="removeParentGuardian(parentGuardian)" title="Remove Parent/Guardian" space-key-press><span class="sr-only"></span>x</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row padding-top-small margin-bottom-small">
+    <div class="col-md-10 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.ifspForm.Comments.$invalid && !ctrl.ifspForm.Comments.$pristine }">
+            <xen-memobox label="Comments" rows="2" maxlength="250" ng-model="ifsp.Comments" id="Comments" name="Comments"></xen-memobox>
+        </div>
+    </div>
+</div>
+
+<div class="row section-block margin-bottom-small">
+    <div class="col-md-2 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-checkbox ng-model="ifsp.MeetingDelayed" data-checkbox-id="MeetingDelayed" data-label="Meeting Delayed? " />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.ifspForm.ReasonForDelay.$invalid && !ctrl.ifspForm.ReasonForDelay.$pristine }">
+            <label for="reasonForDelay">Reason for Delay <sup data-ng-show="ifsp.MeetingDelayed">*</sup></label>
+            <select id="reasonForDelayID" name="ReasonForDelay" data-ng-model="ifsp.ReasonForDelayID" class="form-control ellipsis"
+                    data-ng-options="delayReason.ID as delayReason.Name for delayReason in getLookupsByType('ReasonForDelay')" ng-required="ifsp.MeetingDelayed">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+
+    @*<div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.ifspForm.ParentGuardian.$invalid && !ctrl.ifspForm.ParentGuardian.$pristine }">
+        <label for="parentGuardian">Parent/Guardian</label>
+        <div class="input-group">
+            <input type="text" ng-model="ifsp.ParentGuardian" id="parentGuardian" name="parentGuardian" class="form-control ellipsis" typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                   typeahead-on-select="selectCollateral($item); asyncSelected = '';" typeahead-editable="false" typeahead-no-results="noParentGuardianResults"
+                   typeahead="parentGuardian as parentGuardian.Name for parentGuardian in collaterals | filter:$viewValue" typeahead-trigger />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="triggerTypeahead('parentGuardian');">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <p ng-show="noParentGuardianResults" ng-cloak class="error-block">No Results Found!</p>
+    </div>*@
+
+</div>

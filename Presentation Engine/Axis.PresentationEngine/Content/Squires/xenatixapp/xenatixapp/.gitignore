@@ -1,0 +1,5 @@
+/site/nbproject/private/
+**/*.DS_Store
+**/.sass-cache
+**/*.scssc
+/nbproject/private/

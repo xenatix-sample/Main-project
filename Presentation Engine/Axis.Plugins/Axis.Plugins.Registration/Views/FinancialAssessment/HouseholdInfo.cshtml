@@ -1,0 +1,43 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, true, true)" enter-key-stop="enterKeyStop" close-modal="true" on-add="newAssessmentDetails()" table-id="financialsTable" stop-next="stopNext" save-on-enter="saveOnEnter" permission-key="{{permissionKey}}" permission="{{resolvePermission(financialAssessmentID)}}"></keypress-events>
+
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+            
+            <div class="add_me">
+                <plus-button title="New Assessment Detail" permission-key="{{permissionKey}}" permission="create" save="safeSubmit(false, false)" reset="newAssessment()"></plus-button>
+            </div>
+            <div class="row padding-top-small padding-bottom-small">
+                <div class="col-md-12">
+                    <table id="gridTable" data-toggle="table"
+                           data-show-columns="true"
+                           data-search="true"
+                           data-minimum-count-columns="2"
+                           data-filter-control="false"
+                           data-mobile-responsive="true"
+                           data-filter-bar
+                           data-advanced-search="false"
+                           data-show-multi-sort="true"
+                           data-classes="table table-stripe-borders"
+                           bootstrap-table="gridOptions" grid-arrow-selector>
+                        <thead>
+                            <tr>
+                                <th data-field="grossincome"
+                                    data-sortable="true">ADJUSTED GROSS INCOME</th>
+                                <th data-field="size"
+                                    data-sortable="true">FAMILY SIZE</th>
+                                <th data-field="enteredBy"
+                                    data-sortable="true">ENTERED BY</th>
+                                <th data-field="assessmentdate"
+                                    data-sortable="true">ASSESSMENT DATE</th>
+                                <th data-field="expirationdate"
+                                    data-sortable="true">EXPIRATION DATE</th>
+                                <th data-field="expirationreason"
+                                    data-sortable="true">EXPIRATION REASON</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿
+<keypress-events on-cancel="cancel()" close-modal="true"></keypress-events>
+<!--data entry-->
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security permission-key="General-General-CompanyDischarge" permission="{{resolvePermission(dischargeCompanyID)}}" permission-mode="readonly" is-disabled="{{isDischargeCompanyDisabled}}" dual-permission="true">
+            <form role="form" id="dischargeCompanyForm" name="ctrl.dischargeCompanyForm" xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" permission-key="General-General-CompanyDischarge" permission="{{resolvePermission(dischargeCompanyID)}}" novalidate bs-modifiable="true" set-form-status>
+                <div class="row no-security">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="companyTypeID">Company Type </label>
+                            <select ng-disabled="true" data-ng-model="dischargeCompany.CompanyTypeID" id="companyTypeID" class="form-control" data-ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-7 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="company">Company </label>
+                            <select ng-disabled="true" data-ng-model="dischargeCompany.CompanyID" id="company" class="form-control" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('Company') | securityFilter: 'Division' : 'ID': 'General-General-CompanyDischarge'">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row section-block">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="admissionStatus">Company Status </label>
+                            <select class="form-control" auto-focus event-focus="autoFocus" ng-trim="true" ng-model="dischargeCompany.IsDischarged" id="admissionStatus" ng-options="admissionStatus.ID as admissionStatus.Name for admissionStatus in admissionStatus"></select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding-top-small">
+                    <div class="col-lg-6 col-md-6">
+                        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                        <xen-submit id="btnSave" name="btnSave" value="SAVE" is-next="false" mandatory="true" class="btn btn-default btn-lg" permission-key="General-General-CompanyDischarge" permission="{{resolvePermission(dischargeCompanyID)}}"></xen-submit>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+                <table id="dischargeCompanyTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="CompanyID"
+                                data-sortable="true">Company</th>
+                            <th data-field="IsCompanyInactive"
+                                data-sortable="true">Company Status</th>
+                            <th data-field="ProgramUnitStatusID"
+                                data-sortable="true">Program Unit Status</th>
+                            <th data-field="EffectiveDate"
+                                data-sortable="true">Admission Date</th>
+                            <th data-field="DischargeDate"
+                                data-sortable="true">Discharge Date/Time</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+

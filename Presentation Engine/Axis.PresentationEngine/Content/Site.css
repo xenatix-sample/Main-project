@@ -1,0 +1,319 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+.table-style th{
+    background-color:#6aad3f !important;
+    color:#ffffff;
+}
+
+.seperator {
+    margin-top:10px;
+}
+
+.margin-top-30 {
+    margin-top:30px;
+}
+
+*::before, *::after {
+    box-sizing: border-box;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: pointer;
+}
+
+.buttonLarge {
+    background-color: #81bc58;
+    background-image: url("../images/LeftTop.png");
+    background-position: center bottom;
+    background-repeat: repeat-x;
+    border: 1px solid #d6d3d3;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: "Open Sans",sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    height: 60px;
+    line-height: 60px;
+    margin: 0;
+    outline: medium none;
+    padding-top: 1px;
+    text-align: center;
+    width: 200px;
+}
+
+.PageHeading
+{
+	margin:0px auto;
+	float:none!important;
+}
+.Pageheading-section {
+  text-align: left;
+  padding: 10px 0 5px 0;
+}
+
+.Pageheading-section h1 {
+ font-family: 'Open Sans', sans-serif;
+  font-size: 22px;
+  color: #595a5c;
+  font-weight: 500;
+}
+.Pageheading-section h2 {
+ font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  color: #595a5c;
+  font-weight: 500;
+}
+
+.HLine
+{
+ padding:0;
+ margin:0;
+ height:1px;
+ background-color:#aaaaaa;
+ width:100%;
+
+}
+
+.error-block {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #b94a48;
+}
+
+.BottomPad {
+    padding-bottom: 0.5em;
+}
+/***************************************************/
+
+
+.navbar
+{
+
+background-color:#343535;
+border:none;
+
+}
+.navbar-nav
+{
+
+                background-color:#343535;
+               
+
+}
+
+.navbar-nav li
+{
+
+                background-color:#3f3f3f;
+                height:90px !important;
+              
+                
+                
+                
+}
+.navbar-nav li a
+{
+
+                background-color:#3f3f3f;
+                height:90px !important;
+                padding-top:35px;
+                color:#797a7a !important;
+}
+.navbar-nav > li  > a:hover
+{
+
+                background-color:#3f3f3f;
+                height:90px !important;
+                padding-top:35px;
+                color:#eeeeee !important;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus
+{
+                background-color:#474645;
+                height:90px !important;
+                padding-top:35px;
+                border-bottom:3px solid #90c554!important;
+                color:#ffffff !important;
+}
+.FormLabel {
+     color:#ffffff !important;
+     text-align:right;
+}
+.close {
+
+    color:#ffffff !important;
+    margin-bottom:37px !important;
+    }
+.modal-header {
+    height:40px !important;
+}
+.BgSearch {
+     background-image: url("../images/BgSearch.png");
+     background-repeat:no-repeat;
+     height:200px; 
+     padding:20px;
+     margin-top:20px;
+     margin-left:2px;
+     padding-left:40px;
+}
+.BgSearchN {
+     background-image: url("../images/BgSearch.png");
+     background-repeat:no-repeat;
+     height:250px; 
+     padding:20px;
+    
+     margin-left:2px;
+     padding-left:40px;
+}
+/*
+.table th {
+   background-color: #343535 !important;
+   color:#90c554 !important;
+   text-transform:capitalize !important;
+}
+
+.table td {
+   background-color:#383939 !important;
+   color:#fff !important;
+  
+}
+.table td a{
+   color:#fff !important;
+  }*/
+.nav-tabs > li > a
+{
+   color:#000 !important;
+   
+  }
+.nav-tabs > li.active > a
+{
+   color:#fff !important;
+    background-color:#6fae4f;
+  }
+    .nav-tabs > li > a:hover {
+         background-color:#6fae4f;
+          color:#fff !important;
+    }
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus
+     {
+         background-color:#6fae4f;
+          color:#fff !important;
+    }
+.LeftPanHead
+{
+                background-color:##7b807f;
+                height:40px;
+                width:100%;
+                padding:0;
+  margin:0;
+  padding-left:20px;
+  clear:both;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  color:#FFFFFF;
+  padding-top:12px;
+    border-bottom:1px solid #5d6363;
+
+}
+.LeftPanHead a
+{
+                
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  color:#FFFFFF;
+  text-decoration:none;
+
+}
+.LeftPanSub
+{
+                background-color:#2b2d2f;
+                border-bottom:1px solid #5d6363;
+                height:35px;
+                width:100%;
+                padding:0;
+  margin:0;
+  padding-left:20px;
+  clear:both;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  color:#FFFFFF;
+  padding-top:10px;
+
+}
+.LeftPanSub:hover
+{
+                background-color:#e2e2e3;
+                border-bottom:1px solid #5d6363;
+                height:35px;
+                width:100%;
+                padding:0;
+  margin:0;
+  padding-left:20px;
+  clear:both;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  color:#2c2c2c;
+  padding-top:6px;
+
+}
+
+.ESigCanvas 
+{
+    border: 1px solid black;
+}
+
+label {
+    font-weight:normal;
+}

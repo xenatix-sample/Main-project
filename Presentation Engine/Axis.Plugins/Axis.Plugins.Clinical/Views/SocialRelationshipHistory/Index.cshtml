@@ -1,0 +1,113 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, true, true)" enter-key-stop="enterkeystop" permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="{{resolvePermission(socialHistory.SocialRelationshipID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="col-md-12">
+            <div security permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="{{resolvePermission(socialHistory.SocialRelationshipID)}}" permission-mode="readonly">
+                <form role="form" id="socialRelationshipHistoryForm" name="ctrl.socialRelationshipHistoryForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate data-ng-submit="ctrl.socialRelationshipHistoryForm.$valid" bs-modifiable="true">
+                    {{ setform(ctrl.socialRelationshipHistoryForm.modified) }}
+                    <div ui-view>
+                    </div>
+                    <div class="row">
+                        @Html.Partial("../Shared/_TakenDetails")
+                        <div class="col-lg-12 col-md-12 nopadding text-right">
+                            <button type="button" class="btn btn-default btn-sm margin-bottom-xsmall" data-ng-click="reviewNoChanges()" id="btnReviewNoChanges" ng-disabled="disableReviewedChanges" name="btnReviewNoChanges">Reviewed No Changes</button>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small margin-bottom-small">
+                        <div class="col-md-10 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.socialRelationshipHistoryForm.ChildhoodHistory.$invalid && !ctrl.socialRelationshipHistoryForm.ChildhoodHistory.$pristine }">
+                                <xen-memobox label="Childhood History" maxlength="500" ng-model="socialHistory.ChildhoodHistory" id="ChildhoodHistory" name="ChildhoodHistory"></xen-memobox>
+                                <p ng-show="ctrl.socialRelationshipHistoryForm.ChildhoodHistory.$error.maxlength" ng-cloak class="error-block">Childhood History is too long</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small margin-bottom-small section-block">
+                        <div class="col-md-10 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.socialRelationshipHistoryForm.RelationShipHistory.$invalid && !ctrl.socialRelationshipHistoryForm.RelationShipHistory.$pristine }">
+                                <xen-memobox label="Relationship History" maxlength="500" ng-model="socialHistory.RelationShipHistory" id="RelationShipHistory" name="RelationShipHistory"></xen-memobox>
+                                <p ng-show="ctrl.socialRelationshipHistoryForm.RelationShipHistory.$error.maxlength" ng-cloak class="error-block">RelationShip History is too long</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small">
+                        <div class="col-md-10 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.socialRelationshipHistoryForm.FamilyHistory.$invalid && !ctrl.socialRelationshipHistoryForm.FamilyHistory.$pristine }">
+                                <xen-memobox label="Family History" maxlength="500" ng-model="socialHistory.FamilyHistory" id="FamilyHistory" name="FamilyHistory"></xen-memobox>
+                                <p ng-show="ctrl.socialRelationshipHistoryForm.FamilyHistory.$error.maxlength" ng-cloak class="error-block">Family History is too long</p>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-form name="socialRelationshipDetailsForm" novalidate bs-modifiable="true" class="padding-top-small">
+                        {{ setform(ctrl.socialRelationshipHistoryForm.socialRelationshipDetailsForm.modified, ctrl.socialRelationshipHistoryForm.socialRelationshipDetailsForm) }}
+                        <fieldset>
+                            <legend class="uppercase">Siblings</legend>
+                            <div class="row section-block padding-top-small margin-bottom-small">
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.socialRelationshipHistoryForm.socialRelationshipDetailsForm.FirstName.$invalid && !ctrl.socialRelationshipHistoryForm.socialRelationshipDetailsForm.FirstName.$pristine}">
+                                        <label for="FirstName">First Name</label>
+                                        <input type="text" name="FirstName" id="FirstName" class="form-control ellipsis" ng-model="socialHistoryDetail.FirstName"
+                                               ng-trim="true" ng-maxlength="200" />
+                                        <p ng-show="ctrl.socialRelationshipHistoryForm.socialRelationshipDetailsForm.FirstName.$error.maxlength" ng-cloak class="error-block">First Name is too long</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.socialRelationshipHistoryForm.socialRelationshipDetailsForm.LastName.$invalid && !ctrl.socialRelationshipHistoryForm.socialRelationshipDetailsForm.LastName.$pristine}">
+                                        <label for="LastName">Last Name</label>
+                                        <input type="text" name="LastName" id="LastName" ng-model="socialHistoryDetail.LastName" ng-maxlength="200" ng-trim="true" class="form-control ellipsis" />
+                                        <p ng-show="ctrl.socialRelationshipHistoryForm.socialRelationshipDetailsForm.LastName.$error.maxlength" ng-cloak class="error-block">Last Name is too long</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <xen-checkbox data-ng-model="socialHistoryDetail.IsDeceased" data-checkbox-id="IsDeceased" data-label="Deceased?" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <xen-checkbox data-ng-model="socialHistoryDetail.IsInvolved" data-checkbox-id="IsInvolved" data-label="Involved in Client's Life?" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </ng-form>
+                </form>
+            </div>
+        </div>
+        <div class="row padding-top-small">
+            <div class="col-lg-6 col-md-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, false)" id="btnSave" security permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="{{resolvePermission(socialHistory.SocialRelationshipID)}}" name="btnSave">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, false)" id="btnNext" security permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="{{resolvePermission(socialHistory.SocialRelationshipID)}}" name="btnSave">NEXT</button>
+            </div>
+        </div>
+        <div class="add_me">
+            <plus-button tabindex="0" title="New" permission-key="Clinical-SocialRelationshipHistory-SocialRelationshipHistory" permission="create" save="safeSubmit(false, false)" reset="newFamily()" table-id="historyTable"></plus-button>
+        </div>
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+                <table id="historyTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="FirstName" data-sortable="true">Siblings</th>
+                            <th data-field="IsDeceased" data-sortable="true">Living/Deceased</th>
+                            <th data-field="IsInvolved" data-sortable="true">Involved in Client's Life</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

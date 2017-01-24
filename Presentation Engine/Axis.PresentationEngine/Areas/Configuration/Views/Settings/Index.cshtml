@@ -1,0 +1,33 @@
+﻿
+    <div class="panel panel-main panel-light padding-xsmall">
+        <div class="panel-body">
+            <div class="ng-cloak">
+                <div ng-controller="settingsController">
+                    <table id="settingsTable" data-toggle="table"
+                           data-show-columns="true"
+                           data-search="true"
+                           data-minimum-count-columns="2"
+                           data-filter-control="false"
+                           data-mobile-responsive="true"
+                           data-filter-bar
+                           data-advanced-search="false"
+                           data-show-multi-sort="true"
+                           data-classes="table table-stripe-borders"
+                           bootstrap-table="tableoptions" grid-arrow-selector>
+                        <thead>
+                            <tr>
+                                <th data-field="settingName"
+                                    data-sortable="true">Name</th>
+                                <th data-field="settingValue"
+                                    data-sortable="true">Value</th>
+                                <th data-field="settingType"
+                                    data-sortable="true">Type</th>                                
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div ng-include="'/Configuration/Settings/Edit'"></div>
+                </div>
+            </div>
+        </div>
+    </div>

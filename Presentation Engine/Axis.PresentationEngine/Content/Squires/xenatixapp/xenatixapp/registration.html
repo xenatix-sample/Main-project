@@ -1,0 +1,162 @@
+---
+layout: default
+title: Registration
+permalink: /registration/
+weight: 2
+---
+<div class="container-fluid padding-left padding-right" id="content" role="main">
+	<div class="row">
+		<div class="col-lg-9 nopadding-right">
+			<div class="panel panel-light padding-xsmall">
+				<form>
+					<div class="panel-heading padding-top-small">
+						<h3 class="panel-title">General Information</h3>
+					</div>
+					<div class="panel-body">
+					<div class="row">
+							<div class="col-lg-4">
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="firstName">First Name</label>
+									<input type="text" class="form-control" id="firstName" tabindex="1">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="dateBirth">Date of Birth</label>
+									<input type="text" class="form-control" id="dateBirth" tabindex="4">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="prefPhone">Preferred Phone</label>
+									<input type="text" class="form-control" id="prefPhone" tabindex="9">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="prefPhone">Address Type</label>
+									<select class="form-control" tabindex="12">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									</select>
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="city">City</label>
+									<input type="text" class="form-control" id="city" tabindex="15">
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="middleName">Middle Name</label>
+									<input type="text" class="form-control" id="middleName" tabindex="2">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<div class="row">
+										<div class="col-lg-4">
+											<label for="age">Age</label>
+											<input type="text" class="form-control" id="age" tabindex="5">
+										</div>
+										<div class="col-lg-8">
+											<div class="form-group-lg nomargin-bottom">
+												<label for="gender">Gender</label>
+											</div>
+											<div class="radio-inline">
+											  <label>
+											    <input type="radio" name="optionsRadios" id="optionsRadios1" value="M" tabindex="6">
+											    M
+											  </label>
+											</div>
+											<div class="radio-inline">
+											  <label>
+											    <input type="radio" name="optionsRadios" id="optionsRadios2" value="F" tabindex="7">
+											    F
+											  </label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small has-error has-feedback">
+									<label for="prefPhone">Alternate Phone</label>
+									<input type="text" class="form-control" id="altPhone" aria-describedby="inputError2Status" tabindex="10">
+									<span class="glyphicon glyphicon-exclamation-sign form-control-feedback font-size-xlarge padding-top-xxsmall margin-top-small" aria-hidden="true"></span>
+									<span id="inputError2Status" class="sr-only">(error)</span>
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="addr">Address 1 <sup>*</sup></label>
+									<input type="text" class="form-control" id="addr" tabindex="13">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<div class="row">
+										<div class="col-lg-6">
+											<label for="state">State <sup>*</sup></label>
+											<select class="form-control" tabindex="16">
+												<option>TX</option>
+											</select>
+										</div>
+										<div class="col-lg-6">
+											<label for="county">County <sup>*</sup></label>
+											<select class="form-control" tabindex="17">
+												<option>Dallas</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="lastName">Last Name</label>
+									<input type="text" class="form-control" id="lastName" tabindex="3">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="socialSecNum">Social Security Number</label>
+									<input type="text" class="form-control" id="socialSecNum" tabindex="8">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="emailAddr">Email Address</label>
+									<input type="text" class="form-control" id="emailAddr" tabindex="11">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<label for="addr2">Address 2</label>
+									<input type="text" class="form-control" id="addr2" tabindex="14">
+								</div>
+								<div class="form-group-lg padding-top-small padding-bottom-small">
+									<div class="row">
+										<div class="col-lg-6">
+											<label for="zip">Zip Code</label>
+											<input type="text" class="form-control" id="zip" tabindex="18">
+										</div>
+									</div>
+								</div>
+
+							</div>
+					</div>
+					<div class="row padding-top">
+						<div class="col-lg-8">
+							<p class="uppercase"><sup>*</sup> Indicates a required field</p>
+						</div>
+						<div class="col-lg-4 text-right">
+							<input type="submit" class="btn btn-default btn-lg" value="Next" tabindex="19" />
+						</div>
+					</div>
+					</div><!-- /.panel-body -->
+				</form>
+			</div>
+		</div>
+		<div class="col-lg-3 nopadding-left">
+			<ul class="list-group text-uppercase">
+				<li class="list-group-item active"><a href="" class="btn-block">General Information<i class="fa fa-fw fa-pencil pull-right"></i></a></li>
+				<li class="list-group-item"><a href="">Form Cabinets</a></li>
+				<li class="list-group-item"><a href="" class="text-success">Contact Methods<i class="fa fa-fw fa-check-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-danger">Addresses<i class="fa fa-fw fa-exclamation-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-success">Demographic Profile<i class="fa fa-fw fa-exclamation-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-success">Client Identifiers<i class="fa fa-fw fa-check-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-success">Connections<i class="fa fa-fw fa-check-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-success">Client Companies<i class="fa fa-fw fa-check-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-success">Client Programs<i class="fa fa-fw fa-check-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-success">Financial Assessments<i class="fa fa-fw fa-check-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-success">Client Payors<i class="fa fa-fw fa-check-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-success">Client Self Pay<i class="fa fa-fw fa-check-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-danger">Substance Use<i class="fa fa-fw fa-exclamation-circle pull-right"></i></a></li>
+				<li class="list-group-item"><a href="" class="text-danger">Treatment History<i class="fa fa-fw fa-exclamation-circle pull-right"></i></a></li>
+			</ul>
+		</div>
+	</div>
+</div> <!-- /container-fluid -->

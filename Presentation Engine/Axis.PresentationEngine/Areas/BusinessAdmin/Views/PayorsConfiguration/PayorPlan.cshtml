@@ -1,0 +1,84 @@
+﻿<div class="row padding-right-small margin-bottom-xsmall padding-left-small">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form id="payorPlanForm" name="payorPlanForm" xen-check-form permission-key="{{permissionKey}}" permission="{{resolvePermission(pageSecurity)}}" is-default="true" data-on-save="save(isNext, isMandatory, hasErrors)" novalidate bs-modifiable="true" set-form-status="payorPlanForm" set-form-mode>
+                <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(pageSecurity)}}" is-disabled="{{isPayorDisabled}}" permission-mode="readonly" dual-permission="true">
+                    <h3 class="uppercase nomargin padding-xsmall border-top">Payor</h3>
+                    <div class="row padding-top-small">
+                        <div class="section-block col-md-12 padding-bottom-small">
+                            <div class="col-md-4 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : payorPlanForm.PayorName.$invalid && !payorPlanForm.PayorName.$pristine }">
+                                <label for="payorName">Payor Name <sup>*</sup></label>
+                                <input type="text" ng-model="payor.PayorName" id="payorId" ng-required="true" data-ng-maxlength="100" name="PayorName" data-validation-name="Payor Name" class="form-control" auto-focus event-focus="autoFocus" />
+                                <p data-ng-show="payorPlanForm.PayorName.$error.maxlength" class="error-block">Maximum 100 Characters permitted.</p>
+                            </div>
+                            <div class="col-md-4 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : payorPlanForm.PayorCode.$invalid && !payorPlanForm.PayorCode.$pristine }">
+                                <label for="payorCode">Payor Code <sup>*</sup></label>
+                                <input type="text" class="form-control ellipsis" ng-model="payor.PayorCode" pattern="^[1-9][0-9]{2}$" name="PayorCode" data-validation-name="Payor Code" ng-required="true" />
+                                <p data-ng-show="payorPlanForm.PayorCode.$error.pattern" class="error-block">Must be a 3 digit numeric value</p>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small" ng-class="{ 'has-error' : payorPlanForm.PayorType.$invalid && !payorPlanForm.PayorType.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="payorType">Payor Type <sup>*</sup></label>
+                                    <select name="PayorType" class="form-control" id="PayorType" ng-model="payor.PayorTypeID" auto-focus event-focus="autoFocus"
+                                            ng-trim="true" ng-required="true" data-validation-name="Payor Type"
+                                            ng-options="payorType.ID as payorType.Name for payorType in getLookupsByType('PayorType')">
+                                        <option value="" ng-selected="selected">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div>&nbsp;</div>
+                            <div class="col-md-4 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : payorPlanForm.effectiveDate.$invalid && !payorPlanForm.effectiveDate.$pristine}">
+                                <label for="effectiveDate">Effective Date <sup>*</sup></label>
+                                <xen-date-picker id="effectiveDate" data-validation-name="Effective Date" date-required="true" data-compare-element-name="expirationDate" ng-model="payor.EffectiveDate" end-date="payor.ExpirationDate" greater-than-date-validation="true" name="effectiveDate" ignore-time="true"></xen-date-picker>
+                                <p ng-cloak ng-show="payorPlanForm.effectiveDate.$error.date && !payorPlanForm.effectiveDate.$pristine" class="error-block">Effective Date is invalid.</p>
+                                <p ng-show="payorPlanForm.effectiveDate.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                            </div>
+                            <div class="col-md-4 form-group-lg padding-bottom-small" ng-class="{'has-error' : payorPlanForm.expirationDate.$invalid && !payorPlanForm.expirationDate.$pristine}">
+                                <label for="expirationDate">Expiration Date</label>
+                                <xen-date-picker id="expirationDate" data-validation-name="Expiration Date" data-compare-element-name="effectiveDate" ng-model="payor.ExpirationDate" start-date="payor.EffectiveDate" less-than-date-validation="true" name="expirationDate" ignore-time="true"></xen-date-picker>
+                                <p id="effectiveExpirationDateError" ng-cloak ng-show="payorPlanForm.expirationDate.$error.date && !payorPlanForm.expirationDate.$pristine" class="error-block">Expiration Date is invalid.</p>
+                                <p ng-show="payorPlanForm.expirationDate.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small">
+                        <div class="col-lg-6 col-md-6">
+                            <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                            <xen-submit id="btnSave" name="btnSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="{{permissionKey}}" permission="{{resolvePermission(pageSecurity)}}"></xen-submit>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            &nbsp;
+            <h3 class="uppercase nomargin padding-xsmall border-top">PLANS</h3>
+
+            <div class="row padding-top-small col-md-12">
+                <div class="add_me w-header-button">
+                    <plus-button title="New Plan" href="javascript:void(0);" ng-if="showPlus" ui-sref="businessadministration.configuration.payors.payorplans.initial" permission-key="{{permissionKey}}" permission="create"></plus-button>
+                </div>
+                <div class="row padding-small">
+                    <table id="payorPlanTable" data-toggle="table"
+                           data-sort-order="desc"
+                           data-show-columns="true"
+                           data-search="true"
+                           data-minimum-count-columns="2"
+                           data-filter-control="false"
+                           data-mobile-responsive="true"
+                           data-filter-bar
+                           data-advanced-search="false"
+                           data-show-multi-sort="true"
+                           data-classes="table table-stripe-borders"
+                           bootstrap-table="tableoptions" grid-arrow-selector>
+                        <thead>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

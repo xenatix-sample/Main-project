@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9B5AD036-CB42-4C43-8659-A214CCDAF3C5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.Plugins.ECI</RootNamespace>
+    <AssemblyName>Axis.Plugins.ECI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDev|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseTest|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenDevWeb001|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenDevWeb002|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTstWeb001|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTstWeb002|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenDevWeb002Holding|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTrnWeb001|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTrnWeb002|AnyCPU'">
+    <OutputPath>..\..\Axis.PresentationEngine\Plugins\Axis.Plugins.ECI\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTstWeb003|AnyCPU'">
+    <OutputPath>bin\Release.XenTstWeb003\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.8.18111, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiControllers\ECIAdditionalDemographicController.cs" />
+    <Compile Include="ApiControllers\ECIDemographicController.cs" />
+    <Compile Include="ApiControllers\EligibilityDetermination\EligibilityCalculationController.cs" />
+    <Compile Include="ApiControllers\EligibilityDetermination\EligibilityDeterminationController.cs" />
+    <Compile Include="ApiControllers\IFSPController.cs" />
+    <Compile Include="ApiControllers\ProgressNoteController.cs" />
+    <Compile Include="ApiControllers\Screening\ScreeningController.cs" />
+    <Compile Include="BundleProvider.cs" />
+    <Compile Include="Controllers\ECIAdditionalDemographicController.cs" />
+    <Compile Include="Controllers\ECIDemographicController.cs" />
+    <Compile Include="Controllers\EligibilityDetermination\EligibilityCalculationController.cs" />
+    <Compile Include="Controllers\IFSPController.cs" />
+    <Compile Include="Controllers\ProgressNoteController.cs" />
+    <Compile Include="Controllers\ECIRegistrationController.cs" />
+    <Compile Include="Controllers\Screening\ScreeningController.cs" />
+    <Compile Include="Controllers\EligibilityDetermination\EligibilityDeterminationController.cs" />
+    <Compile Include="ECIRequirementRule.cs" />
+    <Compile Include="HttpRouteProvider.cs" />
+    <Compile Include="Infrastructure\CustomECIViewEngine.cs" />
+    <Compile Include="Infrastructure\DependencyRegistrar.cs" />
+    <Compile Include="Models\DischargeViewModel.cs" />
+    <Compile Include="Models\ECIAdditionalDemographic\ECIAdditionalDemographicsViewModel.cs" />
+    <Compile Include="Models\ECIContactBaseViewModel.cs" />
+    <Compile Include="Models\ECIDemographics\ECIContactDemographicsViewModel.cs" />
+    <Compile Include="Models\ECI\ECIBaseViewModel.cs" />
+    <Compile Include="Models\EligibilityDetermination\EligibilityCalculationViewModel.cs" />
+    <Compile Include="Models\EligibilityDetermination\EligibilityDeterminationViewModel.cs" />
+    <Compile Include="Models\IFSP\IFSPDetailViewModel.cs" />
+    <Compile Include="Models\NoteHeaderViewModel.cs" />
+    <Compile Include="Models\ProgressNoteAssessmentViewModel.cs" />
+    <Compile Include="Models\ProgressNoteViewModel.cs" />
+    <Compile Include="Models\Screening\ScreeningViewModel.cs" />
+    <Compile Include="Repository\ECIAdditionalDemographic\ECIAdditionalDemographicRepository.cs" />
+    <Compile Include="Repository\ECIAdditionalDemographic\IECIAdditionalDemographicRepository.cs" />
+    <Compile Include="Repository\ECIDemographic\ECIDemographicRepository.cs" />
+    <Compile Include="Repository\ECIDemographic\IECIDemographicRepository.cs" />
+    <Compile Include="Repository\EligibilityDetermination\EligibilityCalculationRepository.cs" />
+    <Compile Include="Repository\EligibilityDetermination\EligibilityDeterminationRepository.cs" />
+    <Compile Include="Repository\EligibilityDetermination\IEligibilityCalculationRepository.cs" />
+    <Compile Include="Repository\EligibilityDetermination\IEligibilityDeterminationRepository.cs" />
+    <Compile Include="Repository\IFSP\IFSPRepository.cs" />
+    <Compile Include="Repository\IFSP\IIFSPRepository.cs" />
+    <Compile Include="Repository\ProgressNote\IProgressNoteRepository.cs" />
+    <Compile Include="Repository\ProgressNote\ProgressNoteRepository.cs" />
+    <Compile Include="Repository\Registration\IECIRegistrationRepository.cs" />
+    <Compile Include="Repository\Registration\ECIRegistrationRepository.cs" />
+    <Compile Include="Repository\Screening\IScreeningRepository.cs" />
+    <Compile Include="Repository\Screening\ScreeningRepository.cs" />
+    <Compile Include="RouteProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+		<Compile Include="..\..\..\Axis Libraries\Axis.Constant\GlobalAssemblyInfo.cs"><Link>Properties\GlobalAssemblyInfo.cs</Link></Compile>
+    <Compile Include="Translator\DischargeTranslator.cs" />
+    <Compile Include="Translator\ECIAdditionalDemographic\ECIAdditionalDemographyTranslator.cs" />
+    <Compile Include="Translator\ECIDemographicTranslator.cs" />
+    <Compile Include="Translator\EligibilityDetermination\EligibilityCalculationTranslator.cs" />
+    <Compile Include="Translator\EligibilityDetermination\EligibilityDeterminationTranslator.cs" />
+    <Compile Include="Translator\IFSPDetailTranslator.cs" />
+    <Compile Include="Translator\NoteHeaderTranslator.cs" />
+    <Compile Include="Translator\ProgressNoteAssessmentTranslator.cs" />
+    <Compile Include="Translator\ProgressNoteTranslator.cs" />
+    <Compile Include="Translator\Screening\ScreeningTranslator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Description.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\controllers\eciAdditionalDemographicController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\controllers\eciDemographicController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\controllers\eligibilityCalculationController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\controllers\eligibilityDeterminationController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\controllers\ifspController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\controllers\eciRegistrationController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\controllers\progressNoteController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\controllers\screeningController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\directives\ifspNavigation.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\directives\screeningNavigation.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\eciAdditionalDemographicService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\eciDemographicService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\eciRegistrationTileService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\eciTileService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\eligibilityCalculationService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\eligibilityDeterminationService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\ifspService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\progressNoteService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\screeningService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Views\Shared\_Category.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_ClientIdentifier.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Views\ECIAdditionalDemographic\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\ECIAdditionalDemographic\_AdditionalDemographics.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\ECIDemographic\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\ECIDemographic\_ContactDemographics.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\EligibilityCalculation\Calculation.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\EligibilityDetermination\EligibilityHeader.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\EligibilityDetermination\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\EligibilityDetermination\Notes.cshtml">
+      <SubType>Code</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\EligibilityDetermination\Report.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_ContactAlias.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_ECIRegistrationNavigation.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\ProgressNote\AttemptIndex.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\ProgressNote\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_EligibilityHeader.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\EligibilityDetermination\EligibilitySignature.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\IFSP\IFSPHeader.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\IFSP\IFSPReport.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\IFSP\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Screening\ScreeningReport.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Screening\ScreeningHeader.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_IFSPHeader.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_NoteNavigation.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_ProgressNoteFooter.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_ProgressNoteGrid.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_ProgressNoteHeader.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_ScreeningHeader.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Screening\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\EligibilityDetermination\_EligibilityNavigation.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\_TeamMember.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="web.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Configuration\Axis.Configuration.csproj">
+      <Project>{94E342A4-D5DD-4F1C-A838-E453A28872CC}</Project>
+      <Name>Axis.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Constant\Axis.Constant.csproj">
+      <Project>{F3EAB25A-9FFE-4DDA-9236-71F76FFBD908}</Project>
+      <Name>Axis.Constant</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Helpers\Axis.Helpers.csproj">
+      <Project>{e04d495e-89a3-4d47-90c3-ffc97ba556c4}</Project>
+      <Name>Axis.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Address\Axis.Model.Address.csproj">
+      <Project>{d5ddba0d-9bf0-497b-976d-08d39b7fe976}</Project>
+      <Name>Axis.Model.Address</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Common\Axis.Model.Common.csproj">
+      <Project>{b217d868-9cab-4e0d-a0bc-d82423e64741}</Project>
+      <Name>Axis.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.ECI\Axis.Model.ECI.csproj">
+      <Project>{a58c5eda-c318-4322-b2af-795ec3a5c9a4}</Project>
+      <Name>Axis.Model.ECI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Email\Axis.Model.Email.csproj">
+      <Project>{9f6f9127-fe24-4f59-9e43-3ad252360ae1}</Project>
+      <Name>Axis.Model.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Phone\Axis.Model.Phone.csproj">
+      <Project>{b0a9f6e9-6648-484c-b213-8b15b80973d3}</Project>
+      <Name>Axis.Model.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Registration\Axis.Model.Registration.csproj">
+      <Project>{d43d18cf-2ecf-4ede-866d-7cad9e1e0096}</Project>
+      <Name>Axis.Model.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.PluginsEngine\Axis.PluginsEngine.csproj">
+      <Project>{e3b24473-42c9-4666-a53c-c751dee09b52}</Project>
+      <Name>Axis.PluginsEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Service\Axis.Service.csproj">
+      <Project>{A6BE9F68-DA2A-48C1-A0C7-71A62B04C9D8}</Project>
+      <Name>Axis.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis.PresentationEngine.Helpers\Axis.PresentationEngine.Helpers.csproj">
+      <Project>{bfa7d2c0-4ccf-4a68-ac41-5c8692f21a09}</Project>
+      <Name>Axis.PresentationEngine.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

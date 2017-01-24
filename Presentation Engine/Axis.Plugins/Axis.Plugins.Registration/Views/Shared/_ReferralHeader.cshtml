@@ -1,0 +1,29 @@
+﻿<div class="row section-block">
+    <div class="padding-bottom-small" ng-form="referralStatusForm">
+        <div class="form-group-lg padding-bottom-small">
+
+            <div class="col-md-4 padding-bottom-xsmall">
+                <div id="referralDate" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : referralStatusForm.referralDate.$invalid && !referralStatusForm.referralDate.$pristine }">
+                    <label for="referralDate">Referral Date<sup>*</sup></label>
+                    <mydatepicker id="referralDate" is-disabled="!enableReferralStatus || isReadOnlyForm" is-hidden="!enableReferralStatus || isReadOnlyForm" new-date="$parent.ReferralDate" end-date="$parent.endDate" date-required="true" date-options="dateOptions" dob-name="referralDate" call-function-on-change="validateDate()"></mydatepicker>
+                    <p id="referralDateError" ng-show="referralStatusForm.referralDate.$invalid && !referralStatusForm.referralDate.$pristine" class="error-block">Invalid date</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : referralStatusForm.ReferralStatus.$invalid && !referralStatusForm.ReferralStatus.$pristine }">
+                    <label for="referralStatus">Referral Status <sup ng-if="enableReferralStatus">*</sup></label>
+                    @*set $scope.enableReferralStatus = true; if referral status dropdown need to be enabled.*@
+                    <select ng-disabled="!enableReferralStatus || isReadOnlyForm" ng-model="$parent.referralStatusID" id="ReferralStatus" auto-focus event-focus="autoFocus"
+                            name="ReferralStatus" class="form-control" ng-options="status.ID as status.Name for status in getLookupsByType('ReferralStatus')"
+                            ng-required="true">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

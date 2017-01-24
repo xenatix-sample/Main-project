@@ -1,0 +1,66 @@
+﻿@*<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)"></keypress-events>*@
+<div class="jumbotron">
+
+        <form role="form" name="ctrl.staffManagementForm" novalidate ng-submit="ctrl.eligibilityForm.$valid" server-validate="ServerValidationErrors" class="form-inline"
+              bs-modifiable="true">
+            {{ctrl.staffManagementForm.modified ? setform(true):setform(false)}}
+            <div class="container-fluid padding-small">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 search-box text-center form-group-lg">
+                        <input type="text" name="staffSearch" id="staffSearch" auto-focus event-focus="autoFocus" ng-model="staffSearch" ng-keydown="($event.which === 13)? get():0"
+                               placeholder="Search" tabindex="0" class="form-control ellipsis" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-link" ng-click="get()">
+                                <i class="fa fa-search fa-fw"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+     
+ </div>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="add_me">
+            <plus-button title="New Staff Member" permission-key="SiteAdministration-StaffManagement-UserDetails" permission="create" data-ng-click="add()" table-id="staffManagementTable"></plus-button>
+        </div>
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+                <table id="staffManagementTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="userName"
+                                data-sortable="true">User Name</th>
+                            <th data-field="firstName"
+                                data-sortable="true">First Name</th>
+                            <th data-field="lastName"
+                                data-sortable="true">Last Name</th>
+                            <th data-field="email"
+                                data-sortable="true">Email</th>
+                            <th data-field="active"
+                                data-sortable="true">Active</th>
+                            <th data-field="expirationDate"
+                                data-sortable="true">Expiration Date</th>
+                            <th data-field="lastLogin"
+                                data-sortable="true">Last Login</th>
+                            <th data-field="loginAttempts"
+                                data-sortable="true">Login Attempts</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

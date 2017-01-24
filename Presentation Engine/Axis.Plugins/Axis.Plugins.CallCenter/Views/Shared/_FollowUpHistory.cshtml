@@ -1,0 +1,39 @@
+﻿<div class="modal fade" id="followupHistoryModal" role="dialog" aria-labelledby="followupHistoryModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-top:1px;">
+                <button type="button" id="closePopup" class="close" ng-click="cancelModal()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="contactDischargeNoteHeader">Crisis History</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row padding-top-small padding-bottom-small">
+                    <div class="col-md-12">
+                        <table id="followupHistoryTable" data-toggle="table"
+                               data-show-columns="true"
+                               data-search="true"
+                               data-minimum-count-columns="2"
+                               data-filter-control="false"
+                               data-mobile-responsive="true"
+                               data-filter-bar
+                               data-advanced-search="false"
+                               data-classes="table table-stripe-borders"
+                               bootstrap-table="ctrl.followUpTableOptions" grid-arrow-selector>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row padding-top-small">
+                    <div class="col-lg-6">
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button type="button" class="btn btn-default btn-lg" id="close" ng-click="cancelModal()">Close</button>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-bottom-small"></div>
+            </div>
+        </div>
+    </div>
+</div>

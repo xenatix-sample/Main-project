@@ -1,0 +1,34 @@
+﻿/* DATEPICKER */
+mydatepicker { }
+mydatepicker .dropdown-menu { min-width:245px; max-height:none!important; z-index:1200; }
+mydatepicker table { width:100%; background:#313131; }
+mydatepicker thead tr { /*border-bottom:1px solid #666;*/ }
+mydatepicker thead .btn { font-size:13px; color:#fff; padding:7px 9px; border:4px solid #313131; border-radius:10px; background:#737373; }
+mydatepicker button[role="heading"] { width:100%; font-size:16px; color:#b3b3b3; border:0; background:transparent; }
+mydatepicker button[role="heading"] strong { font-weight:normal; }
+mydatepicker thead th.ng-scope { color:#fff; padding:6px 2px 3px 2px; }
+mydatepicker tbody td { border-right:1px solid #666; }
+mydatepicker tbody td:last-child { border-right:0; }
+mydatepicker tbody button { border:0; background:transparent; }
+mydatepicker tbody button:hover { background:#000; opacity:0.5; }
+mydatepicker tbody button .text-info { color:#81bc41; }
+mydatepicker button.chosen.active { color:#313131; background:#fff; }
+mydatepicker button.chosen.active .text-info { color:#313131; }
+mydatepicker .dropdown-menu button.btn-info { border-color:#252525; background:#737373; }
+mydatepicker .input-group-btn .btn .fa-calendar { color:#666; }
+
+xen-date-picker { }
+xen-date-picker .dropdown-menu { min-width:245px; max-height:none!important; z-index:1200; }
+xen-date-picker table { width:100%; background:#313131; }
+xen-date-picker thead tr { /*border-bottom:1px solid #666;*/ }
+xen-date-picker thead .btn { font-size:13px; color:#fff; padding:7px 9px; border:4px solid #313131; border-radius:10px; background:#b3b3b3; }
+xen-date-picker button[role="heading"] { width:100%; font-size:16px; color:#b3b3b3; border:0; background:transparent; }
+xen-date-picker button[role="heading"] strong { font-weight:normal; }
+xen-date-picker thead th.ng-scope { color:#fff; padding:6px 2px 3px 2px; }
+xen-date-picker tbody td { border-right:1px solid #666; }
+xen-date-picker tbody td:last-child { border-right:0; }
+xen-date-picker tbody button { border:0; background:transparent; }
+xen-date-picker tbody button:hover { background:#000; opacity:0.5; }
+xen-date-picker tbody button .text-info { color:#81bc41; }
+xen-date-picker button.chosen.active { color:#313131; background:#fff; }
+xen-date-picker button.chosen.active .text-info { color:#313131; }

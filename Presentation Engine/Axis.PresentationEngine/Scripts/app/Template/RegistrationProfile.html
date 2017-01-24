@@ -1,0 +1,142 @@
+﻿<div class="sidebar-offcanvas sidebar-tall">
+    <div class="panel panel-default nomargin-top padding-bottom-small">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <div class="col-md-11 col-sm-12 col-xs-12 border-top border-bottom padding-xsmall margin-bottom-small">
+                    <h3 class="nomargin padding-left-small pull-left">Convert to Registration</h3>
+                    <a href="javascript:void(0)" data-toggle="offcanvasoff" alt="Close Panel" ng-click="closeFlyout()" class="pull-right nomargin-right">
+                    <div class="btn-group">
+                        <i class="fa fa-times-circle" data-toggle="offcanvasoff">
+                            <span class="sr-only">Close Section and Return</span>
+                        </i>
+                    </div>
+                </a>
+            </div>
+ 
+        </div>
+        <div class="panel-body nopadding-top" id="panel-last-accessed">
+            <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionRegID)}}" permission-mode="readonly">
+                <form role="form" name="ctrl.quickRegForm" xen-check-form data-on-save="register(isNext, isMandatory, hasErrors)" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionRegID)}}" novalidate ng-submit="ctrl.quickRegForm.$valid" bs-modifiable="true" set-form-status="ctrl.quickRegForm">
+                    <div class="row padding-top-small">
+                        <div class="col-lg-11 col-md-7 col-sm-9 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.quickRegForm.FirstName.$invalid && !ctrl.quickRegForm.FirstName.$pristine}">
+                                <label for="FirstName">First Name<sup> *</sup></label>
+                                <input type="text" name="FirstName" id="quickFirstName" class="form-control ellipsis" ng-model="newDemographyQuickReg.FirstName"
+                                       ng-trim="true" ng-required="true" ng-maxlength="200" data-validation-name="First Name" />
+                                <p ng-show="ctrl.quickRegForm.FirstName.$error.maxlength" ng-cloak class="error-block">First Name is too long</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-11 col-md-7 col-sm-9 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.quickRegForm.LastName.$invalid && !ctrl.quickRegForm.LastName.$pristine}">
+                                <label for="LastName">Last Name<sup> *</sup></label>
+                                <input type="text" name="LastName" id="quickLastName" ng-model="newDemographyQuickReg.LastName" ng-maxlength="200" ng-trim="true" ng-required="true" class="form-control ellipsis" data-validation-name="Last Name" />
+                                <p ng-show="ctrl.quickRegForm.LastName.$error.maxlength" ng-cloak class="error-block">Last Name is too long</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9 col-md-7 col-sm-7 padding-bottom-small">
+                            <div id="dobQuickRegErrorTd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.quickRegForm.dob.$invalid && !ctrl.quickRegForm.dob.$pristine}">
+                                <label for="dob">Date of Birth<sup> *</sup></label>
+                                <xen-date-picker id="quickdob" future-date-validate="true" data-validation-name="Date Of Birth" ng-model="newDemographyQuickReg.DOB"
+                                                 end-date="endDate" name="dob" date-options="dateOptions" start-date="startDate" date-required=" true" max-limit="120"></xen-date-picker>
+                                <p id="dobQuickRegError" ng-show="ctrl.quickRegForm.dob.$error.date || ctrl.quickRegForm.dob.$error.futureDate ||  ctrl.quickRegForm.dob.$error.maxLimit" class="error-block">Please select valid date.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7 col-md-4 col-sm-9 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.quickRegForm.gender.$invalid && !ctrl.quickRegForm.gender.$pristine }">
+                                <label>Gender<sup> *</sup></label>
+                                <select id="quickgender" name="gender" data-validation-name="Gender" ng-model="newDemographyQuickReg.GenderID" class="form-control ellipsis" ng-required="true"
+                                        ng-options="gender.ID as gender.Name for gender in getLookupsByType('Gender')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-11 col-md-9 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" id="raceErrorBlock">
+                                <label for="race">Race <sup>*</sup></label>
+                                <div class="input-group">
+                                    <input type="text" ng-model="raceDetail" id="quickrace" data-validation-name="Race" name="race" class="form-control ellipsis" typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                                           typeahead-on-select="selectRaceDetail($item); asyncSelected = '';" typeahead-editable="false" typeahead-no-results="noRaceDetailResults"
+                                           typeahead="RaceDetail as RaceDetail.Name for RaceDetail in raceLookUpData | filter:$viewValue:comparatorOnEmptyOrMatch" typeahead-trigger />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-info" ng-click="triggerTypeahead('race');ctrl.quickRegForm.raceDetail.$invalid=false;ctrl.quickRegForm.raceDetail.$valid=true">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <p ng-show="noRaceDetailResults" ng-cloak class="error-block">No Results Found!</p>
+                            </div>
+                            <div class="row pod-group pod-group-sm">
+                                <div class="pod" ng-repeat="RaceDetail in selectedRaceDetails | filter: { IsActive : true }" ng-show="{{RaceDetail.RaceID > 0}}">
+                                    <div>
+                                        <p><strong>{{RaceDetail.Race}}</strong></p>
+                                    </div>
+                                    <a class="text-info close" href="javascript:void(0)" ng-click="removeRaceDetail(RaceDetail)" title="Remove Race" space-key-press><span class="sr-only"></span>x</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10 col-md-7 col-sm-9 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.quickRegForm.ethnicity.$invalid && !ctrl.quickRegForm.ethnicity.$pristine}">
+                                <label for="ethnicity">Ethnicity <sup>*</sup></label>
+                                <select name="ethnicity" class="form-control" id="quickethnicity" data-validation-name="Ethnicity" ng-model="additionalDemographicQuickReg.EthnicityID"
+                                        ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/"
+                                        ng-options="ethnicity.ID as ethnicity.Name for ethnicity in getLookupsByType('Ethnicity')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10 col-md-4 col-sm-8 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.quickRegForm.phoneType.$invalid && ! ctrl.quickRegForm.phoneType.$pristine }">
+                                <label for="phoneType">Phone Type</label>
+                                <select ng-model="phone.PhoneTypeID" id="quickphoneType" xen-last-element-focus="Phones" class="form-control" auto-focus event-focus="autoContactPhoneFocus" name="phoneType"
+                                        ng-options="phoneType.ID as phoneType.Name for phoneType in getLookupsByType('PhoneType')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10 col-md-5 col-sm-8 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.quickRegForm.PhoneNumber.$invalid && !ctrl.quickRegForm.PhoneNumber.$pristine }">
+                                <label for="phoneNum">Phone Number<sup ng-show="!isLawLiaison"> *</sup></label>
+                                <input type="text" id="quickphoneNum" name="PhoneNumber" ng-model="phone.Number" data-validation-name="Phone Number" ng-required="!isLawLiaison" ui-mask="999-999-9999" clean="true" class="form-control ellipsis" />
+                                <p ng-show="ctrl.quickRegForm.PhoneNumber.$error.mask" ng-cloak class="error-block">Invalid phone number.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10 col-md-5 col-sm-7 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.quickRegForm.SSN.$invalid && !ctrl.quickRegForm.SSN.$pristine }">
+                                <label for="SSN">SSN</label>
+                                <input type="text" class="form-control ellipsis" ui-mask="999-99-9999" ui-options="{clearOnBlur: false}" clean="true" ng-model="newDemographyQuickReg.SSN" id="quickSSN" name="SSN" />
+                                <p ng-show="ctrl.quickRegForm.SSN.$error.mask  && !ctrl.quickRegForm.SSN.$pristine" ng-cloak class="error-block">Invalid SSN.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer nopadding-left nopadding-top" data-spy="affix" data-offset-top="50" data-offset-bottom="0">
+                        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                        <div class="col-lg-12 nopadding-left nopadding-right padding-top-xsmall text-right">
+                            <button type="button" class="btn btn-default uppercase btn-lg" ng-click="cancelFlyout()" id="quickbtnCancel" name="btnCancel">Cancel</button>
+                            <xen-submit id="saveRegistration" name="saveRegistration" value="REGISTER" is-next="false" mandatory="true" style="btn btn-default uppercase btn-lg" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionRegID)}}"></xen-submit>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

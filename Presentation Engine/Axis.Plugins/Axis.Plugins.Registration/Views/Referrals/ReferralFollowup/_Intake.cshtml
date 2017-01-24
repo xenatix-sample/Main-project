@@ -1,0 +1,81 @@
+﻿@Html.Partial("../Shared/_ReferralHeader")
+<div class="row padding-top-small">
+    <div class="col-md-12">
+        <div class="row">
+
+            <div class="col-md-4 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralForm.followUpExpected.$invalid && !ctrl.referralForm.followUpExpected.$pristine }">
+                    <label for="followUpExpected">Follow Up Expected <sup>*</sup></label>
+                    <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="referralFollowup.FollowupExpected" data-radio-button-id="followUpExpectedYes" data-label="Yes" data-ng-value="true" name="Referral Followup Expected" ng-required="!isReadOnlyForm" auto-focus event-focus="autoFocus" /></span>
+                    <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="referralFollowup.FollowupExpected" data-radio-button-id="followUpExpectedNo" data-label="No" data-ng-value="false" /></span>
+                </div>
+            </div>
+            <div class="col-md-4 padding-bottom-xsmall">
+                <div class="form-group-lg padding-bottom-small" ng-cloak ng-class="{ 'has-error' : ctrl.referralForm.FollowupProvider.$invalid && !ctrl.referralForm.FollowupProvider.$pristine }">
+                    <!-- Yes / No radio buttons -->
+                    <label for="followUpProvider">Follow Up Provider</label>
+                    <div class="input-group">
+                        <input type="text" ng-disabled="isReadOnlyForm" ng-model="FollowupProviderID" id="FollowupProvider" name="FollowupProvider" class="form-control ellipsis" typeahead-wait-ms="500"
+                               typeahead-editable="false" typeahead-no-results="noFollowUpProviderResults" typeahead-on-select="" typeahead-select-on-blur="true"
+                               typeahead="users as users.Name for users in providers" typeahead-trigger>
+                        <span class="input-group-btn">
+                            <button type="button" ng-disabled="isReadOnlyForm" class="btn btn-info" ng-click="triggerTypeahead('FollowupProvider');">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <p ng-show="noFollowUpProviderResults" ng-cloak class="error-block">No Results Found!</p>
+                    <p ng-show="(ctrl.referralForm.FollowupProvider.$invalid && !ctrl.referralForm.FollowupProvider.$pristine)" ng-cloak class="error-block">Provider not found</p>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-xsmall">
+                <div id="followUpDate" class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.referralForm.FollowupDate.$invalid && !ctrl.referralForm.FollowupDate.$pristine }">
+                    <label for="followUpDate">Follow Up Date</label>
+                    <mydatepicker is-disabled="isReadOnlyForm" opened="opened" id="followUpDate" new-date="referralFollowup.FollowupDate" start-date="startDate" dob-name="FollowupDate" date-options="dateOptions">
+                        <div class=" input-group datepicker">
+                            <input type="text" class="form-control datepicker_cal" datepicker-popup="MM/dd/yyyy" min-date="startDate" name="followUpDate" max-date="endDate" ng-model="newDate" is-open="opened" datepicker-options="dateOptions" ng-click="opencalendar($event)" on-open-focus="false" input-mask="{mask: '99/99/9999'}" ng-disabled="isDisabled">
+                            <span class="input-group-btn" style="">
+                                <button type="button" class="btn btn-info" ng-click="opencalendar($event)" tabindex="-1" title="Calendar" ng-disabled="isDisabled"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </mydatepicker>
+                    <p id="followupDateerror" data-ng-show="ctrl.referralForm.followUpDate.$error.date" class="error-block ng-hide">Please select valid date.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="">
+                    <xen-memobox is-disabled="isReadOnlyForm" label="Follow Up Outcome" rows="5" maxlength="500" ng-model="referralFollowup.FollowupOutcome" id="followupOutcomeComments"></xen-memobox>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-4 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <fieldset id="clientNotified">
+                <legend class="uppercase">Was Client Notified?</legend>
+                <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="referralFollowup.IsAppointmentNotified" data-radio-button-id="clientNotifiedYes" data-label="Yes" data-ng-value="true" /></span>
+                &nbsp;&nbsp;&nbsp;
+                <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="referralFollowup.IsAppointmentNotified" data-radio-button-id="clientNotifiedNo" data-label="No" data-ng-value="false" /></span>
+            </fieldset>
+        </div>
+    </div>
+    <!-- here -->
+    <div class="col-md-4 padding-bottom-small" ng-show="referralFollowup.IsAppointmentNotified == true">
+        <!-- conditional: display only if client notified is 'yes' -->
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralForm.clientNotifiedHow.$invalid && !ctrl.referralForm.clientNotifiedHow.$pristine }">
+            <label for="clientNotifiedHow">How? <sup>*</sup></label>
+            <input ng-disabled="isReadOnlyForm" type="text" id="clientNotifiedHow" name="clientNotifiedHow" ng-required="referralFollowup.IsAppointmentNotified == true" value="first last" class="form-control ellipsis" ng-model="referralFollowup.AppointmentNotificationMethod">
+        </div>
+    </div>
+</div>
+<div class="row section-block">
+    <div class="col-md-12 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="">
+            <xen-memobox is-disabled="isReadOnlyForm" label="Comments" rows="5" maxlength="500" ng-model="referralFollowup.Comments" id="referralFollowupCommentsID"></xen-memobox>
+        </div>
+    </div>
+</div>

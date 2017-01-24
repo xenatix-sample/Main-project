@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Photo";
+    Layout = null;
+}
+    <div class="row margin-xsmall padding-bottom-small">
+        @* PREVIEW ---------------------------------------------------------------- *@
+        <div class="preview-col">
+            <h3 class="uppercase nomargin-top">Preview</h3>
+            <div class="photo-preview">
+                @* delete photo button sits above image *@
+                <button type="button" class="delete-photo" ng-click="removePicture()" ng-show="preview && !cameraMode" security permission-key="{{permissionKey}}" permission="{{PERMISSION.DELETE}}" title="Remove Picture"><i class="fa fa-trash"><span class="sr-only">Remove Picture</span></i></button>
+                @* uploaded photo will sit above the placeholder *@
+                <div class="photo-actual" ng-show="preview">
+                    @* Box 1 - section for rotating, zooming & cropping *@
+                    <div class="imageBox" ng-show="!cameraMode">
+                        <div class="mask"></div>
+                        <div class="thumbBox"></div>
+                        <div class="spinner" style="display: none">Loading...</div>
+                    </div>
+
+                    @* Box 2 - camera picture, only one box will be displayed based on select file or take picture*@
+                    <div ng-show="cameraMode" class="camera-mode">
+                        <button type="button" class="close-camera" ng-click="stopCamera()" title="Cancel and close camera"><i class="fa fa-times-circle"><span class="sr-only">cancel and close camera</span></i></button>
+                        <div id="ng-camera-feed"></div>
+                        <a href="javascript:void(0)" id="takePicture" name="takePicture" ng-click="getSnapshot()" title="Take Picture"><i class="fa fa-camera fa-fw" /></a>
+                    </div>
+                </div>
+                @* placeholder background (default visible) *@
+                <div class="photo-placeholder" ng-show="!preview">
+                    <div class="no-photo">
+                        <span class="donot-use-photo" ng-show="isNotUsingPhoto()">Don't use a photo has been set.</span>
+                        <img class="align-center" src="/Images/profile_male.svg" ng-show="!isNotUsingPhoto()" alt="Placeholder Image"> @* fa-male or fa-female - driven by gender. defaults to male if no gender given *@
+                    </div>
+                </div>
+            </div>
+            <div class="photo-controls" ng-show="preview && !cameraMode">
+                <div class="image-zoom">
+                    <a href="javascript:void(0)" id="zoomIn" name="zoomIn" ng-click="" title="Zoom In"><i class="fa fa-search-minus fa-fw" /></a>
+                    <a href="javascript:void(0)" id="zoomOut" name="zoomOut" ng-click="" title="Zoom Out"><i class="fa fa-search-plus fa-fw" /></a>
+                </div>
+                <div class="image-rotate">
+                    <a href="javascript:void(0)" id="rotateLeft" name="rotateLeft" ng-click="" title="Rotate Left"><i class="fa fa-undo fa-fw" /></a>
+                    <a href="javascript:void(0)" id="rotateRight" name="rotateRight" ng-click="" title="Rotate Right"><i class="fa fa-repeat fa-fw" /></a>
+                </div>
+                <a href="javascript:void(0)" id="crop" name="crop" ng-click="" title="Crop Photo"><i class="fa fa-crop fa-fw" /></a>
+                <a href="javascript:void(0)" id="setPreviewAsPhoto" name="setPreviewAsPhoto" ng-click="onSetPreviewAsPhoto()" security permission-key="{{permissionKey}}" permission="{{PERMISSION.UPDATE}}" title="Set as photo">Set as photo</a>
+            </div>
+        </div>
+
+        <div class="upload-col">
+            @* VIEW PHOTOS  ------------------------------------------------------------ *@
+            <h3 class="uppercase" ng-show="photos.length > 0">View Photos</h3>
+            <div class="photo-library" ng-show="photos.length > 0">
+                @*Thumnail photo will be displayed here after cropping*@
+                <div id="photoLibrary" class="owl-carousel">
+
+                </div>
+            </div>
+
+            @* ADD PHOTO ---------------------------------------------------------------- *@
+            <h3 class="uppercase">Add Photo</h3>
+            <div class="photo-upload">
+                <div class="from-device">
+                    <div class="faux-button">Choose a File</div>
+                    <input type="file" name="photoFile" id="photoFile" size="40" title="Choose a picture" security permission-key="{{permissionKey}}" permission="{{PERMISSION.CREATE}}">
+                </div>
+                <a href="javascript:void(0)" id="startCamera" name="startCamera" ng-click="startCamera()" security permission-key="{{permissionKey}}" permission="{{PERMISSION.CREATE}}" title="Take Picture"><i class="fa fa-camera fa-fw" /></a>
+            </div>
+
+            <div ng-show="!donotUsePhoto" security permission-key="{{permissionKey}}" permission="{{PERMISSION.UPDATE}}">
+                <xen-button-checkbox data-ng-model="donotUsePhoto"
+                                     data-button-id="noPhoto"
+                                     data-on-click="onDonotUsePhoto()"
+                                     data-label="Don't use a photo">
+                </xen-button-checkbox>
+            </div>
+        </div>
+    </div>

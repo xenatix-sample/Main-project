@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3A0DF0B8-7C86-48F0-A30E-A7C70AC344EA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.DataProvider.Account</RootNamespace>
+    <AssemblyName>Axis.DataProvider.Account</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Local\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDev|AnyCPU'">
+    <OutputPath>bin\ReleaseDev\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseTest|AnyCPU'">
+    <OutputPath>bin\ReleaseTest\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp001|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp001\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp002|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp002\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp001|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp001\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp002|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp002\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp002Holding|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp002Holding\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp003|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp003\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account\AccountDataProvider.cs" />
+    <Compile Include="ForgotPassword\ForgotPasswordDataProvider.cs" />
+    <Compile Include="ForgotPassword\IForgotPasswordDataProvider.cs" />
+    <Compile Include="Account\IAccountDataProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\..\Axis Libraries\Axis.Constant\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="UserProfile\IUserProfileDataProvider.cs" />
+    <Compile Include="UserProfile\UserProfileDataProvider.cs" />
+    <Compile Include="UserSecurity\IUserSecurityDataProvider.cs" />
+    <Compile Include="UserSecurity\UserSecurityDataProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Constant\Axis.Constant.csproj">
+      <Project>{f3eab25a-9ffe-4dda-9236-71f76ffbd908}</Project>
+      <Name>Axis.Constant</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Helpers\Axis.Helpers.csproj">
+      <Project>{e04d495e-89a3-4d47-90c3-ffc97ba556c4}</Project>
+      <Name>Axis.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Logging\Axis.Logging.csproj">
+      <Project>{8F9BE561-8E96-4C34-A25B-B2D44A1E008B}</Project>
+      <Name>Axis.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Account\Axis.Model.Account.csproj">
+      <Project>{539e2b21-5970-4cec-b479-7b560a2d407b}</Project>
+      <Name>Axis.Model.Account</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Address\Axis.Model.Address.csproj">
+      <Project>{d5ddba0d-9bf0-497b-976d-08d39b7fe976}</Project>
+      <Name>Axis.Model.Address</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Common\Axis.Model.Common.csproj">
+      <Project>{b217d868-9cab-4e0d-a0bc-d82423e64741}</Project>
+      <Name>Axis.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Email\Axis.Model.Email.csproj">
+      <Project>{9f6f9127-fe24-4f59-9e43-3ad252360ae1}</Project>
+      <Name>Axis.Model.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Phone\Axis.Model.Phone.csproj">
+      <Project>{b0a9f6e9-6648-484c-b213-8b15b80973d3}</Project>
+      <Name>Axis.Model.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Security\Axis.Model.Security.csproj">
+      <Project>{9bf54dd3-d68a-451a-a9ff-16d457ef4457}</Project>
+      <Name>Axis.Model.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.ServiceConfiguration\Axis.Model.ServiceConfiguration.csproj">
+      <Project>{1c893329-1834-43a0-960e-8de677fbd575}</Project>
+      <Name>Axis.Model.ServiceConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Setting\Axis.Model.Setting.csproj">
+      <Project>{798aafb3-6a50-4990-8c52-ede71c589fc8}</Project>
+      <Name>Axis.Model.Setting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.NotificationService\Axis.NotificationService.csproj">
+      <Project>{9195bcdd-d355-4696-9558-703f4f545e4b}</Project>
+      <Name>Axis.NotificationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis.Data.Repository\Axis.Data.Repository.csproj">
+      <Project>{8b6625b0-e86e-4b07-bc0a-4f90a5f804c2}</Project>
+      <Name>Axis.Data.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataProvider.Admin\Axis.DataProvider.Admin.csproj">
+      <Project>{0b67e6fb-ea44-46c0-a06e-4d93ee9ee960}</Project>
+      <Name>Axis.DataProvider.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataProvider.Common\Axis.DataProvider.Common.csproj">
+      <Project>{4bb86b3d-131e-4c06-ba39-59a9f589cc41}</Project>
+      <Name>Axis.DataProvider.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataProvider.MessageTemplate\Axis.DataProvider.MessageTemplate.csproj">
+      <Project>{e390c387-85a7-498f-a4ee-9bd9b03c4bc3}</Project>
+      <Name>Axis.DataProvider.MessageTemplate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataProvider.SynchronizationService\Axis.DataProvider.SynchronizationService.csproj">
+      <Project>{D970C38D-D0BC-4C69-9CD9-1092C50A5346}</Project>
+      <Name>Axis.DataProvider.SynchronizationService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

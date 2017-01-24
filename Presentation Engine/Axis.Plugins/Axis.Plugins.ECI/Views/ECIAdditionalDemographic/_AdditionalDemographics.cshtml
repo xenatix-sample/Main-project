@@ -1,0 +1,227 @@
+﻿<!-- ethnicity + language -->
+<div class="row section-block margin-bottom-small">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3 padding-bottom-small" ng-if="false">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.additionalDemographicForm.referralDispositionStatus.$invalid && !ctrl.additionalDemographicForm.referralDispositionStatus.$pristine }">
+                    <label for="referralDispositionStatus">Disposition Status <sup>*</sup></label>
+                    <select name="referralDispositionStatus" class="form-control" id="referralDispositionStatus" ng-model="additionalDemographic.ReferralDispositionStatusID" auto-focus event-focus="autoFocus"
+                            ng-trim="true" ng-pattern="/^[a-zA-Z0-9]*$/"
+                            ng-options="dispositionStatus.ID as dispositionStatus.Name for dispositionStatus in getLookupsByType('ReferralDispositionStatus')">
+                        <option value="" ng-selected="selected">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg">
+                    <label for="reportingUnit">Reporting Unit</label>
+                    <select ng-model="additionalDemographic.ReportingUnitID" id="ClientType" name="reportingUnitID" class="form-control ellipsis"
+                            ng-options="clientType.ID as clientType.Name for clientType in getLookupsByType('ClientType')| securityFilter: 'Division' : 'OrganizationDetailID' : '{{permissionKey}}'">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn select-btn-align"><i class="xen-select"></i></span>
+
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : additionalDemographic.serviceCoordinatorID.$invalid && !additionalDemographic.serviceCoordinatorID.$pristine }">
+                <label for="teamMember">Service Coordinator</label>
+                <xen-providers provider-model="additionalDemographic.ServiceCoordinatorID"
+                               primary-key="additionalDemographic.AdditionalDemographicID"
+                               element-class="ellipsis prevent-disable"
+                               data-validation-name="Service Coordinator"
+                               element-name="serviceCoordinatorID"
+                               element-id="serviceCoordinatorID"
+                               on-select="selectCoordinator(item);"
+                               filter-criteria="{{providerKey}}"
+                               element-type="typeahead">
+                </xen-providers>
+                <p ng-show="noServiceCoordinatorResults" ng-cloak class="error-block">No Results Found!</p>
+            </div>
+            <div class="col-md-4 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="serviceCoordinatorPhone">Service Coordinator's Phone</label>
+                    <input type="text" style="margin-top:4px;" ng-disabled="true" ui-mask="999-999-9999" data-ng-model="selectedCoordinatorPhone" class="form-control" name="serviceCoordinatorPhone" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-cloak ng-class="{ 'has-error' : ctrl.additionalDemographicForm.schoolDistrict.$invalid && !ctrl.additionalDemographicForm.schoolDistrict.$pristine }">
+                    <label for="FirstName">School District </label>
+                    <div class="input-group">
+
+                        <input type="text" ng-model="selectedSchoolDistrict" name="schoolDistrictID"
+                               class="form-control ellipsis"
+                               typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                               typeahead-trigger
+                               typeahead="school as school.Name for school in getLookupsByType('SchoolDistrict')
+                               | filter:$viewValue:comparatorOnEmptyOrMatch | orderBy:orderByPriority"
+                               typeahead-editable="false"
+                               typeahead-no-results="noResults" data-validation-name="School District" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" ng-click="triggerTypeahead('schoolDistrictID');">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-class="{ 'has-error' : ctrl.additionalDemographicForm.preferredLanguage.$invalid && !ctrl.additionalDemographicForm.preferredLanguage.$pristine}">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="primaryLanguage">Preferred Language <sup>*</sup></label>
+                    <select class="form-control" ng-model="additionalDemographic.LanguageID" id="primaryLanguage" ng-required="true"
+                            ng-options="primaryLanguage.ID as primaryLanguage.Name for primaryLanguage in getLookupsByType('Language')" name="preferredLanguage" data-validation-name="Preferred Language">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.LanguageID ==  otherOptions.LanguagesID">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="otherPreferredLanguage">Other Preferred Language</label>
+                    <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherPreferredLanguage" class="form-control" id="otherPreferredLanguage" name="otherPreferredLanguage" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" id="raceErrorBlock">
+                    <label for="race">Race <sup>*</sup></label>
+                    <div class="input-group">
+                        <input type="text" ng-model="raceDetail" id="race" name="race" class="form-control ellipsis" typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                               typeahead-on-select="selectRaceDetail($item); asyncSelected = '';" typeahead-editable="false" typeahead-no-results="noRaceDetailResults"
+                               typeahead="RaceDetail as RaceDetail.Name for RaceDetail in raceLookUpData | filter:$viewValue:comparatorOnEmptyOrMatch" typeahead-trigger />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" ng-click="triggerTypeahead('race');ctrl.additionalDemographicForm.raceDetail.$invalid=false;ctrl.additionalDemographicForm.raceDetail.$valid=true">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <p ng-show="noRaceDetailResults" ng-cloak class="error-block">No Results Found!</p>
+                </div>
+                <div class="row pod-group pod-group-sm">
+                    <div class="pod" ng-repeat="RaceDetail in selectedRaceDetails | filter: { IsActive : true }" ng-show="{{RaceDetail.RaceID > 0}}">
+                        <div>
+                            <p><strong>{{RaceDetail.Race}}</strong></p>
+                        </div>
+                        <a class="text-info close" href="javascript:void(0)" ng-click="removeRaceDetail(RaceDetail)" title="Remove Race" space-key-press><span class="sr-only"></span>x</a>
+                    </div>
+                    <div ng-hide="true">
+                        <input type="text" class="form-control" ng-model="selectedRaceName" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.additionalDemographicForm.ethnicity.$invalid && !ctrl.additionalDemographicForm.ethnicity.$pristine}">
+                    <label for="ethnicity">Ethnicity <sup>*</sup></label>
+                    <select name="ethnicity" class="form-control" id="ethnicity" ng-model="additionalDemographic.EthnicityID"
+                            ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/"
+                            ng-options="ethnicity.ID as ethnicity.Name for ethnicity in getLookupsByType('Ethnicity')" data-validation-name="Ethnicity">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.EthnicityID == otherOptions.EthnicityID">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="otherEthnicity">Enter Other Ethnicity</label>
+                    <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherEthnicity" class="form-control" id="otherEthnicity" name="otherEthnicity" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row padding-bottom-xsmall">
+    <div class="col-md-3 padding-bottom-small nopadding-right col-inline">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.additionalDemographicForm.isCPSInvolved.$invalid && !ctrl.additionalDemographicForm.isCPSInvolved.$pristine }">
+            <fieldset id="IsCPSInvolvedFieldset">
+                <legend class="uppercase">Is CPS Involved? <sup>*</sup></legend>
+                <span><xen-radio-button data-ng-model="additionalDemographic.IsCPSInvolved" name="isCPSInvolved" data-radio-button-id="isCPSInvolvedYes" data-label="Yes" data-ng-value="true" ng-required="true" data-validation-name="Is CPS Involved?" /></span>
+                &nbsp;&nbsp;&nbsp;
+                <span><xen-radio-button data-ng-model="additionalDemographic.IsCPSInvolved" data-radio-button-id="isCPSInvolvedNo" data-label="No" data-ng-value="false" /></span>
+            </fieldset>
+        </div>
+    </div>
+    <div class="col-md-4 padding-bottom-small nopadding-right col-inline">
+        <div class="form-group-lg padding-bottom-small">
+            <fieldset id="ischildCurrentlyHospitalizedFieldset">
+                <legend class="uppercase">Is Child Currently Hospitalized?</legend>
+                <span><xen-radio-button data-ng-model="additionalDemographic.IsChildHospitalized" data-radio-button-id="IschildCurrentlyHospitalizedYes" data-label="Yes" data-ng-value="true" /></span>
+                &nbsp;&nbsp;&nbsp;
+                <span><xen-radio-button data-ng-model="additionalDemographic.IsChildHospitalized" data-radio-button-id="IschildCurrentlyHospitalizedNo" data-label="No" ng-click="resetDischargeDate();" data-ng-value="false" /></span>
+            </fieldset>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small nopadding-left col-inline" data-ng-cloak data-ng-if="additionalDemographic.IsChildHospitalized" >
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.additionalDemographicForm.dateOfDischarge.$invalid && !ctrl.additionalDemographicForm.dateOfDischarge.$pristine}">
+            <label for="expectedDischargeDate">Expected discharge date</label>
+            <xen-date-picker id="dateOfDischarge"
+                             name="dateOfDischarge"
+                             data-validation-name="Expected Discharge Date"
+                             ng-model="additionalDemographic.ExpectedHospitalDischargeDate"
+                             future-date-validate="true">
+
+            </xen-date-picker>
+            <p  ng-show="ctrl.additionalDemographicForm.dateOfDischarge.$invalid && !ctrl.additionalDemographicForm.dateOfDischarge.$pristine" class="error-block">Please select valid date</p>
+            <p  ng-show="ctrl.additionalDemographicForm.dateOfDischarge.$error.futureDate" ng-cloak class="error-block">Expected discharge date can't be of future date.</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small col-inline">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-checkbox data-ng-model="additionalDemographic.InterpreterRequired" data-checkbox-id="interpreterRequired" data-label="Interpreter Required" />
+        </div>
+    </div>
+</div>
+
+<div class="row padding-bottom-xsmall">
+    <div class="col-md-4 padding-bottom-small col-inline">
+        <div class="form-group-lg padding-bottom-small">
+            <fieldset id="isThisTransferFieldset">
+                <legend class="uppercase">Is This a Transfer?</legend>
+                <span><xen-radio-button data-ng-model="additionalDemographic.IsTransfer" data-radio-button-id="isThisTransferYes" data-label="Yes" data-ng-value="true" /></span>
+                &nbsp;&nbsp;&nbsp;
+                <span><xen-radio-button data-ng-model="additionalDemographic.IsTransfer" data-radio-button-id="isThisTransferNo" data-label="No" data-ng-value="false" /></span>
+            </fieldset>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small col-inline" data-ng-cloak data-ng-if="additionalDemographic.IsTransfer" ng-class="{ 'has-error' : ctrl.additionalDemographicForm.transferFrom.$invalid && !ctrl.additionalDemographicForm.transferFrom.$pristine}">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="transferredFrom">ECI Program transferred from </label>
+            <input type="text" maxlength="250" ng-trim="true" style="margin-top:4px;" data-ng-model="additionalDemographic.TransferFrom" class="form-control" name="transferFrom" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small col-inline" data-ng-cloak data-ng-if="additionalDemographic.IsTransfer" ng-class="{ 'has-error' : ctrl.additionalDemographicForm.transferDate.$invalid && !ctrl.additionalDemographicForm.transferDate.$pristine}">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="transferDate">Transferred in date</label>
+            <xen-date-picker id="transferDate" name="transferDate" data-validation-name="Transferred in date" end-date="endDate" ng-model="additionalDemographic.TransferDate" future-date-validate="true"></xen-date-picker>
+            <p ng-show="ctrl.additionalDemographicForm.transferDate.$invalid && !ctrl.additionalDemographicForm.transferDate.$pristine" class="error-block">Please select valid date.</p>
+            <p ng-show="ctrl.additionalDemographicForm.transferDate.$error.futureDate" class="error-block">Transferred in Date can't be future date</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small col-inline">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-checkbox data-ng-model="additionalDemographic.IsOutOfServiceArea" data-checkbox-id="isOutOfServiceArea" data-label="Is Out Of Service Area" />
+        </div>
+    </div>
+</div>
+<div class="row section-block">
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="serviceCoordinatorPhone">Birth weight (Lbs)</label>
+            <input type="number" style="margin-top:4px;" ng-model="additionalDemographic.BirthWeightLbs" name="birthWeightLbs" id="birthWeightLbs" min="0" max="1000" class="form-control ellipsis" />
+            <p id="birthWeightLbsError" ng-show="ctrl.additionalDemographicForm.birthWeightLbs.$invalid && !ctrl.additionalDemographicForm.birthWeightLbs.$pristine"
+               class="error-block">Invalid weight (pounds)</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="serviceCoordinatorPhone">Birth weight (Oz)</label>
+            <input type="number" style="margin-top:4px;" ng-model="additionalDemographic.BirthWeightOz" name="birthWeightOz" id="birthWeightOz" min="0" max="15000" class="form-control ellipsis" />
+            <p id="birthWeightOzError" ng-show="ctrl.additionalDemographicForm.birthWeightOz.$invalid && !ctrl.additionalDemographicForm.birthWeightOz.$pristine"
+               class="error-block">Invalid weight (ounces)</p>
+        </div>
+    </div>
+</div>

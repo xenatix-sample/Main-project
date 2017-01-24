@@ -1,0 +1,61 @@
+﻿<keypress-events on-save="safeSubmit(false,true)" on-next="safeSubmit(false,true)" on-cancel="cancel()" on-add="reset()" enter-key-stop="enterKeyStop" table-id="emailTable" stop-next="stopNext" save-on-enter="saveOnEnter"  permission-key="General-General-Email" permission="{{resolvePermission(email.ContactEmailID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">      
+
+        <form role="form" name="ctrl.emailForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" bs-modifiable="true">
+
+            {{ctrl.emailForm.modified ? setform(true):setform(false)}}
+            <div security permission-key="General-General-Email" permission="{{resolvePermission(email.ContactEmailID)}}" permission-mode="readonly" dual-permission="true">
+                <fieldset data-ng-disabled="IsDisabled">
+                    <div class="row form-group-lg section-block">
+                        @Html.Partial("../Shared/_Email")
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+        <div class="row padding-top-small">
+            <div class="col-lg-6 col-md-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" ng-click="safeSubmit(false,true)" id="btnSave" name="btnSave" security permission-key="General-General-Email" permission="{{resolvePermission(email.ContactEmailID)}}" ng-keydown="($event.keyCode || $event.which)==9  ? setFocusToGrid('emailTable',$event) : null" dual-permission="true">
+                    SAVE
+                </button>
+            </div>
+        </div>
+        <div class="add_me">
+            <plus-button title="Contact Address" permission-key="General-General-Email" permission="create" save="save()" reset="reset()" table-id="emailTable"></plus-button>
+        </div>
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+                <table id="emailTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="Email"
+                                data-sortable="true">Email</th>
+                            <th data-field="EmailPermissionID"
+                                data-sortable="true">Permission Type</th>
+                            <th data-field="EffectiveDate"
+                                data-sortable="true">Effective Date</th>
+                            <th data-field="ExpirationDate"
+                                data-sortable="true">Expiration Date</th>
+                            <th data-field="IsPrimary"
+                                data-sortable="true">Primary</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

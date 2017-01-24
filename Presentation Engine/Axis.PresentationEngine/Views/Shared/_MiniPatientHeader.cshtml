@@ -1,0 +1,42 @@
+﻿<div ng-controller="miniHeaderController">
+    <div class="row padding-bottom-xsmall padding-top-xsmall header-compact show" ng-if="profileView">
+        <!-- begin: INFO-->
+        <a class="info-trigger" ng-if="profileView.MRN" name="ViewInformation" href="{{applicationSettings.webApiBaseUrl}}/xenatix#/Contact/{{contactID}}/General" target="_blank"><i class=" fa fa-info-circle"></i><span class="sr-only">View Information</span></a>
+        <!-- end: INFO-->
+
+        <div class="col-lg-1 col-md-1 padding-top-xsmall" ng-if="!profileView.isECIClient">
+            <img ng-src="{{ (profileView.profilePicture.ThumbnailBLOB == undefined || profileView.profilePicture.ThumbnailBLOB == null) && 'Images/profile_male.svg' || 'data:image/jpeg;base64,' + profileView.profilePicture.ThumbnailBLOB }}" alt="placeholder image" />
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>NAME</dt>
+                <dd>{{profileView.FullName }}</dd>
+
+            </dl>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>DATE OF BIRTH</dt>
+                <dd>{{profileView.DOB}}</dd>
+            </dl>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>Gender</dt>
+                <dd>{{profileView.GenderName}}</dd>
+            </dl>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>MRN</dt>
+                <dd>{{profileView.MRN}}</dd>
+            </dl>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>MEDICAID ID</dt>
+                <dd>{{profileView.MedicaidId}}</dd>
+            </dl>
+        </div>
+    </div>
+</div>

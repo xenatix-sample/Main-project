@@ -1,0 +1,455 @@
+﻿@model Axis.Plugins.Scheduling.Models.ResourcesToCacheViewModel
+
+@{
+    Layout = null;
+}
+
+//<script>
+    (function() {
+        angular.module('xenatixApp').factory('resourceService', [
+            '$http', '$q','settings', 'offlineData',
+            function($http, $q, settings, offlineData) {
+                var CONFIG = {
+                    apiControllerRoot: "/data/plugins/scheduling/resources/",
+                    offlineRoomApi: "/Resources/Rooms/",
+                    offlineCredentialApi: "/Resources/CredentialByAppointmentType/",
+                    offlineProviderApi: "/Resources/ProviderByCredential/",
+                    offlineResourcesApi: "/Resources/Resources/",
+                    offlineResourceDetailsApi: "/Resources/ResourceDetails/",
+                    offlineResourceAvailabilityApi: "/Resources/ResourceAvailability/",
+                    offlineResourceOverridesApi: "/Resources/ResourceOverrides/"
+                };
+
+                var rooms = @Html.Raw(Model.Rooms);
+                var credentialByAppointmentType = @Html.Raw(Model.CredentialByAppointmentType);
+                var providerByCredential = @Html.Raw(Model.ProviderByCredential);
+                var resourcesType = @Html.Raw(Model.ResourcesType);
+                var resourceDetails = @Html.Raw(Model.ResourceDetails);
+                var resourceAvailability = @Html.Raw(Model.ResourceAvailability);
+                var resourceOverrides = @Html.Raw(Model.ResourceOverrides);
+
+                function getRooms(facilityId, forceResetCache) {
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    var q=$q.defer();
+                    response.DataItems =  rooms.filter(
+                       function(item, value) {
+                           return item.FacilityID==facilityId;
+                       });
+
+                    if(response.DataItems.length == 0 || forceResetCache)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetRooms', { data: offlineData.getOfflineSettings(CONFIG.offlineRoomApi + (facilityId || 0).toString(), 'FacilityID', { childKey: 'RoomID' }), params: { facilityId: facilityId } })
+                        .success(function (data, status, header, config) {
+                            rooms.push(data.DataItems);
+                            q.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            q.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        q.resolve(response);
+                    }
+                    return q.promise;
+                };
+
+                function getCredentialByAppointmentType(appointmentTypeID) {
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    var q=$q.defer();
+                    response.DataItems =credentialByAppointmentType.filter(function(item){
+                        return item.AppointmentTypeID==appointmentTypeID;
+                    });
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetCredentialByAppointmentType', { data: offlineData.getOfflineSettings(CONFIG.offlineCredentialApi + (appointmentTypeID || 0).toString(), 'AppointmentTypeID'), params: { appointmentTypeID: appointmentTypeID } })
+                        .success(function (data, status, header, config) {
+                            credentialByAppointmentType.push(data.DataItems);
+                            q.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            q.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        q.resolve(response);
+                    }
+
+                    angular.forEach(response.DataItems,function(item,index){
+                        getProviderByCredential(item.CredentialID).then(function (data) {
+                            item.Providers=data.DataItems;
+                        });
+                    });
+                    return q.promise;
+                };
+
+                function getProviderByCredential(credentialId) {
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    var q=$q.defer();
+                    response.DataItems= providerByCredential.filter(function(i) {
+                        return i.CredentialId == credentialId;
+                    });
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetProviderByCredential', { data: offlineData.getOfflineSettings(CONFIG.offlineProviderApi + (credentialId || 0).toString(), 'CredentialId', { childKey: 'ProviderId' }), params: { credentialId: credentialId } })
+                        .success(function (data, status, header, config) {
+                            providerByCredential.push(data.DataItems);
+                            q.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            q.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        q.resolve(response);
+                    }
+                    return q.promise;
+                };
+
+                function getResources(resourceTypeId, facilityId,forceResetCache) {
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    var q=$q.defer();
+                            response.DataItems= resourcesType.filter(function(i) {
+                            return (facilityId == undefined || i.FacilityID == facilityId) && i.ResourceTypeID == resourceTypeId;
+                        });
+                   
+
+                    if(response.DataItems.length == 0 || forceResetCache)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetResources', { data: offlineData.getOfflineSettings(CONFIG.offlineResourcesApi + (resourceTypeId || 0).toString() + (facilityId || 0).toString()), params: { resourceTypeId: resourceTypeId,facilityId: facilityId } })
+                        .success(function (data, status, header, config) {
+                            resourcesType.push(data.DataItems);
+                            q.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            q.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        q.resolve(response);
+                    }
+
+                  
+                    return q.promise;
+
+                };
+
+                function getResourceById(resourceId, resourceTypeId) {
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    var q=$q.defer();
+                    response.DataItems= resourcesType.filter(function(item) {
+                        return item.ResourceID == resourceId && item.ResourceTypeID == resourceTypeId;
+                    });
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                    }
+                    else
+                    {
+                        q.resolve(response);
+                    }
+
+                    return q.promise;
+
+                };
+
+                function getResourceDetails(resourceId, resourceTypeID) {
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    var q=$q.defer();
+                    var data={};
+                    //TODO: Satish, please revert to this and ensure it works
+                    //response.DataItems=resourceDetails.filter(function (item) {
+                    //    return item.ResourceID == resourceId && item.ResourceTypeID == resourceTypeID;
+                    //});
+                    data.ResourceID=resourceId;
+                    data.ResourceTypeID=resourceTypeID;
+                    data.ResourceAvailabilities=resourceAvailability.filter(function (item) {
+                        return item.ResourceID == resourceId && item.ResourceTypeID == resourceTypeID;
+                    });                 
+
+                    data.ResourceOverrides=resourceOverrides.filter(function (item) {
+                        return item.ResourceID == resourceId && item.ResourceTypeID == resourceTypeID;
+                    });                   
+                    response.DataItems.push(data);
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetResourceDetails', { data: offlineData.getOfflineSettings(CONFIG.offlineResourceDetailsApi + (resourceTypeID || 0).toString() + '/' + (resourceId || 0).toString()), params: { resourceId: resourceId, resourceTypeID:resourceTypeID } })
+                        .success(function (data, status, header, config) {
+                            response.DataItems.push(data.DataItems);
+                            q.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            q.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        q.resolve(response);
+                    }
+
+                    return q.promise;
+                };
+
+                function getResourceAvailability(resourceId, resourceTypeID, isRefresh) {
+                    isRefresh = typeof isRefresh !== 'undefined' ? isRefresh : false;
+                    if (isRefresh === true){
+                        var idxarr = [];
+                        angular.forEach(resourceAvailability, function(item, key) {
+                            if (item.ResourceID == resourceId && item.ResourceTypeID == resourceTypeID)
+                                idxarr.push(key);
+                        });
+                        for (var i = idxarr.length -1; i >= 0; i--)
+                            resourceAvailability.splice(idxarr[i],1);
+                    }                     
+
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    var q=$q.defer();
+                    response.DataItems=resourceAvailability.filter(function (item) {
+                        return item.ResourceID == resourceId && item.ResourceTypeID == resourceTypeID;
+                    });
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetResourceAvailability', { data: offlineData.getOfflineSettings(CONFIG.offlineResourceAvailabilityApi + (resourceTypeID || 0).toString() + '/' + (resourceId || 0).toString()), params: { resourceId: resourceId, resourceTypeID:resourceTypeID } })
+                        .success(function (data, status, header, config) {
+                            resourceAvailability.push(data.DataItems);
+                            q.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            q.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        q.resolve(response);
+                    }
+
+                    return q.promise;
+                };
+
+                function getResourceAvailabilityFromServer(resourceId, resourceTypeID){
+                    var dfd = $q.defer();
+
+                    $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetResourceAvailability', { data: offlineData.getOfflineSettings(CONFIG.offlineResourceAvailabilityApi + (resourceTypeID || 0).toString() + '/' + (resourceId || 0).toString()), params: { resourceId: resourceId, resourceTypeID:resourceTypeID } })
+                    .success(function (data, status, header, config) {
+                        dfd.resolve(data);
+                    })
+                    .error(function (data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function getResourceOverrides(resourceId, resourceTypeID) {
+                    var response={
+                        ResultCode:0,
+                        DataItems:[]
+                    };
+                    var q=$q.defer();
+                    response.DataItems=resourceOverrides.filter(function (item) {
+                        return item.ResourceID == resourceId && item.ResourceTypeID == resourceTypeID;
+                    });
+
+                    if(response.DataItems.length == 0)
+                    {
+                        // if no data found at cache then go and get latest from server.
+                        $http.get(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'GetResourceOverrides', { data: offlineData.getOfflineSettings(CONFIG.offlineResourceOverridesApi + (resourceTypeID || 0).toString() + '/' + (resourceId || 0).toString()), params: { resourceId: resourceId, resourceTypeID:resourceTypeID } })
+                        .success(function (data, status, header, config) {
+                            resourceOverrides.push(data.DataItems);
+                            q.resolve(data);
+                        })
+                        .error(function (data, status, header, config) {
+                            q.reject(status);
+                        });
+                    }
+                    else
+                    {
+                        q.resolve(response);
+                    }
+
+                    return q.promise;
+                };
+
+                function addResourceAvailability(resourceAvailability) {
+                    var dfd = $q.defer();
+                    if (!('ResourceID' in resourceAvailability))
+                        resourceAvailability.ResourceID = 0;
+                    var data = $.extend(true, {}, resourceAvailability, offlineData.getOfflineSettings(CONFIG.offlineResourceAvailabilityApi + (resourceAvailability.ResourceID || 0).toString() + '/' + (resourceAvailability.ResourceAvailabilityID || 0).toString(), 'ResourceAvailabilityID', { parentKey: 'ResourceID' }));
+            
+                    $http.post(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'addResourceAvailability', data)
+                    .success(function (data, status, header, config) {
+                        dfd.resolve(data);
+                    })
+                    .error(function (data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function addResourceOverrides(resourceOverride) {
+                    var dfd = $q.defer();
+                    if (!('ResourceID' in resourceOverride))
+                        resourceOverride.ResourceID = 0;
+                    var data = $.extend(true, {}, resourceAvailability, offlineData.getOfflineSettings(CONFIG.offlineResourceOverridesApi + (resourceOverride.ResourceID || 0).toString() + '/' + (resourceOverride.ResourceOverrideID || 0).toString(), 'ResourceOverrideID', { parentKey: 'ResourceID' }));
+            
+                    $http.post(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'AddResourceOverrides', data)
+                    .success(function (data, status, header, config) {
+                        dfd.resolve(data);
+                    })
+                    .error(function (data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function updateResourceAvailability(resourceAvailability) {
+
+                    var dfd = $q.defer();
+                    var data = $.extend(true, {}, resourceAvailability, offlineData.getOfflineSettings(CONFIG.offlineResourceAvailabilityApi + (resourceAvailability.ResourceID || 0).toString() + '/' + (resourceAvailability.ResourceAvailabilityID || 0).toString(), 'ResourceAvailabilityID', {
+                        parentKey: 'ResourceID'
+                    }));
+                    $http.post(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'UpdateResourceAvailability', data)
+                    .success(function(data, status, header, config) {
+                        dfd.resolve(data);
+                    })
+                    .error(function(data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function updateResourceOverrides(resourceOverride) {
+
+                    var dfd = $q.defer();
+                    var data = $.extend(true, {}, resourceOverride, offlineData.getOfflineSettings(CONFIG.offlineResourceOverridesApi + (resourceOverride.ResourceID || 0).toString() + '/' + (resourceOverride.ResourceOverrideID || 0).toString(), 'ResourceOverrideID', {
+                        parentKey: 'ResourceID'
+                    }));
+                    $http.post(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'updateResourceOverrides', data)
+                    .success(function(data, status, header, config) {
+                        dfd.resolve(data);
+                    })
+                    .error(function(data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function deleteResourceAvailability(resourceid, resourceavailabilityid) {
+                    var dfd = $q.defer();
+                    $http.delete(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'DeleteResourceAvailability', 
+                        { data: offlineData.getOfflineSettings(CONFIG.offlineResourceAvailabilityApi + (resourceid || 0).toString() + '/' + (resourceavailabilityid || 0).toString(), 
+                            'ResourceAvailabilityID', 
+                            { parentKey: 'ResourceID' }), params: { id: resourceavailabilityid, modifiedOn: moment.utc().format() } })
+                        .success(function(data, status, header, config) {
+                            dfd.resolve(data);
+                        })
+                        .error(function(data, status, header, config) {
+                            dfd.reject(status);
+                        });
+
+                    return dfd.promise;
+                };
+
+                function deleteResourceOverrides(resourceid, resourceoverrideid) {
+                    var dfd = $q.defer();
+                    $http.delete(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'DeleteResourceOverrides', 
+                        { data: offlineData.getOfflineSettings(CONFIG.offlineResourceOverridesApi + (resourceid || 0).toString() + '/' + (resourceoverrideid || 0).toString(), 
+                            'ResourceOverrideID', 
+                            { parentKey: 'ResourceID' }), params: { id: resourceoverrideid, modifiedOn: moment.utc().format() } })
+                        .success(function(data, status, header, config) {
+                            dfd.resolve(data);
+                        })
+                        .error(function(data, status, header, config) {
+                            dfd.reject(status);
+                        });
+
+                    return dfd.promise;
+                };
+
+                function updateRoom(room) {
+
+                    var dfd = $q.defer();
+                    var data = $.extend(true, {}, room, offlineData.getOfflineSettings(CONFIG.offlineRoomApi + (room.FacilityID || 0).toString(), 'FacilityID', { childKey: 'RoomID' }));
+                    $http.post(settings.webApiBaseUrl + CONFIG.apiControllerRoot + 'UpdateRoom', data)
+                    .success(function(data, status, header, config) {
+                        dfd.resolve(data);
+                    })
+                    .error(function(data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function clearResourceAvailabilityCache(){
+                    resourceAvailability = [];
+                };
+
+                function clearResourceOverridesCache(){
+                    resourceOverrides = [];
+                }
+
+                return {
+                    getRooms: getRooms,
+                    getCredentialByAppointmentType: getCredentialByAppointmentType,
+                    getProviderByCredential: getProviderByCredential,
+                    getResources: getResources,
+                    getResourceById: getResourceById,
+                    getResourceDetails: getResourceDetails,
+                    getResourceAvailability: getResourceAvailability,
+                    getResourceOverrides: getResourceOverrides,
+
+                    addResourceAvailability: addResourceAvailability,
+                    addResourceOverrides: addResourceOverrides,
+                    //addResourceDetails: addResourceDetails,
+                    deleteResourceAvailability: deleteResourceAvailability,
+                    deleteResourceOverrides: deleteResourceOverrides,
+                    updateResourceAvailability: updateResourceAvailability,
+                    updateResourceOverrides: updateResourceOverrides,
+                    clearResourceAvailabilityCache: clearResourceAvailabilityCache,
+                    clearResourceOverridesCache: clearResourceOverridesCache,
+                    updateRoom: updateRoom
+                };
+            }
+        ]);
+    }());
+    //</script>

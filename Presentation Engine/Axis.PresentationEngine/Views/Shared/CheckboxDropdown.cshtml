@@ -1,0 +1,45 @@
+﻿
+<div class="checkbox-dropdown">
+    <div class="input-group">
+        <input type="text" class="form-control" 
+               input-label="SelText.Value" 
+               ng-model="Search.Text" 
+               ng-click="Open()"
+               ng-keypress="SearchKeyPress($event)" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-info" 
+                ng-click="ToggleList()">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+    <div class="items-panel" ng-show="Lst.IsOpen">
+        <div class="select">
+            <button class="btn btn-primary btn-sm" ng-click="SelectAll()">Select All</button>
+            <button class="btn btn-primary btn-sm" ng-click="DeselectAll()">Deselect All</button>
+        </div>
+        <div class="list-panel" ng-show="Lst.IsOpen">
+            <ul class="list-unstyled" ng-if="!Search.Text">
+                <li ng-repeat="item in Lst.Selected" ng-click="ToggleSelected(item)">
+                    <input type="checkbox" ng-model="item.Selected" ng-change="ToggleSelected(item)" />
+                    {{::item[options.Fields.Text]}}
+                </li>
+                <li ng-if="Lst.Selected.length > 0 && Lst.Unselected.length > 0">
+                    <hr />
+                </li>
+                <li ng-repeat="item in Lst.Unselected" ng-click="ToggleSelected(item)">
+                    <input type="checkbox" ng-model="item.Selected" ng-change="ToggleSelected(item)" />
+                    {{::item[options.Fields.Text]}}
+                </li>
+            </ul>
+            <ul class="list-unstyled" ng-if="Search.Text">
+                <li ng-repeat="item in Lst.Unselected | filterBy: (Op.Fields.Text || 'x'):Search.Text" 
+                    ng-click="ToggleSelected(item)">
+                    <input type="checkbox" ng-model="item.Selected" ng-change="ToggleSelected(item)" />
+                    {{::item[options.Fields.Text]}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

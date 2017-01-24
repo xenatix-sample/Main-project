@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Address";
+    Layout = null;
+}
+
+<div ng-repeat="address in Addresses track by $index" ng-form="addressForm" apply-security>
+    <div class="col-md-12 {{ $index > 0 ? 'border-top' :''}}">
+
+        @* ADDRESS TYPE & PERMISSIONS *@
+        <div class="row padding-top-small">
+            <div class="col-md-3 padding-bottom-small" ng-show="address.HideType==undefined || address.HideType==false">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="addressType">Address Type</label>
+                    <select ng-model="address.AddressTypeID" id="addressType" class="form-control" auto-focus event-focus="addressAutoFocus" ng-disabled="isReadOnlyForm || DisableLinkedDetails"
+                            ng-options="addressType.ID as addressType.Name for addressType in getLookupsByType('AddressType') | orderBy : 'Name'">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-show="address.IsAddressPermissions">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="addressPermission">Address Permissions</label>
+                    <select ng-model="address.MailPermissionID" id="addressPermission" class="form-control" ng-disabled="isReadOnlyForm "
+                            ng-options="addressPermission.ID as addressPermission.Name for addressPermission in getLookupsByType('EmailPermission')">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+        </div>
+
+        @* ADDRESS *@
+        <div class="row">
+            <div class="col-md-6 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : addressForm.addressLine1.$invalid && !addressForm.addressLine1.$pristine }">
+                    <label for="addressLine1">Address Line 1&nbsp;<sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.ConditionalRequired) && (AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.Line1 )">&nbsp &#134</sup><sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.Required) && (AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.Line1 )">*</sup></label>
+                    <input type="text" id="addressLine1" name="addressLine1" class="form-control ellipsis" ng-required="AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.Line1" ng-model="address.Line1" ng-disabled="isReadOnlyForm || DisableLinkedDetails" maxlength="50" data-validation-name="Address Line 1" />
+                    <p id="addresslineerror" ng-show="addressLine1" ng-cloak class="error-block">Please enter address.</p>
+                </div>
+            </div>
+            <div class="col-md-6 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="addressLine2">Address Line 2</label>
+                    <input type="text" id="addressLine2" class="form-control ellipsis" maxlength="50" ng-model="address.Line2" ng-disabled="isReadOnlyForm || DisableLinkedDetails" />
+                </div>
+            </div>
+        </div>
+
+        @* STATE, COUNTY, ZIP *@
+        <div class="row">
+            <div class="col-md-3 padding-bottom-small" ng-class="{ 'has-error' : addressForm.city.$invalid && !addressForm.city.$pristine }">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="city">City&nbsp;<sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.ConditionalRequired)&&(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.City)">&nbsp &#134</sup><sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.Required)&&(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.City)">*</sup></label>
+                    <input type="text" id="city" name="city" class="form-control ellipsis" ng-required="AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.City" ng-model="address.City" ng-pattern="/^[a-zA-Z\. ]*$/" ng-disabled="isReadOnlyForm || DisableLinkedDetails" maxlength="50" data-validation-name="City" />
+                    <p ng-show="addressForm.city.$error.pattern" class="error-block">Invalid city</p>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : addressForm.state.$invalid && !addressForm.state.$pristine }">
+                    <label for="state">State&nbsp;<sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.ConditionalRequired)&&(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.State) ">&nbsp &#134</sup><sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.Required)&&(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.State)">*</sup></label>
+                    <select ng-model="address.StateProvince" id="state" name="state" class="form-control" ng-required="AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.State" ng-disabled="isReadOnlyForm || DisableLinkedDetails" data-validation-name="State"
+                            ng-options="state.ID as state.Name for state in getLookupsByType('StateProvince')">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="county">County</label>
+                    <select id="county" class="form-control" ng-model="address.County" ng-disabled="isReadOnlyForm || DisableLinkedDetails"
+                            ng-options="county.ID as county.Name for county in getLookupsByType('County') | filter: { StateProvinceID : address.StateProvince } :true">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="{{ (!address.IsComplexName && !address.IsGateCode && address.IsMultiAddress) ? 'col-md-2' : 'col-md-3' }} padding-bottom-small" ng-class="{ 'has-error' : addressForm.postalCode.$invalid && !addressForm.postalCode.$pristine }">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="postalCode">Postal Code&nbsp;<sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.ConditionalRequired)&&(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.PostalCode) ">&nbsp &#134</sup><sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.Required)&&(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.PostalCode)">*</sup></label>
+                    <input type="text" id="postalCode" name="postalCode" data-validation-name="Postal Code" ng-disabled="isReadOnlyForm || DisableLinkedDetails" class="InputB form-control ellipsis" ng-required="AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.PostalCode" ng-model="address.Zip" ng-pattern="/^(\d{5}-\d{4}|\d{5})$/" maxlength="10" postal-code />
+                    <p ng-show="addressForm.postalCode.$error.pattern" class="error-block">Invalid postal code</p>
+                </div>
+            </div>
+        </div>
+
+        @* COMPLEX *@
+        <div class="row">
+            <div class="col-md-8 padding-bottom-small" ng-show="address.IsComplexName">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="complexName">Complex Name</label>
+                    <input maxlength="50" type="text" id="complexName" ng-disabled="isReadOnlyForm || DisableLinkedDetails" name="complexName" class="InputB form-control ellipsis" ng-model="address.ComplexName" />
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-show="address.IsGateCode">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="gateCode">Gate Code</label>
+                    <input maxlength="12" type="text" id="GateCode" ng-disabled="isReadOnlyForm || DisableLinkedDetails" name="GateCode" class="InputB form-control ellipsis" ng-model="address.GateCode" />
+                </div>
+            </div>
+            @*<div ng-if="(address.IsComplexName || address.IsGateCode) && address.IsMultiAddress" class="col-md-3 actions nopadding padding-top-small padding-bottom-small">
+                <div class="form-group-lg padding-top-small nomargin-right text-right">
+                    <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="address.ShowPlusButton" ng-click="addNewAddress()" space-key-press>
+                        <i class="fa fa-plus-circle"><span class="sr-only">Add Address</span></i>
+                    </a>
+                    <a href="javascript:void(0);" class="font-size-xlarge" ng-if="(Addresses.length > 1 && !address.AddressID)" ng-click="removeAddress($index)" space-key-press>
+                        <i class="fa fa-minus-circle" on-row-removed security permission-key="{{permissionKey}}" permission="delete"><span class="sr-only">Remove Address</span></i>
+                    </a>
+                </div>
+            </div>*@
+        </div>
+
+        @* EFFECTIVE DATES *@
+        <div class="row {{ $index > 0 ?'margin-top-small' :''}}">
+            <div class="col-md-3 padding-bottom-small" ng-show="address.ShowPrimary">
+                <div class="form-group-lg padding-bottom-small">
+                    <xen-checkbox ng-model="address.IsPrimary" data-checkbox-id="addressIsPrimary{{$index}}" on-click="setPrimary(Addresses,$index)" data-label="Primary" ng-disabled="isReadOnlyForm " />
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-if="address.IsEffectiveDate">
+                <div class="form-group-lg padding-bottom-small" id="effectiveDateError" ng-class="{ 'has-error' : addressForm.effectiveDate.$invalid && !addressForm.effectiveDate.$pristine }">
+                    <label for="effectiveDate">Effective Date<sup data-ng-if="(AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.Required) && (AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.EffectiveDate )">&nbsp*</sup></label>
+                    <xen-date-picker id="addresseffectiveDate{{$index}}" name="effectiveDate" date-required="AddressAccessCode | bitwiseAnd: ADDRESS_ACCESS.EffectiveDate" data-validation-name="Effective Date" data-compare-element-name="expirationDate" ng-model="address.EffectiveDate" end-date="address.ExpirationDate" greater-than-date-validation="true"></xen-date-picker>
+                    <p id="isEffectiveDateValidError" ng-cloak ng-show="addressForm.effectiveDate.$error.date" class="error-block">Date is invalid</p>
+                    <p ng-show="addressForm.effectiveDate.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-if="address.IsExpirationDate">
+                <div id="expirationDateError" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : addressForm.expirationDate.$invalid && !addressForm.expirationDate.$pristine }">
+                    <label for="expirationDate">Expiration Date</label>
+                    <xen-date-picker opened="openedAddress" id="addressexpirationDate{{$index}}" name="expirationDate" data-validation-name="Expiration Date" data-compare-element-name="effectiveDate" ng-model="address.ExpirationDate" start-date="address.EffectiveDate" less-than-date-validation="true"></xen-date-picker>
+                    <p id="isValidError" ng-cloak ng-show="addressForm.expirationDate.$error.date" class="error-block">Date is invalid</p>
+                    <p ng-show="addressForm.expirationDate.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                </div>
+            </div>
+            <div class="col-md-3 actions nopadding padding-top-small padding-bottom-small" ng-if="!address.IsComplexName && !address.IsGateCode && address.IsMultiAddress">
+                <div class="form-group-lg padding-top-small nomargin-right text-right">
+                    <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="address.ShowPlusButton" ng-click="addNewAddress()" space-key-press>
+                        <i class="fa fa-plus-circle"><span class="sr-only">Add Address</span></i>
+                    </a>
+                    <a href="javascript:void(0);" class="font-size-xlarge" ng-if="(Addresses.length>1 && !address.AddressID)" ng-click="removeAddress($index)" space-key-press>
+                        <i class="fa fa-minus-circle" on-row-removed security permission-key="{{permissionKey}}" permission="delete"><span class="sr-only">Remove Address</span></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

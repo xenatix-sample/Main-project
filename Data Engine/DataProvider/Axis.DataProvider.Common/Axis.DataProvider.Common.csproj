@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4BB86B3D-131E-4C06-BA39-59A9F589CC41}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.DataProvider.Common</RootNamespace>
+    <AssemblyName>Axis.DataProvider.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Local\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDev|AnyCPU'">
+    <OutputPath>bin\ReleaseDev\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseTest|AnyCPU'">
+    <OutputPath>bin\ReleaseTest\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp001|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp001\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp002|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp002\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp001|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp001\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp002|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp002\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenDevApp002Holding|AnyCPU'">
+    <OutputPath>bin\ReleaseXenDevApp002Holding\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseXenTstApp003|AnyCPU'">
+    <OutputPath>bin\ReleaseXenTstApp003\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Lookups\ServiceWorkflowType\IServiceWorkfowTypeDataProvider.cs" />
+    <Compile Include="Lookups\ServiceWorkflowType\ServiceWorkflowTypeDataProvider.cs" />
+    <Compile Include="Lookups\ServiceConfigType\ServiceConfigTypeDataProvider.cs" />
+    <Compile Include="Lookups\ServiceConfigType\IServiceConfigTypeDataProvider.cs" />
+    <Compile Include="Lookups\AdmissionReason\AdmissionReasonDataProvider.cs" />
+    <Compile Include="Lookups\AdmissionReason\IAdmissionReasonDataProvider.cs" />
+    <Compile Include="Lookups\PayorType\PayorTypeDataProvider.cs" />
+    <Compile Include="Lookups\PayorType\IPayorTypeDataProvider.cs" />
+    <Compile Include="Lookups\ServiceDuration\IServiceDurationDataProvider.cs" />
+    <Compile Include="Lookups\ServiceDuration\ServiceDurationDataProvider.cs" />
+    <Compile Include="Providers\ProvidersDataProvider.cs" />
+    <Compile Include="Providers\IProvidersDataProvider.cs" />
+    <Compile Include="Address\AddressDataProvider.cs" />
+    <Compile Include="Address\IAddressDataProvider.cs" />
+    <Compile Include="ClientAudit\ClientAuditDataProvider.cs" />
+    <Compile Include="ClientAudit\IClientAuditDataProvider.cs" />
+    <Compile Include="Email\EmailDataProvider.cs" />
+    <Compile Include="Email\IEmailDataProvider.cs" />
+    <Compile Include="Lookups\Allergy\AllergyLookupDataProvider.cs" />
+    <Compile Include="Lookups\Allergy\IAllergyLookupDataProvider.cs" />
+    <Compile Include="Lookups\Assesssment\AssessmentDataProvider.cs" />
+    <Compile Include="Lookups\Assesssment\IAssessmentDataProvider.cs" />
+    <Compile Include="Lookups\AttendanceStatus\AttendanceStatusDataProvider.cs" />
+    <Compile Include="Lookups\AttendanceStatus\IAttendanceStatusDataProvider.cs" />
+    <Compile Include="Lookups\BehavioralCategory\BehavioralCategoryDataProvider.cs" />
+    <Compile Include="Lookups\BehavioralCategory\IBehavioralCategoryDataProvider.cs" />
+    <Compile Include="Lookups\BPMethod\BPMethodDataProvider.cs" />
+    <Compile Include="Lookups\BPMethod\IBPMethodDataProvider.cs" />
+    <Compile Include="Lookups\CallStatus\CallStatusDataProvider.cs" />
+    <Compile Include="Lookups\CallStatus\ICallStatusDataProvider.cs" />
+    <Compile Include="Lookups\CallType\CallTypeDataProvider.cs" />
+    <Compile Include="Lookups\CallType\ICallTypeDataProvider.cs" />
+    <Compile Include="Lookups\CauseOfDeath\CauseOfDeathDataProvider.cs" />
+    <Compile Include="Lookups\CauseOfDeath\ICauseOfDeathDataProvider.cs" />
+    <Compile Include="Lookups\CCPriority\CCPriorityDataProvider.cs" />
+    <Compile Include="Lookups\CCPriority\ICCPriorityDataProvider.cs" />
+    <Compile Include="Lookups\ClientIdentifierType\ClientIdentifierTypeDataProvider.cs" />
+    <Compile Include="Lookups\ClientIdentifierType\IClientIdentifierTypeDataProvider.cs" />
+    <Compile Include="Lookups\ClientStatus\ClientStatusDataProvider.cs" />
+    <Compile Include="Lookups\ClientStatus\IClientStatusDataProvider.cs" />
+    <Compile Include="Lookups\CollateralType\CollateralTypeDataProvider.cs" />
+    <Compile Include="Lookups\CollateralType\ICollateralTypeDataProvider.cs" />
+    <Compile Include="Lookups\ConfirmationStatement\ConfirmationStatementDataProvider.cs" />
+    <Compile Include="Lookups\ConfirmationStatement\IConfirmationStatementDataProvider.cs" />
+    <Compile Include="Lookups\ContactTypeCallCenter\ContactTypeCallCenterDataProvider.cs" />
+    <Compile Include="Lookups\ContactTypeCallCenter\IContactTypeCallCenterDataProvider.cs" />
+    <Compile Include="Lookups\ConversionStatus\ConversionStatusDataProvider.cs" />
+    <Compile Include="Lookups\ConversionStatus\IConversionStatusDataProvider.cs" />
+    <Compile Include="Lookups\Credential\CredentialDataProvider.cs" />
+    <Compile Include="Lookups\Credential\ICredentialDataProvider.cs" />
+    <Compile Include="Lookups\DayOfWeek\DayOfWeekDataProvider.cs" />
+    <Compile Include="Lookups\DayOfWeek\IDayOfWeekDataProvider.cs" />
+    <Compile Include="Lookups\DeliveryMethod\DeliveryMethodDataProvider.cs" />
+    <Compile Include="Lookups\DeliveryMethod\IDeliveryMethodDataProvider.cs" />
+    <Compile Include="Lookups\DocumentTypeGroup\DocumentTypeGroupDataProvider.cs" />
+    <Compile Include="Lookups\DocumentTypeGroup\IDocumentTypeGroupDataProvider.cs" />
+    <Compile Include="Lookups\LetterOutcome\ILetterOutcomeDataProvider.cs" />
+    <Compile Include="Lookups\LetterOutcome\LetterOutcomeDataProvider.cs" />
+    <Compile Include="Lookups\Organizations\OrganizationsDataProvider.cs" />
+    <Compile Include="Lookups\Organizations\IOrganizationsDataProvider.cs" />
+    <Compile Include="Lookups\DischargeReason\DischargeReasonDataProvider.cs" />
+    <Compile Include="Lookups\DischargeReason\IDischargeReasonDataProvider.cs" />
+    <Compile Include="Lookups\CancelReason\CancelReasonDataProvider.cs" />
+    <Compile Include="Lookups\CancelReason\ICancelReasonDataProvider.cs" />
+    <Compile Include="Lookups\DocumentType\DocumentTypeDataProvider.cs" />
+    <Compile Include="Lookups\DocumentType\IDocumentTypeDataProvider.cs" />
+    <Compile Include="Lookups\Drug\DrugLookupDataProvider.cs" />
+    <Compile Include="Lookups\Drug\IDrugLookupDataProvider.cs" />
+    <Compile Include="Lookups\Duration\DurationDataProvider.cs" />
+    <Compile Include="Lookups\Duration\IDurationDataProvider.cs" />
+    <Compile Include="Lookups\EligibilityCategory\EligibilityCategoryDataProvider.cs" />
+    <Compile Include="Lookups\EligibilityCategory\IEligibilityCategoryDataProvider.cs" />
+    <Compile Include="Lookups\EligibilityType\EligibilityTypeDataProvider.cs" />
+    <Compile Include="Lookups\EligibilityType\IEligibilityTypeDataProvider.cs" />
+    <Compile Include="Lookups\EmailPermission\EmailPermissionDataProvider.cs" />
+    <Compile Include="Lookups\EmailPermission\IEmailPermissionDataProvider.cs" />
+    <Compile Include="Lookups\EntityType\EntityTypeDataProvider.cs" />
+    <Compile Include="Lookups\EntityType\IEntityTypeDataProvider.cs" />
+    <Compile Include="Lookups\Facility\FacilityDataProvider.cs" />
+    <Compile Include="Lookups\Facility\IFacilityDataProvider.cs" />
+    <Compile Include="Lookups\FamilyRelationship\FamilyRelationshipDataProvider.cs" />
+    <Compile Include="Lookups\FamilyRelationship\IFamilyRelationshipDataProvider.cs" />
+    <Compile Include="Lookups\GroupService\GroupServiceDataProvider.cs" />
+    <Compile Include="Lookups\GroupService\IGroupServiceDataProvider.cs" />
+    <Compile Include="Lookups\GroupType\GroupTypeDataProvider.cs" />
+    <Compile Include="Lookups\GroupType\IGroupTypeDataProvider.cs" />
+    <Compile Include="Lookups\IFSPType\IFSPTypeDataProvider.cs" />
+    <Compile Include="Lookups\IFSPType\IIFSPTypeDataProvider.cs" />
+    <Compile Include="Lookups\ImmunizationStatus\IImmunizationStatusDataProvider.cs" />
+    <Compile Include="Lookups\ImmunizationStatus\ImmunizationStatusDataProvider.cs" />
+    <Compile Include="Lookups\DirectiveType\IAdvancedDirectiveTypeDataProvider.cs" />
+    <Compile Include="Lookups\DirectiveType\AdvancedDirectiveTypeDataProvider.cs" />
+    <Compile Include="Lookups\LivingStatus\ILivingStatusDataProvider.cs" />
+    <Compile Include="Lookups\LivingStatus\LivingStatusDataProvider.cs" />
+    <Compile Include="Lookups\LookupDataProvider.cs" />
+    <Compile Include="Lookups\ExpirationReason\ExpirationReasonDataProvider.cs" />
+    <Compile Include="Lookups\ExpirationReason\IExpirationReasonDataProvider.cs" />
+    <Compile Include="Lookups\Frequency\FinanceFrequencyDataProvider.cs" />
+    <Compile Include="Lookups\Frequency\IFinanceFrequencyDataProvider.cs" />
+    <Compile Include="Lookups\Category\CategoryDataProvider.cs" />
+    <Compile Include="Lookups\Category\ICategoryDataProvider.cs" />
+    <Compile Include="Lookups\County\CountyDataProvider.cs" />
+    <Compile Include="Lookups\County\ICountyDataProvider.cs" />
+    <Compile Include="Lookups\ILookupDataProvider.cs" />
+    <Compile Include="Lookups\MailPermissionType\IMailPermissionTypeDataProvider.cs" />
+    <Compile Include="Lookups\MailPermissionType\MailPermissionTypeDataProvider.cs" />
+    <Compile Include="Lookups\MedicalCondition\IMedicalConditionLookupDataProvider.cs" />
+    <Compile Include="Lookups\MedicalCondition\MedicalConditionLookupDataProvider.cs" />
+    <Compile Include="Lookups\Month\IMonthDataProvider.cs" />
+    <Compile Include="Lookups\Month\MonthDataProvider.cs" />
+    <Compile Include="Lookups\NoteStatus\INoteStatusDataProvider.cs" />
+    <Compile Include="Lookups\NoteStatus\NoteStatusDataProvider.cs" />
+    <Compile Include="Lookups\NoteType\INoteTypeDataProvider.cs" />
+    <Compile Include="Lookups\NoteType\NoteTypeDataProvider.cs" />
+    <Compile Include="Lookups\PayorExpirationReason\IPayorExpirationReasonDataProvider.cs" />
+    <Compile Include="Lookups\PayorExpirationReason\PayorExpirationReasonDataProvider.cs" />
+    <Compile Include="Lookups\PresentingProblemType\IPresentingProblemTypeDataProvider.cs" />
+    <Compile Include="Lookups\PresentingProblemType\PresentingProblemTypeDataProvider.cs" />
+    <Compile Include="Lookups\ProgramClientIdentifier\IProgramClientIdentifierDataProvider.cs" />
+    <Compile Include="Lookups\ProgramClientIdentifier\ProgramClientIdentifierDataProvider.cs" />
+    <Compile Include="Lookups\ProgramUnit\IProgramUnitDataProvider.cs" />
+    <Compile Include="Lookups\ProgramUnit\ProgramUnitDataProvider.cs" />
+    <Compile Include="Lookups\Program\IProgramDataProvider.cs" />
+    <Compile Include="Lookups\Program\ProgramDataProvider.cs" />
+    <Compile Include="Lookups\ReasonForDelay\IReasonForDelayDataProvider.cs" />
+    <Compile Include="Lookups\ReasonForDelay\ReasonForDelayDataProvider.cs" />
+    <Compile Include="Lookups\RecipientCode\IRecipientCodeDataProvider.cs" />
+    <Compile Include="Lookups\RecipientCode\RecipientCodeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralAgency\IReferralAgencyDataProvider.cs" />
+    <Compile Include="Lookups\ReferralAgency\ReferralAgencyDataProvider.cs" />
+    <Compile Include="Lookups\ReferralCategorySource\IReferralCategorySourceDataProvider.cs" />
+    <Compile Include="Lookups\ReferralCategorySource\ReferralCategorySourceDataProvider.cs" />
+    <Compile Include="Lookups\ReferralOrganization\IReferralOrganizationDataProvider.cs" />
+    <Compile Include="Lookups\ReferralOrganization\ReferralOrganizationDataProvider.cs" />
+    <Compile Include="Lookups\ReferralCategory\IReferralCategoryDataProvider.cs" />
+    <Compile Include="Lookups\ReferralCategory\ReferralCategoryDataProvider.cs" />
+    <Compile Include="Lookups\ReferralConcernType\IReferralConcernTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralConcernType\ReferralConcernTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralDispositionOutcomeType\IReferralDispositionOutcomeTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralDispositionOutcomeType\ReferralDispositionOutcomeTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralDispositionStatus\IReferralDispositionStatusTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralDispositionStatus\ReferralDispositionStatusTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralDispositionType\ReferralDispositionTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralOrigin\IReferralOriginDataProvider.cs" />
+    <Compile Include="Lookups\ReferralOrigin\ReferralOriginDataProvider.cs" />
+    <Compile Include="Lookups\ReferralPriority\IReferralPriorityDataProvider.cs" />
+    <Compile Include="Lookups\ReferralPriority\ReferralPriorityDataProvider.cs" />
+    <Compile Include="Lookups\ReferralResourceType\IReferralResourceTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralResourceType\ReferralResourceTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralDispositionType\IReferralDispositionTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralType\IReferralTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReferralType\ReferralTypeDataProvider.cs" />
+    <Compile Include="Lookups\Reports\IReportDataProvider.cs" />
+    <Compile Include="Lookups\Reports\ReportDataProvider.cs" />
+    <Compile Include="Lookups\ResourceType\IResourceTypeDataProvider.cs" />
+    <Compile Include="Lookups\ResourceType\ResourceTypeDataProvider.cs" />
+    <Compile Include="Lookups\ScheduleType\ScheduleTypeDataProvider.cs" />
+    <Compile Include="Lookups\ScheduleType\IScheduleTypeDataProvider.cs" />
+    <Compile Include="Lookups\ScreeningName\IScreeningNameDataProvider.cs" />
+    <Compile Include="Lookups\ScreeningName\ScreeningNameDataProvider.cs" />
+    <Compile Include="Lookups\ScreeningType\IScreeningTypeDataProvider.cs" />
+    <Compile Include="Lookups\ScreeningType\ScreeningTypeDataProvider.cs" />
+    <Compile Include="Lookups\ScreeningResult\IScreeningResultDataProvider.cs" />
+    <Compile Include="Lookups\ScreeningResult\ScreeningResultDataProvider.cs" />
+    <Compile Include="Lookups\ServiceCoordinator\IServiceCoordinatorDataProvider.cs" />
+    <Compile Include="Lookups\ServiceCoordinator\ServiceCoordinatorDataProvider.cs" />
+    <Compile Include="Lookups\Payor\IPayorDataProvider.cs" />
+    <Compile Include="Lookups\Payor\PayorDataProvider.cs" />
+    <Compile Include="Lookups\PhoneType\IPhoneTypeDataProvider.cs" />
+    <Compile Include="Lookups\PhoneType\PhoneTypeDataProvider.cs" />
+    <Compile Include="Lookups\PolicyHolder\IPolicyHolderDataProvider.cs" />
+    <Compile Include="Lookups\PolicyHolder\PolicyHolderDataProvider.cs" />
+    <Compile Include="Lookups\PrefixType\IPrefixTypeDataProvider.cs" />
+    <Compile Include="Lookups\PrefixType\PrefixTypeDataProvider.cs" />
+    <Compile Include="Lookups\ReceiveCorrespondence\IReceiveCorrespondenceDataProvider.cs" />
+    <Compile Include="Lookups\ReceiveCorrespondence\ReceiveCorrespondenceDataProvider.cs" />
+    <Compile Include="Lookups\RegistrationType\IRegistrationTypeDataProvider.cs" />
+    <Compile Include="Lookups\RegistrationType\RegistrationTypeDataProvider.cs" />
+    <Compile Include="Lookups\RelationshipType\IRelationshipTypeDataProvider.cs" />
+    <Compile Include="Lookups\RelationshipType\RelationshipTypeDataProvider.cs" />
+    <Compile Include="Lookups\SchoolDistrict\ISchoolDistrictDataProvider.cs" />
+    <Compile Include="Lookups\SchoolDistrict\SchoolDistrictDataProvider.cs" />
+    <Compile Include="Lookups\SecurityQuestion\ISecurityQuestionDataProvider.cs" />
+    <Compile Include="Lookups\SecurityQuestion\SecurityQuestionDataProvider.cs" />
+    <Compile Include="Lookups\ServiceItem\IServiceItemDataProvider.cs" />
+    <Compile Include="Lookups\ServiceItem\ServiceItemDataProvider.cs" />
+    <Compile Include="Lookups\ServiceLocation\IServiceLocationDataProvider.cs" />
+    <Compile Include="Lookups\ServiceLocation\ServiceLocationDataProvider.cs" />
+    <Compile Include="Lookups\ServiceRecordingSource\IServiceRecordingSourceDataProvider.cs" />
+    <Compile Include="Lookups\ServiceRecordingSource\ServiceRecordingSourceDataProvider.cs" />
+    <Compile Include="Lookups\ServiceStatus\IServiceStatusDataProvider.cs" />
+    <Compile Include="Lookups\ServiceStatus\ServiceStatusDataProvider.cs" />
+    <Compile Include="Lookups\Services\IServicesDataProvider.cs" />
+    <Compile Include="Lookups\Services\ServicesDataProvider.cs" />
+    <Compile Include="Lookups\Signature Status\ISignatureStatusDataProvider.cs" />
+    <Compile Include="Lookups\Signature Status\SignatureStatusDataProvider.cs" />
+    <Compile Include="Lookups\TrackingField\ITrackingFieldDataProvider.cs" />
+    <Compile Include="Lookups\TrackingField\TrackingFieldDataProvider.cs" />
+    <Compile Include="Lookups\UserIdentifierType\UserIdentifierTypeDataProvider.cs" />
+    <Compile Include="Lookups\UserIdentifierType\IUserIdentifierTypeDataProvider.cs" />
+    <Compile Include="Lookups\VoidRecordedService\IVoidRecordedServiceReasonDataProvider.cs" />
+    <Compile Include="Lookups\VoidRecordedService\VoidRecordedServiceReasonDataProvider.cs" />
+    <Compile Include="Lookups\ServiceType\IServiceTypeDataProvider.cs" />
+    <Compile Include="Lookups\ServiceType\ServiceTypeDataProvider.cs" />
+    <Compile Include="Lookups\Service\IServiceDataProvider.cs" />
+    <Compile Include="Lookups\Service\ServiceDataProvider.cs" />
+    <Compile Include="Lookups\StateProvince\IStateProvinceDataProvider.cs" />
+    <Compile Include="Lookups\StateProvince\StateProvinceDataProvider.cs" />
+    <Compile Include="Lookups\Language\LanguageDataProvider.cs" />
+    <Compile Include="Lookups\SuicidalHomicidal\ISuicidalHomicidalDataProvider.cs" />
+    <Compile Include="Lookups\SuicidalHomicidal\SuicidalHomicidalDataProvider.cs" />
+    <Compile Include="Lookups\UserFacility\IUserFacilityDataProvider.cs" />
+    <Compile Include="Lookups\UserFacility\UserFacilityDataProvider.cs" />
+    <Compile Include="Lookups\Users\IUsersDataProvider.cs" />
+    <Compile Include="Lookups\Users\UsersDataProvider.cs" />
+    <Compile Include="Lookups\ReferralStatus\IReferralStatusDataProvider.cs" />
+    <Compile Include="Lookups\ReferralStatus\ReferralStatusDataProvider.cs" />
+    <Compile Include="Lookups\VeteranStatus\VeteranStatusDataProvider.cs" />
+    <Compile Include="Lookups\Citizenship\CitizenshipDataProvider.cs" />
+    <Compile Include="Lookups\ClientType\ClientTypeDataProvider.cs" />
+    <Compile Include="Lookups\ContactMethod\ContactMethodDataProvider.cs" />
+    <Compile Include="Lookups\ContactType\ContactTypeDataProvider.cs" />
+    <Compile Include="Lookups\DOBStatus\DOBStatusDataProvider.cs" />
+    <Compile Include="Lookups\EducationStatus\EducationStatusDataProvider.cs" />
+    <Compile Include="Lookups\EmploymentStatus\EmploymentStatusDataProvider.cs" />
+    <Compile Include="Lookups\Ethnicity\EthnicityDataProvider.cs" />
+    <Compile Include="Lookups\Gender\GenderDataProvider.cs" />
+    <Compile Include="Lookups\Language\ILanguageDataProvider.cs" />
+    <Compile Include="Lookups\VeteranStatus\IVeteranStatusDataProvider.cs" />
+    <Compile Include="Lookups\LegalStatus\LegalStatusDataProvider.cs" />
+    <Compile Include="Lookups\LivingArrangement\LivingArrangementDataProvider.cs" />
+    <Compile Include="Lookups\MaritalStatus\MaritalStatusDataProvider.cs" />
+    <Compile Include="Lookups\PhonePermission\PhonePermissionDataProvider.cs" />
+    <Compile Include="Lookups\Race\RaceDataProvider.cs" />
+    <Compile Include="Lookups\ReferralSource\ReferralSourceDataProvider.cs" />
+    <Compile Include="Lookups\Religion\ReligionDataProvider.cs" />
+    <Compile Include="Lookups\SmokingStatus\SmokingStatusDataProvider.cs" />
+    <Compile Include="Lookups\SSNStatus\SSNStatusDataProvider.cs" />
+    <Compile Include="Lookups\Suffix\SuffixDataProvider.cs" />
+    <Compile Include="Lookups\AddressTypes\AddressTypeDataProvider.cs" />
+    <Compile Include="Lookups\Citizenship\ICitizenshipDataProvider.cs" />
+    <Compile Include="Lookups\ClientType\IClientTypeDataProvider.cs" />
+    <Compile Include="Lookups\ContactMethod\IContactMethodDataProvider.cs" />
+    <Compile Include="Lookups\ContactType\IContactTypeDataProvider.cs" />
+    <Compile Include="Lookups\DOBStatus\IDOBStatusDataProvider.cs" />
+    <Compile Include="Lookups\EducationStatus\IEducationStatusDataProvider.cs" />
+    <Compile Include="Lookups\EmploymentStatus\IEmploymentStatusDataProvider.cs" />
+    <Compile Include="Lookups\Ethnicity\IEthnicityDataProvider.cs" />
+    <Compile Include="Lookups\Gender\IGenderDataProvider.cs" />
+    <Compile Include="Lookups\LegalStatus\ILegalStatusDataProvider.cs" />
+    <Compile Include="Lookups\LivingArrangement\ILivingArrangementDataProvider.cs" />
+    <Compile Include="Lookups\MaritalStatus\IMaritalStatusDataProvider.cs" />
+    <Compile Include="Lookups\PhonePermission\IPhonePermissionDataProvider.cs" />
+    <Compile Include="Lookups\Race\IRaceDataProvider.cs" />
+    <Compile Include="Lookups\ReferralSource\IReferralSourceDataProvider.cs" />
+    <Compile Include="Lookups\Religion\IReligionDataProvider.cs" />
+    <Compile Include="Lookups\SmokingStatus\ISmokingStatusDataProvider.cs" />
+    <Compile Include="Lookups\SSNStatus\ISSNStatusDataProvider.cs" />
+    <Compile Include="Lookups\Suffix\ISuffixDataProvider.cs" />
+    <Compile Include="Lookups\AddressTypes\IAddressTypeDataProvider.cs" />
+    <Compile Include="Lookups\WeekOfMonth\IWeekOfMonthDataProvider.cs" />
+    <Compile Include="Lookups\WeekOfMonth\WeekOfMonthDataProvider.cs" />
+    <Compile Include="Phone\IPhoneDataProvider.cs" />
+    <Compile Include="Phone\PhoneDataProvider.cs" />
+    <Compile Include="Photo\IPhotoDataProvider.cs" />
+    <Compile Include="Photo\PhotoDataProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\..\Axis Libraries\Axis.Constant\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="SecurityQuestion\IUserSecurityQuestionDataProvider.cs" />
+    <Compile Include="SecurityQuestion\UserSecurityQuestionDataProvider.cs" />
+    <Compile Include="ServiceRecording\IServiceRecordingDataProvider.cs" />
+    <Compile Include="ServiceRecording\ServiceRecordingDataProvider.cs" />
+    <Compile Include="WorkflowHeaders\WorkflowHeaders.cs" />
+    <Compile Include="WorkflowHeaders\IWorkFlowHeaderDataProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Helpers\Axis.Helpers.csproj">
+      <Project>{e04d495e-89a3-4d47-90c3-ffc97ba556c4}</Project>
+      <Name>Axis.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Account\Axis.Model.Account.csproj">
+      <Project>{539E2B21-5970-4CEC-B479-7B560A2D407B}</Project>
+      <Name>Axis.Model.Account</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Address\Axis.Model.Address.csproj">
+      <Project>{d5ddba0d-9bf0-497b-976d-08d39b7fe976}</Project>
+      <Name>Axis.Model.Address</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Common\Axis.Model.Common.csproj">
+      <Project>{b217d868-9cab-4e0d-a0bc-d82423e64741}</Project>
+      <Name>Axis.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Email\Axis.Model.Email.csproj">
+      <Project>{9f6f9127-fe24-4f59-9e43-3ad252360ae1}</Project>
+      <Name>Axis.Model.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Phone\Axis.Model.Phone.csproj">
+      <Project>{b0a9f6e9-6648-484c-b213-8b15b80973d3}</Project>
+      <Name>Axis.Model.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Photo\Axis.Model.Photo.csproj">
+      <Project>{cbd7d40a-d0b3-41a0-9931-1cff51d000da}</Project>
+      <Name>Axis.Model.Photo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Registration\Axis.Model.Registration.csproj">
+      <Project>{d43d18cf-2ecf-4ede-866d-7cad9e1e0096}</Project>
+      <Name>Axis.Model.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Scheduling\Axis.Model.Scheduling.csproj">
+      <Project>{b4701714-ef73-4d51-918e-886df6f36a8c}</Project>
+      <Name>Axis.Model.Scheduling</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Models\Axis.Model.Setting\Axis.Model.Setting.csproj">
+      <Project>{798aafb3-6a50-4990-8c52-ede71c589fc8}</Project>
+      <Name>Axis.Model.Setting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Axis Libraries\Axis.Security\Axis.Security.csproj">
+      <Project>{6ADD8735-4FE1-471D-991A-6DFA7D588899}</Project>
+      <Name>Axis.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis.Data.Repository\Axis.Data.Repository.csproj">
+      <Project>{8b6625b0-e86e-4b07-bc0a-4f90a5f804c2}</Project>
+      <Name>Axis.Data.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.DataProvider.Scheduling\Axis.DataProvider.Scheduling.csproj">
+      <Project>{c6ddd5dd-a65f-4b87-aede-60b0b5e7b9dc}</Project>
+      <Name>Axis.DataProvider.Scheduling</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

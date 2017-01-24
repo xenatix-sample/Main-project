@@ -1,0 +1,75 @@
+﻿<style>
+    td, th {
+        border: 1px solid #fff;
+    }
+</style>
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Merged Contacts</h2>
+                <p>Unmerge is only available for merged records which have not been edited post-merge.</p>
+            </div>
+        </div>
+        <div class="row padding-bottom-small">
+            <div class="col-md-12">
+                <table data-toggle="table"
+                       class="table nomargin-bottom table-bordered combo-table form-group-sm">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>MRN</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>DOB</th>
+                            <th>SSN</th>
+                            <th>Driver’s License Number</th>
+                            <th>Preferred Phone Number</th>
+                            <th>Email Address</th>
+                            <th>Merged Date</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="data in mergedContactList" >
+                        <tr ng-repeat-start="mergedItem in data.mergeContactList " >
+                            <td rowspan="2">
+                                <input type="checkbox" ng-click="mergeCheckboxCallBack(mergedItem.MergedContactsMappingID)" class="xencheckbox" />
+                            </td>
+                            <td>{{mergedItem.MRN + " (master)"}}</td>
+                            <td>{{mergedItem.FirstName}}</td>
+                            <td>{{mergedItem.LastName}}</td>
+                            <td>{{mergedItem.DOB | formatDate:'MM/DD/YYYY' }}</td>
+                            <td>{{mergedItem.SSN | toMaskSSN }}</td>
+                            <td>{{mergedItem.DriverLicense }}</td>
+                            <td>{{mergedItem.Phone | toPhone }}</td>
+                            <td>{{mergedItem.Email }}</td>
+                            <td>{{mergedItem.MergedDate | formatDate:'MM/DD/YYYY' }}</td>
+                        </tr>
+                        <tr ng-repeat-end>
+                            <td>{{ mergedItem.childrens[0].MRN }}</td>
+                            <td>{{ mergedItem.childrens[0].FirstName }}</td>
+                            <td>{{ mergedItem.childrens[0].LastName }}</td>
+                            <td>{{ mergedItem.childrens[0].DOB | formatDate:'MM/DD/YYYY' }}</td>
+                            <td>{{ mergedItem.childrens[0].SSN | toMaskSSN }}</td>
+                            <td>{{ mergedItem.childrens[0].DriverLicense }}</td>
+                            <td>{{ mergedItem.childrens[0].Phone | toPhone }}</td>
+                            <td>{{ mergedItem.childrens[0].Email}}</td>
+                            <td>{{ mergedItem.childrens[0].MergedDate | formatDate:'MM/DD/YYYY' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row table-footer-buttons">
+            <div class="col-md-6 col-sm-6 padding-top-xsmall">
+                <button type="button" class="btn btn-default btn-sm ng-isolate-scope" security permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read" ng-disabled="disabledUnMergeButton" ng-click="unMergeContact()">
+                    <i class="fa fa-expand"></i>UNMERGE RECORDS
+                </button>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+

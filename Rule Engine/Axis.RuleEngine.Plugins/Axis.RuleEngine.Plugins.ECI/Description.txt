@@ -1,0 +1,8 @@
+﻿Group: Axis.RuleEngine.Plugins.ECI
+FriendlyName: Axis.RuleEngine.Plugins.ECI
+SystemName: Axis.RuleEngine.Plugins.ECI
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 1
+FileName: Axis.RuleEngine.Plugins.ECI.dll

@@ -1,0 +1,138 @@
+﻿<keypress-events on-save="safeSubmit(false)" on-next="safeSubmit(true)" on-cancel="cancel()" on-add="reset()" permission-key="Registration-Registration-Demographics" permission="{{resolvePermission(emergencyContact.ContactRelationshipID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security permission-key="Registration-Registration-Demographics" permission="{{resolvePermission(emergencyContact.ContactRelationshipID)}}" permission-mode="readonly">
+            <form role="form" name="ctrl.contactForm" id="contactForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" novalidate data-ng-submit="ctrl.contactForm.$valid" server-validate="ServerValidationErrors" bs-modifiable="true">
+                {{ctrl.contactForm.modified ? setform(true):setform(false)}}
+                <fieldset data-ng-disabled="IsDisabled">
+                    <div class="row section-block">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.contactForm.FirstName.$invalid && !ctrl.contactForm.FirstName.$pristine}">
+                                <label for="race">First Name <sup>*</sup></label>
+                                <input type="text" class="form-control ellipsis" id="FirstName" data-ng-model="emergencyContact.FirstName" auto-focus event-focus="autoFocus"
+                                       data-ng-trim="true" data-ng-required="true" name="FirstName" data-ng-maxlength="200" />
+                                <p data-ng-show="ctrl.contactForm.FirstName.$error.maxlength" data-ng-cloak class="error-block">First Name is too long</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.contactForm.lastname.$invalid && !ctrl.contactForm.lastname.$pristine}">
+                                <label for="ethnicity">Last Name <sup>*</sup></label>
+                                <input type="text" name="lastname" id="lastname" data-ng-model="emergencyContact.LastName" data-ng-maxlength="200" data-ng-trim="true" class="form-control ellipsis" data-ng-required="true" />
+                                <p data-ng-show="ctrl.contactForm.LastName.$error.maxlength" data-ng-cloak class="error-block">Last Name is too long</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.contactForm.Middle.$invalid && !ctrl.contactForm.Middle.$pristine}">
+                                <label for="race">MI</label>
+                                <input type="text" id="Middle" name="Middle" class="form-control" data-ng-model="emergencyContact.Middle" data-ng-maxlength="1" style="width: 75px;" />
+                                <p ng-show="ctrl.contactForm.Middle.$error.maxlength" ng-cloak class="error-block">Single letter only</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="race">Suffix</label>
+                                <select data-ng-model="emergencyContact.SuffixID" id="suffix" class="form-control" data-ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.contactForm.relationship.$invalid && !ctrl.contactForm.relationship.$pristine}">
+                                <label for="race">Relationship <sup>*</sup></label>
+                                <select data-ng-model="emergencyContact.RelationshipTypeID" id="relationship" name="relationship" data-ng-required="true" class="form-control" data-ng-options="relation.ID as relation.Name for relation in  emergencyRelationshipLookups">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                                <p ng-show="ctrl.contactForm.relationship.$error.maxlength" ng-cloak class="error-block">Required</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" id="">
+                                <label for="race">Date of Birth </label>
+                                <mydatepicker opened="opened" id="dob" new-date="emergencyContact.DOB" end-date="endDate" start-date="startDate" dob-name="dobName" date-options="dateOptions" call-function-on-change="calculateAge()"></mydatepicker>
+                            </div>
+                        </div>
+                        <div class="col-md-2 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="ethnicity">Age</label>
+                                <input type="text" tabindex="-1" id="age" name="age" value="{{ emergencyContact.DOB | ageToShow }}" readonly="readonly" class="form-control ellipsis" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="contactRelationship">Gender</label>
+                                <select data-ng-model="emergencyContact.GenderID" id="Gender" name="Gender" class="form-control" style="width: 200px;"
+                                        data-ng-options="gender.ID as gender.Name for gender in getLookupsByType('Gender')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small">
+                        <div class="col-md-2">
+                            <div class="form-group-lg padding-bottom-small">
+                                <xen-copy-address data-ng-model="isChecked" data-checkbox-id="copyAddress" data-label="Copy Contact Address" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group-lg section-block">
+                        @Html.Partial("../Shared/_Address")
+                    </div>
+                    <div class="row form-group-lg padding-top-small">
+                        @Html.Partial("../Shared/_Phone")
+                    </div>
+                    <div class="row form-group-lg section-block">
+                        @Html.Partial("../Shared/_Email")
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="row padding-top-small">
+            <div class="col-lg-1 padding-left">
+                <a href="javascript:void(0)" class="plain font-size-xlarge" role="button" title="New Contact" data-ng-click="reset()" security permission-key="Registration-Registration-Demographics" permission="create"><i class="fa fa-plus-circle"></i></a>
+            </div>
+            <div class="col-lg-5">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false)" id="btnSave" name="btnSave" security permission-key="Registration-Registration-Demographics" permission="{{resolvePermission(emergencyContact.ContactRelationshipID)}}">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" id="btnNext" name="btnNext" ng-click="safeSubmit(true)" security permission-key="Registration-Registration-Demographics" permission="{{resolvePermission(emergencyContact.ContactRelationshipID)}}">NEXT</button>
+            </div>
+        </div>
+        <div class="col-md-12 padding-bottom-small"></div>
+        <table class="table table-striped table-bordered table-style">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>MI</th>
+                <th>DOB</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th class="col-md-1">
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="contactItem in emergencyContactList" ng-click="edit(contactItem.ContactRelationshipID,$index)" ng-class="{success:selIdx==$index}">
+                <td data-ng-bind="contactItem.FirstName"></td>
+                <td data-ng-bind="contactItem.LastName"></td>
+                <td data-ng-bind="contactItem.Middle"></td>
+                <td data-ng-bind="contactItem.DOB"></td>
+                <td data-ng-bind="contactItem.FullAddress"></td>
+                <td data-ng-bind="formatPhone(contactItem.Phones[0].Number)"></td>
+                <td data-ng-bind="contactItem.Emails[0].Email"></td>
+                <td class="col-md-1">
+                    <a href="javascript:void(0)" data-ng-click="edit(contactItem.ContactRelationshipID)" alt="View Contact" security permission-key="Registration-Registration-Demographics" permission="update" event-focus="autoFocus" space-key-press><i class="fa fa-pencil fa-fw"/></a>
+                    <a href="javascript:void(0)" data-ng-click="remove(contactItem.ContactRelationshipID)" security permission-key="Registration-Registration-Demographics" permission="delete" event-focus="autoFocus" space-key-press><i class="fa fa-trash fa-fw"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

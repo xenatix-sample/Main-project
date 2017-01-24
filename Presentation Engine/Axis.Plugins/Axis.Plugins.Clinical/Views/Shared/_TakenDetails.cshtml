@@ -1,0 +1,29 @@
+﻿<div class="row section-block padding-top-small margin-bottom-xsmall" ng-form="takenDetailsForm">
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : takenDetailsForm.takenBy.$invalid && !takenDetailsForm.takenBy.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="takenBy">Taken By <sup>*</sup></label>
+            <select class="form-control" ng-required="true" ng-model="takenOnDetail.TakenBy" 
+                    name="takenBy" id="takenBy" auto-focus event-focus="autoFocus" ng-options="users.ID as users.Name for users in getLookupsByType('Users')">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : takenDetailsForm.takenOnDateCalander.$invalid && !takenDetailsForm.takenOnDateCalander.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="takenOnDate">Date <sup>*</sup></label>
+            <mydatepicker opened="opened" id="takenOnDate" name="takenOnDate" new-date="takenOnDetail.TakenOnDate" start-date="startDate" end-date="endDate" dob-name="'takenOnDateCalander'"
+                          is-disabled="isTakenDateDisabled" is-hidden="isTakenDateDisabled" date-options="dateOptions" date-required="true" call-function-on-change="validateFutureDate(this)"></mydatepicker>
+            <p id="takenDateError" ng-show="takenDetailsForm.takenOnDateCalander.$invalid && !takenDetailsForm.takenOnDateCalander.$pristine" class="error-block">Invalid date and time</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : takenDetailsForm.takenOnTime.$invalid && !takenDetailsForm.takenOnTime.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="TakenOnTime">Time <sup>*</sup></label>
+            <div class="bootstrap-timepicker timepicker">
+                <input type="text" class="form-control ellipsis" ng-model="takenOnDetail.TakenOnTime" ng-disabled="isTakenDateDisabled" id="takenTime" name="takenTime" ng-required="true" call-function-on-change="validateFutureDate(this)" />
+            </div>
+            <p id="takenTimeError" data-ng-show="ctrl.takenDetailsForm.TakenOnTime.$error.date  && !ctrl.takenDetailsForm.TakenOnTime.$pristine" data-ng-cloak class="error-block">Please enter a valid Time.</p>        
+        </div>
+    </div>
+</div>

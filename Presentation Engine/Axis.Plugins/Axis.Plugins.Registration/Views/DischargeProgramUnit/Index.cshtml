@@ -1,0 +1,107 @@
+﻿<data-keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, true, true)" enter-key-stop="enterKeyStop" on-cancel="cancel()" close-modal="true" permission-key="General-General-ProgramUnitDischarge" permission="create"></data-keypress-events>
+<!--data entry-->
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security permission-key="General-General-ProgramUnitDischarge" program-units="{{dischargeProgramUnit.ProgramUnitID}}" permission="{{resolvePermission(dischargeProgramUnitID)}}" permission-mode="readonly" is-disabled="{{isDischargePUDisabled}}" dual-permission="true">
+            <form role="form" id="dischargeProgramUnitForm" name="ctrl.dischargeProgramUnitForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" set-form-status set-form-mode>
+                <div class="row no-security">
+                    <div class="col-md-4 padding-bottom-small form-group-lg">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="division">Division </label>
+                            <select ng-disabled="true" class="form-control" ng-required="true" ng-model="dischargeProgramUnit.DivisionID"
+                                    name="division" id="division" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('Division',CompanyID) | securityFilter: 'Division' : 'ID': 'General-General-ProgramUnitDischarge'">
+
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 padding-bottom-small form-group-lg">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="program">Program </label>
+                            <select ng-disabled="true" class="form-control" ng-required="true" ng-model="dischargeProgramUnit.ProgramID"
+                                    name="program" id="program" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('Program',DivisionID) | securityFilter: 'Program' : 'ID': 'General-General-ProgramUnitDischarge'">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 padding-bottom-small form-group-lg">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="programUnit">Program Unit </label>
+                            <select ng-disabled="true" class="form-control" ng-required="true" ng-model="dischargeProgramUnit.ProgramUnitID"
+                                    name="programUnit" id="programUnit" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('ProgramUnit',ProgramID) | securityFilter: 'ProgramUnit' : 'ID': 'General-General-ProgramUnitDischarge'">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row section-block">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="admissionStatus">Program Unit Status </label>
+                            <select class="form-control" auto-focus event-focus="autoFocus"  ng-trim="true" ng-model="dischargeProgramUnit.IsDischarged" id="admissionStatus" ng-options="admissionStatus.ID as admissionStatus.Name for admissionStatus in admissionStatus"></select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding-top-small">
+                    <div class="col-lg-6 col-md-6">
+                        <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                    </div>
+                    <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                        <button type="button" class="btn btn-default btn-lg" ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave">SAVE</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+                <table id="dischargeProgramUnitTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="CompanyID"
+                                data-sortable="true">Company</th>
+                            <th data-field="DivisionID"
+                                data-sortable="true">Division</th>
+                            <th data-field="ProgramID"
+                                data-sortable="true">Program</th>
+                            <th data-field="ProgramUnitID"
+                                data-sortable="true">Program Unit</th>
+                            <th data-field="IsDischarged"
+                                data-sortable="true">Program Unit Status</th>
+                            <th data-field="EffectiveDate"
+                                data-sortable="true">Admission Date</th>
+                            <th data-field="DischargeDate"
+                                data-sortable="true">Discharge Date</th>
+                            <th data-field="SignedByEntityName"
+                                data-sortable="true">Signed By</th>
+                            <th data-field="DateSigned"
+                                data-sortable="true">Date Signed</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="modal-dialog modal-lg modalInCenter" ng-form="dischargeNoteForm">
+    @Html.Partial("_ContactDischargeNote")
+</div>

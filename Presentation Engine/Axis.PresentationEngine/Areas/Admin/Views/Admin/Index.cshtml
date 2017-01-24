@@ -1,0 +1,75 @@
+﻿<!--add the search bar here-->
+<div class="jumbotron">
+
+    <form class="form-inline" name="searchForm" ng-submit="searchForm.$valid">
+        <div class="container-fluid padding-small">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 search-box text-center form-group-lg">
+                    <input type="text" name="userSearch" id="userSearch" auto-focus event-focus="autoFocus" ng-change="searchForm.$valid ? get(userSch) : null" ng-model="userSch"
+                           ng-model-options="{ debounce: 1000 }"
+                           placeholder="Search" tabindex="0" class="form-control ellipsis" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="read" />
+                    @* added icon as button *@
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-link">
+                            <i class="fa fa-search fa-fw"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="ng-cloak">
+            <div class="add_me">
+                <a href="javascript:void(0)" class="plain font-size-xlarge" space-key-press role="button" plus-button-grid-clear table-id="usersTable" title="Add User" aria-haspopup="true" aria-expanded="false" permission-key="SiteAdministration-StaffManagement-UserDetails" permission="create" id="btnadduser" data-toggle="modal" ng-click="add();setShortCutKeys(false);"><i class="fa fa-plus-circle"></i></a>
+            </div>
+            <div class="row padding-top-small padding-bottom-small">
+                <div class="col-md-12">
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-container">
+                            <div class="fixed-table-body">
+                                <table id="usersTable" data-toggle="table"
+                                       data-show-columns="true"
+                                       data-search="true"
+                                       data-minimum-count-columns="2"
+                                       data-filter-control="false"
+                                       data-mobile-responsive="true"
+                                       data-filter-bar
+                                       data-advanced-search="false"
+                                       data-show-multi-sort="true"
+                                       data-classes="table table-stripe-borders"
+                                       bootstrap-table="tableoptions" grid-arrow-selector>
+                                    <thead>
+                                        <tr>
+                                            <th data-field="userName"
+                                                data-sortable="true">User Name</th>
+                                            <th data-field="firstName"
+                                                data-sortable="true">First Name</th>
+                                            <th data-field="lastName"
+                                                data-sortable="true">Last Name</th>
+                                            <th data-field="email"
+                                                data-sortable="true">Email</th>
+
+                                            <th data-field="active"
+                                                data-sortable="true">Active</th>
+                                            <th data-field="expirationDate"
+                                                data-sortable="true">Expiration Date</th>
+                                            <th data-field="lastLogin"
+                                                data-sortable="true">Last Login</th>
+                                            <th data-field="loginAttempts"
+                                                data-sortable="true">Login Attempts</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-include="'/Admin/Admin/Edit'"></div>
+        </div>
+    </div>
+</div>

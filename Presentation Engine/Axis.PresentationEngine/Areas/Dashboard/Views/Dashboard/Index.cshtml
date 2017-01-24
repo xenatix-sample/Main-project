@@ -1,0 +1,394 @@
+﻿<div class="modal fade" id="contactListModel" tabindex="-1" role="dialog" aria-labelledby="contactListModel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" ng-click="vm.closeModal();"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Contacts</h4>
+            </div>
+            <div class="modal-body">
+                <table id="contactsTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="fName"
+                                data-sortable="true">First Name</th>
+                            <th data-field="lName"
+                                data-sortable="true">Last Name</th>
+                            <th data-field="mname"
+                                data-sortable="true">MI</th>
+                            <th data-field="birthdate"
+                                data-sortable="true">Date Of Birth</th>
+                            <th data-field="gender"
+                                data-sortable="true">Gender</th>
+                            <th data-field="ssn"
+                                data-sortable="true">SSN</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-offcanvas row-offcanvas-right row-onscreen active">
+
+<!-- slide out panel -------------------------------------------------------------------------------------->
+<div class="sidebar-offcanvas">
+    <div class="panel panel-default nomargin-top padding-bottom-small" id="slideOurRecentlyAccessed" ng-show="vm.selectedQueueItem.QueueTypeId===1">
+        <div class="panel-heading">
+            <div class="border-top padding-top-xsmall"></div>
+            <div class="panel-title">
+                <a href="javascript:void(0)" data-toggle="offcanvasoff" alt="Close Panel">
+                    Recently Accessed
+
+                    <div class="btn-group pull-right padding-right">
+                        <i class="fa fa-times-circle" data-toggle="offcanvasoff"><span class="sr-only">Close Section and Return</span></i>
+                    </div>
+                </a>
+            </div>
+            <div class="border-bottom padding-top-xsmall"></div>
+        </div>
+        <div class="panel-body nopadding-top" id="panel-last-accessed">
+            <div class="row padding-bottom-small">
+                <div class="col-lg-8">
+                    <h1>{{vm.selectedQueueItem.Label}}</h1>
+                </div>
+                <div class="col-lg-4 nopadding">
+                    <img src="~/Images/ph_avatar.png" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="border-top padding-bottom-xxsmall"></div>
+                    <h4 class="uppercase">Accessed Date</h4>
+                    <p>
+                        {{vm.selectedQueueItem.Description}}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="border-top padding-bottom-xxsmall"></div>
+                    <h4>PRIMARY PHONE</h4>
+                    <p>
+                        <a href="tel:+{{vm.selectedQueueItem.MetaData.PrimaryPhone}}">{{vm.selectedQueueItem.MetaData.PrimaryPhone}}</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="border-top padding-bottom-xxsmall"></div>
+                    <h4>EMAIL ADDRESS</h4>
+                    <p>
+                        <a href="mailto:{{vm.selectedQueueItem.MetaData.EmailAddress}}">{{vm.selectedQueueItem.MetaData.EmailAddress}}</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="border-top padding-bottom-xxsmall"></div>
+                    <h4>CURRENT ADDRESS</h4>
+                    <p>
+                        {{vm.selectedQueueItem.MetaData.CurrentAddress1}}<br/>
+                        <span ng-show="vm.selectedQueueItem.MetaData.CurrentCity !== ''">
+                            {{vm.selectedQueueItem.MetaData.CurrentCity}}, {{vm.selectedQueueItem.MetaData.CurrentState}} {{vm.selectedQueueItem.MetaData.CurrentZip}}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer" data-spy="affix" data-offset-top="50" data-offset-bottom="0">
+            <div class="border-top padding-bottom-small"></div>
+            <div class="row padding-bottom-small">
+                <div class="col-lg-6">
+                    <button href="javascript:void(0);" class="btn btn-default btn-block" ng-click="Goto('patientprofile.appointments', { ContactID: vm.selectedQueueItem.MetaData.ContactId })">Appt<i class="fa fa-calendar padding-left-small"></i></button>
+                </div>
+                <div class="col-lg-6">
+                    <button href="javascript:void(0);" class="btn btn-default btn-block" ng-click="Goto('patientprofile.chart.intake.note', { ContactID: vm.selectedQueueItem.MetaData.ContactId })">Notes<i class="fa fa-file-text-o padding-left-small"></i></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <button href="javascript:void(0);" class="btn btn-default btn-block" ng-click="Goto('patientprofile.general', { ContactID: vm.selectedQueueItem.MetaData.ContactId })">Edit<i class="fa fa-pencil fa-fw padding-left-small"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default nomargin-top padding-bottom-small" id="slideOutAlerts" ng-show="vm.selectedQueueItem.QueueTypeId===2">
+        <div class="panel-heading">
+            <div class="border-top padding-top-xsmall"></div>
+            <div class="panel-title">
+                <a href="javascript:void(0)" data-toggle="offcanvasoff" alt="Close Panel">
+                    Alerts (prototype)
+
+                    <div class="btn-group pull-right padding-right">
+                        <i class="fa fa-times-circle" data-toggle="offcanvasoff"><span class="sr-only">Close Section and Return</span></i>
+                    </div>
+                </a>
+            </div>
+            <div class="border-bottom padding-top-xsmall"></div>
+        </div>
+        <div class="panel-body nopadding-top" id="panel-last-accessed">
+            <div class="row padding-bottom-small">
+                <div class="col-lg-8">
+                    <h2 class="uppercase">Severity</h2>
+                    <p>{{vm.selectedQueueItem.Label}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="border-top padding-bottom-xxsmall"></div>
+                    <h4 class="uppercase">Message</h4>
+                    <p>
+                        {{vm.selectedQueueItem.Description}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default nomargin-top padding-bottom-small" id="slideOutRegistrations" ng-show="vm.selectedQueueItem.QueueTypeId===3">
+        <div class="panel-heading">
+            <div class="border-top padding-top-xsmall"></div>
+            <div class="panel-title">
+                <a href="javascript:void(0)" data-toggle="offcanvasoff" alt="Close Panel">
+                    Registrations
+
+                    <div class="btn-group pull-right padding-right">
+                        <i class="fa fa-times-circle" data-toggle="offcanvasoff"><span class="sr-only">Close Section and Return</span></i>
+                    </div>
+                </a>
+            </div>
+            <div class="border-bottom padding-top-xsmall"></div>
+        </div>
+        <div class="panel-body nopadding-top" id="panel-last-accessed">
+            <div class="row padding-bottom-small">
+                <div class="col-lg-8">
+                    <h1>{{vm.selectedQueueItem.Label}}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="border-top padding-bottom-xxsmall"></div>
+                    <h4 class="uppercase">Fields</h4>
+                    <p>
+                        {{vm.selectedQueueItem.Description}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer" data-spy="affix" data-offset-top="50" data-offset-bottom="0">
+            <div class="border-top padding-bottom-small"></div>
+            <div class="row padding-bottom-small">
+                <div class="col-lg-6">
+                    <button href="javascript:void(0);" class="btn btn-default btn-block">Edit<i class="fa fa-pencil fa-fw padding-left-small"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default nomargin-top padding-bottom-small" id="slideOutLabs" ng-show="vm.selectedQueueItem.QueueTypeId===4">
+        <div class="panel-heading">
+            <div class="border-top padding-top-xsmall"></div>
+            <div class="panel-title">
+                <a href="javascript:void(0)" data-toggle="offcanvasoff" alt="Close Panel">
+                    Labs (prototype)
+
+                    <div class="btn-group pull-right padding-right">
+                        <i class="fa fa-times-circle" data-toggle="offcanvasoff"><span class="sr-only">Close Section and Return</span></i>
+                    </div>
+                </a>
+            </div>
+            <div class="border-bottom padding-top-xsmall"></div>
+        </div>
+        <div class="panel-body nopadding-top">
+            <div class="row padding-bottom-small">
+                <div class="col-lg-8">
+                    <h1>{{vm.selectedQueueItem.Label}}</h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="border-top padding-bottom-xxsmall"></div>
+                    <h4 class="uppercase">Results</h4>
+                    <p>
+                        {{vm.selectedQueueItem.Description}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+@*
+    <div class="col-lg-8">vm.selectedQueueItem.$parent.TypeCodeId===1
+        <h1>{{vm.selectedQueueItem.Label}}</h1>*@
+    
+    
+</div>
+<!-- end: slide out panel --------------------------------------------------------------------------------->
+
+
+<!-- main panel -------------------------------------------------------------------------------------->
+<div class="col-lg-12">
+    <!-- big search box + welcome -->
+    <div class="jumbotron border-bottom">
+        <div class="container-fluid padding-1x">
+            <div class="row">
+                <div class="col-lg-12 text-center search-box padding-bottom form-group-lg">
+                    <h2 class="padding-bottom h1" ng-bind="vm.getGreeting()"></h2>
+                    <input type="text" name="ClientSearch" id="txtClientSearch" ng-change="vm.EnableDisableEnterKey(searchText,true)" ng-model="searchText" auto-focus event-focus="autoFocus"
+                           ng-model-options="{ debounce: 500 }" ng-focus="vm.EnableDisableEnterKey(searchText,false)" ng-blur="vm.stopEnterKey()"
+                           placeholder="Search" tabindex="0" class="form-control" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end: big search box -->
+
+
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <!-- Tasks and Productivity are intended as examples of modular panels that can be arranged or turned on/off by the client.
+            Additional panels could be concieved and configured. These are for example purposes only. (rwq) -->
+            <!-- TASKS -->
+            <div class="panel-group col-md-6" id="topaccordion" role="tablist" aria-multiselectable="true">
+                <div class="panel">
+                    <div class="panel-heading nopadding-left nopadding-right" role="tab" id="heading-tasks">
+                        <div class="border-top padding-top-xsmall"></div>
+                        
+                        <div class="panel-title">
+                            <a href="javscript:void(0)" data-toggle="offcanvas">Your Tasks {{selectedQueueItem.Description}}</a>
+
+                            <div class="btn-group pull-right padding-right">
+                                <div class="inset_menu collapse" id="taskFilterPopup">
+                                    <h4 class="uppercase header">Filter</h4>
+                                    <ul>
+                                        <li class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="vm.showRecentlyAccessed">
+                                                Recently Accessed
+                                            </label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="vm.showAlerts">
+                                                Alerts
+                                            </label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="vm.showLabs">
+                                                Labs
+                                            </label>
+                                        </li>
+                                        <li class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="vm.showRegistrations">
+                                                Registrations
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button class="btn-link" ng-click="vm.toggleTaskFilter();"><i class="fa fa-filter"></i></button>
+                            </div>
+                        </div>
+                        <div class="border-bottom padding-top-xsmall"></div>
+                    </div>
+                    <div id="panel-tasks" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-tasks">
+                        
+
+                        <div class="nopadding-top panel-scroll">
+                            <div class="context-list-container">
+                                <div ng-repeat="queueCategory in vm.queueInfo.Queues">
+                                    <div ng-show="(queueCategory.QueueTypeId==1 && vm.showRecentlyAccessed)
+                                         || (queueCategory.QueueTypeId==2 && vm.showAlerts)
+                                          || (queueCategory.QueueTypeId==3 && vm.showRegistrations)
+                                          || (queueCategory.QueueTypeId==4 && vm.showLabs)">
+                                        <h4 class="uppercase">{{queueCategory.QueueName}}</h4>
+                                        <ul class="list-unstyled context-list">
+                                            <li ng-repeat="queueItem in queueCategory.QueueItems" ng-class="{'selected': vm.selectedQueueItem == queueItem}">
+                                                <a href="javascript:void(0);" data-toggle="offcanvason" id="queueItem_{{queueItem.QueueId}}" ng-click="vm.selectedQueueItem = queueItem">
+                                                    <span>{{queueItem.Label}}</span>
+                                                    {{queueItem.Description}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                @*<ul class="list-unstyled context-list">
+                                    <li ng-repeat="queueCategory in vm.queueInfo.Queues">
+                                        <a href="javascript:void(0);" data-toggle="offcanvason" ng-click="vm.selectedTask = task">
+                                            <span>{{task.TypeCode}}:</span>
+                                            {{task.ContactFullName}}
+                                        </a>
+                                    </li>
+                                </ul>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer hidden">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- PRODUCTIVITY -->
+            <div class="panel-group col-md-6" id="bottomaccordion" role="tablist" aria-multiselectable="true">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="border-top padding-top-xsmall"></div>
+                        <h3 class="panel-title">
+                            <a data-parent="#bottomaccordion" href="#panel-productivity" aria-expanded="true" aria-controls="panel-productivity">Productivity</a>
+
+                            <div class="btn-group pull-right padding-right">
+
+                            </div>
+                        </h3>
+                        <div class="border-bottom padding-top-xsmall"></div>
+                    </div>
+                    <div id="panel-productivity" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-productivity">
+                        <div class="panel-body nopadding-top panel-scroll">
+                            <h3 class="uppercase">Created v. Completed Registrations</h3>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" style="width: {{vm.productivity.RegistrationsCompletedPercent}}%"><span class="sr-only">&nbsp;</span></div>
+                                <div class="progress-bar" style="width: {{vm.productivity.RegistrationsNotCompletedPercent}}%"><span class="sr-only">&nbsp;</span></div>
+                            </div>
+                            <h3 class="uppercase">Created v. Completed Assessments</h3>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" style="width: {{vm.productivity.AssesmentsCompletedPercent}}%"><span class="sr-only">&nbsp;</span></div>
+                                <div class="progress-bar" style="width: {{vm.productivity.AssesmentsNotCompletedPercent}}%"><span class="sr-only">&nbsp;</span></div>
+                            </div>
+                            <h3 class="uppercase">Created v. Completed Progress Notes</h3>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" style="width: {{vm.productivity.ProgressNotesCompletedPercent}}%"><span class="sr-only">&nbsp;</span></div>
+                                <div class="progress-bar" style="width: {{vm.productivity.ProgressNotesNotCompletedPercent}}%"><span class="sr-only">&nbsp;</span></div>
+                            </div>
+                        </div>
+                        <div class="panel-footer hidden">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</div>

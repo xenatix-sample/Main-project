@@ -1,0 +1,8 @@
+﻿Group: Axis.DataEngine.Plugins.CallCenter
+FriendlyName: Axis.DataEngine.Plugins.CallCenter
+SystemName: Axis.DataEngine.Plugins.CallCenter
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 2
+FileName: Axis.DataEngine.Plugins.CallCenter.dll

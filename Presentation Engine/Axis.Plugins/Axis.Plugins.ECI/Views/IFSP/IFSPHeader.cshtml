@@ -1,0 +1,23 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)" permission-key="ECI-IFSP-IFSP" permission="{{resolvePermission(ifsp.IFSPID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <form role="form" name="ctrl.ifspForm" check-form data-on-save="saveHeader(isNext, isMandatory, hasErrors, keepForm)" novalidate data-ng-submit="ctrl.ifspForm.$valid" bs-modifiable="true">
+            {{ctrl.ifspForm.modified ? setform(true):setform(false)}}
+
+            <div class="col-md-12" ng-init="initHeader()" security permission-key="ECI-IFSP-IFSP" permission="{{resolvePermission(ifsp.IFSPID)}}" permission-mode="readonly">
+                @Html.Partial("../Shared/_IFSPHeader")
+            </div>
+
+            <div class="row padding-top-small">
+                <div class="col-lg-6 col-md-6">
+                    <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                </div>
+                <div class="col-lg-6 col-md-6 text-right">
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, false, false)" id="ifspSave" name="btnSave" security permission-key="ECI-IFSP-IFSP" permission="{{resolvePermission(ifsp.IFSPID)}}">SAVE</button>
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, false, true)" id="btnNext" name="btnNext" security permission-key="ECI-IFSP-IFSP" permission="{{resolvePermission(ifsp.IFSPID)}}">NEXT</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿<div class="panel panel-light padding-xsmall">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">            
+            <form role="form" id="userSecurityForm" name="ctrl.userSecurityForm" novalidate xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status="ctrl.userSecurityForm" bs-modifiable="true" set-form-mode>
+                <h3 class="uppercase nomargin padding-xsmall border-top">Password</h3>
+                <div class="row section-block margin-bottom">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userSecurityForm.currentPassword.$invalid && !ctrl.userSecurityForm.currentPassword.$pristine }">
+                                    <label for="currentPassword">Current Password <sup ng-show="!enablePasswordsButton"></sup></label>
+                                    <input type="password" class="form-control ellipsis" clean="true" ng-model="userProfile.CurrentPassword" id="currentPassword" name="currentPassword" data-validation-name="Current password"
+                                           ng-disabled="enablePasswordsButton" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small" ng-show="enablePasswordsButton">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <button type="button" ng-disabled="!enableChangePasswordButton" class="btn btn-default btn-inline btn-sm" ng-click="enablePasswordFields()" id="btnchangePassword" name="btnchangePassword" readonly="readonly">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userSecurityForm.newPassword.$invalid && !ctrl.userSecurityForm.newPassword.$pristine }">
+                                    <label for="newPassword">New Password <sup data-ng-if="userProfile.CurrentPassword">&nbsp &#134</sup></label>
+                                    <input type="password" class="form-control ellipsis" clean="true" ng-model="userProfile.NewPassword" id="newPassword" name="newPassword" data-validation-name="New password"
+                                           pattern-validator="((((?=.*[!#$%^&*])(?=.*[A-Z])(?=.*[a-z]))|((?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]))|((?=.*[0-9])(?=.*[!#$%^&*])(?=.*[a-z]))|((?=.*[0-9])(?=.*[A-Z])(?=.*[!#$%^&*]))).{8,15})"
+                                           ng-disabled="enablePasswordsButton" ng-required="userProfile.CurrentPassword" />
+                                    <p class="error-block" ng-show="ctrl.userSecurityForm.newPassword.$error.passwordPattern">The password does not meet requirements!</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-1 padding-bottom-small">
+                                <i class="fa fa-question-circle title-top-long" ng-show="!enablePasswordsButton" data-title="Password Should Contain 3 of the following criteria:
+                                        - Uppercase characters (A-Z)
+                                        - Lowercase characters (a-z)
+                                        - Numbers (0-9)
+                                        - Special characters (i.e. !,#,&,*)"></i>
+                            </div>
+                            <div class="col-md-4 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userSecurityForm.confirmPassword.$invalid && !ctrl.userSecurityForm.confirmPassword.$pristine }">
+                                    <label for="confirmPassword">Confirm Password <sup data-ng-if="userProfile.CurrentPassword">&nbsp &#134</sup></label>
+                                    <input type="password" class="form-control ellipsis" clean="true" ng-model="userProfile.ConfirmPassword" id="confirmPassword" name="confirmPassword" data-validation-name="Confirm password"
+                                           pattern-validator="((((?=.*[!#$%^&*])(?=.*[A-Z])(?=.*[a-z]))|((?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]))|((?=.*[0-9])(?=.*[!#$%^&*])(?=.*[a-z]))|((?=.*[0-9])(?=.*[A-Z])(?=.*[!#$%^&*]))).{8,15})" ng-disabled="enablePasswordsButton" ng-required="userProfile.CurrentPassword" />
+                                    <p class="error-block" ng-show="ctrl.userSecurityForm.confirmPassword.$error.passwordPattern">The password does not meet requirements!</p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-top-small">
+                                <password-strength ng-model="userProfile.NewPassword"></password-strength>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="uppercase nomargin padding-xsmall border-top">Security Questions</h3>
+                <div class="row section-block margin-bottom">
+                    <div class="col-lg-12">
+                        @Html.Partial("../Shared/_SecurityQuestion")
+                    </div>
+                </div>
+               
+                <div class="row padding-top-small">
+                    <div class="col-lg-6">
+                        <p class="uppercase subtext">
+                            <sup>*</sup> Indicates a required field
+                        </p>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <xen-submit id="btnSave" name="btnSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg"></xen-submit>
+                        <xen-submit id="btnNext" name="btnNext" value="NEXT" is-next="true" mandatory="true" style="btn btn-default btn-lg"></xen-submit>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

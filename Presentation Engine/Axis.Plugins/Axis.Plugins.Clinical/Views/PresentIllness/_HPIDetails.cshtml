@@ -1,0 +1,82 @@
+﻿@Html.Partial("../Shared/_TakenDetails")
+
+<div class="row padding-top-small">
+    <div class="col-md-12 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.hpiForm.hpiComment.$invalid && !ctrl.hpiForm.hpiComment.$pristine }">
+            <xen-memobox auto-focus event-focus="autoFocus"  label="HPI Comments" rows="4" maxlength="2000" ng-model="hpiDetails.Comment" id="hpiComment" name="hpiComment"></xen-memobox>
+            <p id="hpiCommentError" ng-show="ctrl.hpiForm.hpiComment.$invalid && !ctrl.hpiForm.hpiComment.$pristine"
+               class="error-block">Invalid comments</p>
+        </div>
+    </div>
+</div>
+<div class="row section-block padding-top-small">
+    <div class="col-lg-4 col-md-6 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.hpiForm.Location.$invalid && !ctrl.hpiForm.Location.$pristine}">
+            <label for="Location">Location</label>
+            <input type="text" name="Location" id="Location" class="form-control ellipsis" ng-model="hpiDetails.Location" ng-trim="true" ng-maxlength="100" />
+            <p ng-show="ctrl.hpiForm.Location.$error.maxlength" ng-cloak class="error-block">Invalid Location</p>
+        </div>
+    </div>
+    <div class="col-md-6 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="Severity">Severity</label>
+            <span><xen-radio-button data-ng-model="hpiDetails.HPISeverityID" data-radio-button-id="severityMild" data-label="Mild" data-ng-value="1" /></span>
+            <span><xen-radio-button data-ng-model="hpiDetails.HPISeverityID" data-radio-button-id="severityModerate" data-label="Moderate" data-ng-value="2" /></span>
+            <span><xen-radio-button data-ng-model="hpiDetails.HPISeverityID" data-radio-button-id="severitySevere" data-label="Severe" data-ng-value="3" /></span>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-4 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.hpiForm.Quality.$invalid && !ctrl.hpiForm.Quality.$pristine }">
+            <label for="Quality">Quality</label>
+            <input type="text" name="Quality" id="Quality" class="form-control ellipsis" data-ng-model="hpiDetails.Quality" ng-maxlength="200" />
+            <p ng-show="ctrl.hpiForm.ChildhoodHistory.$error.maxlength" ng-cloak class="error-block">Invalid Quality</p>
+        </div>
+    </div>
+    <div class="col-md-4 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.hpiForm.Duration.$invalid && !ctrl.hpiForm.Duration.$pristine}">
+            <label for="Duration">Duration</label>
+            <input type="text" name="Duration" id="Duration" class="form-control ellipsis" ng-model="hpiDetails.Duration"
+                   ng-trim="true" ng-maxlength="100" />
+            <p ng-show="ctrl.hpiForm.Duration.$error.maxlength" ng-cloak class="error-block">Invalid Duration</p>
+        </div>
+    </div>
+    <div class="col-md-4 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.hpiForm.Timing.$invalid && !ctrl.hpiForm.Timing.$pristine}">
+            <label for="Timing">Timing</label>
+            <input type="text" name="Timing" id="Timing" class="form-control ellipsis" ng-model="hpiDetails.Timing"
+                   ng-trim="true" ng-maxlength="100" />
+            <p ng-show="ctrl.hpiForm.Timing.$error.maxlength" ng-cloak class="error-block">Invalid Timing</p>
+        </div>
+    </div>
+</div>
+<div class="row section-block padding-top-small">
+    <div class="col-lg-5 col-md-6 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.hpiForm.Context.$invalid && !ctrl.hpiForm.Context.$pristine }">
+            <xen-memobox label="Context" rows="2" maxlength="200" ng-model="hpiDetails.Context" id="Context" name="Context"></xen-memobox>
+            <p ng-show="ctrl.hpiForm.Context.$error.maxlength" ng-cloak class="error-block">Invalid Context</p>
+        </div>
+    </div>
+    <div class="col-lg-5 col-md-6 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.hpiForm.Modifyingfactors.$invalid && !ctrl.hpiForm.Context.$pristine }">
+            <xen-memobox label="Modifying Factors" rows="2" maxlength="200" ng-model="hpiDetails.Modifyingfactors" id="Modifyingfactors" name="Modifyingfactors"></xen-memobox>
+            <p ng-show="ctrl.hpiForm.Modifyingfactors.$error.maxlength" ng-cloak class="error-block">Modifying factors Invalid</p>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-lg-5 col-md-6 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.hpiForm.AssociatedSignsandSymptoms.$invalid && !ctrl.hpiForm.AssociatedSignsandSymptoms.$pristine }">
+            <xen-memobox label="Associated Signs and Symptoms" rows="2" maxlength="200" ng-model="hpiDetails.Symptoms" id="AssociatedSignsandSymptoms" name="AssociatedSignsandSymptoms"></xen-memobox>
+            <p id="SymptomsError" ng-show="ctrl.hpiForm.AssociatedSignsandSymptoms.$invalid && !ctrl.hpiForm.AssociatedSignsandSymptoms.$pristine"
+               class="error-block">Invalid Symptoms</p>
+        </div>
+    </div>
+    <div class="col-lg-5 col-md-6 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.hpiForm.ChronicOrInactiveConditions.$invalid && !ctrl.hpiForm.ChronicOrInactiveConditions.$pristine }">
+            <xen-memobox label="Chronic Or Inactive Conditions" rows="2" maxlength="200" ng-model="hpiDetails.Conditions" id="ChronicOrInactiveConditions" name="ChronicOrInactiveConditions"></xen-memobox>
+            <p ng-show="ctrl.hpiForm.Modifyingfactors.$error.maxlength" ng-cloak class="error-block">Conditons Invalid</p>
+        </div>
+    </div>
+</div>

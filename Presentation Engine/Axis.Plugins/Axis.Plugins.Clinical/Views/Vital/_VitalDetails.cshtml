@@ -1,0 +1,119 @@
+﻿@Html.Partial("../Shared/_TakenDetails")
+
+<div class="row padding-top-small">
+    <div class="col-md-2 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.heightFeet.$invalid && !ctrl.vitalForm.heightFeet.$pristine }">
+            <label for="heightFeet">Height <sup>*</sup> (FT)</label>
+            <input type="number" ng-model="vital.HeightFeet" name="heightFeet" id="heightFeet" ng-required="true" min="0" max="9" class="form-control ellipsis" auto-focus event-focus="autoFocus" />
+            <p id="heightFeetError" ng-show="ctrl.vitalForm.heightFeet.$invalid && !ctrl.vitalForm.heightFeet.$pristine"
+               class="error-block">Invalid height (feet)</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.heightInches.$invalid && !ctrl.vitalForm.heightInches.$pristine }">
+            <label for="heightInches">(IN) <sup>*</sup></label>
+            <input type="number" ng-model="vital.HeightInches" ng-required="true" min="0" max="1000" name="heightInches" id="heightInches" class="form-control ellipsis" />
+            <p id="heightInchesError" ng-show="ctrl.vitalForm.heightInches.$invalid && !ctrl.vitalForm.heightInches.$pristine"
+               class="error-block">Invalid height (inches)</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.weightLbs.$invalid && !ctrl.vitalForm.weightLbs.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="weightLbs">Weight <sup>*</sup> (LBS)</label>
+            <input type="number" ng-model="vital.WeightLbs" name="weightLbs" min="0" max="1000" id="weightLbs" ng-required="true" class="form-control ellipsis" />
+            <p id="weightLbsError" ng-show="ctrl.vitalForm.weightLbs.$invalid && !ctrl.vitalForm.weightLbs.$pristine"
+               class="error-block">Invalid weight (pounds)</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.weightOz.$invalid && !ctrl.vitalForm.weightOz.$pristine }">
+            <label for="weightOz">(OZ) <sup>*</sup></label>
+            <input type="number" ng-model="vital.WeightOz" name="weightOz" id="weightOz" ng-required="true" min="0" max="15000" class="form-control ellipsis" />
+            <p id="weightOzError" ng-show="ctrl.vitalForm.weightOz.$invalid && !ctrl.vitalForm.weightOz.$pristine"
+               class="error-block">Invalid weight (ounces)</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.bmi.$invalid && !ctrl.vitalForm.bmi.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="bmi">BMI</label>
+            <input type="text" ng-model="vital.BMI" name="bmi" id="bmi" class="form-control ellipsis" readonly="readonly" />
+        </div>
+    </div>
+</div>
+<div class="row med-names padding-top-small">
+    <div class="col-md-2 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.vitalForm.systolicBP.$invalid && !ctrl.vitalForm.systolicBP.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="systolicBP">Blood Pressure Systolic <sup>*</sup></label>
+            <input type="number" class="form-control ellipsis" ng-model="vital.Systolic" ng-required="true" id="systolicBP" name="systolicBP" min="1" max="400" />
+        </div>
+        <p id="systolicBPError" ng-show="ctrl.vitalForm.systolicBP.$invalid && !ctrl.vitalForm.systolicBP.$pristine" class="error-block">Invalid BP</p>
+    </div>
+    <div class="col-md-2 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.vitalForm.diastolicBP.$invalid && !ctrl.vitalForm.diastolicBP.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="diastolicBP">Diastolic <sup>*</sup> </label>
+            <input type="number" class="form-control ellipsis" ng-model="vital.Diastolic" ng-required="true" id="diastolicBP" name="diastolicBP" min="1" max="400" />
+            <p id="diastolicBPError" ng-show="ctrl.vitalForm.diastolicBP.$invalid && !ctrl.vitalForm.diastolicBP.$pristine" class="error-block">Invalid BP</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small">
+        <div class=" form-group-lg padding-bottom-small">
+            <label for="">How was the BP taken? </label>
+            <select ng-model="vital.BPMethodID" id="bpMethodType" name="bpMethodType" class="form-control ellipsis"
+                    ng-options="bpMethod.ID as bpMethod.Name for bpMethod in BPMethods">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.pulse.$invalid && !ctrl.vitalForm.pulse.$pristine }">
+            <label for="pulse">Pulse <sup>*</sup></label>
+            <input type="number" class="form-control ellipsis" required="true" min="0" ng-model="vital.Pulse" id="pulse" name="pulse" />
+            <p id="pulseBPError" ng-show="ctrl.vitalForm.pulse.$invalid && !ctrl.vitalForm.pulse.$pristine" class="error-block">Invalid pulse</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-show="gender==2">
+        <div class="form-group-lg padding-bottom-small" id="lmpErrortd" ng-class="{ 'has-error' : ctrl.vitalForm.lmp.$invalid && !ctrl.vitalForm.lmp.$pristine }">
+            <label for="lmp">LMP</label>
+            <mydatepicker opened="VitalDateOpened" id="lmp" name="lmp" dob-name="'lmp'" new-date="vital.LMP" end-date="endDate" date-options="dateOptions" call-function-on-change="validateVitalFutureDate()"></mydatepicker>
+            <p id="lmpError" ng-show="ctrl.vitalForm.lmp.$invalid && !ctrl.vitalForm.lmp.$pristine" class="error-block">Invalid date (MM/DD/YYYY)</p>
+        </div>
+    </div>
+</div>
+<div class="row med-names padding-top-small">
+    <div class="col-md-2 padding-bottom-small form-group-lg">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.temperature.$invalid && !ctrl.vitalForm.temperature.$pristine }">
+            <label for="temperature">Temperature</label>
+            <input type="number" class="form-control ellipsis" id="temperature" min="0" max="200" name="temperature" ng-model="vital.Temperature" />
+            <p id="temperatureError" ng-show="ctrl.vitalForm.temperature.$error.pattern && !ctrl.vitalForm.temperature.$pristine" class="error-block">Invalid temperature</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small form-group-lg">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.oxygenSaturation.$invalid && !ctrl.vitalForm.oxygenSaturation.$pristine }">
+            <label for="oxygenSaturation">Oxygen Saturation SpO2</label>
+            <input type="number" class="form-control ellipsis" ng-model="vital.OxygenSaturation" min="1" max="99" id="oxygenSaturation" name="oxygenSaturation" />
+            <p id="oxygenSaturationError" ng-show="ctrl.vitalForm.oxygenSaturation.$invalid && !ctrl.vitalForm.oxygenSaturation.$pristine" class="error-block">Invalid oxygen saturation</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small form-group-lg">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.respiratoryRate.$invalid && !ctrl.vitalForm.respiratoryRate.$pristine }">
+            <label for="respiratoryRate">Respiratory Rate RR</label>
+            <input type="number" class="form-control ellipsis" ng-model="vital.RespiratoryRate" min="1" max="99" id="respiratoryRate" name="respiratoryRate" />
+            <p id="respiratoryRateError" ng-show="ctrl.vitalForm.respiratoryRate.$invalid && !ctrl.vitalForm.respiratoryRate.$pristine" class="error-block">Invalid respiratory rate</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small form-group-lg">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.glucose.$invalid && !ctrl.vitalForm.glucose.$pristine }">
+            <label for="glucose">Glucose</label>
+            <input type="number" class="form-control ellipsis" min="0" max="999" id="glucose" name="glucose" ng-model="vital.Glucose" />
+            <p id="glucoseError" ng-show="ctrl.vitalForm.glucose.$invalid && !ctrl.vitalForm.glucose.$pristine" class="error-block">Invalid glucose</p>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small form-group-lg">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.vitalForm.waistCircumference.$invalid && !ctrl.vitalForm.waistCircumference.$pristine }">
+            <label for="waistCircumference">Waist Circumference</label>
+            <input type="number" class="form-control ellipsis" id="waistCircumference" min="1" max="99" name="waistCircumference" ng-model="vital.WaistCircumference" />
+            <p id="waistCircumferenceError" ng-show="ctrl.vitalForm.waistCircumference.$invalid && !ctrl.vitalForm.waistCircumference.$pristine" class="error-block">Invalid waist circumference</p>
+        </div>
+    </div>
+</div>

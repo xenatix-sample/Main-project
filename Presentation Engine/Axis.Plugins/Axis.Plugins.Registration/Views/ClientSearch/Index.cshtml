@@ -1,0 +1,84 @@
+﻿<keypress-events on-save="save()" on-next="save(1)" on-cancel="cancel()" ></keypress-events>
+
+<div class="ng-cloak container-fluid row row-offcanvas row-offcanvas-right row-onscreen height-fix">
+    <flyout-contact data-contact-model="contactModel"></flyout-contact>
+    @* Right side slide out panel
+        <div class="sidebar-offcanvas col-lg-3 col-md-4 col-sm-6 col-xs-12 panel-scroll">
+            <div class="panel panel-default nomargin-top">
+                <div class="panel panel-default nomargin-top"></div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>*@
+    <div class="jumbotron">
+        <form class="form-inline" name="searchForm" ng-submit="searchForm.$valid">
+            <div class="container-fluid padding-small">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg">
+                        <input type="text" name="ClientSearch" id="txtClientSearch" auto-focus event-focus="autoFocus" ng-model="searchText"
+                                placeholder="Search" tabindex="0" class="form-control"   ng-keydown ="($event.which === 13)?getClientSummary(searchText):0">
+                        @* added icon as button *@
+                        <span class="input-group-btn">
+                            <button type="submit" ng-click="getClientSummary(searchText)" class="btn btn-link">
+                                <i class="fa fa-search fa-fw"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <div class="panel panel-primary panel-main">
+            <div class="panel-heading pull-left padding-top hidden">
+                <h3 class="panel-title">
+                    <a href="javascript:void(0)">Recently Added</a> |
+                    <a href="javascript:void(0)" class="inactive">Recently Viewed</a>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <table id="contactsTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th data-field="mrn"
+                                data-sortable="true">MRN</th>
+                            <th data-field="fname"
+                                data-sortable="true">First Name</th>
+                            <th data-field="lname"
+                                data-sortable="true">Last Name</th>
+                            <th data-field="mname"
+                                data-sortable="true">Middle Name</th>
+                            <th data-field="birthdate"
+                                data-sortable="true">Date Of Birth</th>
+                            <th data-field="gender"
+                                data-sortable="true">Gender</th>
+                            <th data-field="ssn"
+                                data-sortable="true">SSN</th>
+                            <th data-field="dln"
+                                data-sortable="true">DL #</th>
+                            <th data-field="idn"
+                                data-sortable="true">ID #</th>
+                            <th data-field="preferredName"
+                                data-sortable="true">Preferred Name</th>
+                            <th data-field="ctype"
+                                data-sortable="true">Division</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿<div apply-security>
+    <div class="input-group">
+        <input type="text"
+               id="{{elementId}}"
+               name="{{elementName}}"
+               data-validation-name="{{validationName}}"
+               class="form-control {{elementClass}}"
+               ng-model="selectedProvider"
+               ng-disabled="isDisabled"
+               typeahead-wait-ms="500"
+               typeahead-on-select="onProviderSelected($item); asyncSelected = '';"
+               typeahead-trigger typeahead-select-on-blur="true"
+               typeahead="provider as provider.Name for provider in providers | filter:$viewValue | orderBy: 'Name'"
+               typeahead-editable="false"
+               typeahead-no-results="noProviderFound" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-info" ng-disabled="isDisabled" ng-click="triggerTypeahead(elementName);">
+                <i class="fa fa-search" />
+            </button>
+        </span>
+    </div>
+    <p ng-show="noProviderFound" ng-cloak class="error-block">No Results Found!</p>
+</div>

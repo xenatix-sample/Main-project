@@ -1,0 +1,116 @@
+﻿@model Axis.PresentationEngine.Models.JsonViewModel
+@{
+    Layout = null;
+}
+//<script>
+    (function () {
+        angular.module('xenatixApp')
+        .factory('roleSecurityService', ['$filter', "$http", "$q", 'settings',
+            function ($filter, $http, $q, settings) {
+                var securityData = @Html.Raw(Model.Json);
+
+                var CONFIG = {
+                    controllerAction: "/security/rolesecurity/"
+                };
+
+                function getUserRoleSecurity() {
+                    var dfd = $q.defer();
+
+                    var dfd = $q.defer();
+                    $http.get(settings.webApiBaseUrl + CONFIG.controllerAction + 'getUserRoleSecurity')
+                    .success(function (response, status, header, config) {
+                        securityData = eval(response.data);
+                        dfd.resolve(securityData);
+                    })
+                    .error(function (data, status, header, config) {
+                        dfd.reject(status);
+                    });
+
+                    return dfd.promise;
+                };
+
+                function hasPermission(permissionKey, permission, permissionLevel) {
+                    if (!securityData || !permissionKey || !permission)
+                        return false;
+
+                    var permissionKeys = permissionKey.split("|");
+                    var permissions = [];
+                    var componentPermissions = false;
+
+                    for (var permissionKeyIndex = 0; permissionKeyIndex < permissionKeys.length; permissionKeyIndex ++) {
+
+                        permissions = [];
+                        permissions = $filter('filter')(securityData,function(itm) { return itm.DataKey.toLowerCase() == permissionKeys[permissionKeyIndex].trim().toLowerCase() },true);
+
+                        for (var permissionIndex = 0; permissionIndex < permissions.length; permissionIndex++) {
+                            // check for component permission
+                            if(permissions[permissionIndex].ComponentPermissions && permissions[permissionIndex].ComponentPermissions.length>0)
+                                componentPermissions = checkPermission(permissions[permissionIndex].ComponentPermissions,permission, permissionLevel);
+
+                            if(componentPermissions)
+                                return true;
+                        }
+                    }
+                    return false;
+                };
+
+                function hasModulePermission(moduleName, permission, permissionLevel) {
+                    if (!securityData || !moduleName || !permission)
+                        return false;
+
+                    var moduleNames = moduleName.split("|");
+                    var permissions = [];
+                    var componentPermissions = false;
+                    var modulePermissions = false;
+
+                    for (var modIndex = 0; modIndex < moduleNames.length; modIndex ++) {
+                        permissions = [];
+                        permissions = $filter('filter')(securityData, function(itm) { return itm.ModuleName.toLowerCase() == moduleNames[modIndex].trim().toLowerCase() },true);
+
+                        if (permissions && permissions.length > 0) {
+                            for (var permissionIndex = 0; permissionIndex < permissions.length; permissionIndex++) {
+                                // check for module permission
+                                modulePermissions = false;
+
+                                if(permissions[permissionIndex].ModulePermissions && permissions[permissionIndex].ModulePermissions.length>0)
+                                    modulePermissions = checkPermission(permissions[permissionIndex].ModulePermissions,permission, permissionLevel)
+
+                                if(modulePermissions)
+                                    return true;
+                                else {// check for component permission
+                                    componentPermissions = false;
+
+                                    if(permissions[permissionIndex].ComponentPermissions && permissions[permissionIndex].ComponentPermissions.length>0)
+                                        componentPermissions = checkPermission(permissions[permissionIndex].ComponentPermissions,permission, permissionLevel);
+                                    if(componentPermissions)
+                                        return true;
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                };
+
+                function checkPermission(obj,permission,permissionLevel){
+                    if (obj) {
+                        var permissions = permission.split("|");
+                        for (var objIndex = 0; objIndex < obj.length; objIndex++) {
+                            for (var permissionIndex = 0; permissionIndex < permissions.length; permissionIndex++) {
+                                if (obj[objIndex].PermissionName && obj[objIndex].PermissionName.toLowerCase() == permissions[permissionIndex].trim().toLowerCase() && (permissionLevel ? obj[objIndex].PermissionLevelID == permissionLevel : true)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    return false;
+                }
+
+                return {
+                    getUserRoleSecurity:getUserRoleSecurity,
+                    hasPermission: hasPermission,
+                    hasModulePermission: hasModulePermission
+                };
+            }
+        ]);
+    }());
+    //</script>

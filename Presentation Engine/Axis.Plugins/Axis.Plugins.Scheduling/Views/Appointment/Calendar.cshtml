@@ -1,0 +1,669 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" ignore-enter="true" permission-key="Scheduling-Appointment-SingleAppointment" permission="read" permission-mode="readonly"></keypress-events>
+<style>
+.calendar_header h1 { font-size:2.2rem; margin-top:0.07rem; }
+
+/* calendar controls */
+.calendar_header .controls { font-size:1.45rem; }
+.calendar_header .controls a { line-height:2.35rem; }
+.calendar_header .controls .prev,
+.calendar_header .controls .next { font-size:1.65rem; margin:0 5px; }
+
+/* sat-sun checkboxes */
+.calendar_header .form-inline i.fa.fa-fw.fa-square { font-size:1.825rem; margin-right:0; }
+.calendar_header .form-inline i.fa.fa-fw.fa-check-square { font-size:1.825rem; margin-right:0; }
+.calendar_header .form-inline .xencheckbox label { font-size:1.05rem; letter-spacing:0.05rem; line-height:2.45rem; }
+
+/* dropdowns */
+.calendar_header .form-control { height:2.8rem; font-size:1.325rem; padding:3px 12px 3px 6px; }
+
+/* legend */
+.calendar_header .legend li { font-size:1.21rem; color:#666; }
+body.dark .calendar_header .legend li { color:#ccc; }
+.calendar_header li.status-one .fa { color:#be6a28; }
+.calendar_header li.status-two .fa { color:#9a3494; }
+.calendar_header li.status-three .fa { color:#27aae1; }
+.calendar_header li.status-four .fa { color:#38469d; }
+
+/* CALENDAR */
+.calendar { margin-bottom:35px; padding:4px 0 1px 0; background:#fff; }
+body.dark .calendar { background:#666; }
+.calendar .owl-wrapper-outer { border-right:1px dashed #81bc41; }
+.calendar .owl-carousel .owl-item { cursor:default; }
+.calendar .owl-carousel .item { width:100%; margin:0; padding:0; }
+.calendar .owl-theme .owl-controls .owl-pagination { margin-top:3.0rem; }
+@@media (max-width:1184px) { .calendar .owl-theme .owl-controls .owl-page span { display:none!important; }}
+.scheduling_calendar { table-layout:fixed; width:100%; min-height:600px; background-color:transparent; }
+.scheduling_calendar caption { padding-bottom:3.0rem; }
+.scheduling_calendar th, .scheduling_calendar td { border-top:1px solid transparent; border-bottom:1px solid #3f3e3e; border-right:1px solid #3f3e3e; border-left:1px solid transparent; }
+.scheduling_calendar tbody td { cursor:pointer; }
+.scheduling_calendar .date td { background:#fff; }
+body.dark .scheduling_calendar .date td { background:#252525; }
+.scheduling_calendar .date td span { display:block; font-size:1.45rem; font-weight:bold; color:#666; margin:2px auto; border-bottom:1px solid #666; }
+body.dark .scheduling_calendar .date td span { color:#81bc41; } 
+.scheduling_calendar td { vertical-align:top; }
+.scheduling_calendar thead tr:first-child th:first-child { position:relative; width:6.75rem; }
+.scheduling_calendar tbody th { font-weight:normal; color:#168e4c!important; text-align:center; background:#fff; }
+body.dark .scheduling_calendar tbody th { color:#fff!important; background:#252525; }
+.scheduling_calendar tbody td { height:2.125rem/*3.0*/; }
+.scheduling_calendar tr:first-child th, .scheduling_calendar tr:first-child td { font-weight:normal; text-align:center; padding:2px 0; border-top-color:transparent; border-bottom-color:#313131; }
+.scheduling_calendar tbody tr:first-child th { width:6.75rem; font-weight:normal; color:#fff; border-bottom-color:#666; }
+body.dark .scheduling_calendar tbody tr:first-child th{ color:#fff; border-bottom-color:#666; }
+.scheduling_calendar tbody tr:first-child td { border-top-color:transparent; border-bottom-color:#666; }
+.scheduling_calendar th:first-child, .scheduling_calendar td:first-child { border-left-color:transparent; }
+.scheduling_calendar tr:last-child th, .scheduling_calendar tr:last-child td { border-bottom-color:transparent; }
+.scheduling_calendar th:last-child, .scheduling_calendar td:last-child { border-right-color:transparent; }
+.scheduling_calendar tr.datehrs th, .scheduling_calendar tr.datehrs td { border-bottom-color:#666; }
+th.stubhead { vertical-align:top; }
+th.stubhead span { display:block; padding-left:8px; }
+th.day_in_days span { display:block; margin-bottom:3px; margin-left:4px; }
+.scheduling_calendar .form-control { width:89%; height:28px; height:2.8rem; font-size:12.5px; font-size:1.25rem; margin-bottom:5px; margin-left:6px; padding-left:6px; } 
+/* cell styles */
+.scheduling_calendar tbody td { vertical-align:middle; text-align:center; }
+.scheduling_calendar tbody td span { display:table-cell; width:auto; font-size:1.15rem; line-height:1.6rem; text-align:left; margin:0 auto; padding:3px 10px; vertical-align:top; }
+.scheduling_calendar tbody td span.drop { display:inline; padding:0; }
+.scheduling_calendar tbody td span .fa { font-size:1.2rem; }
+.scheduling_calendar tbody td.office_closed { text-align:center; background:#fff; }
+body.dark .scheduling_calendar tbody td.office_closed { background:#666; }
+.scheduling_calendar tbody td.office_closed span { display:inline-block; color:#666; text-align:center; }
+body.dark .scheduling_calendar tbody td.office_closed span { color:#252525; }
+.scheduling_calendar td.date_blocked { background:#222; }
+.scheduling_calendar td.date_blocked:hover { background:#414141; }
+.scheduling_calendar td.date_avail {  background:#81bc41; }
+.scheduling_calendar td.date_avail:hover {  background:#62863b; }
+.scheduling_calendar td.date_appt { color:#313131; background:#ccc; }
+.scheduling_calendar td.date_appt:hover { background:#979797; }
+.scheduling_calendar td.half_hour { }
+.scheduling_calendar td.col_hover { background:#62863b; }
+
+.scheduling_calendar td.date_appt.col_hover { background:#979797; }
+.scheduling_calendar td.date_blocked.col_hover { background:#414141; }
+.scheduling_calendar td.date_avail.col_hover { background:#62863b; }
+
+.scheduling_calendar td.col_select { background:#668d3c; }
+.scheduling_calendar td.col_hover .status, td.col_select .status { display:block; height:4px; margin-top:-8px; background:#8cff0f; }
+.dateid span { display:block; padding:0 4px 4px 4px; }
+.datehrs th { color:#666!important; text-align:center; }
+.scheduling_calendar td .status-one { color:#be6a28; }
+.scheduling_calendar td .status-two { color:#9a3494; }
+.scheduling_calendar td .status-three { color:#27aae1; }
+.scheduling_calendar td .status-four { color:#38469d; }
+body.dark .datehrs th { color:#ccc!important; }
+
+/* current time */
+.time_marker { position:absolute; }
+.time_marker .fa { float:left; color:#168e4c; }
+.time_marker .time_marker_line { float:right; display:block; width:63px; height:1px; margin-top:7px; margin-left:-2px; background:#168e4c; }
+body.dark .time_marker .fa { color:#81bc41; }
+body.dark .time_marker .time_marker_line { background:#81bc41; }
+
+/* APPOINTMENT PANEL ---------------------------*/
+.calendar_details .navbar-toggle { position:absolute; top:-2px; right:-14px; color:rgba(0,0,0,0.128); }
+.calendar_details .section-block { width:100%; margin:-13px 0 0 0; background:#f2f2f2; }
+.calendar_details { }
+/* header bar */
+.calendar_details .controls { padding-bottom:3px; }
+.calendar_details .controls h2 { font-size:15px; font-size:1.5rem; margin-top:3px; margin-bottom:10px; }
+.calendar_details .controls #status { }
+.calendar_details .controls #global { }
+#content .calendar_details .controls #global a { display:inline-block; font-size:2.0rem; margin-left:8px; padding:1px; border-radius:4px; -webkit-transition:none; -o-transition:none; transition:none; cursor:pointer; }
+#content .calendar_details .controls #global a:hover { color:#0f6234; }
+.calendar_details .controls #status button,
+.calendar_details .controls #status button[disabled]:hover { font-size:1.45rem; color:#7c7c7c; border:0; background:transparent; }
+.calendar_details .controls #status button.active { color:#168e4c; }
+.calendar_details .controls #status button:hover { color:#168e4c; }
+.calendar_details .controls #status button .fa { margin-right:3px; }
+.xen-check-in { display:inline-block; width:1.5rem; height:1.5rem; margin-bottom:-1px; vertical-align:baseline; background:url("../Images/icon_check_in.svg") no-repeat 0 0; background-size:100%; }
+button:hover .xen-check-in { background-position:0 75%; }
+.calendar_details #status .fa-exclamation-triangle, .calendar_details #status .fa-ban { font-size:1.6rem; }
+body.dark .calendar_details .controls #status button,
+body.dark .calendar_details .controls #status button[disabled]:hover { color:#7c7c7c; }
+body.dark .calendar_details .controls #status button.active { color:#ccc; }
+body.dark .calendar_details .controls #status button:hover { color:#fff; }
+body.dark .xen-check-in { background-position:0 0; }
+body.dark button:hover .xen-check-in { background-position:0 50%; }
+body.dark .calendar_details .section-block { background:#515151; }
+body.dark .calendar_details .navbar-toggle { color:rgba(255,255,255,0.2); }
+body.dark .calendar_details .controls #global a { color:#2e2e2e; background:#757575; }
+body.dark .calendar_details .controls #global a:hover { background:#ccc; }
+body.dark .calendar_details .controls #global a:hover .fa { color:#2e2e2e; }
+/* image column */
+.calendar_details .profile_img { border-radius:10px 0 0 10px; background:#ccc; }
+.calendar_details .profile_img a { color:#666; margin-top:15px; }
+#content .calendar_details .profile_img.status-one { background:#be6a28; }
+#content .calendar_details .profile_img.status-two { background:#9a3494; }
+#content .calendar_details .profile_img.status-three { background:#27aae1; }
+#content .calendar_details .profile_img.status-four { background:#38469d; }
+body.dark .calendar_details .profile_img { background:#313131; }
+body.dark .calendar_details .profile_img a { color:#fff; }
+/* content area */
+.calendar_details .section-block h2 { font-size:2.2rem; }
+.calendar_details .section-block h3 { font-size:1.28rem; font-weight:bold; margin-top:0; }
+.calendar_details label { height:auto; }
+.calendar_details input[disabled] { color:#666!important; box-shadow:none; padding-left:0; background:#f2f2f2!important; }
+.calendar_details input[disabled], 
+.calendar_details .list-inline>li,
+.calendar_details p { font-size:1.45rem; }
+body.light .calendar_details .section-block label { color:#168e4c; }
+body.light .calendar_details .form-control { background:#fff; }
+body.dark .calendar_details input[disabled] { color:#fff!important; background:#515151!important; opacity:1.0!important; }
+body.dark .calendar_details p { color:#ccc; }
+body.dark .calendar_details input[disabled], 
+body.dark .calendar_details .list-inline>li, 
+body.dark .calendar_details p { color:#fff; }
+
+
+@@media (max-width:991px) {
+    .calendar_details .divcell { vertical-align:top; }
+    .calendar_details .profile_img a { font-size:89%; }
+    .calendar_details .section-block h2 { font-size:2.65rem; }
+    .calendar_details .section-block h3 { font-size:1.75rem; }
+    .calendar_details input[disabled], 
+    .calendar_details .list-inline>li,
+    .calendar_details p { font-size:1.75rem; }
+    .calendar_details textarea { margin-bottom:20px; }
+}
+@@media (max-width:767px) {
+    .calendar_details .controls h2 { font-size:1.9rem; }
+    #content .calendar_details .controls #status a  { font-size:2.5rem; margin-right:20px; }
+    #content .calendar_details .controls #global a { font-size:3.125rem; margin-left:11px; }
+    .calendar_details .section-block { margin-top:-6px; }
+    .calendar_details .section-block h2 { font-size:3.0rem; }
+    body.dark .calendar_details .controls #global a, 
+    body.dark .calendar_details .controls #global a:hover .fa { color:#252525; }}
+
+/*------ phone --------*/
+@@media (max-width:500px) {
+    .calendar_nav { margin-right:15px; margin-left:0; }
+    .calendar_header .legend { padding:0 15px!important; }
+    .calendar_header .legend .row { margin:0 15px 0 0!important; }
+    .calendar_header .controls .prev, .calendar_header .controls .next { font-size:4.0rem; } 
+    .calendar_header .controls a { width:3.75rem; }
+    .calendar_header .text-nowrap { display:inline-block; margin-bottom:5px; }
+}
+@@media (max-width:768px) {
+    .calendar { display:none; }
+    .calendar_header { margin:0; }
+    .calendar_header h1 { text-align:center; }
+    .calendar_header .calendar_nav { margin-bottom:-10px; }
+    .calendar_header .controls { font-size:2.0rem; text-align:center; line-height:3.0rem; }
+    .calendar_header .controls a { display:inline-block; width:2.0rem; line-height:3.0rem; }
+    .calendar_header .controls .prev, .calendar_header .controls .next { font-size:3.0rem; vertical-align:middle; }
+    .calendar_header .weekend { display:none; }
+    .calendar_header .calendar_filter { width:100%; margin:10px 15px 0 0; padding:10px; border-radius:13px 13px 0 0; background:#f2f2f2; }
+    body.dark  .calendar_header .calendar_filter { background:#666; }
+    .calendar_header .form-control { height:4.5rem; font-size:2.0rem; margin-bottom:10px; }
+    body.light .calendar_header .form-control { border-color:#ccc; background:#fcfcfc; }
+    .calendar_header .legend { width:100%; margin:0 auto; padding:0; }
+    .calendar_header .legend .row { margin:0 15px 0 0; padding-bottom:4px; border-radius:0 0 13px 13px; background:#f2f2f2; }
+    body.dark .calendar_header .legend .row { background:#666; }
+    .calendar_header .legend .list-unstyled { display:table; float:none; }
+    .calendar_header .legend .legend_basic,
+    .calendar_header .legend .legend_type { width:100%; padding:0 10px; }
+    .calendar_header .legend .legend_type { margin-top:-8px; }
+    .calendar_header .legend li { font-size:1.65rem; }
+    .calendar_header .legend .legend_basic li,
+    .calendar_header .legend .legend_type li { float:left; width:50%; padding:3px 0; text-indent:8px; text-align:left; }
+    .calendar_header .legend .legend_type li { margin:-4px 0 0 0; }
+    .calendar_header .legend .legend_type li.status-one { float:right; margin-top:-3.2rem; }
+    .calendar_header .legend .legend_type li.status-four { margin-top:1px; }
+    
+}
+/*------ phone + tablet ------*/
+@@media (max-width:1212px) {
+    .calendar_header .legend { width:100%; padding:0; }
+    .calendar_header .legend .row { margin:0; }
+    .calendar_header .legend .col-md-12 { width:100%; padding:0; }
+    .calendar_header .legend_basic .fa,
+    .calendar_header .legend_type .fa { display:none; }
+    .calendar_header li.status-one { color:#fff!important; background:#be6a28; }
+    .calendar_header li.status-two { color:#fff!important; background:#9a3494; }
+    .calendar_header li.status-three { color:#252525!important; background:#27aae1; }
+    .calendar_header li.status-four { color:#fff!important; background:#38469d; }
+    .calendar_header li.blocked { color:#fff!important; background:#222; }
+    .calendar_header li.appointment { color:#252525!important; background:#ccc; }
+    .calendar_header li.available { color:#fff!important; background:#81bc41; }
+}
+/*------ tablet --------*/
+@@media (min-width:769px) and (max-width:1212px) {
+    .calendar_nav { padding-left:10px; }
+    .calendar_header .col-md-9 { width:100%; }
+    .calendar_header .calendar_nav { display:table; width:100%; }
+    .calendar_header .calendar_title { width:50%; }
+    .calendar_header .controls { position:absolute; top:0; right:0; }
+    .calendar_header .select { text-align:right; }
+    .calendar_header .weekend { float:left; width:25%; }
+    .calendar_header .calendar_filter { float:left; width:75%; margin-left:-70px; padding-right:0; }
+    .calendar_header .calendar_filter .col-md-4 { float:left; width:33.333%; }
+    .calendar_header .form-control  { height:3.0rem; font-size:1.45rem; }
+    .calendar_header .legend .list-unstyled { display:table; float:left; }
+    .calendar_header .legend .legend_basic { width:33.3333%; padding-right:0; }
+    .calendar_header .legend .legend_type { width:66.6666%; padding-left:0; }
+    .calendar_header .legend .list-unstyled li { float:left; display:block; text-align:left; padding:3px 6px; }
+    .calendar_header .legend .legend_basic li { width:33.333%; }
+    .calendar_header .legend .legend_type li { width:25%; }
+    .scheduling_calendar tbody td { height:2.125rem; }
+    .scheduling_calendar tbody td span { font-size:1.1rem; line-height:1.5rem; }
+    .scheduling_calendar tbody td span .fa { font-size:1.1rem; }
+    .scheduling_calendar tbody td.office_closed span { font-size:1.1rem; padding:0; }
+    .scheduling_calendar .drop { position:absolute; width:1px; height:1px; overflow:hidden; }
+}
+/*------ desktop --------*/
+@@media (min-width:1201px) {
+    .calendar_nav { padding-left:10px; }
+    .calendar_header .calendar_filter .col-md-4 { padding-right:0; }
+}
+/*------ large monitor --------*/
+@@media (min-width:1365px) {
+    .calendar_nav { padding-left:10px; }
+    .calendar_header .controls { width:29.5%; }
+    .calendar_header .weekend { width:14%; }
+    .calendar_header .calendar_filter { width:56.5%; }
+}
+</style>
+
+<div class="row padding-right-small padding-left-small" ui-view>
+    <div ng-controller="calendarController" class="row-offcanvas row-offcanvas-right offcanvas-large">     
+
+
+        @* HIDDEN PANEL *@
+        <div class="sidebar-offcanvas calendar_details" ng-show="apptDetails.IsGroupAppointment == null || apptDetails.IsGroupAppointment == 0">
+            <div class="panel panel-default nomargin-top">
+                <div class="panel-body nopadding-top">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row controls padding-small">
+                                <div class="col-lg-4 col-md-4 col-sm-4 nopadding-left">
+                                    <h2 class="uppercase">Appointment Details</h2>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 nopadding" id="status">
+                                    <button ng-disabled="apptDetails.Contact.AppointmentStatusID != null" ng-click="UpdateStatus(3)"><i class="fa xen-check-in"></i>Check-in</button> 
+                                    <button ng-disabled="apptDetails.Contact.AppointmentStatusID != 3" ng-click="UpdateStatus(4)"><i class="fa fa-sign-in"></i>Check-out</button> 
+                                    <button ng-disabled="apptDetails.Contact.AppointmentStatusID != null" ng-click="UpdateStatus(1)"><i class="fa fa-exclamation-triangle"></i>No Show</button> 
+                                    <button ng-disabled="apptDetails.Contact.AppointmentStatusID !== null" ng-click="goToCancelAppt()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                                 
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 nopadding text-right" id="global">
+                                    <a ng-click="goToChart()" class="">
+                                        <i class="fa fa-fw fa-file-text"><span class="sr-only">View {{apptDetails.FullName}}'s Chart</span></i>
+                                    </a>
+                                    <a ng-hide="apptDetails.IsCancelled == true || apptDetails.Contact.AppointmentStatusID != null" ng-click="goToAppt()" class="">
+                                        <i class="fa fa-fw fa-pencil"><span class="sr-only">Edit Appointment</span></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row padding-small">
+                                <div class="col-lg-12 section-block divtable nopadding">
+                                    <button type="button" class="navbar-toggle" ng-click="closeFlyout()"><span class="sr-only">Return to calendar</span></button>
+                                    <div class="row divrow">
+                                        <div class="col-lg-2 col-md-2 profile_img divcell {{apptDetails.ApptTypeClass}}">
+                                            <img src="/Images/profile_male.svg" alt="{{apptDetails.FullName}}">
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 divcell padding-bottom-small">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 padding-top-xsmall">
+                                                    <h2>{{apptDetails.FullName}}</h2>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 padding-top-small">
+                                                    <h3 class="uppercase nomargin-bottom">Alias</h3>
+                                                    <input type="text" name="Alias" id="Alias" class="form-control ellipsis" disabled="disabled" value="{{apptDetails.Alias}}" />
+                                                </div>
+                                            </div>
+                                            <div class="row padding-top-small">
+                                                <div class="col-lg-6 col-md-6">
+                                                    <h3 class="uppercase">Program</h3>
+                                                    <ul class="list-inline list-alt">
+                                                        <li>{{apptDetails.ProgramName}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <h3 class="uppercase">Current Appointment</h3>
+                                                    <p>{{apptDetails.ApptDate}} {{apptDetails.StartTime}} - {{apptDetails.EndTime}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="row padding-top-xsmall">
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label for="apptType" class="uppercase">Appointment Type</label>
+                                                            <input type="text" name="apptType" id="apptType" class="form-control ellipsis" disabled="disabled" value="{{apptDetails.ApptType}}" />
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-5">
+                                                            @* disabled form field *@
+                                                            <h3 class="uppercase">Provider(s)</h3>
+                                                            <div ng-repeat="provider in apptDetails.Providers">
+                                                                <input type="text" name="provider" id="provider" class="form-control ellipsis" disabled="disabled" value="{{provider.Name}}" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6" style="display: none;">
+                                                    @* TODO: Implement after the Dec 9 demo *@
+                                                    <div class="row padding-top-xsmall">
+                                                        <div class="col-lg-12 col-md-12">
+                                                            <h3 class="uppercase">Previous Appointment</h3>
+                                                            <p>Date Time to Time</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row padding-top-small">
+                                                <div class="col-lg-6 col-md-6">
+                                                    <xen-memobox label="Appointment Note" ng-model="apptDetails.Note" rows="5" maxlength="500" is-disabled="true" id="apptNote"></xen-memobox>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <h3 class="uppercase">Medications</h3>
+                                                            <ul class="list-inline">
+                                                                @* TODO *@
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <h3 class="uppercase">Related Diagnosis</h3>
+                                                            <ul class="list-inline">
+                                                                @* TODO *@
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row padding-top-xsmall">
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <h3 class="uppercase">Allergies</h3>
+                                                            <ul class="list-inline">
+                                                                @* TODO *@
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label class="uppercase">Age</label>
+                                                            <input type="text" name="age" id="age" class="form-control ellipsis" disabled="disabled" value="{{apptDetails.Age}}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-offcanvas calendar_details" ng-show="apptDetails.IsGroupAppointment == true">
+            <div class="panel panel-default nomargin-top">
+                <div class="panel-body nopadding-top">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row controls padding-small">
+                                <div class="col-lg-4 col-md-4 col-sm-4 nopadding-left">
+                                    <h2 class="uppercase">Appointment Details</h2>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 nopadding" id="status">
+                                    <button  ng-disabled="apptDetails.IsCancelled == true"  ng-click="goToGroupNote()"><i class="fa xen-check-in"></i>Group Note</button>
+                                    <button  ng-disabled="apptDetails.IsCancelled == true"  ng-click="cancelAppointment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 nopadding text-right" id="global">
+                                    <a ng-hide="apptDetails.IsCancelled == true" ng-click="goToGroupAppt()" class="">
+                                        <i class="fa fa-fw fa-pencil"><span class="sr-only">Edit Appointment</span></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row padding-small">
+                                <div class="col-lg-12 section-block divtable nopadding">
+                                    <button type="button" class="navbar-toggle" ng-click="closeFlyout()"><span class="sr-only">Return to calendar</span></button>
+                                    <div class="row divrow">
+                                        <div class="col-lg-2 col-md-2 profile_img divcell {{apptDetails.ApptTypeClass}}">
+                                            <img src="/Images/icon_group.svg" alt="Group Appointment">
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 divcell padding-bottom-small">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 padding-top-xsmall">
+                                                    <h2>{{apptDetails.ApptInfo.Name}}</h2>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 padding-top-small">
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="row padding-top-small">
+                                                <div class="col-lg-6 col-md-6">
+                                                    <h3 class="uppercase">Program Unit</h3>
+                                                    <ul class="list-inline list-alt">
+                                                        <li>{{apptDetails.ProgramUnit}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <h3 class="uppercase">Current Appointment</h3>
+                                                    <p>{{apptDetails.ApptDate}} {{apptDetails.StartTime}} - {{apptDetails.EndTime}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="row padding-top-xsmall">
+                                                        <div class="col-lg-3 col-md-3">
+                                                            <label for="apptType" class="uppercase">Appointment Type</label>
+                                                            <input type="text" name="apptType" id="apptType" class="form-control ellipsis" disabled="disabled" value="{{apptDetails.ApptInfo.Type}}" />
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3">
+                                                            <h3 class="uppercase">Provider(s)</h3>
+                                                            <div ng-repeat="provider in apptDetails.Providers">
+                                                                <input type="text" name="provider" id="provider" class="form-control ellipsis" disabled="disabled" value="{{provider.Name}}" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            @* disabled form field *@
+                                                            <label for="location" class="uppercase">Location</label>
+                                                            <input type="text" name="location" id="location" class="form-control ellipsis" disabled="disabled" value="{{apptDetails.FacilityName}}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 padding-top-xsmall">
+                                                    <h3 class="uppercase">Individuals</h3>
+                                                    <div ng-repeat="contact in apptDetails.contactsNameList">
+                                                        <input type="text" name="location" id="location" class="form-control ellipsis" disabled="disabled" value="{{contact.FirstName + ' ' + contact.LastName}}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row padding-top-small">
+                                                <div class="col-lg-6 col-md-6">
+                                                    <xen-memobox label="Appointment Note" ng-model="apptDetails.GroupComments" rows="5" maxlength="500" is-disabled="true" id="apptNote"></xen-memobox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        @* CALENDAR HEADER *@
+        <div class="row calendar_header">
+            <div class="col-md-9">
+                <div class="row calendar_title">
+                    <div class="col-md-12">
+                        <h1 class="uppercase">My Calendar</h1>
+                        <div class="icon-label">
+                              <a ng-hide="" href="unsafe:javascript: void(0) javascript:void(0)" class="plain font-size-xlarge" role="button" security permission-key="Scheduling-Appointment-SingleAppointment" permission="create" title="Group Scheduling" ng-click="Goto('scheduling.groupschedulingsearch')" style="display: block;"><i class="fa fa-plus-circle"></i> <span>Group Appointment</span></a>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row calendar_nav margin-bottom-xsmall">
+                    <div class="col-lg-4 col-md-6 nopadding-left controls">
+                        <div class="select">
+                            <span class="sr-only">Screen Readers: Navigate the calendar by month, week, and year.</span>
+                            <span class="text-nowrap"><a href="javascript:void(0)" ng-click="changeMonth(-1)" title="previous month" class="prev"><i class="fa fa-caret-left"></i><span class="sr-only">previous month</span></a> {{ includedCalendarDays[0].monthName }} <a href="javascript:void(0)" ng-click="changeMonth(1)" title="next month" class="next"><i class="fa fa-caret-right"></i><span class="sr-only">next month</span></a></span>
+                            <span class="text-nowrap"><a href="javascript:void(0)" ng-click="changeDate(-7)" title="previous week" class="prev"><i class="fa fa-caret-left"></i><span class="sr-only">previous week</span></a> {{ includedCalendarDays[0].fullDate.getDate() }} - {{ includedCalendarDays[includedCalendarDays.length - 1].fullDate.getDate() }}  <a href="javascript:void(0)" ng-click="changeDate(7)" class="next"><i class="fa fa-caret-right" title="next week"></i><span class="sr-only">next week</span></a></span>
+                            <span class="text-nowrap"><a href="javascript:void(0)" ng-click="changeYear(-1)" title="previous year" class="prev"><i class="fa fa-caret-left"></i><span class="sr-only">previous year</span></a> {{ includedCalendarDays[0].fullDate.getFullYear() }} <a href="javascript:void(0)" ng-click="changeYear(1)" title="next year" class="next"><i class="fa fa-caret-right"></i><span class="sr-only">next year</span></a></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 nopadding weekend">
+                        <div class="form-inline">
+                            <span class="sr-only">Screen Readers: Turn weekend view on or off</span>
+                            <span><xen-checkbox data-ng-model="config.includeSaturday" data-checkbox-id="day_sat" data-label="Sat" /></span>
+                            <span><xen-checkbox data-ng-model="config.includeSunday" data-checkbox-id="day_sun" data-label="Sun" /></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-8 calendar_filter">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <label class="sr-only" for="calendarUserView">Select User Calendar</label>
+                                <select id="calendarUserView" class="form-control"
+                                        ng-model="config.selectedUserID"
+                                        ng-options="user.ID as user.Name for user in config.users | orderBy:'Name'"></select>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <label class="sr-only" for="calendarView">Select Calendar View</label>
+                                <select id="calendarView" class="form-control"
+                                        ng-model="config.selectedFacilityID"
+                                        ng-options="facility.ID as facility.Name for facility in config.facilities | orderBy:'Name'">
+                                    <option value="" class="">Full Calendar</option>
+                                </select>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-3 legend">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="sr-only">Screen Readers: Color legend - the same information decoded here by color will be provided in text form in the calendar for you.</span>
+                        <ul class="list-unstyled text-right col-md-6 legend_basic">
+                            <li class="blocked">Blocked <i class="fa fa-square fa-fw date_blocked"></i></li>
+                            <li class="appointment">Appointment <i class="fa fa-square fa-fw date_appt"></i></li>
+                            <li class="available">Available <i class="fa fa-square fa-fw date_avail"></i></li>
+                        </ul>
+                        <ul class="list-unstyled text-right col-md-6 legend_type">
+                            @*<li class="status-one">Assessment <i class="fa fa-square fa-fw"></i></li>
+                            <li class="status-two">Nursing <i class="fa fa-square fa-fw"></i></li>
+                            <li class="status-three">Injection <i class="fa fa-square fa-fw"></i></li>
+                            <li class="status-four">DID <i class="fa fa-square fa-fw"></i></li>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* CALENDAR DAYS *@
+        <div class="calendar">
+            <div id="scheduling_calendar" class="owl-carousel">
+                <div class="item">
+                    <div ng-if="config.timeMarkerTop > 0" class="time_marker" ng-style="{ top: config.timeMarkerTop }"><i class=" fa fa-caret-right"></i><span class="time_marker_line"></span></div>
+                    <table class="scheduling_calendar">
+                        <caption class="sr-only"><span>View Schedule Calendar</span></caption>
+                        <thead>
+                            <tr>
+                                <th rowspan="2" scope="col"><i ng-if="isLoading" class="fa fa-fw fa-3x fa-spinner fa-spin"></i></th>
+                                <th scope="col" class="uppercase" ng-repeat="calendarDay in includedCalendarDays">
+                                    {{ calendarDay.dayOfTheWeek.substring(0, 3) }}<span class="drop">{{ calendarDay.dayOfTheWeek.substring(3) }}</span>
+                                </th>
+                            </tr>
+                            <tr class="date">
+                                <td ng-repeat="calendarDay in includedCalendarDays"><span>{{ calendarDay.dateOfTheMonth }}</span></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="calendarHour in calendarHours">
+                                <th ng-if="calendarHour.hourHeader" hour="{{calendarHour.slot}}" rowspan="{{calendarHour.rowSpan}}" scope="row" class="uppercase">{{calendarHour.hourHeader}}</th>
+                                <td ng-repeat="calendarCell in getCalendarRowData(calendarHour.slot)" rowspan="{{::calendarCell.rowSpan}}" class="{{::calendarCell.className}}" title="{{::calendarCell.title}}"
+                                    ng-click="loadAppointmentDetails(calendarCell.CID, calendarCell.AID)">
+                                    <span ng-if="calendarCell.AID" title="Appointment scheduled">
+                                        @*<span ng-repeat="contact in calendarCell.Contacts"><i class="fa fa-square fa-fw {{::calendarCell.apptType}}"></i> <span class="drop">{{::contact.First}}</span> {{::contact.Last}}</span>*@
+                                        <span>
+                                            <i class="fa fa-square fa-fw {{::calendarCell.apptType}}"></i>
+                                            <span class="drop">{{::calendarCell.apptInfo.Name}}</span></br>
+                                            <span>{{::calendarCell.apptInfo.Type}} - {{::calendarCell.apptInfo.ServiceName}}</span>
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+        </div>
+
+        @*CANCEL GROUP APPOINTMENT MODEL*@
+        <div class="modal fade" id="cancelGroupScheduleModel" tabindex="-1" role="dialog" aria-labelledby="cancelGroupScheduleModel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close" ng-click="cancelModal();"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Cancel Group Schedule</h4>
+                    </div>
+                    <form role="form" id="cancelGroupScheduleForm" name="ctrl.cancelGroupScheduleForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" novalidate bs-modifiable="true" set-form-status set-form-mode>
+                        {{ctrl.cancelGroupScheduleForm.modified ? setform(true):setform(false)}}
+                        <div class="modal-body">
+                            <div class="form-group-lg padding-bottom-small">
+                                <span><xen-radio-button data-ng-model="groupScheduleToCancel.IsCancelAllAppoitment" data-radio-button-id="appointmentAll" data-label="All Appointments" data-ng-value="true" /></span>
+                                <span><xen-radio-button data-ng-model="groupScheduleToCancel.IsCancelAllAppoitment" data-radio-button-id="appointmentSelected" data-label="Selected Appointments" data-ng-value="false" /></span>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.cancelGroupScheduleForm.appointmentCancelReason.$invalid && !ctrl.cancelGroupScheduleForm.appointmentCancelReason.$pristine }">
+                                        <label for="Program">Cancel Reason <sup>*</sup></label>
+                                        <select data-ng-model="groupScheduleToCancel.CancelReasonID" class="form-control prevent-disable" id="appointmentCancelReason" name="appointmentCancelReason" ng-required="true"
+                                                ng-options="reason.ID as reason.Name for reason in getLookupsByType('CancelReason')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="">
+                                        <xen-memobox label="Comment" rows="5" maxlength="400" ng-model="groupScheduleToCancel.CancelComment" name="cancelComment" id="cancelComment"></xen-memobox>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row text-right nopadding-left padding-right-small">
+                                <button type="button" id="cancelAppointmentSave" class="btn btn-default btn-lg" name="btnSave" ng-click="save(false, true)" security permission-key="Scheduling-Appointment-SingleAppointment" permission="delete">SAVE</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @*Edit recurrent/single instance of this appt modal*@
+        <div class="modal fade" id="editSingleOrRecurrentAptModal" tabindex="-1" role="dialog" aria-labelledby="editSingleOrRecurrentAptModal" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close" ng-click="cancelSingleOrRecurrentModal();"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Open Recurring Appointment</h4>
+                    </div>
+                    <form role="form" id="editSingleOrRecurrentAptForm" name="ctrl.editSingleOrRecurrentAptForm" check-form novalidate bs-modifiable="true" set-form-status set-form-mode>
+                        {{ctrl.cancelAppointmentForm.modified ? setform(true):setform(false)}}
+                        <div class="modal-body">
+                            <div class="form-group-lg padding-bottom-small" ng-if="appointmentToCancel.RecurrenceID !== null">
+                                <span><xen-radio-button data-ng-model="appointmentToEdit.IsRecurrentAppointment" data-radio-button-id="appointmentAll" data-label="All Appointments" data-ng-value="true" /></span>
+                                <span><xen-radio-button data-ng-model="appointmentToEdit.IsRecurrentAppointment" data-radio-button-id="appointmentSelected" data-label="Selected Appointment" data-ng-value="false" /></span>
+                            </div>
+
+                            <div class="row text-right nopadding-left padding-right-small">
+                                <button type="button" id="editSingleOrRecurrentAptOpen" class="btn btn-default btn-lg" name="editSingleOrRecurrentAptOpen" ng-click="editSingleOrRecurrigAppt()" security permission-key="Scheduling-Appointment-SingleAppointment" permission="update">OPEN</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

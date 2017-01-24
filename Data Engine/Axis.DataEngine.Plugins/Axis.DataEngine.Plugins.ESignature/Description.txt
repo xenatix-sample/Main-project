@@ -1,0 +1,8 @@
+﻿Group: Axis.DataEngine.Plugins.ESignature
+FriendlyName: Axis.DataEngine.Plugins.ESignature
+SystemName: Axis.DataEngine.Plugins.ESignature
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 2
+FileName: Axis.DataEngine.Plugins.ESignature.dll

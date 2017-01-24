@@ -1,0 +1,38 @@
+﻿<form name="addServiceWorkflowForm" data-ng-submit="addServiceWorkflowForm.$valid" xen-check-form data-on-save="saveProgramUnitServiceWorkflowAssignment(isNext, isMandatory, hasErrors, keepForm)" permission-key="{{permissionKey}}" permission="{{resolvePermission(pageSecurity)}}" novalidate bs-modifiable="true" set-form-status="addServiceWorkflowForm">
+    <div class="sidebar-offcanvas" style="height:100%">
+        <div class="panel panel-default nomargin-top padding-bottom-small">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="col-md-12 col-sm-12 col-xs-12 border-top border-bottom padding-xsmall nopadding-right margin-bottom-small">
+                        <h3 class="nomargin padding-left-small pull-left">Add Service Workflows to Program Unit</h3>
+                        <a href="javascript:void(0)" alt="Close Panel" ng-click="closeServiceWorkflowFlyout()" class="pull-right nomargin-right">
+                            <div class="btn-group">
+                                <i class="fa fa-times-circle">
+                                    <span class="sr-only">Close Section</span>
+                                </i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body nopadding-top" id="panel-last-accessed">
+                <div class="panel-body panel-scroll ps-active-y">
+                    <div class="row">
+                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12 padding-bottom-small">
+                            <xen-multi-select-typeahead class="xen-multi-select" element-id="serviceWorkflowName" element-name="serviceWorkflowName" label="Service Workflows" form-name="addServiceWorkflowForm" data-validation-name="Service Workflows" selected-values="programUnitServiceWorkflow.ServiceWorkflows" ng-model="serviceWorkflows" is-required="true"></xen-multi-select-typeahead>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer nopadding-top">
+                <div class="col-lg-12 nopadding-left text-right">
+                    <button type="button" id="serviceWorkflowClose" name="serviceWorkflowClose" class="btn btn-info-alt uppercase btn-lg" ng-click="closeServiceWorkflowFlyout()">CANCEL</button>
+                    <xen-submit name="submit" value="SAVE" permission-key="{{permissionKey}}" permission="{{resolvePermission(pageSecurity)}}" is-next="false" mandatory="true" data-style="btn btn-default uppercase btn-lg"></xen-submit>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer" data-spy="affix" data-offset-top="10" data-offset-bottom="0">
+        </div>
+    </div>
+</form>

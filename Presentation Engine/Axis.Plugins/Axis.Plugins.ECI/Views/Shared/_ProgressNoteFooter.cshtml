@@ -1,0 +1,77 @@
+﻿
+<div class="row section-block margin-bottom-xsmall">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <xen-memobox is-disabled="isReadOnlyForm" label="Comments" rows="5" maxlength="500" ng-model="noteHeader.ProgressNote.Comments" id="comments"></xen-memobox>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-5 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="takenby">Entered By</label>
+                    <select class="form-control" ng-model="noteHeader.TakenBy" name="takenBy" id="takenBy"
+                            ng-options="users.ID as users.Name for users in getLookupsByType('Users')">
+                        <option value="" ng-selected="selected">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-5 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="signature">Signature</label>
+                    <select ng-model="noteHeader.ProgressNote.SignatureID" id="signature" name="signature" class="form-control">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small col-inline">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-checkbox data-ng-model="noteHeader.ProgressNote.IsDischarged" data-checkbox-id="IsDischarged" data-label="Should Child be Discharged?" />
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 padding-bottom-small">
+        <div ng-show="noteHeader.ProgressNote.IsDischarged" class="form-group-lg padding-bottom-small">
+            <label for="referralType">Discharge Reason</label>
+            <select ng-model="noteHeader.Discharge.DischargeReasonID" id="referralType" name="referralType" class="form-control" ng-options="dischargeReason.ID as dischargeReason.Name for dischargeReason in DischargeReasonList">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-show="noteHeader.ProgressNote.IsDischarged">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.progressNoteForm.dischargedate.$invalid && !ctrl.progressNoteForm.dischargedate.$pristine}">
+            <label for="dischargedate">Date of Discharge</label>
+            <mydatepicker id="dob" new-date="noteHeader.Discharge.DischargeDate" end-date="enddate" start-date="dischargedate" dob-name="dischargedate" date-options="dateOptions"></mydatepicker>
+            <p id="dischargedateerror" ng-show="ctrl.progressNoteForm.dischargedate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+        </div>
+    </div>
+</div>
+<div class="row section-block" ng-show="noteHeader.ProgressNote.IsDischarged">
+    <div class="col-lg-3 col-md-5 padding-bottom-small" ng-show="noteHeader.ProgressNote.IsDischarged">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="referralSource">Entered By</label>
+            <select class="form-control" ng-model="noteHeader.Discharge.TakenBy" name="dischargetakenBy" id="dischargetakenBy"
+                    ng-options="users.ID as users.Name for users in getLookupsByType('Users')">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-5 padding-bottom-small" ng-show="noteHeader.ProgressNote.IsDischarged">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="dischargesignature">Signature</label>
+            <select ng-model="noteHeader.Discharge.Signature" id="dischargesignature" name="dischargesignature" class="form-control" ng-options="type.ID as type.Name for type in getLookupsByType('Signature')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>

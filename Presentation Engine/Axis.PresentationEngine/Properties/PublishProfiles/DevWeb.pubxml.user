@@ -1,0 +1,1434 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\scratch\testing</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="App_Data/InstalledPlugins.txt">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Areas/Account/Views/Account/Login.cshtml">
+      <publishTime>07/07/2015 17:16:27</publishTime>
+    </File>
+    <File Include="Areas/Account/Views/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Areas/Admin/Scripts/app/controllers/adminController.js">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Admin/Scripts/app/services/adminService.js">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Admin/Edit.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Admin/Index.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/Admin/RoleEdit.cshtml">
+      <publishTime>07/01/2015 09:49:31</publishTime>
+    </File>
+    <File Include="Areas/Admin/Views/web.config">
+      <publishTime>06/29/2015 10:21:56</publishTime>
+    </File>
+    <File Include="Areas/Cache/Views/Cache/Manifest.cshtml">
+      <publishTime>06/25/2015 08:58:16</publishTime>
+    </File>
+    <File Include="Areas/Cache/Views/Web.config">
+      <publishTime>06/23/2015 17:22:12</publishTime>
+    </File>
+    <File Include="Areas/Configuration/Views/Plugins/List.cshtml">
+      <publishTime>06/23/2015 17:22:12</publishTime>
+    </File>
+    <File Include="Areas/Configuration/Views/web.config">
+      <publishTime>06/23/2015 17:22:12</publishTime>
+    </File>
+    <File Include="Areas/Dashboard/Views/Dashboard/Index.cshtml">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Areas/Dashboard/Views/web.config">
+      <publishTime>06/24/2015 10:03:18</publishTime>
+    </File>
+    <File Include="Areas/Logging/Views/web.config">
+      <publishTime>06/23/2015 17:22:12</publishTime>
+    </File>
+    <File Include="Areas/Security/Scripts/app/controllers/roleController.js">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Security/Scripts/app/services/roleService.js">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Security/Scripts/app/unit test/roleControllerTest.js">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Security/Scripts/app/unit test/testRunner.html">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Security/Views/Role/Edit.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Security/Views/Role/Index.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Areas/Security/Views/web.config">
+      <publishTime>06/23/2015 17:22:23</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.pdb">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="bin/Autofac.dll">
+      <publishTime>06/23/2015 17:22:26</publishTime>
+    </File>
+    <File Include="bin/Autofac.Integration.Mvc.dll">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="bin/Autofac.Integration.WebApi.dll">
+      <publishTime>07/08/2015 17:50:35</publishTime>
+    </File>
+    <File Include="bin/AutoMapper.dll">
+      <publishTime>07/14/2015 14:12:25</publishTime>
+    </File>
+    <File Include="bin/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="bin/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="bin/AutoMapper.pdb">
+      <publishTime>07/14/2015 14:12:25</publishTime>
+    </File>
+    <File Include="bin/Axis.Configuration.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="bin/Axis.Configuration.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="bin/Axis.Constant.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="bin/Axis.Constant.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="bin/Axis.Helpers.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="bin/Axis.Helpers.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="bin/Axis.Logging.dll">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="bin/Axis.Logging.pdb">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Common.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Common.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="bin/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="bin/Axis.PluginsEngine.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="bin/Axis.PluginsEngine.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="bin/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 15:56:04</publishTime>
+    </File>
+    <File Include="bin/Axis.PresentationEngine.Helpers.dll">
+      <publishTime>07/16/2015 15:10:58</publishTime>
+    </File>
+    <File Include="bin/Axis.PresentationEngine.Helpers.pdb">
+      <publishTime>07/16/2015 15:10:58</publishTime>
+    </File>
+    <File Include="bin/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 15:56:04</publishTime>
+    </File>
+    <File Include="bin/Axis.Service.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="bin/Axis.Service.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>07/14/2015 18:20:34</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>07/14/2015 18:20:34</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>06/23/2015 17:21:41</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
+      <publishTime>07/14/2015 18:20:35</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Cookies.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Facebook.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Google.dll">
+      <publishTime>07/14/2015 18:20:37</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.MicrosoftAccount.dll">
+      <publishTime>07/14/2015 18:20:37</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
+      <publishTime>07/14/2015 18:20:37</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Twitter.dll">
+      <publishTime>07/14/2015 18:20:37</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>06/23/2015 17:22:36</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>07/14/2015 18:20:38</publishTime>
+    </File>
+    <File Include="bin/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>07/08/2015 17:50:36</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>06/23/2015 17:22:34</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>07/09/2013 11:04:28</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>07/09/2013 11:04:28</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>06/23/2015 17:22:34</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>06/23/2015 17:22:35</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>06/23/2015 17:22:35</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>06/23/2015 17:22:35</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>07/14/2015 18:20:39</publishTime>
+    </File>
+    <File Include="Content/bootstrap.css">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Content/bootstrap.min.css">
+      <publishTime>07/09/2015 12:10:31</publishTime>
+    </File>
+    <File Include="Content/Site.css">
+      <publishTime>07/09/2015 12:10:30</publishTime>
+    </File>
+    <File Include="Content/toastr.css">
+      <publishTime>06/23/2015 17:22:23</publishTime>
+    </File>
+    <File Include="Content/toastr.less">
+      <publishTime>06/23/2015 17:22:23</publishTime>
+    </File>
+    <File Include="Content/toastr.min.css">
+      <publishTime>06/23/2015 17:22:23</publishTime>
+    </File>
+    <File Include="Content/toastr.scss">
+      <publishTime>06/23/2015 17:22:23</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Fonts/glyphicons-halflings-regular.eot">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Fonts/glyphicons-halflings-regular.svg">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Fonts/glyphicons-halflings-regular.woff">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>07/01/2015 16:57:01</publishTime>
+    </File>
+    <File Include="Images/BgHead.png">
+      <publishTime>06/23/2015 17:22:23</publishTime>
+    </File>
+    <File Include="Images/Logo.png">
+      <publishTime>06/23/2015 17:22:23</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Constant.dll">
+      <publishTime>07/16/2015 11:11:48</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Constant.pdb">
+      <publishTime>07/16/2015 11:11:48</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Entity.Common.dll">
+      <publishTime>07/01/2015 23:58:15</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Entity.Common.pdb">
+      <publishTime>07/01/2015 23:58:13</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 11:11:49</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 11:11:49</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Address.dll">
+      <publishTime>07/16/2015 14:10:56</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Address.pdb">
+      <publishTime>07/15/2015 21:59:19</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 11:11:49</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 11:11:49</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Email.dll">
+      <publishTime>07/16/2015 14:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Email.pdb">
+      <publishTime>07/15/2015 21:59:18</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 11:11:50</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 11:11:50</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Phone.dll">
+      <publishTime>07/16/2015 14:10:56</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Phone.pdb">
+      <publishTime>07/15/2015 21:59:18</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Registration.dll">
+      <publishTime>07/16/2015 14:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Registration.pdb">
+      <publishTime>07/16/2015 14:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 11:11:50</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 11:11:50</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration.dll">
+      <publishTime>07/16/2015 14:10:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration.dll.config">
+      <publishTime>07/14/2015 18:20:30</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration.pdb">
+      <publishTime>07/16/2015 14:10:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Constant.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Constant.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Entity.Common.dll">
+      <publishTime>07/01/2015 23:58:15</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Entity.Common.pdb">
+      <publishTime>07/01/2015 23:58:13</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Address.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Address.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Email.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Email.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Phone.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Phone.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Registration.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Registration.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Plugins.Registration.dll">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Plugins.Registration.dll.config">
+      <publishTime>07/14/2015 18:20:30</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.Plugins.Registration.pdb">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Description.txt">
+      <publishTime>06/23/2015 17:22:10</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Microsoft.Owin.xml">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/additionalDemographyController.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Constant.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Constant.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Entity.Common.dll">
+      <publishTime>07/01/2015 23:58:15</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Entity.Common.pdb">
+      <publishTime>07/01/2015 23:58:13</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Address.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Address.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Email.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Email.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Phone.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Phone.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Registration.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Registration.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Plugins.Registration.dll">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Plugins.Registration.dll.config">
+      <publishTime>07/14/2015 18:20:30</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.Plugins.Registration.pdb">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Description.txt">
+      <publishTime>06/23/2015 17:22:10</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Microsoft.Owin.xml">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/patientController.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/QuickRegistrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/registrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/System.Web.Optimization.xml">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/controllers/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/additionalDemographyController.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/additionalDemographyService.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Constant.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Constant.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Entity.Common.dll">
+      <publishTime>07/01/2015 23:58:15</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Entity.Common.pdb">
+      <publishTime>07/01/2015 23:58:13</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Address.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Address.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Email.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Email.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Phone.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Phone.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Registration.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Registration.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Plugins.Registration.dll">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Plugins.Registration.dll.config">
+      <publishTime>07/14/2015 18:20:30</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.Plugins.Registration.pdb">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Description.txt">
+      <publishTime>06/23/2015 17:22:10</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Microsoft.Owin.xml">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/patientController.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/patientService.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/QuickRegistrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/QuickRegistrationService.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/registrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/registrationService.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/System.Web.Optimization.xml">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Scripts/app/services/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/System.Web.Optimization.xml">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/additionalDemographyController.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/additionalDemographyService.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Constant.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Constant.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Entity.Common.dll">
+      <publishTime>07/01/2015 23:58:15</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Entity.Common.pdb">
+      <publishTime>07/01/2015 23:58:13</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Address.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Address.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Email.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Email.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Phone.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Phone.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Registration.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Registration.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Plugins.Registration.dll">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Plugins.Registration.dll.config">
+      <publishTime>07/14/2015 18:20:30</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.Plugins.Registration.pdb">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Description.txt">
+      <publishTime>06/23/2015 17:22:10</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Index.cshtml">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Microsoft.Owin.xml">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/patientController.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/patientService.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/QuickRegistrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/QuickRegistrationService.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/registrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/registrationService.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/System.Web.Optimization.xml">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/AdditionalDemographic/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/additionalDemographyController.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/additionalDemographyService.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Constant.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Constant.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Entity.Common.dll">
+      <publishTime>07/01/2015 23:58:15</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Entity.Common.pdb">
+      <publishTime>07/01/2015 23:58:13</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Address.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Address.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Email.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Email.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Phone.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Phone.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Registration.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Registration.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Plugins.Registration.dll">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Plugins.Registration.dll.config">
+      <publishTime>07/14/2015 18:20:30</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.Plugins.Registration.pdb">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Description.txt">
+      <publishTime>06/23/2015 17:22:10</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Index.cshtml">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Microsoft.Owin.xml">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/patientController.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/patientService.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/QuickRegistrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/QuickRegistrationService.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/registrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/registrationService.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/System.Web.Optimization.xml">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/_Address.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/_Client.cshtml">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/QuickRegistration/_Contact.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Add.cshtml">
+      <publishTime>07/15/2015 10:07:41</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/additionalDemographyController.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/additionalDemographyService.js">
+      <publishTime>07/15/2015 10:07:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Constant.dll">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Constant.pdb">
+      <publishTime>07/16/2015 15:10:51</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Entity.Common.dll">
+      <publishTime>07/01/2015 23:58:15</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Entity.Common.pdb">
+      <publishTime>07/01/2015 23:58:13</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 15:10:52</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Address.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Address.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Email.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Email.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Phone.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Phone.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Registration.dll">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Registration.pdb">
+      <publishTime>07/16/2015 15:10:57</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 15:10:53</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Plugins.Registration.dll">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Plugins.Registration.dll.config">
+      <publishTime>07/14/2015 18:20:30</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.Plugins.Registration.pdb">
+      <publishTime>07/16/2015 15:11:02</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 15:11:01</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Description.txt">
+      <publishTime>06/23/2015 17:22:10</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Index.cshtml">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Microsoft.Owin.xml">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/patientController.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/patientService.js">
+      <publishTime>07/09/2015 17:26:58</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/QuickRegistrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/QuickRegistrationService.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/registrationController.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/registrationService.js">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/System.Web.Optimization.xml">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/_Address.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/_Client.cshtml">
+      <publishTime>07/14/2015 18:20:32</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/_Contact.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/_ContactDemographics.cshtml">
+      <publishTime>07/10/2015 16:45:26</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/Views/Registration/_ContactMethods.cshtml">
+      <publishTime>07/10/2015 09:56:22</publishTime>
+    </File>
+    <File Include="Plugins/Axis.Plugins.Registration/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Plugins/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 11:37:47</publishTime>
+    </File>
+    <File Include="Plugins/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 11:37:47</publishTime>
+    </File>
+    <File Include="Plugins/Description.txt">
+      <publishTime>06/23/2015 17:22:10</publishTime>
+    </File>
+    <File Include="Plugins/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Microsoft.Owin.xml">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="Plugins/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/System.Web.Optimization.xml">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Plugins2/AutoMapper.Net4.dll">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins2/AutoMapper.Net4.pdb">
+      <publishTime>06/23/2015 17:22:27</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Constant.dll">
+      <publishTime>07/16/2015 11:11:48</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Constant.pdb">
+      <publishTime>07/16/2015 11:11:48</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Entity.Common.dll">
+      <publishTime>07/01/2015 23:58:15</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Entity.Common.pdb">
+      <publishTime>07/01/2015 23:58:13</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Account.dll">
+      <publishTime>07/16/2015 11:11:49</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Account.pdb">
+      <publishTime>07/16/2015 11:11:49</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Address.dll">
+      <publishTime>07/16/2015 14:10:56</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Address.pdb">
+      <publishTime>07/15/2015 21:59:19</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Cache.dll">
+      <publishTime>07/16/2015 11:11:49</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Cache.pdb">
+      <publishTime>07/16/2015 11:11:49</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Email.dll">
+      <publishTime>07/16/2015 14:10:57</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Email.pdb">
+      <publishTime>07/15/2015 21:59:18</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Logging.dll">
+      <publishTime>07/16/2015 11:11:50</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Logging.pdb">
+      <publishTime>07/16/2015 11:11:50</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Phone.dll">
+      <publishTime>07/16/2015 14:10:56</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Phone.pdb">
+      <publishTime>07/15/2015 21:59:18</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Registration.dll">
+      <publishTime>07/16/2015 14:10:57</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Registration.pdb">
+      <publishTime>07/16/2015 14:10:57</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Security.dll">
+      <publishTime>07/16/2015 11:11:50</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Model.Security.pdb">
+      <publishTime>07/16/2015 11:11:50</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Plugins.Registration.dll">
+      <publishTime>07/16/2015 14:10:58</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Plugins.Registration.dll.config">
+      <publishTime>07/14/2015 18:20:30</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.Plugins.Registration.pdb">
+      <publishTime>07/16/2015 14:10:58</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.PresentationEngine.dll">
+      <publishTime>07/16/2015 11:37:47</publishTime>
+    </File>
+    <File Include="Plugins2/Axis.PresentationEngine.pdb">
+      <publishTime>07/16/2015 11:37:47</publishTime>
+    </File>
+    <File Include="Plugins2/Description.txt">
+      <publishTime>06/23/2015 17:22:10</publishTime>
+    </File>
+    <File Include="Plugins2/Microsoft.Owin.dll">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins2/Microsoft.Owin.xml">
+      <publishTime>07/14/2015 18:20:36</publishTime>
+    </File>
+    <File Include="Plugins2/Owin.dll">
+      <publishTime>06/23/2015 17:22:39</publishTime>
+    </File>
+    <File Include="Plugins2/System.Web.Optimization.dll">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins2/System.Web.Optimization.xml">
+      <publishTime>06/23/2015 17:22:33</publishTime>
+    </File>
+    <File Include="Plugins2/web.config">
+      <publishTime>06/23/2015 17:22:11</publishTime>
+    </File>
+    <File Include="Properties/PublishProfiles/DevWeb.pubxml.user">
+      <publishTime>07/16/2015 15:12:15</publishTime>
+    </File>
+    <File Include="Scripts/app/app.js">
+      <publishTime>06/29/2015 10:21:56</publishTime>
+    </File>
+    <File Include="Scripts/app/directives/toDateDirective.js">
+      <publishTime>07/10/2015 09:56:27</publishTime>
+    </File>
+    <File Include="Scripts/app/filters/boolFilters.js">
+      <publishTime>06/29/2015 18:04:12</publishTime>
+    </File>
+    <File Include="Scripts/app/filters/toDateFilters.js">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Scripts/app/filters/toSSN.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/app/offline/indexedDB.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/app/services/alertService.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular-ui/ui-bootstrap-tpls.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular-ui/ui-bootstrap-tpls.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular-ui/ui-bootstrap.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular-ui/ui-bootstrap.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-animate.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-animate.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-animate.min.js.map">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-mocks.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-resource.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-resource.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-resource.min.js.map">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-route.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-route.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular-route.min.js.map">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/angular/angular.min.js.map">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/bootstrap/bootstrap.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/bootstrap/bootstrap.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/bootstrap/respond.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/bootstrap/respond.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/jQuery/jquery-1.10.2.js">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Scripts/library/jQuery/jquery-1.10.2.min.js">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Scripts/library/jQuery/jquery-1.10.2.min.map">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Scripts/library/jQuery/jquery.validate.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/jQuery/jquery.validate.min.js">
+      <publishTime>06/23/2015 17:22:24</publishTime>
+    </File>
+    <File Include="Scripts/library/jQuery/jquery.validate.unobtrusive.js">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Scripts/library/jQuery/jquery.validate.unobtrusive.min.js">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Scripts/modernizr-2.6.2.js">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Scripts/plugins/toastr/toastr.js">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Scripts/plugins/toastr/toastr.min.js">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Views/Home/Settings.cshtml">
+      <publishTime>07/14/2015 18:20:33</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Views/Shared/Lockout.cshtml">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Views/Shared/_Address.cshtml">
+      <publishTime>07/10/2015 10:33:10</publishTime>
+    </File>
+    <File Include="Views/Shared/_Email.cshtml">
+      <publishTime>07/10/2015 10:35:29</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>07/07/2015 17:16:28</publishTime>
+    </File>
+    <File Include="Views/Shared/_LoginPartial.cshtml">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Views/Shared/_Phone.cshtml">
+      <publishTime>07/10/2015 10:36:30</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>06/23/2015 17:22:25</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>07/16/2015 15:11:21</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

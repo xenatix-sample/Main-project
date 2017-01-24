@@ -1,0 +1,130 @@
+﻿
+<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, false, true)" close-modal="true" on-cancel="CancelReferral()" permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}"></keypress-events>
+<!--close / return to referral queue-->
+<div class="row">
+    <breadcrumbs min-breadcrumbs="2" goto="referralsearch" />
+</div>
+<!--data entry-->
+<div class="row padding-right-small">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form role="form" name="ctrl.referralInformationForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" set-form-status>
+                <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionID)}}" permission-mode="readonly">
+                    @Html.Partial("../Shared/_ReferralHeader")
+                    <div class="row padding-top-small">
+                        <div class="col-md-4 padding-bottom-small">
+                            <!-- Date -->
+                            <div id="referredToDate" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralInformationForm.referredToDate.$invalid && !ctrl.referralInformationForm.referredToDate.$pristine }">
+                                <label for="referredToDate">Referred To Date</label>
+
+                                <mydatepicker is-disabled="isReadOnlyForm" opened="opened" id="referredToDate" name="referredToDate" new-date="referral.Date" dob-name="'referredToDate'"
+                                              date-options="dateOptions" date-required="true" call-function-on-change="validateDatetime()"></mydatepicker>
+
+                                <p id="dateerror" ng-cloak ng-show="ctrl.referralInformationForm.referredToDate.$error.date" class="error-block">Date is invalid</p>
+                                <p ng-cloak ng-show="ctrl.referralInformationForm.referredToDate.$error.required" class="error-block">Select valid date</p>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2 padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralInformationForm.referredToTime.$invalid && !ctrl.referralInformationForm.referredToTime.$pristine }">
+                            <!-- Time -->
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="referredToTime">Time</label>
+                                <input type="text" ng-disabled="isReadOnlyForm" standard-time="" data-ng-model="referral.Time" ui-mask="99:99" ng-keyup="validateDatetime()" placeholder="hh:mm" class="form-control" id="referredToTime" name="referredToTime" ng-trim="true" ng-required="referral.Date" />
+                                <p ng-cloak class="error-block" id="timeFormat" ng-show="ctrl.referralInformationForm.referredToTime.$invalid && !ctrl.referralInformationForm.referredToTime.$pristine">
+                                    <span ng-show="referral.Date">Please select a valid time.</span>
+                                    <span ng-show="!referral.Date">Please select a date.</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 nopadding-right">
+                            <!-- Time frame -->
+                            <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                                <fieldset id="referredTimeAMPMF">
+                                    <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                    <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="referral.AMPM" data-radio-button-id="aptDateAM" data-label="AM" data-ng-value='"AM"' /></span>
+                                    <span><xen-radio-button ng-disabled="isReadOnlyForm" data-ng-model="referral.AMPM" data-radio-button-id="aptDatePM" data-label="PM" data-ng-value='"PM"' /></span>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row section-block margin-bottom-xsmall">
+                        <div class="col-md-5 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralInformationForm.division.$invalid && !ctrl.referralInformationForm.division.$pristine }">
+                                <label for="referredDivision">Division</label>
+                                <select ng-disabled="isReadOnlyForm" ng-model="referral.OrganizationID" id="division" name="division" class="form-control" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('Division') | securityFilter: 'Division' : 'ID': '{{permissionKey}}'">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="uppercase nomargin padding-xsmall border-top">Disposition</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- DISPOSITION INFO -->
+                            <div class="row padding-top-small" ng-class="{ 'has-error' : ctrl.referralInformationForm.disposition.$invalid && !ctrl.referralInformationForm.disposition.$pristine }">
+                                <div class="col-md-4 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <!-- pre-populate this with selection from the disposition screen IF AVAILABLE
+                            otherwise, user will select item from dropdown  -->
+                                        <label for="dispositionStatus">Disposition</label>
+
+                                        <select ng-disabled="isReadOnlyForm" ng-model="disposition.ReferralDispositionID" name="disposition" id="dispositionStatus" class="form-control" ng-options="dispositionType.ID as dispositionType.Name for dispositionType in referralDispositionType">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- display only if 'DENIED' is selected from the dropdown above pre-populate this with info from the disposition screen IF AVAILABLE
+                otherwise, user will enter information here.  -->
+                            <div class="row padding-top-small" ng-show="disposition.ReferralDispositionID==2" ng-class="{ 'has-error' : ctrl.referralInformationForm.reasonForDenail.$invalid && !ctrl.referralInformationForm.reasonForDenail.$pristine }">
+                                <div class="col-md-12 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="">
+                                        <xen-memobox is-disabled="isReadOnlyForm" label="Reason for Denial *" rows="5" maxlength="250" ng-model="disposition.ReasonforDenial" ng-required="disposition.ReferralDispositionID==2" name="reasonForDenail" id="reasonForDenialID"></xen-memobox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="uppercase nomargin padding-xsmall border-top">Activity</h3>
+                    <div class="row section-block">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="actionTaken">Action Taken</label>
+                                        <input ng-disabled="isReadOnlyForm" type="text" id="actionTaken" name="actionTaken" class="form-control ellipsis" ng-model="referral.ActionTaken">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="">
+                                        <xen-memobox is-disabled="isReadOnlyForm" label="Comments" rows="5" maxlength="250" ng-model="referral.Comments" id="referralCommentsID"></xen-memobox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-top-small">
+                        <div class="col-md-5 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="takenBy">Staff Name</label>
+                                <input type="text" tabindex="-1" id="takenBy" name="takenBy" readonly="readonly" class="form-control ellipsis" ng-model="staffName">
+                            </div>
+                        </div>
+                        <div class="col-md-4 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="contactMethod">Staff Contact Method</label>
+                                <input type="text" tabindex="-1" ng-model="contactMethod" ui-mask="(999)999-9999" readonly="readonly" id="contactMethod" name="contactMethod" class="form-control ellipsis">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @Html.Partial("../Shared/_ReferralActionControl")
+            </form>
+        </div>
+    </div>
+</div>

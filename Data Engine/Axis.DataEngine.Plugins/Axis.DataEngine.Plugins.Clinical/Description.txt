@@ -1,0 +1,8 @@
+﻿Group: Axis.DataEngine.Plugins.Clinical
+FriendlyName: Axis.DataEngine.Plugins.Clinical
+SystemName: Axis.DataEngine.Plugins.Clinical
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 1
+FileName: Axis.DataEngine.Plugins.Clinical.dll

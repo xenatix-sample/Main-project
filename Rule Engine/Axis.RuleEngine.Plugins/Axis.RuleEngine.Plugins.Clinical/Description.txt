@@ -1,0 +1,8 @@
+﻿Group: Axis.RuleEngine.Plugins.Clinical
+FriendlyName: Axis.RuleEngine.Plugins.Clinical
+SystemName: Axis.RuleEngine.Plugins.Clinical
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 1
+FileName: Axis.RuleEngine.Plugins.Clinical.dll

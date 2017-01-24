@@ -1,0 +1,186 @@
+﻿<div class="row padding-right-small relative margin-bottom-small" id="primaryHeader">
+    <div class="header-action">
+        <button ng-click="printHeader()">
+            <i class="fa fa-print"><span class="sr-only">Print </span></i> Record
+        </button>
+    </div>
+
+    @* Main Header *@
+    <div class="row header_primary one-true one-true-right" id="primaryHeader">
+        <!-- begin: TOGGLE -->
+        <a class="toggle-header" id="toggleSmall" href="" ng-click="showHideView('primaryHeader','compactHeader')"><i class="fa fa-minus-square"></i><span class="sr-only">Collapse to minimised header</span></a>
+        <!-- end: TOGGLE -->
+        <div class="col col-lg-9 col-md-9 header_quickview">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 profile_img">
+                    <img ng-src="{{ (profilePicture.ThumbnailBLOB == undefined || profilePicture.ThumbnailBLOB == null) && 'Images/profile_male.svg' || 'data:image/jpeg;base64,' + profilePicture.ThumbnailBLOB }}" alt="placeholder image" />
+                    <a href="javascript:void(0);" data-toggle="offcanvasoff" ng-click="openPhotoChange($event)">change</a>
+                </div>
+                <div class="col-lg-10 col-md-10 profile_info">
+                    <div class="row one-true one-true-right margin-bottom-small">
+                        <div class="col-lg-12 col-md-12">
+                            <h1>{{header.FullName}} <span ng-if="showDeceased" class="deceased text-warning">(DECEASED)</span></h1>
+                            <div class="col-lg-4 col-md-4">
+                                <h3>Preferred Name</h3>
+                                <input type="text" name="PreferredName" id="PreferredName" class="form-control ellipsis" ng-disabled="true" ng-model="header.PreferredName" />
+                            </div>
+                            <div class="col-lg-4 col-md-4 border-left">
+                                <label for="DOB">Date Of Birth</label>
+                                <input type="text" name="DOB" id="DOB" class="form-control ellipsis" ng-disabled="true" ng-model="header.DOB" />
+                            </div>
+                            <div class="col-lg-4 col-md-4 border-left">
+                                <label for="medicaidId">Medicaid Id</label>
+                                <input type="text" name="medicaidId" id="medicaidId" class="form-control ellipsis" ng-disabled="true" ng-model="header.MedicaidId" title="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row one-true one-true-right margin-top-small margin-bottom-small">
+                        <div class="col col-lg-4 col-md-4">
+                            <label for="MRN">MRN</label>
+                            <input type="text" name="MRN" id="MRN" value="{{header.IsMerged ? header.MRN + ',' + header.MergedMRN : header.MRN}}" class="form-control ellipsis" ng-disabled="true" title="" />
+                            <i class="fa fa-compress" ng-if="header.IsMerged"></i>
+                        </div>
+                        <div class="col col-lg-4 col-md-4">
+                            <label for="Age">Age</label>
+                            <input type="text" name="Age" id="Age" value="{{header.Age}}" class="form-control ellipsis" ng-disabled="true" ng-model="header.Age" />
+                        </div>
+                        <div class="col col-lg-4 col-md-4">
+                            <label for="legalStatus">Legal Status</label>
+                            <input type="text" name="legalStatus" id="legalStatus" class="form-control ellipsis" ng-model="header.LegalStatus" ng-disabled="true" title="" />
+                        </div>
+                    </div>
+                    <div class="row one-true one-true-right margin-top-small margin-bottom-small">
+                        <div class="col-lg-4 col-md-4">
+
+                        </div>
+                        <div class="col col-lg-4 col-md-4 border-left">
+                            <label for="Gender">{{header.PreferredGenderID != undefined ? 'Preferred Gender' : 'Gender'}}</label>
+                            <input type="text" name="Gender" id="Gender" class="form-control ellipsis" ng-disabled="true" value="{{ header.PreferredGender != '' ? header.PreferredGender : header.Gender }}" />
+                            <i class="fa fa-fw fa-gender {{ header.PreferredGender != '' ? (header.PreferredGender == 'Male' ? 'fa-mars' : header.PreferredGender == 'Female' ? 'fa-venus' : 'fa-genderless') : (header.Gender == 'Male' ? 'fa-mars' : header.Gender == 'Female' ? 'fa-venus' : 'fa-genderless') }}"></i>
+                        </div>
+                        <div class="col col-lg-4 col-md-4">
+                            <label for="LAR">Guardian/LAR</label>
+                            <input type="text" name="larName" id="larName" class="form-control ellipsis" ng-model="header.LARName" ng-disabled="true" title="" />
+                            <input type="text" name="larPhone" id="larPhone" class="form-control ellipsis" ui-mask="999-999-9999" ng-model="header.LARPhone" ng-disabled="true" title="" />
+                        </div>
+                    </div>
+
+                    <div data-ng-show="header.showCompleteHeader">
+                        <div class="row one-true one-true-right margin-top-small margin-bottom-small">
+                            <div class="col col-lg-4 col-md-4">
+                                <label for="Language">Language</label>
+                                <input type="text" name="Language" id="Language" class="form-control ellipsis" ng-disabled="true" ng-model="header.PrimaryLanguage" />
+                            </div>
+                            <div class="col col-lg-4 col-md-4">
+                                <label for="DOB">TKIDS ID</label>
+                                <input type="text" name="DOB" id="DOB" class="form-control ellipsis" ng-disabled="true" ng-model="header.AlternateID" />
+                            </div>
+                            <div class="col col-lg-4 col-md-4">
+                                <h3>School District</h3>
+                                <input type="text" name="DOB" id="DOB" class="form-control ellipsis" ng-disabled="true" ng-model="header.SchoolDistrict" />
+                            </div>
+                        </div>
+                        <div class="row one-true one-true-right margin-top-small margin-bottom-small">
+                            <div class="col col-lg-4 col-md-4">
+                                <label for="Language">Gestational Age</label>
+                                <input type="text" name="Language" id="Language" class="form-control ellipsis" ng-disabled="true" ng-model="header.GestationalAge" />
+                            </div>
+                            <div class="col col-lg-4 col-md-4">
+                                <label for="Language">Race</label>
+                                <input type="text" name="Language" id="Language" class="form-control ellipsis" ng-disabled="true" ng-model="header.Race" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-lg-3 col-md-3 header_sidebar">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 padding-top-small">
+                    <a href="" @*ui-sref="{{header.AllergyUrl}}"*@>
+                        <h3 class="listedTooltip">
+                            Allergies
+                            <ul>
+                                <li ng-repeat="item in header.AllergyData" ng-class="{'error-block':item.AllergySeverityID>header.ColorAllergySeverityID}">{{item.AllergyName}}</li>
+                            </ul>
+                        </h3>
+                        <i class="fa fa-list"><span class="sr-only">View Allergies</span></i>
+                    </a>
+                    <ul id="Allergies" class="list-inline multiLineDetails"><li ng-repeat="allergy in header.AllergyData" ng-class="{'error-block':allergy.AllergySeverityID>header.ColorAllergySeverityID}">{{allergy.AllergyName}}<i class="fa fa-alert"></i></li></ul>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <label for="emergencyContactName">Emergency Contact</label>
+                    <input type="text" name="emergencyContactName" id="emergencyContactName" class="form-control pull-left ellipsis" ng-model="header.EmergencyContactName" ng-disabled="true" />
+                    <label for="emergencyContactPhone"><span class="sr-only">Emergency Contact Phone</span></label>
+                    <input type="text" name="emergencyContactPhone" id="emergencyContactPhone" class="form-control ellipsis" ng-model="header.EmergencyContactPhoneNumber" ng-disabled="true" />
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>
+
+    @*Compact Header*@
+    <div class="row padding-bottom-xsmall padding-top-xsmall header-compact hide" id="compactHeader">
+        <!-- begin: TOGGLE -->
+        <a class="toggle-header" id="toggleBig" href="" ng-click="showHideView('compactHeader','primaryHeader')"><i class="fa fa-plus-square"></i><span class="sr-only">Expand to full header</span></a>
+        <!-- end: TOGGLE -->
+
+        <div class="col-lg-1 col-md-1 padding-top-xsmall">
+            <img ng-src="{{ (profilePicture.ThumbnailBLOB == undefined || profilePicture.ThumbnailBLOB == null) && 'Images/profile_male.svg' || 'data:image/jpeg;base64,' + profilePicture.ThumbnailBLOB }}" alt="placeholder image" />
+    </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>NAME</dt>
+                <dd>{{header.FullName}}</dd>
+            </dl>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>DATE OF BIRTH</dt>
+                <dd>{{header.DOB}}</dd>
+            </dl>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>MRN</dt>
+                <dd>{{header.MRN}}</dd>
+            </dl>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 padding-top-xsmall">
+            <dl>
+                <dt>MEDICAID ID</dt>
+                <dd>{{header.MedicaidId}}</dd>
+            </dl>
+        </div>
+</div>
+
+    @* Alerts *@
+    <div class="row reminders">
+        <div class="row">
+            <div class="reminder-group" ng-repeat="alert in header.Alerts">
+                <a class="btn text-danger" id="btnAlert1"><span class="sr-only">{{alert.ButtonText}}</span><i class="fa fa-exclamation-circle"></i> {{alert.AlertText}}</a>
+                <a class="text-info close" title="Dismiss Alert"><span class="sr-only">Dismiss Alert</span>x</a>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="reportHeaderModal" role="dialog" aria-labelledby="reportModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-top: 1px;">
+                <button type="button" id="closePopup" class="close" data-dismiss="modal" ng-click="closeReport()"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="roleHeader">{{ reportModel.ReportHeader }}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-show="!reportModel.HasLoaded">
+                    <div class="loading text-center padding-top padding-bottom">
+                        <i class="fa fa-spinner fa-spin"><span class="sr-only">Report is loading</span></i>
+                    </div>
+                </div>
+                <div ng-if="reportModel.HasLoaded" style="height: 800px;">
+                    <pdf-maker report-id="headerReport" report-name="{{ reportModel.ReportName }}" report-data="reportModel" report-width="100%" report-height="100%" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

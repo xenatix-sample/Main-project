@@ -1,0 +1,8 @@
+﻿Group: Axis.DataEngine.Plugins.Registration
+FriendlyName: Axis.DataEngine.Plugins.Registration
+SystemName: Axis.DataEngine.Plugins.Registration
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 1
+FileName: Axis.DataEngine.Plugins.Registration.dll

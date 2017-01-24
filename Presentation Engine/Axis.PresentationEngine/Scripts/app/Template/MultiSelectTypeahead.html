@@ -1,0 +1,37 @@
+﻿<div class="form-group-lg" ng-class="{ 'has-error' : formName[elementName].$invalid && (!formName[elementName].$pristine || !formName[elementName + '_search'].$pristine) }">
+    <label for="{{elementId}}">{{label}} <sup ng-if="isRequired">*</sup></label>
+    <div class="input-group">
+        <input type="text" class="form-control" id="{{elementId}}_search" name="{{elementName}}_search" ng-model="searchText" ng-keyup="search()" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-info" ng-click="toggle();">
+                <i class="fa fa-search" />
+            </button>
+        </span>
+    </div>
+    <p data-ng-show="formName[elementName].$error.invalidSearch" class="error-block">{{validationName}} not found.</p>
+
+    <div class="row pod-group pod-group-sm" ng-if="showSelected">
+        <div class="pod" ng-repeat="selectedItem in selectedValues track by $index">
+            <div>
+                <p><strong>{{selectedItem[targetTextKey]}}</strong></p>
+            </div>
+            <a class="text-info close" href="javascript:void(0)" ng-click="removeItem(selectedItem)" title="Remove Attendee" space-key-press><span class="sr-only"></span>x</a>
+        </div>
+    </div>
+    <div ng-show="isVisible">
+        <ul class="dropdown-menu multi-select" style="display: block">
+            <li>
+                <label> <input type="checkbox" ng-model="isAllSelected" ng-click="checkAll()" ng-value="true" /><span class="label">{{customSelectAllText}}</span></label>
+            </li>
+            <li ng-repeat="item in items" should-focus="isActive($index)">
+                <div>
+                    <label><input type="checkbox" ng-model="item.isSelected" value="{{item[sourceValueKey]}}" ng-click="onSelect()" /><span class="label">{{item[sourceTextKey]}}</span></label>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div ng-hide="true">
+        <input type="hidden" id="{{elementId}}" name="{{elementName}}" class="form-control" ng-model="selectedItemsInCSV" data-validation-name="{{validationName}}" ng-required="isRequired" />
+    </div>
+</div>
+

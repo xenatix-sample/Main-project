@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Void Service";
+    Layout = null;
+}
+<div ng-form="voidServiceForm">
+    <div class="col-md-12 padding-bottom-xsmall">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="voidReason">Void Reason</label>
+            <select ng-model="voidModel.ServiceRecordingVoidReasonID" id="voidReason" class="form-control" auto-focus event-focus="voidFocus"
+                    ng-options="voidReason.ID as voidReason.Name for voidReason in getLookupsByType('VoidRecordedServiceReason')"></select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="form-inline form-compact margin-right-small" ng-show="voidModel.ServiceRecordingVoidReasonID === dataEntryErrorID">
+        <div class="col-md-12 nopadding-right margin-bottom-small vertical-scrollbox">
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectOrganization" data-checkbox-id="IncorrectOrganization" data-label="Incorrect Program Unit" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectServiceType" data-checkbox-id="IncorrectServiceType" data-label="Incorrect Service Type" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectServiceItem" data-checkbox-id="IncorrectServiceItem" data-label="Incorrect Service Item" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectServiceStatus" data-checkbox-id="IncorrectServiceStatus" data-label="Incorrect Service Status" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectSupervisor" data-checkbox-id="IncorrectSupervisor" data-label="Incorrect Supervising Provider" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectAdditionalUser" data-checkbox-id="IncorrectAdditionalUser" data-label="Incorrect Co-Provider" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectAttendanceStatus" data-checkbox-id="IncorrectAttendanceStatus" data-label="Incorrect Attendance Status" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectTrackingField" data-checkbox-id="IncorrectTrackingField" data-label="Incorrect Tracking Field" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectStartDate" data-checkbox-id="IncorrectStartDate" data-label="Incorrect Date" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectStartTime" data-checkbox-id="IncorrectStartTime" data-label="Incorrect Start Time" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectEndTime" data-checkbox-id="IncorrectEndTime" data-label="Incorrect End Time" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectDeliveryMethod" data-checkbox-id="IncorrectDeliveryMethod" data-label="Incorrect Delivery Method" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectServiceLocation" data-checkbox-id="IncorrectServiceLocation" data-label="Incorrect Place of service" /></div>
+            <div><xen-checkbox data-ng-model="voidModel.IncorrectRecipientCode" data-checkbox-id="IncorrectRecipientCode" data-label="Incorrect Recipient" /></div>
+        </div>
+    </div>
+    <div class="col-md-12 ">
+        <div class="form-group-lg ">
+            <xen-memobox label="Comments" rows="5" maxlength="250" ng-model="voidModel.Comments" name="Comments"></xen-memobox>
+        </div>
+    </div>
+</div>

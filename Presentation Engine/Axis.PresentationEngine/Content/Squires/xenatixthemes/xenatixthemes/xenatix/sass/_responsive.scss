@@ -1,0 +1,59 @@
+//== Site specific responsive
+
+// Max: 767
+@media (max-width: $screen-xs-max) {
+	.pull-left,
+	.pull-right {
+		float: none !important;
+	}
+	body {
+		&:before {
+			content: '';
+		}
+		#content {
+
+		}
+	}
+
+	img {
+		max-width: 100%;
+	}
+	.btn {
+		white-space: normal;
+	}
+
+	// Off-canvas
+	html,
+	body {
+	  overflow-x: hidden; /* Prevent scroll on narrow devices */
+	}
+	* {
+		@include animation(none !important);
+		opacity: 1 !important;
+	}
+}
+// Min: 768 Max: 991
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+	body {
+		&:before {
+			content: '';
+		}
+		#content{
+
+		}
+	}
+
+	// Off-canvas
+	html,
+	body {
+	  overflow-x: hidden; /* Prevent scroll on narrow devices */
+	}
+}
+// Min: 992 Max: 1199
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+
+}
+// 1200
+@media (min-width: $screen-lg-min) {
+
+}

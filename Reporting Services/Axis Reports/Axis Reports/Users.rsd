@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="Users">
+    <Query>
+      <DataSourceReference>Axis</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@OrganizationID">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Int32</rd:DbType>
+          <rd:IsMultiValued>true</rd:IsMultiValued>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT DISTINCT
+	UserID,
+	Name
+FROM
+	(
+		SELECT
+			0 AS UserID,
+			'None' AS Name,
+			0 AS OrganizationID
+		UNION
+		SELECT
+			U.UserID,
+			LastName + ', ' + FirstName AS Name,
+			ISNULL(UODM.MappingID, 0) AS OrganizationID
+		FROM
+			Core.Users U
+			LEFT OUTER JOIN Core.UserOrganizationDetailsMapping UODM
+				ON U.UserID = UODM.UserID
+	) AS Users
+WHERE
+	OrganizationID IN (@OrganizationID)
+ORDER BY
+	Name</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="UserID">
+        <DataField>UserID</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

@@ -1,0 +1,8 @@
+﻿Group: Axis.RuleEngine.Plugins.Scheduling
+FriendlyName: Axis.RuleEngine.Plugins.Scheduling
+SystemName: Axis.RuleEngine.Plugins.Scheduling
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 1
+FileName: Axis.RuleEngine.Plugins.Scheduling.dll

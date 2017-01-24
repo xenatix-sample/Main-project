@@ -1,0 +1,50 @@
+﻿<div apply-security>
+    <ng-form name="programInfo" novalidate bs-modifiable="true" set-form-status="child">
+        <div class="row section-block margin-bottom-xsmall">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : programInfo.ProgramUnit.$invalid && !programInfo.ProgramUnit.$pristine }">
+                            <label for="ProgramUnit">Program Unit</label>
+                            <select ng-model="programUnitId" id="ProgramUnit" name="ProgramUnit" class="form-control"
+                                    ng-options="ProgramUnit.ID as ProgramUnit.Name for ProgramUnit in programUnit |securityFilter :'ProgramUnit'">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="County">County</label>
+                            <select ng-model="countyId" id="County" name="County" class="form-control" ng-options="County.ID as County.Name for County in getLookupsByType('OrganizationCounty') | filter: {OrganizationID:programUnitId}:true">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : programInfo.SHID.$invalid && !programInfo.SHID.$pristine }">
+                            <label for="SHID">S/H ID</label>
+                            <select ng-model="suicideHomicideId" id="SHID" name="SHID" class="form-control"
+                                    ng-options="SHID.ID as SHID.Name for SHID in getLookupsByType('SHID')">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="Priority">Priority</label>
+                            <select ng-model="callPriorityId" id="Priority" name="Priority" class="form-control"
+                                    ng-options="Priority.ID as Priority.Name for Priority in getLookupsByType('CallCenterPriority')">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-transclude></ng-transclude>
+    </ng-form>
+</div>

@@ -1,0 +1,203 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(false, false, false)" enter-key-stop="!confirm" close-modal="true" on-add="newAdmission()" table-id="admissionTable" stop-next="stopNext" save-on-enter="!confirm" permission-key="General-General-Admission" permission="{{resolvePermission(admission.ContactAdmissionID)}}"></keypress-events>
+
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <form name="ctrl.admissionForm" xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" set-form-status>
+            <div security permission-key="General-General-Admission" permission="{{resolvePermission(admission.ContactAdmissionID)}}" permission-mode="readonly" is-disabled="isAdmissionDisabled" dual-permission="true">
+                <div class="row">
+                    <div class="col-md-12 padding-bottom-small nopadding-left">
+                        <div class="form-group-lg form-inline padding-bottom">
+                            <xen-checkbox ng-model="confirm" auto-focus event-focus="autoFocus" data-checkbox-id="confirmCheckbox" data-label="I confirm all Admission Documentation is complete." ng-disabled="disableCheckBox || !hasPermission" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row section-block margin-bottom-small no-security">
+                    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.admissionForm.admittingUser.$invalid && !ctrl.admissionForm.admittingUser.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="admittingUser">Admitting User <sup>*</sup></label>
+                            <xen-providers provider-model="admission.UserID"
+                                           primary-key="admission.ContactAdmissionID"
+                                           element-name="admittingUser"
+                                           element-id="admittingUser"
+                                           validation-name="Admitting User"
+                                           is-disabled="!confirm || !hasPermission"
+                                           is-required="true"
+                                           filter-criteria="{{providerKey}}"
+                                           element-type="select">
+                            </xen-providers>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-bottom-small form-group-lg" id="todayDateError" ng-class="{'has-error':ctrl.admissionForm.admissionDate.$invalid && !ctrl.admissionForm.admissionDate.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="date">Date <sup>*</sup></label>
+                            <xen-date-picker id="admissionDate" name="admissionDate" future-date-validate="true" data-validation-name="admissionDate" is-disabled="(!confirm && !isCompanyEdit) || !hasPermission" ng-model="todayDate" dob-name="date" futuredatevalidate="true" end-date="endDate" start-date="companyAdmissionDate" date-required="true" date-options="ctrl.dateOptions" is-hidden="isReadOnlyForm" call-function-on-change="admissionDateValidation()"></xen-date-picker>
+                            <p id="adminssionDateInvalid" ng-show="ctrl.admissionForm.admissionDate.$error.date" class="error-block">Please select valid date.</p>
+                            <p id="adminssionDateFutureError" ng-show="ctrl.admissionForm.admissionDate.$error.futureDate" class="error-block">Start date can't be future Date.</p>
+                            <p id="isPUSmallerD" ng-show="false" class="error-block">Admission time can't be before than Company Admission Time</p>
+                            <p id="isCompGreaterD" ng-show="false" class="error-block">Admission time can't be after than Program Unit Admission time</p>
+                            <p id="isInActiveGreaterD" ng-show="false" class="error-block">New admission can't be after last inactive time</p>
+                         </div>
+                    </div>
+                    <div class="col-md-2 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" id="admissionTimeError" ng-class="{'has-error':ctrl.admissionForm.admissionTime.$invalid && !ctrl.admissionForm.admissionTime.$pristine}">
+                            <label for="admissionTime">Time <sup>*</sup></label>
+                            <input type="text" standard-time data-ng-model="todayTime" ui-mask="99:99" placeholder="hh:mm" ng-required="true" class="form-control" id="admissionTime" data-validation-name="Admission Time" name="admissionTime" ng-keyup="admissionDateValidation()" ng-disabled="(!confirm && !isCompanyEdit) || !hasPermission" />
+                            <p id="startTimeError" data-ng-show="ctrl.admissionForm.admissionTime.$error.pattern" data-ng-cloak class="error-block">Please select a valid time.</p>
+                            <p id="startTimeFutureError" ng-show="ctrl.admissionForm.admissionTime.$error.date" ng-cloak class="error-block">Start Time can't be future.</p>
+                            <p id="isPUSmaller" ng-show="false" class="error-block">Admission time can't be before Company Admission Time</p>
+                            <p id="isCompGreater" ng-show="false" class="error-block">Admission time can't be after Program Unit Admission time</p>
+                            <p id="isInActiveGreater" ng-show="false" class="error-block">New admission can't be after last inactive time</p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 nopadding-right">
+                        <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                            <fieldset id="aptDateAMPMF" ng-disabled="!confirm || !hasPermission">
+                                <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                <span><xen-radio-button data-ng-model="AMPM" data-radio-button-id="aptDateAM" data-label="AM" data-ng-value='"AM"' data-on-click="changeAMPM()" data-on-change="validateFutureDateTime()" ng-disabled="(!confirm && !isCompanyEdit) || !hasPermission" /></span>
+                                <span><xen-radio-button data-ng-model="AMPM" data-radio-button-id="aptDatePM" data-label="PM" data-ng-value='"PM"' data-on-click="changeAMPM()" data-on-change="validateFutureDateTime()" ng-disabled="(!confirm && !isCompanyEdit) || !hasPermission" /></span>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="uppercase nomargin padding-xsmall border-top">Company</h3>
+                <div class="row  padding-top-small no-security">
+                    <div class="col-md-4 padding-bottom-small form-group-lg" ng-hide="true">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="companyType">Company Type <sup>*</sup></label>
+                            <select class="form-control" ng-model="admission.CompanyType" id="companyType" name="companyType" ng-disabled="true">
+                                <option value="" ng-selected="selected"> </option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' :ctrl.admissionForm.Company.$invalid && !ctrl.admissionForm.Company.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="Company">Company <sup>*</sup></label>
+                            <select class="form-control" ng-required="true" ng-model="admission.CompanyID"
+                                    name="Company" id="Company" auto-focus event-focus="autoFocus" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('Company')|securityFilter :'Company': 'ID': 'General-General-Admission'" ng-disabled="!confirm || !hasPermission" ng-change="isRequiredCompany()">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : admissionForm.comapanyLevel.$invalid && !admissionForm.comapanyLevel.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="comapanyLevel">Company Level Status <sup>*</sup></label>
+                            <select class="form-control" ng-model="admission.IsCompanyActive" id="comapanyLevel" name="comapanyLevel" ng-disabled="admission.IsCompanyActive==1 || !hasPermission" ng-options="status.Value as status.Name for status in statusList"></select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <h3 class="uppercase nomargin padding-xsmall border-top">Program Unit</h3>
+                <div class="row  padding-top-small no-security">
+                    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.admissionForm.division.$invalid && !ctrl.admissionForm.division.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="division">Division <sup ng-show="requiredInProgram || admission.ProgramID || admission.ProgramUnitID">*</sup></label>
+                            <select class="form-control" ng-required="requiredInProgram || admission.ProgramID || admission.ProgramUnitID" ng-model="admission.DivisionID" data-validation-name="Division"
+                                    name="division" id="division" auto-focus event-focus="autoFocus" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('Division',admission.CompanyID)|securityFilter :'Division': 'ID': 'General-General-Admission'" ng-disabled="!confirm || !hasPermission" ng-change="getPrograms()">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.admissionForm.program.$invalid && !ctrl.admissionForm.program.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="program">Program <sup ng-show="requiredInProgram || admission.DivisionID || admission.ProgramUnitID">*</sup></label>
+                            <select class="form-control" ng-disabled="!confirm || !hasPermission" ng-required="requiredInProgram || admission.DivisionID || admission.ProgramUnitID" ng-model="admission.ProgramID" data-validation-name="Program"
+                                    name="program" id="program" auto-focus event-focus="autoFocus" ng-options="organization.ID as organization.Name for organization in programs | securityFilter :'Program': 'ID': 'General-General-Admission'" ng-change="getProgramUnits()">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.admissionForm.programUnit.$invalid && !ctrl.admissionForm.programUnit.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="programUnit">Program Unit <sup ng-show="requiredInProgram || admission.DivisionID || admission.ProgramID">*</sup></label>
+                            <select class="form-control" ng-disabled="!confirm || !hasPermission" ng-required="requiredInProgram || admission.DivisionID || admission.ProgramID" ng-model="admission.ProgramUnitID" data-validation-name="Program Unit"
+                                    name="programUnit" id="programUnit" auto-focus event-focus="autoFocus" ng-options="organization.ID as organization.Name for organization in programUnits | securityFilter :'ProgramUnit': 'ID': 'General-General-Admission'">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.admissionForm.admissionReason.$invalid && !ctrl.admissionForm.admissionReason.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="admissionReason">Admission Reason <sup ng-show="requiredInProgram || admission.DivisionID || admission.ProgramID">*</sup></label>
+                            <select class="form-control" ng-disabled="!confirm || !hasPermission" ng-required="requiredInProgram || admission.DivisionID || admission.ProgramID" ng-model="admission.AdmissionReasonID"
+                                    name="admissionReason" id="admissionReason" auto-focus event-focus="autoFocus" data-validation-name="Admission Reason" ng-options="admissionReason.ID as admissionReason.Name for admissionReason in getLookupsByType('AdmissionReason')">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+
+                    @*<div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.admissionForm.programUnitStatus.$invalid && !ctrl.admissionForm.programUnitStatus.$pristine }">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="programUnitStatus">Program Unit Status <sup>*</sup></label>
+                                <select class="form-control" ng-required="true" ng-model="admission.ProgramUnitStatus"
+                                        name="programUnitStatus" id="programUnitStatus" auto-focus event-focus="autoFocus" ng-options="users.ID as users.Name for users in getLookupsByType('Users')">
+                                    <option value="" ng-selected="selected">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>*@
+                </div>
+                <div class="row  padding-top-small no-security">
+                    <div class="col-md-12 padding-bottom-small" ng-cloak>
+                        <xen-memobox is-disabled="!confirm|| !hasPermission" label="Comments" rows="5" maxlength="255" ng-model="admission.Comments" id="comment" name="comment"></xen-memobox>
+                    </div>
+                </div>
+            </div>
+            <div class="row padding-top-small">
+                <div class="col-lg-6 col-md-6">
+                    <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                </div>
+                <div class="col-lg-6 col-md-6 text-right">
+                    <xen-submit id="save" is-disabled="(!confirm && !isCompanyEdit) || !hasPermission" name="save" value="SAVE" is-next="false" mandatory="true" class="btn btn-default btn-lg" permission-key="General-General-Admission" permission="{{resolvePermission(admission.ContactAdmissionID)}}" dual-permission="true"></xen-submit>
+                </div>
+            </div>
+
+            <div class="add_me">
+                <plus-button title="New Admission" permission-key="General-General-Admission" permission="create" save="save()" reset="newAdmission()" table-id="admissionTable"></plus-button>
+            </div>
+            <div class="row padding-top-small padding-bottom-small">
+                <div class="col-md-12">
+                    <table id="admissionTable" data-toggle="table"
+                           data-show-columns="true"
+                           data-search="true"
+                           data-minimum-count-columns="2"
+                           data-filter-control="false"
+                           data-mobile-responsive="true"
+                           data-filter-bar
+                           data-advanced-search="false"
+                           data-show-multi-sort="true"
+                           data-classes="table table-stripe-borders"
+                           bootstrap-table="tableoptions" grid-arrow-selector>
+                        <thead>
+                            <tr>
+                                <th data-field="EffectiveDateTime"
+                                    data-sortable="true">EffectiveDate/Time</th>
+                                <th data-field="Company"
+                                    data-sortable="true">Company</th>
+                                <th data-field="Division"
+                                    data-sortable="true">Division</th>
+                                <th data-field="Program"
+                                    data-sortable="true">Program</th>
+                                <th data-field="ProgramUnit"
+                                    data-sortable="true">Program Unit</th>
+                                <th data-field="IsDischarged"
+                                    data-sortable="true">Admission Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

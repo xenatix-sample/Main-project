@@ -1,0 +1,277 @@
+﻿<ng-form name="presentingProblemForm" novalidate bs-modifiable="true" set-form-status="child">
+    <div class="row section-block margin-bottom-small" id="presentingProblemFormDiv">
+        @Html.Partial("../Shared/_PresentingProblem")
+    </div>
+</ng-form>
+<ng-form name="contactInformationForm" novalidate bs-modifiable="true" set-form-status="child">
+    <div class="row padding-bottom-xsmall margin-bottom-xsmall border-bottom">
+        <div class="col-md-12">
+            <div class="row">
+                <!-- Client Type -->
+                <div class="col-md-3 padding-bottom-small" ng-if="!isRegistrationState">
+                    <div class="form-group-lg" ng-class="{ 'has-error' : contactInformationForm.ClientType.$invalid && !contactInformationForm.ClientType.$pristine}">
+                        <label for="ClientType">Division <sup>*</sup></label>
+                        <select ng-model="newDemography.ClientTypeID" id="ClientType" name="ClientType" class="form-control ellipsis"
+                                ng-options="clientType.ID as clientType.Name for clientType in ClientTypeList" ng-change="formatAlternateIDs()"
+                                ng-required="true" auto-focus event-focus="focusToProgram" data-validation-name="Division">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn select-btn-align"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg padding-bottom-small">
+                        <xen-checkbox ng-model="newDemography.IsDeceased" data-checkbox-id="IsDeceased?" data-label="Is Deceased" ng-disabled="isReadOnlyForm " data-on-click="resetDeceased();" />
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small" ng-show="newDemography.IsDeceased">
+                    <div id="dateOfDeathtd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : contactInformationForm.dateOfDeath.$invalid && !contactInformationForm.dateOfDeath.$pristine}">
+                        <label for="dateOfDeath">Date of Death </label>
+                        <xen-date-picker id="dateOfDeath"
+                                         start-date="newDemography.DOB"
+                                         name="dateOfDeath"
+                                         data-validation-name="Date Of Death"
+                                         compare-element-form="additionalContactForm"
+                                         data-compare-element-name="dateOfBirth"
+                                         less-than-date-validation="true"
+                                         ng-model="newDemography.DeceasedDate"
+                                         future-date-validate="true">
+
+                        </xen-date-picker>
+                        <p id="dateOfDeatherror" ng-show="contactInformationForm.dateOfDeath.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                        <p id="futuredateOfDeatherror" ng-show="contactInformationForm.dateOfDeath.$error.futureDate" ng-cloak class="error-block">Date of death can't be of future date.</p>
+                        <p id="lessthandoberror" ng-show="contactInformationForm.dateOfDeath.$error.lessThanDate" ng-cloak class="error-block">Date of death can't be less than date of birth.</p>
+                    </div>
+                </div>
+                <div class="col-md-3" ng-show="newDemography.IsDeceased">
+                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactInformationForm.CauseOfDeath.$invalid && !contactInformationForm.CauseOfDeath.$pristine }">
+                        <label>Cause Of Death </label>
+                        <select id="causeOfDeath" name="causeOfDeath" ng-model="newDemography.CauseOfDeath" class="form-control ellipsis"
+                                ng-options="causeofdeath.ID as causeofdeath.Name for causeofdeath in getLookupsByType('CauseOfDeath')" data-validation-name="Cause Of Death">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- name + alias -->
+    <div class="row padding-top-small">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactInformationForm.FirstName.$invalid && !contactInformationForm.FirstName.$pristine}">
+                        <label for="FirstName">First Name<sup ng-show="isRequiredField || isLawLiaison"> *</sup></label>
+                        <input type="text" name="FirstName" id="FirstName" class="form-control ellipsis" ng-model="newDemography.FirstName" data-validation-name="First Name"
+                               ng-trim="true" ng-required="isRequiredField || isLawLiaison" ng-maxlength="200" />
+                        <p ng-show="contactInformationForm.FirstName.$error.maxlength" ng-cloak class="error-block">First Name is too long</p>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactInformationForm.LastName.$invalid && !contactInformationForm.LastName.$pristine}">
+                        <label for="LastName">Last Name<sup ng-show="isRequiredField ||isLawLiaison"> *</sup></label>
+                        <input type="text" name="LastName" id="LastName" ng-model="newDemography.LastName" ng-maxlength="200" ng-trim="true" ng-required="isRequiredField || isLawLiaison" class="form-control ellipsis" data-validation-name="Last Name" />
+                        <p ng-show="contactInformationForm.LastName.$error.maxlength" ng-cloak class="error-block">Last Name is too long</p>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactInformationForm.Middle.$invalid && !contactInformationForm.Middle.$pristine }">
+                        <label for="Middle">Middle Name</label>
+                        <input type="text" id="Middle" name="Middle" class="form-control" ng-model="newDemography.Middle" ng-maxlength="200" />
+                        <p ng-show="contactInformationForm.Middle.$error.maxlength" ng-cloak class="error-block">Middle Name is too long</p>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg">
+                        <label for="suffix">Preferred Name</label>
+                        <input type="text" ng-model="newDemography.PreferredName" id="PreferredName" name="PreferredName" class="form-control ellipsis" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @* PREFIX *@
+                <div class="col-md-2 padding-bottom-small clear">
+                    <div class="form-group-lg padding-bottom-small">
+                        <label for="prefix">Prefix</label>
+                        <select class="form-control ellipsis" ng-model="newDemography.TitleID" id="prefix" ng-options="prefix.ID as prefix.Name for prefix in getLookupsByType('PrefixType')">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-2 padding-bottom-small">
+                    <div class="form-group-lg padding-bottom-small">
+                        <label for="suffix">Suffix</label>
+                        <select ng-model="newDemography.SuffixID" id="suffix" class="form-control ellipsis" ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+                @* GENDER *@
+                <div class="col-md-2">
+                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactInformationForm.gender.$invalid && !contactInformationForm.gender.$pristine }">
+                        <label>Gender <sup ng-show="isRequiredField">*</sup></label>
+                        <select id="gender" name="gender" ng-model="newDemography.GenderID" class="form-control ellipsis" ng-required="isRequiredField"
+                                ng-options="gender.ID as gender.Name for gender in getLookupsByType('Gender')" data-validation-name="Gender">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg" ng-class="{ 'has-error' : contactInformationForm.IsPregnant.$invalid && !contactInformationForm.IsPregnant.$pristine }">
+                        <div ng-cloak ng-show="newDemography.GenderID == femaleOptions">
+                            <label for="IsPregnant">Is pregnant? <sup>*</sup></label>
+                            <select ng-model="newDemography.IsPregnant" ng-required="newDemography.GenderID == femaleOptions" class="form-control ellipsis" id="IsPregnant" name="IsPregnant" ng-options="pregnant.Value as pregnant.Name for pregnant in pregnantValues" data-validation-name="Is Pregnant">
+                                <option value="" selected>Select</option>
+                            </select>
+                            <span class="select-btn select-btn-align"><i class="xen-select"></i></span>
+                            <p ng-show="contactInformationForm.gender.$error.required && newDemography.GenderID == femaleOptions" ng-cloak class="error-block">Invalid Is Pregnant</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactInformationForm.preferredGender.$invalid && !contactInformationForm.preferredGender.$pristine }">
+                        <label>Preferred Gender </label>
+                        <select id="preferredGender" name="preferredGender" ng-model="newDemography.PreferredGenderID" class="form-control ellipsis"
+                                ng-options="preferredGender.ID as preferredGender.Name for preferredGender in getLookupsByType('Gender') | filter: { Name:'!Unknown'  }">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>
+
+<ng-form name="ContactAliasForm" novalidate bs-modifiable="true" set-form-status="child">
+    <div class="row section-block">
+        @Html.Partial("../Shared/_ContactAlias")
+    </div>
+</ng-form>
+
+<ng-form name="additionalContactForm" novalidate bs-modifiable="true" set-form-status="child">
+    <div class="row padding-top-small">
+        <!-- dob + age -->
+        <div class="col-md-3 padding-bottom-small">
+            <div id="doberrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : additionalContactForm.dateOfBirth.$invalid && !additionalContactForm.dateOfBirth.$pristine}">
+                <label for="dob">Date of Birth <sup ng-show="isRequiredField">*</sup></label>
+                <xen-date-picker id="dateOfBirth" name="dateOfBirth"
+                                 data-validation-name="Date Of Birth"
+                                 greater-than-date-validation="true"
+                                 ng-model="newDemography.DOB"
+                                 end-date="newDemography.DeceasedDate"
+                                 compare-element-form="contactInformationForm"
+                                 data-compare-element-name="dateOfDeath"
+                                 call-function-on-change="isRequiredField?calculateAge():gestationalVisibility()"
+                                 future-date-validate="true" date-required="isRequiredField"></xen-date-picker>
+                <p id="doberror" ng-show="additionalContactForm.dateOfBirth.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                <p id="futuredoberror" ng-show="additionalContactForm.dateOfBirth.$error.futureDate" ng-cloak class="error-block">Date of birth can't be of future date.</p>
+                <p id="greaterdoberror" ng-show="additionalContactForm.dateOfBirth.$error.greaterThanDate" ng-cloak class="error-block">Date of birth can't be greater than Date Of Death.</p>
+            </div>
+        </div>
+        <div class="col-md-2 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="">Age</label>
+                <input type="text" tabindex="-1" id="age" name="age" value="{{ newDemography.DOB | ageToShow:newDemography.DeceasedDate }}" readonly="readonly" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small" ng-show="!additionalContactForm.dob.$invalid && newDemography.DOB && newDemography.DOB != '' && ageInMonths >= 0 && ageInMonths < 36"
+                 ng-class="{ 'has-error' : additionalContactForm.GestationalAge.$invalid && !additionalContactForm.GestationalAge.$pristine}">
+                <label for="FirstName">Gestational Age</label>
+                <input type="text" name="GestationalAge" id="GestationalAge" class="form-control ellipsis" ng-pattern="/^\d{2,2}(\.\d{0,1})?$/"
+                       ng-model="newDemography.GestationalAge" ng-model-options="{ debounce: 400 }" ng-trim="true" />
+                <p ng-show="additionalContactForm.GestationalAge.$error.pattern" ng-cloak class="error-block">Must be two digit numeric and can contain upto one decimal value</p>
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="DOBStatus">DOB Status</label>
+                <select ng-model="newDemography.DOBStatusID" id="DOBStatus" class="form-control ellipsis"
+                        ng-options="dobStatus.ID as dobStatus.Name for dobStatus in getLookupsByType('DOBStatus')">
+                    <option value="">Select</option>
+                </select>
+                <span class="select-btn"><i class="xen-select"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="row padding-top-small">
+        <!--  identity -->
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : additionalContactForm.SSN.$invalid && !additionalContactForm.SSN.$pristine }">
+                <label for="SSN">SSN</label>
+                @* ? in front of the mask makes it so it doesn't clear when field fails. *@
+                <input type="text" class="form-control ellipsis" ui-mask="999-99-9999" ui-options="{clearOnBlur: false}" clean="true" ng-model="newDemography.SSN" id="SSN" name="SSN" ng-change="checkSSN()" />
+                <p ng-show="additionalContactForm.SSN.$error.mask" ng-cloak class="error-block">Invalid SSN.</p>
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="SSNStatus">SSN Status</label>
+                <select ng-model="newDemography.SSNStatusID" id="SSNStatus" name="SSNStatus" class="form-control ellipsis"
+                        ng-options="ssnStatus.ID as ssnStatus.Name for ssnStatus in getLookupsByType('SSNStatus') | filter: ssnStatusFilter ">
+                    <option value="">Select</option>
+                </select>
+                <span class="select-btn"><i class="xen-select"></i></span>
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="DriverLicense">Driver License </label>
+                <input type="text" class="form-control ellipsis" id="DriverLicense" name="DriverLicense" ng-model="newDemography.DriverLicense" ng-maxlength="25" />
+                <p ng-show="additionalContactForm.DriverLicense.$error.maxlength" ng-cloak class="error-block">Max 25 chars</p>
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="DriverLicenseState">Driver License State</label>
+                <select ng-model="newDemography.DriverLicenseStateID" id="DriverLicenseState" name="DriverLicenseState" class="form-control"
+                        ng-options="driverLicenseState.ID as driverLicenseState.Name for driverLicenseState in getLookupsByType('StateProvince')">
+                    <option value="">Select</option>
+                </select>
+                <span class="select-btn"><i class="xen-select"></i></span>
+            </div>
+        </div>
+    </div>
+</ng-form>
+
+<div class="row section-block">
+    <div class="col-md-12">
+        <div class="row">
+            @Html.Partial("../Shared/_ClientIdentifier")
+        </div>
+        <ng-form name="contactMethodForm" novalidate bs-modifiable="true" set-form-status="child">
+            <div class="row">
+                <!-- referral source (Hide the referral source using nghide for the backlog item 2637(task 2674 child task) ) -->
+                <div class="col-md-3 padding-bottom-small" ng-hide="true">
+                    <div class="form-group-lg">
+                        <label for="RefrralSource">Referral Source</label>
+                        <select ng-model="newDemography.ReferralSourceID" id="RefrralSource" name="RefrralSource" class="form-control ellipsis"
+                                ng-options="referralSource.ID as referralSource.Name for referralSource in getLookupsByType('ReferralSource')">
+                            <option value="">Select</option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 padding-bottom-small">
+                    <div class="form-group-lg padding-bottom-small">
+                        <label for="PreferredContactMethod">Preferred Contact Method</label>
+                        <select ng-model="newDemography.ContactMethodID" id="PreferredContactMethod" name="PreferredContactMethod" class="form-control" ng-change="isPreferredContact()"
+                                ng-options="preferredContactMethod.ID as preferredContactMethod.Name for preferredContactMethod in getPreferredContactMethod()">
+                            <option value="">
+                                Select
+                            </option>
+                        </select>
+                        <span class="select-btn"><i class="xen-select"></i></span>
+                    </div>
+                </div>
+            </div>
+        </ng-form>
+    </div>
+</div>
+

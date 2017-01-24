@@ -1,0 +1,902 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/10/2015 2:51:44 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="GKV4R52"
+  DTS:CreatorName="GKV4R52\SSangapu"
+  DTS:DTSID="{17D5A917-C046-452B-A807-414CE4D0C509}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.4100.1"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="ICD10CodesImport"
+  DTS:PackageType="5"
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{F84F1251-185A-42C3-B80C-670C9C196DB0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.Axis]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3387B9D6-BD33-482D-B892-ACCEB3A82AF9}"
+      DTS:ObjectName="LocalHost.Axis">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=Axis2;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.DataStage]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C42A304D-7888-462D-8EBB-9E80B111CF6C}"
+      DTS:ObjectName="LocalHost.DataStage">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=AxisStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6F84FFE2-5447-48F2-A48F-8387FABCD540}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="VarXMLFileName">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CM Drugs"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{304a0d2b-faa1-4c37-b1bf-32b7e3b6df1e}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CM Drugs">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\CM Drugs\Load Drugs CM XML files into table"
+          DTS:CreationName="STOCK:FOREACHLOOP"
+          DTS:Description="Foreach Loop Container"
+          DTS:DTSID="{8f66bdaa-6aaf-4825-80e5-3c113aaf7697}"
+          DTS:ExecutableType="STOCK:FOREACHLOOP"
+          DTS:LocaleID="-1"
+          DTS:MaxErrorCount="1000"
+          DTS:ObjectName="Load Drugs CM XML files into table">
+          <DTS:ForEachEnumerator
+            DTS:CreationName="Microsoft.ForEachFileEnumerator"
+            DTS:DTSID="{a3f4725f-920c-4fc5-9b3e-6c81afa6f1d1}"
+            DTS:ObjectName="{F5874458-CE63-445F-8C84-336A3DD83EDD}">
+            <DTS:ObjectData>
+              <ForEachFileEnumeratorProperties>
+                <FEFEProperty
+                  Folder="C:\SSIS\SourceFiles\ICD10\Drugs\" />
+                <FEFEProperty
+                  FileSpec="Drug.xml" />
+                <FEFEProperty
+                  FileNameRetrievalType="0" />
+                <FEFEProperty
+                  Recurse="0" />
+              </ForEachFileEnumeratorProperties>
+            </DTS:ObjectData>
+          </DTS:ForEachEnumerator>
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\CM Drugs\Load Drugs CM XML files into table\XMLData"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{fd8fb67c-5f88-4901-9044-3fc4688751e8}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="XMLData"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:EventHandlers>
+                <DTS:EventHandler
+                  DTS:refId="Package\CM Drugs\Load Drugs CM XML files into table\XMLData.EventHandlers[OnError]"
+                  DTS:CreationName="OnError"
+                  DTS:DTSID="{2a0a1a4e-2702-4302-8b2e-8339b6710b17}"
+                  DTS:EventID="439720872"
+                  DTS:EventName="OnError"
+                  DTS:LocaleID="-1">
+                  <DTS:Variables>
+                    <DTS:Variable
+                      DTS:CreationName=""
+                      DTS:Description="The propagate property of the event"
+                      DTS:DTSID="{d944b129-32c0-4ab1-9cdd-25db9488707b}"
+                      DTS:IncludeInDebugDump="6789"
+                      DTS:Namespace="System"
+                      DTS:ObjectName="Propagate">
+                      <DTS:VariableValue
+                        DTS:DataType="11">-1</DTS:VariableValue>
+                    </DTS:Variable>
+                  </DTS:Variables>
+                  <DTS:Executables>
+                    <DTS:Executable
+                      DTS:refId="Package\CM Drugs\Load Drugs CM XML files into table\XMLData.EventHandlers[OnError]\Execute SQL Task"
+                      DTS:CreationName="Microsoft.ExecuteSQLTask"
+                      DTS:Description="Execute SQL Task"
+                      DTS:DTSID="{1228f49c-de31-4c0b-a3c8-8223b31ced8e}"
+                      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                      DTS:LocaleID="-1"
+                      DTS:ObjectName="Execute SQL Task"
+                      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                      <DTS:Variables />
+                      <DTS:ObjectData>
+                        <SQLTask:SqlTaskData
+                          SQLTask:Connection="{BA04F364-F67A-44CF-8EC5-EE7887447A53}"
+                          SQLTask:BypassPrepare="False"
+                          SQLTask:SqlStatementSource="INSERT INTO dbo.Errors&#xA;(?)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                          <SQLTask:ParameterBinding
+                            SQLTask:ParameterName="0"
+                            SQLTask:DtsVariableName="User::VarXMLFileName"
+                            SQLTask:ParameterDirection="Input"
+                            SQLTask:DataType="129"
+                            SQLTask:ParameterSize="-1" />
+                        </SQLTask:SqlTaskData>
+                      </DTS:ObjectData>
+                    </DTS:Executable>
+                  </DTS:Executables>
+                </DTS:EventHandler>
+                <DTS:EventHandler
+                  DTS:refId="Package\CM Drugs\Load Drugs CM XML files into table\XMLData.EventHandlers[OnPostExecute]"
+                  DTS:CreationName="OnPostExecute"
+                  DTS:DTSID="{8f7f24b6-f8da-4d79-aa2c-74373715bfbf}"
+                  DTS:EventID="721769796"
+                  DTS:EventName="OnPostExecute"
+                  DTS:LocaleID="-1">
+                  <DTS:Variables>
+                    <DTS:Variable
+                      DTS:CreationName=""
+                      DTS:Description="The propagate property of the event"
+                      DTS:DTSID="{d9ee07b1-b7fd-4ada-86f2-21f6f4a9805f}"
+                      DTS:IncludeInDebugDump="6789"
+                      DTS:Namespace="System"
+                      DTS:ObjectName="Propagate">
+                      <DTS:VariableValue
+                        DTS:DataType="11">-1</DTS:VariableValue>
+                    </DTS:Variable>
+                  </DTS:Variables>
+                  <DTS:Executables>
+                    <DTS:Executable
+                      DTS:refId="Package\CM Drugs\Load Drugs CM XML files into table\XMLData.EventHandlers[OnPostExecute]\Execute SQL Task"
+                      DTS:CreationName="Microsoft.ExecuteSQLTask"
+                      DTS:Description="Execute SQL Task"
+                      DTS:DTSID="{c8f4f5b7-7b61-49fd-8750-00a3ec8a8abc}"
+                      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                      DTS:LocaleID="-1"
+                      DTS:ObjectName="Execute SQL Task"
+                      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                      <DTS:Variables />
+                      <DTS:ObjectData>
+                        <SQLTask:SqlTaskData
+                          SQLTask:Connection="{BA04F364-F67A-44CF-8EC5-EE7887447A53}"
+                          SQLTask:BypassPrepare="False"
+                          SQLTask:SqlStatementSource="INSERT INTO dbo.Errors&#xA;(?)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                          <SQLTask:ParameterBinding
+                            SQLTask:ParameterName="0"
+                            SQLTask:DtsVariableName="User::VarXMLFileName"
+                            SQLTask:ParameterDirection="Input"
+                            SQLTask:DataType="129"
+                            SQLTask:ParameterSize="-1" />
+                        </SQLTask:SqlTaskData>
+                      </DTS:ObjectData>
+                    </DTS:Executable>
+                  </DTS:Executables>
+                </DTS:EventHandler>
+              </DTS:EventHandlers>
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{C42A304D-7888-462D-8EBB-9E80B111CF6C}"
+                  SQLTask:BypassPrepare="False"
+                  SQLTask:SqlStatementSource="&#xA;DECLARE @sql varchar(8000);&#xA;&#xA;set @sql = ''&#xA;&#xA;&#xA;set @sql = ' INSERT INTO  [dbo].[ICD10CodesXMLData](XMLData, LoadedDateTime)&#xA;SELECT CONVERT(XML, BulkColumn) AS BulkColumn, GETDATE() &#xA;FROM OPENROWSET(BULK ''' +?  +''', SINGLE_BLOB) AS x;'&#xA;&#xA;exec (@sql)&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\CM Drugs\Parse Drugs CM XML"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{bbffa7ff-e445-42d8-9719-60d1367c0672}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Parse Drugs CM XML"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{C42A304D-7888-462D-8EBB-9E80B111CF6C}"
+              SQLTask:SqlStatementSource="--truncate table [dbo].[ICD10DrugsCMLevel1Stage]&#xA;--truncate table [dbo].[ICD10DrugsCMLevel2Stage]&#xA;--truncate table [dbo].[ICD10DrugsCMLevel3Stage]&#xA;--truncate table [dbo].[ICD10DrugsCMLevel4Stage]&#xA;&#xA;------------------------------------------------------------------------------&#xA;&#xA;exec dbo.usp_SSISExtractICD10CMDrugs&#xA;&#xA;truncate table [dbo].[ICD10CodesXMLData]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\CM Drugs.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{f7917511-63db-465f-a8e7-761dbe87cc70}"
+          DTS:From="Package\CM Drugs\Load Drugs CM XML files into table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\CM Drugs\Parse Drugs CM XML" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CM Neoplasms"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{b44e5919-db6a-4d19-ab15-77ffc56d6127}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CM Neoplasms">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\CM Neoplasms\Load Neoplasms CM XML files into table"
+          DTS:CreationName="STOCK:FOREACHLOOP"
+          DTS:Description="Foreach Loop Container"
+          DTS:DTSID="{b24d79a8-4c10-4370-9ddb-43a09a3cc072}"
+          DTS:ExecutableType="STOCK:FOREACHLOOP"
+          DTS:LocaleID="-1"
+          DTS:MaxErrorCount="1000"
+          DTS:ObjectName="Load Neoplasms CM XML files into table">
+          <DTS:ForEachEnumerator
+            DTS:CreationName="Microsoft.ForEachFileEnumerator"
+            DTS:DTSID="{a7f15037-5574-4d4d-93c2-1a0ef7510e38}"
+            DTS:ObjectName="{F5874458-CE63-445F-8C84-336A3DD83EDD}">
+            <DTS:ObjectData>
+              <ForEachFileEnumeratorProperties>
+                <FEFEProperty
+                  Folder="C:\SSIS\SourceFiles\ICD10\Neoplasms" />
+                <FEFEProperty
+                  FileSpec="*.xml" />
+                <FEFEProperty
+                  FileNameRetrievalType="0" />
+                <FEFEProperty
+                  Recurse="0" />
+              </ForEachFileEnumeratorProperties>
+            </DTS:ObjectData>
+          </DTS:ForEachEnumerator>
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{ca4b4c43-9ba6-4b22-b2bd-42459513ce55}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="XMLData"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:EventHandlers>
+                <DTS:EventHandler
+                  DTS:refId="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData.EventHandlers[OnError]"
+                  DTS:CreationName="OnError"
+                  DTS:DTSID="{39b7d3af-d5b6-4764-9cd0-932565c27bd6}"
+                  DTS:EventID="439720872"
+                  DTS:EventName="OnError"
+                  DTS:LocaleID="-1">
+                  <DTS:Variables>
+                    <DTS:Variable
+                      DTS:CreationName=""
+                      DTS:Description="The propagate property of the event"
+                      DTS:DTSID="{52e1184c-449b-4eb6-b842-c3dd081a7e61}"
+                      DTS:IncludeInDebugDump="6789"
+                      DTS:Namespace="System"
+                      DTS:ObjectName="Propagate">
+                      <DTS:VariableValue
+                        DTS:DataType="11">-1</DTS:VariableValue>
+                    </DTS:Variable>
+                  </DTS:Variables>
+                  <DTS:Executables>
+                    <DTS:Executable
+                      DTS:refId="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData.EventHandlers[OnError]\Execute SQL Task"
+                      DTS:CreationName="Microsoft.ExecuteSQLTask"
+                      DTS:Description="Execute SQL Task"
+                      DTS:DTSID="{4f1371e0-1b21-4c29-ae46-95839b22fde5}"
+                      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                      DTS:LocaleID="-1"
+                      DTS:ObjectName="Execute SQL Task"
+                      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                      <DTS:Variables />
+                      <DTS:ObjectData>
+                        <SQLTask:SqlTaskData
+                          SQLTask:Connection="{BA04F364-F67A-44CF-8EC5-EE7887447A53}"
+                          SQLTask:BypassPrepare="False"
+                          SQLTask:SqlStatementSource="INSERT INTO dbo.Errors&#xA;(?)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                          <SQLTask:ParameterBinding
+                            SQLTask:ParameterName="0"
+                            SQLTask:DtsVariableName="User::VarXMLFileName"
+                            SQLTask:ParameterDirection="Input"
+                            SQLTask:DataType="129"
+                            SQLTask:ParameterSize="-1" />
+                        </SQLTask:SqlTaskData>
+                      </DTS:ObjectData>
+                    </DTS:Executable>
+                  </DTS:Executables>
+                </DTS:EventHandler>
+                <DTS:EventHandler
+                  DTS:refId="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData.EventHandlers[OnPostExecute]"
+                  DTS:CreationName="OnPostExecute"
+                  DTS:DTSID="{010ea89b-0a9d-4522-8b69-df2c05878a86}"
+                  DTS:EventID="721769796"
+                  DTS:EventName="OnPostExecute"
+                  DTS:LocaleID="-1">
+                  <DTS:Variables>
+                    <DTS:Variable
+                      DTS:CreationName=""
+                      DTS:Description="The propagate property of the event"
+                      DTS:DTSID="{09171c53-5e0b-4495-a1a5-2dd13d85ec75}"
+                      DTS:IncludeInDebugDump="6789"
+                      DTS:Namespace="System"
+                      DTS:ObjectName="Propagate">
+                      <DTS:VariableValue
+                        DTS:DataType="11">-1</DTS:VariableValue>
+                    </DTS:Variable>
+                  </DTS:Variables>
+                  <DTS:Executables>
+                    <DTS:Executable
+                      DTS:refId="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData.EventHandlers[OnPostExecute]\Execute SQL Task"
+                      DTS:CreationName="Microsoft.ExecuteSQLTask"
+                      DTS:Description="Execute SQL Task"
+                      DTS:DTSID="{99517b41-9b4f-4135-9cf1-ebc5cd50cf2b}"
+                      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                      DTS:LocaleID="-1"
+                      DTS:ObjectName="Execute SQL Task"
+                      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                      <DTS:Variables />
+                      <DTS:ObjectData>
+                        <SQLTask:SqlTaskData
+                          SQLTask:Connection="{BA04F364-F67A-44CF-8EC5-EE7887447A53}"
+                          SQLTask:BypassPrepare="False"
+                          SQLTask:SqlStatementSource="INSERT INTO dbo.Errors&#xA;(?)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                          <SQLTask:ParameterBinding
+                            SQLTask:ParameterName="0"
+                            SQLTask:DtsVariableName="User::VarXMLFileName"
+                            SQLTask:ParameterDirection="Input"
+                            SQLTask:DataType="129"
+                            SQLTask:ParameterSize="-1" />
+                        </SQLTask:SqlTaskData>
+                      </DTS:ObjectData>
+                    </DTS:Executable>
+                  </DTS:Executables>
+                </DTS:EventHandler>
+              </DTS:EventHandlers>
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{C42A304D-7888-462D-8EBB-9E80B111CF6C}"
+                  SQLTask:BypassPrepare="False"
+                  SQLTask:SqlStatementSource="&#xA;DECLARE @sql varchar(8000);&#xA;&#xA;set @sql = ''&#xA;&#xA;&#xA;set @sql = ' INSERT INTO  [dbo].[ICD10CodesXMLData](XMLData, LoadedDateTime)&#xA;SELECT CONVERT(XML, BulkColumn) AS BulkColumn, GETDATE() &#xA;FROM OPENROWSET(BULK ''' +?  +''', SINGLE_BLOB) AS x;'&#xA;&#xA;exec (@sql)&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:ForEachVariableMappings>
+            <DTS:ForEachVariableMapping
+              DTS:CreationName=""
+              DTS:DTSID="{37ac4a00-00e3-446a-b32c-d77478bfc091}"
+              DTS:ObjectName="{9B28BD48-0272-4042-81B4-7753A2FDF1B1}"
+              DTS:ValueIndex="0"
+              DTS:VariableName="User::VarXMLFileName" />
+          </DTS:ForEachVariableMappings>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\CM Neoplasms\Parse Neoplasms CM XML"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{be9ac0b7-f406-4609-8ed9-87823f05b992}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Parse Neoplasms CM XML"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{C42A304D-7888-462D-8EBB-9E80B111CF6C}"
+              SQLTask:SqlStatementSource="--truncate table [dbo].[ICD10NeoplasmsCMLevel1Stage]&#xA;&#xA;--truncate table [dbo].[ICD10NeoplasmsCMLevel2Stage]&#xA;&#xA;--truncate table [dbo].[ICD10NeoplasmsCMLevel3Stage]&#xA;&#xA;--truncate table [dbo].[ICD10NeoplasmsCMLevel4Stage]&#xA;------------------------------------------------------------------------------&#xA;&#xA;exec dbo.usp_SSISExtractICD10CMNeoplasms&#xA;&#xA;truncate table [dbo].[ICD10CodesXMLData]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\CM Neoplasms.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{7b7e7602-03fb-41a6-9186-fac6b897368a}"
+          DTS:From="Package\CM Neoplasms\Load Neoplasms CM XML files into table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\CM Neoplasms\Parse Neoplasms CM XML" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PCS Codes"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{4978c0dc-e842-4072-a7ee-3d9d0e5304bd}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PCS Codes">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\PCS Codes\Load PCS XML files into table"
+          DTS:CreationName="STOCK:FOREACHLOOP"
+          DTS:Description="Foreach Loop Container"
+          DTS:DTSID="{178c0cd8-fcf5-4d12-a909-9e7a888f9bc5}"
+          DTS:ExecutableType="STOCK:FOREACHLOOP"
+          DTS:LocaleID="-1"
+          DTS:MaxErrorCount="1000"
+          DTS:ObjectName="Load PCS XML files into table">
+          <DTS:ForEachEnumerator
+            DTS:CreationName="Microsoft.ForEachFileEnumerator"
+            DTS:DTSID="{872b6770-b0fa-4fb2-b8fb-13e6c2a06075}"
+            DTS:ObjectName="{F5874458-CE63-445F-8C84-336A3DD83EDD}">
+            <DTS:ObjectData>
+              <ForEachFileEnumeratorProperties>
+                <FEFEProperty
+                  Folder="C:\SSIS\SourceFiles\ICD10\PCS" />
+                <FEFEProperty
+                  FileSpec="*.xml" />
+                <FEFEProperty
+                  FileNameRetrievalType="0" />
+                <FEFEProperty
+                  Recurse="0" />
+              </ForEachFileEnumeratorProperties>
+            </DTS:ObjectData>
+          </DTS:ForEachEnumerator>
+          <DTS:Variables />
+          <DTS:Executables>
+            <DTS:Executable
+              DTS:refId="Package\PCS Codes\Load PCS XML files into table\XMLData"
+              DTS:CreationName="Microsoft.ExecuteSQLTask"
+              DTS:Description="Execute SQL Task"
+              DTS:DTSID="{c122d96f-f567-4026-9807-0ca694c20acb}"
+              DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+              DTS:LocaleID="-1"
+              DTS:ObjectName="XMLData"
+              DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+              DTS:ThreadHint="0">
+              <DTS:Variables />
+              <DTS:EventHandlers>
+                <DTS:EventHandler
+                  DTS:refId="Package\PCS Codes\Load PCS XML files into table\XMLData.EventHandlers[OnError]"
+                  DTS:CreationName="OnError"
+                  DTS:DTSID="{4bea9ab4-9966-4c6c-acb1-0499ed5b97c3}"
+                  DTS:EventID="439720872"
+                  DTS:EventName="OnError"
+                  DTS:LocaleID="-1">
+                  <DTS:Variables>
+                    <DTS:Variable
+                      DTS:CreationName=""
+                      DTS:Description="The propagate property of the event"
+                      DTS:DTSID="{6cf7a709-7bc8-4081-9a13-4338ea5635c8}"
+                      DTS:IncludeInDebugDump="6789"
+                      DTS:Namespace="System"
+                      DTS:ObjectName="Propagate">
+                      <DTS:VariableValue
+                        DTS:DataType="11">-1</DTS:VariableValue>
+                    </DTS:Variable>
+                  </DTS:Variables>
+                  <DTS:Executables>
+                    <DTS:Executable
+                      DTS:refId="Package\PCS Codes\Load PCS XML files into table\XMLData.EventHandlers[OnError]\Execute SQL Task"
+                      DTS:CreationName="Microsoft.ExecuteSQLTask"
+                      DTS:Description="Execute SQL Task"
+                      DTS:DTSID="{d247651b-413b-484b-9b4a-b7d657615d9b}"
+                      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                      DTS:LocaleID="-1"
+                      DTS:ObjectName="Execute SQL Task"
+                      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                      <DTS:Variables />
+                      <DTS:ObjectData>
+                        <SQLTask:SqlTaskData
+                          SQLTask:Connection="{BA04F364-F67A-44CF-8EC5-EE7887447A53}"
+                          SQLTask:BypassPrepare="False"
+                          SQLTask:SqlStatementSource="INSERT INTO dbo.Errors&#xA;(?)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                          <SQLTask:ParameterBinding
+                            SQLTask:ParameterName="0"
+                            SQLTask:DtsVariableName="User::VarXMLFileName"
+                            SQLTask:ParameterDirection="Input"
+                            SQLTask:DataType="129"
+                            SQLTask:ParameterSize="-1" />
+                        </SQLTask:SqlTaskData>
+                      </DTS:ObjectData>
+                    </DTS:Executable>
+                  </DTS:Executables>
+                </DTS:EventHandler>
+                <DTS:EventHandler
+                  DTS:refId="Package\PCS Codes\Load PCS XML files into table\XMLData.EventHandlers[OnPostExecute]"
+                  DTS:CreationName="OnPostExecute"
+                  DTS:DTSID="{82e45c64-7d09-4e78-9436-fca362e3643a}"
+                  DTS:EventID="721769796"
+                  DTS:EventName="OnPostExecute"
+                  DTS:LocaleID="-1">
+                  <DTS:Variables>
+                    <DTS:Variable
+                      DTS:CreationName=""
+                      DTS:Description="The propagate property of the event"
+                      DTS:DTSID="{4e124e97-71fe-4fec-bb22-240860caacd2}"
+                      DTS:IncludeInDebugDump="6789"
+                      DTS:Namespace="System"
+                      DTS:ObjectName="Propagate">
+                      <DTS:VariableValue
+                        DTS:DataType="11">-1</DTS:VariableValue>
+                    </DTS:Variable>
+                  </DTS:Variables>
+                  <DTS:Executables>
+                    <DTS:Executable
+                      DTS:refId="Package\PCS Codes\Load PCS XML files into table\XMLData.EventHandlers[OnPostExecute]\Execute SQL Task"
+                      DTS:CreationName="Microsoft.ExecuteSQLTask"
+                      DTS:Description="Execute SQL Task"
+                      DTS:DTSID="{e4e465e9-25ef-43ce-846b-52e13989487e}"
+                      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+                      DTS:LocaleID="-1"
+                      DTS:ObjectName="Execute SQL Task"
+                      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+                      <DTS:Variables />
+                      <DTS:ObjectData>
+                        <SQLTask:SqlTaskData
+                          SQLTask:Connection="{BA04F364-F67A-44CF-8EC5-EE7887447A53}"
+                          SQLTask:BypassPrepare="False"
+                          SQLTask:SqlStatementSource="INSERT INTO dbo.Errors&#xA;(?)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                          <SQLTask:ParameterBinding
+                            SQLTask:ParameterName="0"
+                            SQLTask:DtsVariableName="User::VarXMLFileName"
+                            SQLTask:ParameterDirection="Input"
+                            SQLTask:DataType="129"
+                            SQLTask:ParameterSize="-1" />
+                        </SQLTask:SqlTaskData>
+                      </DTS:ObjectData>
+                    </DTS:Executable>
+                  </DTS:Executables>
+                </DTS:EventHandler>
+              </DTS:EventHandlers>
+              <DTS:ObjectData>
+                <SQLTask:SqlTaskData
+                  SQLTask:Connection="{C42A304D-7888-462D-8EBB-9E80B111CF6C}"
+                  SQLTask:BypassPrepare="False"
+                  SQLTask:SqlStatementSource="&#xA;DECLARE @sql varchar(8000);&#xA;&#xA;set @sql = ''&#xA;&#xA;&#xA;set @sql = ' INSERT INTO  [dbo].[ICD10CodesXMLData](XMLData, LoadedDateTime)&#xA;SELECT CONVERT(XML, BulkColumn) AS BulkColumn, GETDATE() &#xA;FROM OPENROWSET(BULK ''' +?  +''', SINGLE_BLOB) AS x;'&#xA;&#xA;exec (@sql)&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+                  <SQLTask:ParameterBinding
+                    SQLTask:ParameterName="0"
+                    SQLTask:DtsVariableName="User::VarXMLFileName"
+                    SQLTask:ParameterDirection="Input"
+                    SQLTask:DataType="129"
+                    SQLTask:ParameterSize="-1" />
+                </SQLTask:SqlTaskData>
+              </DTS:ObjectData>
+            </DTS:Executable>
+          </DTS:Executables>
+          <DTS:ForEachVariableMappings>
+            <DTS:ForEachVariableMapping
+              DTS:CreationName=""
+              DTS:DTSID="{04C047E8-73F9-45AF-9398-5805505273A5}"
+              DTS:ObjectName="{04C047E8-73F9-45AF-9398-5805505273A5}"
+              DTS:ValueIndex="0"
+              DTS:VariableName="User::VarXMLFileName" />
+          </DTS:ForEachVariableMappings>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\PCS Codes\Parse PCS Codes XML"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{d9a27664-69b7-4f95-bea2-79a332e0e8a9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Parse PCS Codes XML"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{C42A304D-7888-462D-8EBB-9E80B111CF6C}"
+              SQLTask:SqlStatementSource="--truncate table [dbo].[ICD10NeoplasmsCMLevel1Stage]&#xA;&#xA;--truncate table [dbo].[ICD10NeoplasmsCMLevel2Stage]&#xA;&#xA;--truncate table [dbo].[ICD10NeoplasmsCMLevel3Stage]&#xA;&#xA;--truncate table [dbo].[ICD10NeoplasmsCMLevel4Stage]&#xA;------------------------------------------------------------------------------&#xA;&#xA;exec dbo.usp_SSISExtractICD10PCSCodes&#xA;&#xA;truncate table [dbo].[ICD10CodesXMLData]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\PCS Codes.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{5f36bc1c-07e8-407b-bb37-7a2cbc6a8336}"
+          DTS:From="Package\PCS Codes\Load PCS XML files into table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\PCS Codes\Parse PCS Codes XML" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{A8C683B7-E29E-4A0E-A9CF-A3E1DAAEECAE}"
+      DTS:From="Package\CM Drugs"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\CM Neoplasms" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{FDC11811-5054-4707-ADAF-F642FFE11844}"
+      DTS:From="Package\CM Neoplasms"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\PCS Codes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="121,42"
+          Id="Package\CM Drugs\Load Drugs CM XML files into table\XMLData"
+          TopLeft="23.5,29.5" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="202,127"
+          Size="202,170"
+          Id="Package\CM Drugs\Load Drugs CM XML files into table"
+          TopLeft="35.166666666667,26.5" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\CM Drugs\Parse Drugs CM XML"
+          TopLeft="45,226.666666666667" />
+        <EdgeLayout
+          Id="Package\CM Drugs.PrecedenceConstraints[Constraint 1]"
+          TopLeft="134.833333333333,196.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30.166666666667"
+              Start="0,0"
+              End="0,22.666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="280,324"
+          Size="280,367"
+          Id="Package\CM Drugs"
+          TopLeft="143.545454545454,58" />
+        <NodeLayout
+          Size="121,42"
+          Id="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData"
+          TopLeft="56,25" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="231,122"
+          Size="231,165"
+          Id="Package\CM Neoplasms\Load Neoplasms CM XML files into table"
+          TopLeft="39.166666666667,29.5" />
+        <NodeLayout
+          Size="200,42"
+          Id="Package\CM Neoplasms\Parse Neoplasms CM XML"
+          TopLeft="51,237.666666666667" />
+        <EdgeLayout
+          Id="Package\CM Neoplasms.PrecedenceConstraints[Constraint 1]"
+          TopLeft="152.833333333333,194.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.166666666667"
+              Start="0,0"
+              End="0,35.666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="305,301"
+          Size="305,344"
+          Id="Package\CM Neoplasms"
+          TopLeft="129,467.54545454547" />
+        <NodeLayout
+          Size="121,42"
+          Id="Package\PCS Codes\Load PCS XML files into table\XMLData"
+          TopLeft="56,25" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="239,122"
+          Size="239,165"
+          Id="Package\PCS Codes\Load PCS XML files into table"
+          TopLeft="39.166666666667,29.5" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\PCS Codes\Parse PCS Codes XML"
+          TopLeft="72,234.666666666667" />
+        <EdgeLayout
+          Id="Package\PCS Codes.PrecedenceConstraints[Constraint 1]"
+          TopLeft="160.583333333333,194.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.166666666667"
+              Start="0,0"
+              End="0,32.666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="312,296"
+          Size="312,339"
+          Id="Package\PCS Codes"
+          TopLeft="528,472" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="282.522727272727,425">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.54545454547"
+              Start="0,0"
+              End="0,35.04545454547">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.04545454547" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="434,640.522727272735">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="94,0"
+              Start="0,0"
+              End="86.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="86.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package\CM Drugs\Load Drugs CM XML files into table\XMLData.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\CM Drugs\Load Drugs CM XML files into table\XMLData.EventHandlers[OnPostExecute]\Execute SQL Task"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\CM Drugs\Load Drugs CM XML files into table\XMLData.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\CM Drugs\Load Drugs CM XML files into table\XMLData.EventHandlers[OnError]\Execute SQL Task"
+          TopLeft="320,205" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData.EventHandlers[OnPostExecute]\Execute SQL Task"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\CM Neoplasms\Load Neoplasms CM XML files into table\XMLData.EventHandlers[OnError]\Execute SQL Task"
+          TopLeft="320,205" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\PCS Codes\Load PCS XML files into table\XMLData.EventHandlers[OnPostExecute]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\PCS Codes\Load PCS XML files into table\XMLData.EventHandlers[OnPostExecute]\Execute SQL Task"
+          TopLeft="60,60" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <DtsEventHandler
+    design-time-name="Package\PCS Codes\Load PCS XML files into table\XMLData.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\PCS Codes\Load PCS XML files into table\XMLData.EventHandlers[OnError]\Execute SQL Task"
+          TopLeft="320,205" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,9 @@
+﻿<keypress-events on-save="safeSubmit(false, false)" on-next="safeSubmit(true, false)" enter-key-stop="stopEnter" permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read"></keypress-events>
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="add_me">
+            <plus-button permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="create" title="Add" data-ng-click="add()" table-id="healthRecordsTable"></plus-button>
+        </div>
+        <health-records element-id="healthRecordsMainTable" data="healthRecordItems"></health-records>
+    </div>
+</div>

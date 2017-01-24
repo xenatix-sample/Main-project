@@ -1,0 +1,43 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="{{resolvePermission(roleModuleID)}}"></keypress-events>
+
+<div class="panel panel-main panel-light padding-xsmall">
+    <form role="form" name="ctrl.assignForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+          bs-modifiable="true" set-form-mode>
+        {{ctrl.assignForm.modified ? setform(true):setform(false)}}
+        <div security permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="{{resolvePermission(roleModuleID)}}" permission-mode="readonly">
+            <div class="panel panel-light padding-xsmall" ng-init="initModule()">
+                <div class="panel-body">
+                    <h4 class="modal-title" id="roleHeader">Role Name: {{newRole.Name}}</h4>
+                    <div class="col-md-12 padding-bottom-small"></div>
+                    <div class="seperator"></div>
+                    <div class="fixed-table-container">
+                        <table id="moduleNameAndDescriptionTable" class="table table-bordered table-style table-select-grid">
+                            <thead>
+                                <tr>
+                                    <th class="col-lg-3">Module</th>
+                                    <th class="col-lg-2">Assign</th>
+                                    <th class="col-lg-1">Module Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="moduleFeature in modules" apply-security>
+                                    <td class="col-lg-3">{{ moduleFeature.Name }}</td>
+                                    <td class="col-lg-2"><input type="checkbox" id="featurePermission" ng-model="moduleFeature.Selected" /></td>
+                                    <td class="col-lg-1">{{moduleFeature.Description}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row padding-top-small">
+            <div class="col-lg-6">
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" id="save" ng-click="safeSubmit(false, true)" security permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="{{resolvePermission(roleModuleID)}}">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" id="next" ng-click="safeSubmit(true, false)" security permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="read">NEXT</button>
+            </div>
+        </div>
+    </form>
+</div>

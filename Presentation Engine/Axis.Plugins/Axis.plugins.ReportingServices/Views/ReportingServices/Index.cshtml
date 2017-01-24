@@ -1,0 +1,36 @@
+﻿@inherits WebViewPage
+
+<div class="row padding-left-small">
+    @*Remove Before Production Publish*@
+    <a href="#" ng-click="RL.Toggle(); Tab.Set(1)">
+        <i class="fa fa-table" ng-if="RL.Type == 'G'"></i>
+        <i class="fa fa-th" ng-if="RL.Type == 'F'"></i>
+    </a>
+</div>
+
+<div class="row padding-left-small">
+    <profile-breadcrumbs ng-title="Reports"></profile-breadcrumbs>
+</div>
+
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="row padding-top-small vertical-cols">
+            <div data-ng-repeat="group in groups track by $index" data-ng-class="{'col-md-3 section-block section-block-nested': $index % 2 == 0, 'col-md-3': $index % 2 !== 0}">
+                <h2>{{::group.GroupName}}</h2>
+                <ul data-ng-class="{'padding-bottom-small': $index % 2 == 0}">
+                    <li data-ng-repeat="report in group.Reports track by $index" ng-class="{active : activeMenu === report.ReportName}" data-ng-click="setReport(report.ReportName)">
+                        <a href="#">{{::report.ReportDisplayName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row padding-top-small">
+            <div class="col-md-12" id="xenFrameWrapper">
+                <iframe class="xen-frame" id="iframeReport" data-ng-src="{{reportSource}}" data-ng-show="showReport">
+                    "Please contact the System Administrator Error Code: Reporting Services: 1001"
+                </iframe>
+
+            </div>
+        </div>
+    </div>
+</div>

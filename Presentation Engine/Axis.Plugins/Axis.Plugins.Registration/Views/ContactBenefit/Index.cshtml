@@ -1,0 +1,6 @@
+﻿<keypress-events on-save="safeSubmit(false, false)" on-next="safeSubmit(true, false)" on-cancel="cancel()" on-add="initContactBenefit()" enter-key-stop="enterKeyStop" stop-next="stopNext" save-on-enter="saveOnEnter" permission-key="{{permissionKey}}" permission="{{resolvePermission(contactBenefit.ContactPayorID)}}"></keypress-events>
+<div>
+    <div>
+        @Html.Partial("_Benefit")
+    </div>
+</div>

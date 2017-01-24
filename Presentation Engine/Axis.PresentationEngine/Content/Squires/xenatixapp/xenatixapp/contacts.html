@@ -1,0 +1,111 @@
+---
+layout: default
+title: Contacts
+permalink: /contacts/
+weight: 1
+---
+<div class="container-fluid padding-left padding-right" id="content" role="main">
+  <div class="row row-offcanvas row-offcanvas-right">
+	<div class="sidebar-offcanvas col-lg-3 col-md-4 col-sm-6 col-xs-12">
+		<div class="panel panel-default panel-scroll nomargin-top">
+			<div class="panel-body nopadding-top">
+				<div class="row nopadding-left">
+					<div class="col-lg-12 nopadding-left">
+						<button type="button" class="navbar-toggle" data-toggle="offcanvas">
+							<span class="sr-only">Toggle navigation</span>
+						</button>
+					</div>
+				</div>
+				<div class="row padding-bottom-small border-bottom">
+					<div class="col-lg-8">
+						<h1>Michael J. Dudikoff</h1>
+					</div>
+					<div class="col-lg-4">
+						<img src="{{ "/xenatix/images/ph_avatar_2.png" | prepend: site.baseurl }}" />
+					</div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-lg-12">
+						<h4>PRIMARY PHONE</h4>
+						<p><a href="tel:+19402687984">940.268.7984</a></p>
+					</div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-lg-12">
+						<h4>EMAIL ADDRESS</h4>
+						<p><a href="mailto:m.dudikoff@gmail.com">m.dudikoff@gmail.com</a></p>
+					</div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-lg-12">
+						<h4>CURRENT ADDRESS</h4>
+						<p>4402 Browning Ln. # 204<br />
+						Dallas TX 75225</p>
+					</div>
+				</div>
+				<div class="row padding-bottom-small border-bottom">
+					<div class="col-lg-12">
+						<h4>PRIMARY INSURANCE</h4>
+						<p>Blue Cross Blue Shield of Texas</p>
+						<div class="row">
+							<div class="col-lg-3"><p>ISSUER</p></div>
+							<div class="col-lg-9"><p>80850</p></div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3"><p>ACTIVE</p></div>
+							<div class="col-lg-9"><p>01/01/2015</p></div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3"><p>GROUP</p></div>
+							<div class="col-lg-9"><p>4632084</p></div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3"><p>ID</p></div>
+							<div class="col-lg-9"><p>U35053291 02</p></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<div class="row padding-bottom-small">
+					<div class="col-lg-6">
+						<a href="javascript:void(0);" class="btn btn-default btn-block">Schedule<i class="fa fa-calendar fa-fw border-left margin-left padding-left-small padding-right-small"></i></a>
+					</div>
+					<div class="col-lg-6">
+						<a href="javascript:void(0);" class="btn btn-default btn-block">Notes<i class="fa fa-file-text-o fa-fw border-left margin-left padding-left-small padding-right-small"></i></a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<a href="javascript:void(0);" class="btn btn-default btn-block">Providers<i class="fa fa-user-md fa-fw border-left margin-left padding-left-small padding-right-small"></i></a>
+					</div>
+					<div class="col-lg-6">
+						<a href="javascript:void(0);" class="btn btn-default btn-block">Edit<i class="fa fa-pencil fa-fw border-left margin-left padding-left-small padding-right-small"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="jumbotron">
+      <div class="container-fluid padding-small">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 text-center form-group-lg">
+            <input type="text" class="form-control" id="search" placeholder="Search">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading pull-left padding-top">
+        <h3 class="panel-title"><a href="#">Recently Added</a> |
+        <a href="#" class="inactive">Recently Viewed</a></h3>
+      </div>
+      <div class="panel-body">
+        {% include tabledata.html %}
+      </div>
+      <div class="panel-footer">
+
+      </div>
+    </div>
+  </div>
+</div> <!-- /container -->

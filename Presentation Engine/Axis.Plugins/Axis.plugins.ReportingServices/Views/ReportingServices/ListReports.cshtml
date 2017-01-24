@@ -1,0 +1,62 @@
+﻿
+<div class="row padding-left-small">
+    @*Remove Before Production Publish*@
+    <a href="#" ng-click="RL.Toggle(); Tab.Set(1)">
+        <i class="fa fa-table" ng-if="RL.Type == 'G'"></i>
+        <i class="fa fa-th" ng-if="RL.Type == 'F'"></i>
+    </a>
+</div>
+
+<div class="row padding-left-small">
+    <breadcrumbs min-breadcrumbs="2" goto="Reports" />
+</div>
+
+<!--  Grouped Reports List -->
+<div class="panel panel-light padding-xsmall" ui-view>
+    <div class="panel-body" ng-if="Loading == 'Reports'">
+        <div class="row padding-small padding-top-xxsmall">
+            <div class="loading text-center padding-top padding-bottom">
+                <i class="fa fa-spinner fa-spin"><span class="sr-only">Please wait...</span></i>
+                <label>Loading Reports</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-body" ng-if="Reports.Groups.length > 0">
+        <div class="row padding-top-small vertical-cols" ng-if="RL.Type == 'G'">
+            <div ng-repeat="group in Reports.Groups"
+                 ng-class="{'col-md-3 section-block section-block-nested': $index % 2 == 0, 'col-md-3': $index % 2 !== 0}">
+                <h2>{{::group.ReportGroup}}</h2>
+                <ul ng-class="{'padding-bottom-small': $index % 2 == 0}">
+                    <li ng-repeat="report in group.Reports"
+                        ng-click="LoadReportParams(report.ReportName)">
+                        <a href="javascript:void(0)">{{::report.ReportName}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row section-block margin-bottom-small" ng-if="RL.Type == 'F'">
+            <h3 ng-if="Reports.Folders.length < 1">No Reports To Display!</h3>
+            <ul class="" ng-if="Reports.Folders.length > 0">
+                <li class="" ng-repeat="folder in Reports.Folders">
+                    <h3 ng-bind="folder.FolderName"></h3>
+                    <ul class="">
+                        <li ng-repeat="report in folder.Reports">
+                            <a href="#" ng-click="LoadReportParams(report.ReportName)">
+                                <i class="fa fa-file"></i>
+                                {{report.ReportName}}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel-body" ng-if="!Loading && Reports.Groups.length < 1">
+        <div class="row section-block margin-bottom-small">
+            <h3>No Reports To Display!</h3>
+        </div>
+    </div>
+</div>

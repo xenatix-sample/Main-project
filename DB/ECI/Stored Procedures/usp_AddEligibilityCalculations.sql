@@ -1,0 +1,134 @@
+﻿----------------------------------------------------------------------------------------------------------------------
+-- Procedure:	[ECI].[usp_AddEligibilityCalculations]
+-- Author:		Sumana Sangapu
+-- Date:		10/26/2015
+--
+-- Purpose:		Add the Eligibility Calculations
+--
+-- Notes:		N/A (or any additional notes)
+--
+-- Depends:		N/A (or any dependencies such as other procs or functions)
+--
+-- REVISION HISTORY ---------------------------------------------------------------------------------------------------
+-- 10/26/2015	-	Sumana Sangapu	- Task 3015	- Initial Creation
+-- 11/24/2015	Scott Martin		TFS:3636	Added Audit logging
+-- 01/14/2016	Scott Martin		Added ModifiedOn parameter, Added CreatedBy and CreatedOn field
+-----------------------------------------------------------------------------------------------------------------------
+
+CREATE PROCEDURE [ECI].[usp_AddEligibilityCalculations]
+	@EligibilityCalculationsXML XML,
+	@ModifiedOn DATETIME,
+	@ModifiedBy INT,
+	@ResultCode INT OUTPUT,
+	@ResultMessage NVARCHAR(500) OUTPUT 
+AS
+BEGIN
+DECLARE @AuditDetailID BIGINT,
+		@ProcName VARCHAR(255) = OBJECT_NAME(@@PROCID),
+		@ID BIGINT;
+
+DECLARE @EC_ID TABLE (ID BIGINT);
+
+	SELECT @ResultCode = 0,
+			@ResultMessage = 'Executed successfully';
+		
+	BEGIN TRY
+
+	INSERT INTO [ECI].[EligibilityCalculations]
+	(  [EligibilityID], [UseAdjustedAge],[TestingDate],	[GestationAge], [SCRawScore] ,[SCAEMonths] ,[PRRawScore] ,[PRAEMonths] ,[AdpAE],[AdpMonthsDelay] ,
+		[AdpPCTDelay],[AIRawScore],[AIAEMonths] ,[PIRawScore],[PIAEMonths] ,[SRRawScore],[SRAEMonths] ,[PSAE],[PSMonthsDelay] ,
+		[PSPCTDelay] ,[RCRawScore] ,[ECRawScore],[RCAEMonths],	[ECAEMonths], [ECMonths] ,[ECPCTDelay] ,	[CommAE], [CommMonthsDelay] ,
+		[CommPCTDelay] ,[GMRawScore] ,[GMAE] ,[GMMonthsDelay] ,	[GMPCTDelay],[FMRawScore],[FMAEMonths],	[PMRawScore],[PMAEMonths],
+		[FMPMAE] ,[FMPMMonthsDelay] ,[FMPMPCTDelay] ,[AMRS] ,[AMAEMonths] ,[RARawScore] ,[RAAEMonths] ,	[PCRawScore] ,	[PCAEMonths] ,[CogAE] ,[CogMonthsDelay] ,[CogPCTDelay] ,
+		IsActive, ModifiedBy, ModifiedOn, CreatedBy, CreatedOn
+	)
+	OUTPUT inserted.EligibilityCalculationID
+	INTO @EC_ID
+	SELECT    	T.C.value('EligibilityID[1]','[bigint]') as EligibilityID,
+				T.C.value('UseAdjustedAge[1]', '[bit]') as UseAdjustedAge,
+				T.C.value('TestingDate[1]', '[date]') as TestingDate,
+				T.C.value('GestationalAge[1]', '[decimal]') as GestationAge,
+				T.C.value('SCRS[1]', '[decimal]') as SCRawScore,
+				T.C.value('SCAE[1]', '[decimal]') as SCAEMonths,
+				T.C.value('PRRS[1]', '[decimal]') as PRRawScore,
+				T.C.value('PRAE[1]', '[decimal]') as PRAEMonths,
+				T.C.value('AAE[1]', '[decimal]') as AdpAE,
+				T.C.value('AMD[1]', '[decimal]') as AdpMonthsDelay,
+				T.C.value('APD[1]', '[decimal]')as AdpPCTDelay,
+				T.C.value('AIRS[1]', '[decimal]') as AIRawScore,
+				T.C.value('AIAE[1]', '[decimal]') as AIAEMonths,
+				T.C.value('PIRS[1]', '[decimal]') as PIRawScore,
+				T.C.value('PIAE[1]', '[decimal]') as PIAEMonths,
+				T.C.value('SRRS[1]', '[decimal]') as SRRawScore,
+				T.C.value('SRAE[1]', '[decimal]') as SRAEMonths,
+				T.C.value('PersonalSocialAE[1]', '[decimal]') as PSAE,
+				T.C.value('PersonalSocialMD[1]', '[decimal]') as PSMonthsDelay,
+				T.C.value('PersonalSocialPD[1]', '[decimal]' )as PSPCTDelay,
+				T.C.value('RCRS[1]', '[decimal]') as RCRawScore,
+				T.C.value('ECRS[1]', '[decimal]' )as ECRawScore,
+				T.C.value('RCAE[1]', '[decimal]' )as RCAEMonths,
+				T.C.value('ECAE[1]', '[decimal]') as ECAEMonths,
+				T.C.value('ECMD[1]', '[decimal]') as ECMonths,
+				T.C.value('ECPD[1]', '[decimal]') as ECPCTDelay,
+				T.C.value('CommAE[1]', '[decimal]') as CommAE,
+				T.C.value('CommMD[1]', '[decimal]') as CommMonthsDelay,
+				T.C.value('CommPD[1]', '[decimal]') as CommPCTDelay,
+				T.C.value('GMRS[1]', '[decimal]') as GMRawScore,
+				T.C.value('GMAE[1]', '[decimal]') as GMAE,
+				T.C.value('GMD[1]', '[decimal]') as GMMonthsDelay,--Was GMMD
+				T.C.value('GMPD[1]', '[decimal]') as GMPCTDelay,
+				T.C.value('FMRS[1]', '[decimal]') as FMRawScore,
+				T.C.value('FMAE[1]', '[decimal]') as FMAEMonths,
+				T.C.value('PMRS[1]', '[decimal]') as PMRawScore,
+				T.C.value('PMAE[1]', '[decimal]') as PMAEMonths,
+				T.C.value('FPMAE[1]', '[decimal]') as FMPMAE,
+				T.C.value('FPMD[1]', '[decimal]') as FMPMMonthsDelay,
+				T.C.value('FPMPD[1]', '[decimal]') as FMPMPCTDelay,
+				T.C.value('AMRS[1]', '[decimal]') as AMRS,
+				T.C.value('AMAE[1]', '[decimal]') as AMAEMonths,
+				T.C.value('RARS[1]', '[decimal]') as RARawScore,
+				T.C.value('RAAE[1]', '[decimal]') as RAAEMonths,
+				T.C.value('PCRS[1]', '[decimal]') as PCRawScore,
+				T.C.value('PCAE[1]', '[decimal]') as PCAEMonths,
+				T.C.value('CognitiveAE[1]', '[decimal]') as CogAE,
+				T.C.value('CD[1]', '[decimal]') as CogMonthsDelay,
+				T.C.value('CPD[1]', '[decimal]') as CogPCTDelay,
+				1, 
+				@ModifiedBy, 
+				@ModifiedOn,
+				@ModifiedBy,
+				@ModifiedOn
+	FROM
+		@EligibilityCalculationsXML.nodes('EligibilityCalculation') AS T(C);
+
+	DECLARE @AuditCursor CURSOR;
+	BEGIN
+		SET @AuditCursor = CURSOR FOR
+		SELECT ID FROM @EC_ID;    
+
+		OPEN @AuditCursor 
+		FETCH NEXT FROM @AuditCursor 
+		INTO @ID
+
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+		EXEC Core.usp_AddPreAuditLog @ProcName, 'Insert', 'ECI', 'EligibilityCalculations', @ID, NULL, @ModifiedOn, @ModifiedBy, @ResultCode OUTPUT, @ResultMessage OUTPUT, @AuditDetailID OUTPUT;
+
+		EXEC Auditing.usp_AddPostAuditLog 'Insert', 'ECI', 'EligibilityCalculations', @AuditDetailID, @ID, NULL, @ModifiedOn, @ModifiedBy, @ResultCode OUTPUT, @ResultMessage OUTPUT, @AuditDetailID OUTPUT;
+
+		FETCH NEXT FROM @AuditCursor 
+		INTO @ID
+		END; 
+
+		CLOSE @AuditCursor;
+		DEALLOCATE @AuditCursor;
+	END;
+
+	END TRY
+
+	BEGIN CATCH
+			SELECT  @ResultCode = ERROR_SEVERITY(),
+					@ResultMessage = ERROR_MESSAGE()
+	END CATCH
+
+END

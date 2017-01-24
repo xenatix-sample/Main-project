@@ -1,0 +1,26 @@
+﻿CACHE MANIFEST
+@*
+    Nothing should come before CACHE keyword. Any comments needed should be added after that.
+    Change Log:
+        2016-06-15: Added the Fallback section for an offline resource
+*@
+@model IEnumerable<Axis.Model.Cache.ManifestModel>
+@{bool cacheEnabled = Convert.ToBoolean(Axis.Configuration.ApplicationSettings.EnableCaching.ToString());}
+#version @(String.IsNullOrEmpty(Model.FirstOrDefault().Version.ToString()) ? "1" : Model.FirstOrDefault().Version.ToString())
+#Timestamp @(Model.FirstOrDefault().LastUpdated)
+
+CACHE:
+@if (cacheEnabled)
+{
+    foreach (var item in Model)
+    {
+        @Url.Content(item.FilePath)
+        @Environment.NewLine;
+    }
+}
+@*Commenting as offline.cshtml file is not yet added and it breaks the offline bar.*@
+@*FALLBACK:
+/ offline.cshtml*@
+
+NETWORK:
+*

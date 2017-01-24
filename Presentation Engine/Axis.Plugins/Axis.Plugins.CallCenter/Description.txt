@@ -1,0 +1,8 @@
+﻿Group: Axis.Plugins.CallCenter
+FriendlyName: Axis.Plugins.CallCenter
+SystemName: Axis.Plugins.CallCenter
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 6
+FileName: Axis.Plugins.CallCenter.dll

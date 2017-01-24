@@ -1,0 +1,59 @@
+﻿<div class="row row-offcanvas row-offcanvas-right row-onscreen height-fix">
+
+    <div class="col-lg-12">
+        <keypress-events on-add="addNew()" ignore-enter="true" permission-key="{{permissionKey}}" permission="create"></keypress-events>
+        
+        <div class="ng-cloak">
+            <div class="jumbotron">
+                <form class="form-inline" name="searchForm">
+                    <div class="container-fluid padding-small">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg">
+
+                                <input type="text" name="payorSearch" id="txtPayorSearch" auto-focus event-focus="autoFocus" ng-model="searchText"
+                                       placeholder="Search for Payors" tabindex="0" class="form-control" ng-blur="stopEnterKey()"
+                                       security permission-key="{{permissionKey}}" permission="read">
+                                @* added icon as button *@
+                                <span class="input-group-btn">
+
+                                    <button type="submit" ng-click="getPayors(searchText)" class="btn btn-link">
+                                        <i class="fa fa-search fa-fw"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+         
+            <div class="panel panel-light padding-xsmall">
+                <div class="panel-body">
+                    <h3 class="uppercase nomargin padding-xsmall border-top">PAYORS</h3> 
+                    <div class="add_me">
+                        <plus-button title="New Payor" permission-key="{{permissionKey}}" permission="create" href="javascript:void(0);" ui-sref="businessadministration.configuration.payors.initial"></plus-button>
+                    </div>
+
+                    <div class="row padding-top-small padding-bottom-small">
+                        <table id="payorListTable" data-toggle="table"
+                               data-sort-order="desc"
+                               data-show-columns="true"
+                               data-search="true"
+                               data-minimum-count-columns="2"
+                               data-filter-control="false"
+                               data-mobile-responsive="true"
+                               data-filter-bar
+                               data-advanced-search="false"
+                               data-show-multi-sort="true"
+                               data-classes="table table-stripe-borders"
+                               bootstrap-table="tableoptions" grid-arrow-selector>
+                            <thead>
+                            </thead>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

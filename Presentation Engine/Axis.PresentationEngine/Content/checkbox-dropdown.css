@@ -1,0 +1,20 @@
+﻿
+/*  Directive: Checkbox-Dropdown  */
+.checkbox-dropdown {
+}
+
+    .checkbox-dropdown .items-panel {
+        background-color: #2e2e2e;
+        border-radius: 0 0 10px 10px;
+        display: block;
+        left: 0;
+        padding: 2px 10px;
+        position: absolute;
+        top: 72px;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .checkbox-dropdown .items-panel button {
+        width: 49%;
+    }

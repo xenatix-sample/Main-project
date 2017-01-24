@@ -1,0 +1,8 @@
+﻿Group: Axis.RuleEngine.Plugins.ESignature
+FriendlyName: Axis.RuleEngine.Plugins.ESignature
+SystemName: Axis.RuleEngine.Plugins.ESignature
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 1
+FileName: Axis.RuleEngine.Plugins.ESignature.dll

@@ -1,0 +1,46 @@
+﻿<div ng-repeat="phone in phoneItems=(ctrl.Phones | filter :(EnableFilter||'') && {IsActive:true}) track by $index" ng-form="phoneForm">
+    <!-- phone -->
+    <div class="col-md-2 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="phoneType">Phone Type</label>
+            <select ng-model="phone.PhoneTypeID" id="_providerphoneType{{$index}}" xen-last-element-focus="Phones" class="form-control" auto-focus event-focus="autoContactPhoneFocus" ng-disabled="isReadOnlyForm || ctrl.disableControl || DisableLinkedDetails"
+                    ng-options="phoneType.ID as phoneType.Name for phoneType in getLookupsByType('PhoneType')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : phoneForm.PhoneNumber.$invalid && !phoneForm.PhoneNumber.$pristine }">
+            <label for="phoneNum">Phone Number<sup ng-if="phone.IsMandatory"> *</sup></label> <!--Removed index from name as error message includes index in it and we are not supporting multiple phones for call center till now. Refactor scenario comes. -->  
+            <input type="text" id="_providerphoneNum{{$index}}" name="PhoneNumber" ng-model="phone.Number" ui-mask="999-999-9999" ng-required="phone.IsMandatory"
+                   clean="true" ng-disabled="isReadOnlyForm || ctrl.disableControl || DisableLinkedDetails" class="form-control ellipsis" />
+            <p ng-show="ctrl.callerInformationForm.phoneForm.PhoneNumber.$error.mask" ng-cloak class="error-block">Invalid phone number.</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="phonePermission">Phone Permissions</label>
+            <select ng-model="phone.PhonePermissionID" id="_providerphonePermission{{$index}}" class="form-control" ng-disabled="isReadOnlyForm || ctrl.disableControl || DisableLinkedDetails"
+                    ng-options="phonePermission.ID as phonePermission.Name for phonePermission in getLookupsByType('PhonePermission')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small" data-ng-show="ShowPrimaryCheckbox">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-checkbox ng-model="phone.IsPrimary" data-checkbox-id="_providerphoneIsPrimary{{$index}}" data-label="Primary" />
+        </div>
+    </div>
+    <div class="col-md-2 actions nopadding padding-top-small padding-bottom-small">
+        <div class="form-group-lg padding-top-small margin-right-small text-right">
+            <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="phone.ShowPlusButton" ng-click="addNewPhone()" space-key-press>
+                <i class="fa fa-plus-circle"><span class="sr-only">Add Phone Number</span></i>
+            </a>
+            <a href="javascript:void(0);" class="font-size-xlarge" ng-if="(phone.ShowMinusButton && phoneItems.length>1)" ng-click="removePhone($index)" space-key-press>
+                <i class="fa fa-minus-circle" on-row-removed><span class="sr-only">Remove Phone Number</span></i>
+            </a>
+        </div>
+    </div>
+</div>

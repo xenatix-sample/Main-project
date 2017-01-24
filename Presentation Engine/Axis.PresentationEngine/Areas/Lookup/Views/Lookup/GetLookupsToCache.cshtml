@@ -1,0 +1,147 @@
+﻿@model Axis.PresentationEngine.Models.JsonViewModel
+@{
+    Layout = null;
+}
+//<script>
+    (function() {
+        angular.module('xenatixApp').factory('lookupService', [
+            '$http', '$q','$filter',
+            function($http, $q,$filter) {
+                var data = @Html.Raw(Model.Json);
+
+                function get(typeName) {
+                    var result = data[typeName].filter(
+                        function(obj, value) {
+                            if(obj.IsActive == undefined)
+                                return obj;
+                            else
+                                return (obj.IsActive == true);
+                        }
+                    );
+                    return result;
+                };
+
+                function getLookupsByTypeAll(typeName) {
+                    var result = data[typeName];
+                    return result;
+                };
+
+                function getById(typeName, id, propID){
+                    var result = data[typeName].filter(
+                        function(obj, value) {
+                            if(propID){
+                                return (obj[propID]==id);
+                            }else{
+                                return (obj.ID == id);
+                            }
+                            
+                        }
+                    );
+                    return result;
+                };
+
+                function getAll(typeName, id, propID){
+                    var getActive = get(typeName);
+                    var newlist =[];
+                    var ids = id ? (id.toString()).split(",") : '';
+                    angular.forEach(ids, function (item) {
+                        var getInactive = getById(typeName, item,propID);
+                        if(getInactive.length> 0 && getInactive[0].IsActive == false)
+                            newlist.push(getInactive[0]);
+                    });
+                    var mergedArray = getActive.concat(newlist);
+                    return mergedArray;
+                };
+
+                function getLatest(typeName) {
+                    var deferred = $q.defer();
+
+                    $http.get('@Url.Action("GetLookupsByType")', { params: { lookupType: typeName } })
+                        .then(function(response) {
+                            var latestData = eval(response.data);
+                            if (latestData && latestData[typeName]) {
+                                if (data[typeName])
+                                    delete data[typeName];
+                                data[typeName] = latestData[typeName];
+                            }
+                            deferred.resolve(get(typeName));
+                        });
+
+                    return deferred.promise;
+                };
+
+                function getCounties(stateProvinceId) {
+                    var counties = get('County');
+                    var result = counties.filter(
+                        function(county, value) {
+                            return (county.StateProvinceID == stateProvinceId);
+                        }
+                    );
+                    return result;
+                };
+
+                function getSelectedTextById(selectedValue, list, propID) {
+                    var result = list.filter(
+                        function(obj, value) {
+                            if(propID){
+                                return (obj[propID]==selectedValue);
+                            }
+                            else{
+                                return(obj.ID == selectedValue);
+                            }
+                            
+                        }
+                    );
+                    return result;
+                }
+
+                function getSelectedTextByText(selectedText, list) {
+                    var result = list.filter(
+                        function(obj, value) {
+                            return(obj.Name.toLowerCase() == selectedText.toLowerCase());
+                        }
+                    );
+                    return result;
+                }
+
+                function getSelectedText(selectedType, selectedValue, propID) {
+                    var dropDownDetails = getAll(selectedType,selectedValue, propID);
+                    return getSelectedTextById(selectedValue, dropDownDetails, propID);
+
+                }
+
+                function getText(selectedType, selectedValue, propName, propID) {
+                    var obj = getSelectedText(selectedType, selectedValue, propID);
+                    if (obj.length > 0)
+                        return propName ? obj[0][propName] : obj[0].Name;
+                    return "";
+                }
+
+                function getOrganizationByDataKey(dataKey, parentID) {
+                    var organizations = get('Organizations');
+                    var result = organizations.filter(
+                        function(organization, value) {
+                            return (organization.DataKey == dataKey)
+                                    && (parentID == undefined ? true : organization.ParentID == parentID);
+                        }
+                    );
+                    return result;
+                };
+
+                return {
+                    getLookupsByType: get,
+                    getLookupsByTypeAll : getLookupsByTypeAll,
+                    getById : getById,
+                    getAllLookupByType:getAll,
+                    getLatestLookupsByType: getLatest,
+                    getCountiesByStateProvince: getCounties,
+                    getSelectedText: getSelectedText,
+                    getSelectedTextById: getSelectedTextById,
+                    getText: getText,
+                    getSelectedTextByText: getSelectedTextByText,
+                    getOrganizationByDataKey: getOrganizationByDataKey
+                };
+            }
+        ]);
+    }());
+    //</script>

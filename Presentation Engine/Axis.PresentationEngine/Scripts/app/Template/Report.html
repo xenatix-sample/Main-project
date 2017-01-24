@@ -1,0 +1,24 @@
+﻿
+<div class="row padding-left-small" ng-if="!hideBreadcrumb">
+    <breadcrumbs min-breadcrumbs="2" goto="{{ gotoState }}" />
+</div>
+<div class="modal fade no-security prevent-disable" id="xenReportModal" role="dialog" aria-labelledby="reportModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-top: 1px;">
+                <button type="button" id="closePopup" class="close no-security prevent-disable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="roleHeader">{{ reportModel.ReportHeader }}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-show="!reportModel.HasLoaded">
+                    <div class="loading text-center padding-top padding-bottom">
+                        <i class="fa fa-spinner fa-spin"><span class="sr-only">Report is loading</span></i>
+                    </div>
+                </div>
+                <div ng-if="reportModel.HasLoaded" style="height: 800px;">
+                    <pdf-maker report-id="assessementReport" report-name="{{ reportModel.ReportName }}" report-data="reportModel" report-width="100%" report-height="100%" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

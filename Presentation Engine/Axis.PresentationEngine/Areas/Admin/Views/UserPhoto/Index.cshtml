@@ -1,0 +1,35 @@
+﻿<keypress-events enter-key-stop="stopEnter" permission-key="{{permissionKey}}" permission="{{resolvePermission(photoId)}}"></keypress-events>
+<div class="panel panel-main panel-light padding-xsmall page-photo">
+    <form role="form" name="ctrl.photoForm" novalidate xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors)" stop-save="stopSave" stop-next="stopNext" permission-key="{{permissionKey}}" permission="{{resolvePermission(photoId)}}" server-validate="ServerValidationErrors" set-form-status bs-modifiable="true" set-form-mode>
+        <div security permission-key="{{permissionKey}}" permission="create" permission-mode="readonly">
+            <div class="panel panel-default nomargin-top">
+                <photo-profile output-height="185"
+                               output-width="356"
+                               viewer-height="105"
+                               viewer-width="275"
+                               image-format="jpeg"
+                               jpeg-quality="100"
+                               flash-fallback-url="~/Scripts/plugins/camera media/webcam.swf"
+                               overlay-url="~/Scripts/plugins/camera media/overlay.png"
+                               shutter-url="~/Scripts/plugins/camera media/shutter.mp3"
+                               module="User"
+                               picture="picture"
+                               photos="userPhotos"
+                               preview="preview"
+                               on-delete="delete(userPhotoId)"
+                               on-set-as-photo="setAsPhoto(userPhotoId)"
+                               on-set-preview-as-photo="setPreviewAsPhoto()"
+                               on-donot-use-photo="donotUsePhoto()">
+                </photo-profile>
+            </div>
+        </div>
+        <div class="row nomargin padding-xsmall">
+            <div class="col-md-12 border-top padding-top-xxsmall nopadding-right nopadding-left">
+                <div class="col-lg-12 text-right">
+                    <xen-submit id="save" name="save" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="{{permissionKey}}" permission="{{resolvePermission(photoId)}}"></xen-submit>
+                    <xen-submit id="next" name="next" value="NEXT" is-next="true" mandatory="true" style="btn btn-default btn-lg" permission-key="{{permissionKey}}" permission="read" is-hidden="inProfile"></xen-submit>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

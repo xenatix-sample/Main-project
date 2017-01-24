@@ -1,0 +1,28 @@
+﻿<div class="container-fluid nomargin nopadding">
+    <div class="col-md-12">
+        <div class="col-lg-9 col-md-9 nopadding-right ng-cloak">
+            <div class="row padding-right-small tiles">
+                @Html.Partial("../Shared/_MiniPatientHeader")
+            </div>
+            <div class="row padding-right-small tiles" ui-view>
+            </div>
+        </div>
+        <div class="col-md-3 col-lg-3 right-nav">
+            <!--Change to the ECI states-->
+            <xen-workflows work-flow-options="eciRegistrationWorkFlowOptions" work-flow-model="workFlowModel">
+                <div class="btn-group">
+                    <a href="#" security modules="General|Benefits|Consents|Intake|Chart" permission="read" ng-click="Goto('patientprofile.general',{ ContactID: $stateParams.ContactID },false,false)" class="btn btn-default">
+                        <span tab-action="" tabindex="0">View Profile</span>
+                        <i class="fa fa-user pull-right padding-left-small"></i>
+                    </a>
+                    @* ---------- Temporarily hiding "Schedule appointment" button for R1.1 ---------------- *@
+                    @*<a href="#" ng-click="Goto('patientprofile.appointments.newAppointment',{ ContactID: $stateParams.ContactID },false,false)" class="btn btn-default">
+                        <span tab-action="" tabindex="0">Schedule Appointment</span>
+                        <i class="fa fa-calendar pull-right padding-left-small"></i>
+                    </a>*@
+                    @* ---------- Temporarily hiding "Schedule appointment" button for R1.1 ---------------- *@
+                </div>
+            </xen-workflows>
+        </div>
+    </div>
+</div>

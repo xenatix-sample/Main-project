@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+<div class="col-md-4 padding-bottom-small">
+    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.category.$invalid &amp;&amp; !ctrl.referralMainForm.referralDetailForm.category.$pristine}">
+        <label for="category">Category<sup> *</sup></label>
+        <select ng-model="ReferralDetail.ReferralCategoryID" data-validation-name="Category" id="category" name="category" class="form-control" ng-options="category.ID as category.Name for category in getLookupsByType('ReferralCategory')" ng-required="true">
+            <option value="">Select</option>
+        </select>
+        <span class="select-btn"><i class="xen-select"></i></span>
+    </div>
+</div>
+<div class="col-md-4 padding-bottom-small">
+    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.referralMainForm.referralDetailForm.categorySource.$invalid &amp;&amp; !ctrl.referralMainForm.referralDetailForm.categorySource.$pristine}">
+        <label for="categorySource">Category Source<sup> *</sup></label>
+        <select ng-model="ReferralDetail.ReferralCategorySourceID" id="categorySource" data-validation-name="Category Source" name="categorySource" class="form-control" ng-required="true" ng-options="source.ID as source.Name for source in getLookupsByType(ReferralCategorySourceLookUpType) | filter: { CategoryID : ReferralDetail.ReferralCategoryID==null?0 : ReferralDetail.ReferralCategoryID }:true">
+            <option value="">Select</option>
+        </select>
+        <span class="select-btn"><i class="xen-select"></i></span>
+    </div>
+</div>

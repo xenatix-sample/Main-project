@@ -1,0 +1,18 @@
+﻿<div apply-security>
+    <div class="col-md-3">
+        <div class="form-group-lg" ng-class="{'has-error':formName[elementName].$invalid && !formName[elementName].$pristine}">
+            <label for="{{elementId}}">{{label}} <sup ng-if="timeRequired">*</sup></label>
+            <input type="text" standard-time data-ng-model="time" ui-mask="99:99" placeholder="hh:mm" ng-required="timeRequired" class="form-control" id="{{elementId}}" name="{{elementName}}" ng-change="onChange()" data-validation-name="{{validationMessage}}"/>
+            <p ng-show="formName[elementName].$error.invalidTime || formName[elementName].$error.mask" ng-cloak class="error-block">Please select valid {{validationMessage}}.</p>
+        </div>
+    </div>
+    <div class="col-md-3 nopadding-right">
+        <div class="form-group-lg stackable">
+            <fieldset>
+                <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                <span><xen-radio-button data-ng-model="AMPM" on-change="onChange()" data-radio-button-id="{{elementName}}AM" data-on-click="onChange()" data-label="AM" data-ng-value='"AM"' /></span>
+                <span><xen-radio-button data-ng-model="AMPM" on-change="onChange()" data-radio-button-id="{{elementName}}PM" data-on-click="onChange()" data-label="PM" data-ng-value='"PM"' /></span>
+            </fieldset>
+        </div>
+    </div>
+</div>

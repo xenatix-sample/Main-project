@@ -1,0 +1,374 @@
+﻿<keypress-events permission-key="{{permissionKey}}" permission="{{resolvePermission(appointment.AppointmentID)}}" permission-mode="readonly"></keypress-events>
+<div class="row padding-left-small" ng-if="$state.includes('callcenter')">
+    <breadcrumbs min-breadcrumbs="2" goto="{{ $state.current.name.indexOf('crisisline') > -1 ? 'crisisline' : 'lawliaison' }}" />
+</div>
+<div class="row padding-left-small" ng-if="$state.includes('referrals')">
+    <breadcrumbs min-breadcrumbs="2" goto="referralsearch" />
+</div>
+<div security permission-key="{{permissionKey}}" permission="{{resolvePermission(appointment.AppointmentID)}}" permission-mode="readonly">
+        <form role="form" name="ctrl.scheduleForm" novalidate xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors)" stop-save="stopSave" stop-next="stopNext" permission-key="{{permissionKey}}" permission="{{resolvePermission(appointment.AppointmentID)}}"
+              server-validate="ServerValidationErrors" bs-modifiable="true" set-form-status set-form-mode>
+
+            <div class="panel panel-light padding-xsmall">
+
+                <div class="panel-body">
+                    <div class="row padding-bottom-small">
+                        <div class="row padding-top-small" ng-if="isCancel">
+                            <div class="col-md-8 padding-bottom-small" ng-cloak>
+                                <div class="col-md-5 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.appointmentCancelReason.$invalid && !ctrl.scheduleForm.appointmentCancelReason.$pristine }">
+                                        <label for="Program">Cancel Reason <sup>*</sup></label>
+                                        <select data-ng-model="appointment.CancelReasonID" class="form-control prevent-disable" id="appointmentCancelReason" name="appointmentCancelReason" ng-required="isCancel"
+                                                ng-options="reason.ID as reason.Name for reason in getLookupsByType('CancelReason')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 padding-bottom-small padding-left" ng-cloak>
+                                <xen-memobox label="Cancel Comments" rows="5" maxlength="1000" ng-model="appointment.CancelComment" id="appointmentCancelComment" name="appointmentCancelComment" class-name="prevent-disable"></xen-memobox>
+                            </div>
+                        </div>
+
+                        @*Program Unit*@
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.Program.$invalid && !ctrl.scheduleForm.Program.$pristine }">
+                                <label for="Program">Program Unit <sup>*</sup></label>
+
+                                <select data-ng-model="appointment.ProgramID" class="form-control" id="Program" name="Program" ng-required="true" ng-init="selectedValue"
+                                        ng-options="program.ID as program.Name for program in programs"
+                                        ng-change="filterServiceData(appointment.ProgramID)" ng-selected="selectedValue" auto-focus event-focus="autoFocus">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        @*appoinmentType*@
+                        <div class="col-md-3 padding-bottom-small" ng-disabled="!hideShowRequired">
+
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.AppointmentType.$invalid && !ctrl.scheduleForm.AppointmentType.$pristine }">
+                                <label for="AppointmentType">Appointment Type <sup>*</sup></label>
+                                <select ng-model="appointment.AppointmentTypeID" class="form-control" id="appointmentType" name="AppointmentType" ng-required="true"
+                                        ng-options="appointmentType.AppointmentTypeID as appointmentType.AppointmentType for appointmentType in appointmentTypes"
+                                        ng-change="processByAppointmentType(appointment.AppointmentTypeID)">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small" ng-hide="!isNonMHMR">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="firstName">Non MHMR Appoinments</label>
+                                <input class="form-control" id="inputdefault" ng-model="appointment.NonMHMRAppointment" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row padding-bottom-small">
+
+                        @*Service*@
+                        <div class="col-md-3 padding-bottom-small" ng-disabled="!hideShowRequired">
+
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.Services.$invalid && !ctrl.scheduleForm.Services.$pristine }">
+                                <label for="Service">Services <sup ng-hide="isNonMHMR">*</sup></label>
+                                <select data-ng-model="appointment.ServicesID" class="form-control" id="Services" name="Services" ng-required="!isNonMHMR"
+                                        ng-options="service.ServiceID as service.ServiceName for service in serviceData" ng-change="filterServiceStatusData(appointment.ServicesID)">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+
+                        @*Service Status*@
+                        <div class="col-md-3 padding-bottom-small" ng-disabled="!hideShowRequired">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.Program.$invalid && !ctrl.scheduleForm.Program.$pristine }">
+                                <label for="Service Status">Service Status </label>
+                                <select data-ng-model="appointment.ServiceStatusID" class="form-control" id="serviceStatus" name="serviceStatus"
+                                        ng-options="serviceStatus.ID as serviceStatus.Name for serviceStatus in getLookupsByType('ServiceToServiceStatus') | filter: { ServiceID : appointment.ServicesID } :true"
+                                        ng-change="">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 padding-bottom-small col-inline" ng-disabled="!hideShowRequired">
+                            <div class="form-group-lg padding-bottom-small">
+                                <xen-checkbox data-checkbox-id="interpreterId" data-label="Interpreter Required" data-ng-model="interpreterRequired" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row section-block" ng-hide="isNonMHMR">
+                        <div class="col-md-4 padding-bottom-small clear">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="Location">Location</label>
+                                <select ng-model="selectedLocation.ID" id="ClientIdentifierType" name="Location" class="form-control ellipsis"
+                                        ng-options="location.ID as location.Name for location in locations"
+                                        ng-change="populateRooms()">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-5 padding-bottom-small" ng-show="selectedLocation.type==1">
+                            <div class="form-group-lg">
+                                <label for="RoomNumber">Room Number</label>
+                                <select ng-model="selectedRoomId" id="room" name="room" class="form-control ellipsis"
+                                        ng-options="room.RoomID as room.RoomName for room in rooms" ng-change="addRoom()">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn select-btn-align"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scheduling_inset">
+                        <h2 class="uppercase">Scheduling Assistant</h2>
+                        <div class="controls" ng-if="!isFormDisabled">
+                            <div class="actions">
+                                <a href="javascript:void(0)" ng-click="addResource()" ng-hide="isNonMHMR"><i class="fa fa-plus-circle"></i> Add Resource</a>&nbsp;
+                            </div>
+                            <div class="select">
+                                <a href="javascript:void(0)" title="previous month" class="prev" ng-click="changeCalander('left','month')"><i class="fa fa-caret-left"></i><span class="sr-only">previous month</span></a> {{currentMonthName}} <a href="javascript:void(0)" title="next month" class="next" ng-click="changeCalander('right','month')"><i class="fa fa-caret-right"></i><span class="sr-only">next month</span></a>
+                                <a href="javascript:void(0)" title="previous week" class="prev" ng-click="changeCalander('left','week')"><i class="fa fa-caret-left"></i><span class="sr-only">previous week</span></a> {{weekStartDate }} -{{weekEndDate }}  <a href="javascript:void(0)" class="next" ng-click="changeCalander('right','week')"><i class="fa fa-caret-right" title="next week"></i><span class="sr-only">next week</span></a>
+                                <a href="javascript:void(0)" title="previous year" class="prev" ng-click="changeCalander('left','year')"><i class="fa fa-caret-left"></i><span class="sr-only">previous year</span></a>{{selectedYear}} <a href="javascript:void(0)" title="next year" class="next" ng-click="changeCalander('right','year')"><i class="fa fa-caret-right"></i><span class="sr-only">next year</span></a>
+                            </div>
+                            <div class="legend">
+                                <span class="sr-only">Color legend</span><i class="fa fa-square fa-fw date_blocked"></i> Blocked <i class="fa fa-square fa-fw date_appt"></i> Appointment <i class="fa fa-square fa-fw date_avail"></i> Available
+                            </div>
+                        </div>
+                        <div id="scheduling_assistant" class="owl-carousel" ng-if="!isFormDisabled">
+                            <div class="item">
+                                <table cellspacing="0" cellpadding="0" class="scheduling_assist">
+                                    <caption class="sr-only"><span>Scheduling Assistant</span></caption>
+                                    <thead>
+                                        <tr>
+                                            <th class="stubhead" rowspan="2"><span>Resource</span></th>
+                                            <th colspan="20" ng-repeat="day in days" class="day_in_days">
+                                                <span style="">{{::day.calenderDay}}-{{::day.calenderDate}}</span>
+                                            </th>
+                                        </tr>
+                                        <tr class="datehrs">
+                                            <th colspan="2" ng-repeat="hour in hours">
+                                                {{::hour.hour}}
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <th>
+                                                <p class="sub0" ng-bind="contactName"></p>
+                                            </th>
+                                            <td ng-click="getAppointmentStatus(slot,true)" ng-class="slot.status == 'appointment' ? 'date_appt' : 'date_avail'" ng-repeat="slot in timeSlots| filter:{type:0}">
+                                                <span title="available"><span class="sr-only"></span></span>
+                                            </td>
+                                        </tr>
+
+                                        <tr ng-if="selectedRoomId!=0">
+                                            <th>
+
+                                                <p class="sub0">{{selectedRoomName}}</p>
+                                            </th>
+                                            <td ng-click="getAppointmentStatus(slot,true)" class="{{ slot.status=='available' ? 'date_avail': (slot.status=='appointment'?'date_appt':'date_blocked') }}" ng-repeat="slot in timeSlots| filter:{type:3}">
+                                                <span><span class="sr-only"></span></span>
+                                            </td>
+                                        </tr>
+
+                                        <tr ng-repeat="credential in credentials | orderBy: 'CredentialName'">
+                                            <th>
+
+                                                <a href="javascript:void(0)" ng-click="removeResource(credential.CredentialID,1)" class="remove"><i class="fa fa-minus-circle" on-row-removed></i><span class="sr-only">delete</span></a>
+                                                <p class="sub0">{{ credential.CredentialName }}</p>
+                                                <select ng-model="credential.selectedProviderId" id="specialist" name="specialist" class="form-control ellipsis"
+                                                        ng-options="specialist.ProviderId as specialist.ProviderName for specialist in credential.Providers"
+                                                        ng-change="getResourceAvailability(2, credential.CredentialID, 1)"></select>
+                                            </th>
+
+                                            <td ng-click="getAppointmentStatus(slot,true)" class="{{slot.status=='available' ? 'date_avail':(slot.status=='appointment'?'date_appt':'date_blocked')}}" ng-repeat="slot in timeSlots| filter:{groupId:credential.CredentialID, type:1}">
+                                                <span>
+                                                    <span class="sr-only"></span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="nonSpecialist in nonSpecialistProviders">
+                                            <th>
+                                                <a href="javascript:void(0)" ng-click="removeResource(nonSpecialist.nonSpecialistID,2)" class="remove"><i class="fa fa-minus-circle" on-row-removed></i><span class="sr-only">delete</span></a>
+
+                                                <select ng-model="nonSpecialist.selectedProviderId" id="provider" name="provider" class="form-control ellipsis"
+                                                        ng-options="provider.ResourceID as provider.ResourceName for provider in providers | xenUnique: 'ResourceID' | orderBy:'ResourceName'"
+                                                        ng-change="getResourceAvailability(2, nonSpecialist.nonSpecialistID, 2)"></select>
+                                            </th>
+
+                                            <td ng-click="getAppointmentStatus(slot,true)" class="{{ slot.status=='available' ? 'date_avail':(slot.status=='appointment'?'date_appt':'date_blocked')}}" ng-repeat="slot in timeSlots| filter:{groupId: nonSpecialist.nonSpecialistID, type:2}">
+                                                <span>
+                                                    <span class="sr-only"></span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="item"></div>
+                            <div class="item"></div>
+                            <div class="item"></div>
+                            <div class="item"></div>
+                            <div class="item"></div>
+                            <div class="item"></div>
+                            <div class="item"></div>
+                            <div class="item"></div>
+                        </div>
+
+                        @* Show contact, rooms and/or providers as labels here...*@
+                        <div ng-if="isFormDisabled" class="padding-left-small padding-bottom-small">
+                            <div>
+                                <p class="sub0">{{contactName}}</p>
+                            </div>
+                            <div ng-if="selectedRoomId!=0">
+                                <p class="sub0">{{selectedRoomName}}</p>
+                            </div>
+                            <div ng-repeat="credential in credentials">
+                                <p class="sub0">{{ credential.CredentialName }} - {{ credential.Providers[0].ProviderName }}</p>
+                            </div>
+                            <div ng-repeat="nonSpecialist in nonSpecialistProviders" class="row">
+                                <div class="col-lg-4 col-md-5 col-sm-8 col-xs-12 padding-bottom-xsmall">
+                                    <select ng-model="nonSpecialist.selectedProviderId" id="provider" name="provider" class="form-control ellipsis"
+                                            ng-options="provider.ResourceID as provider.ResourceName for provider in providers"
+                                            ng-disabled="isFormDisabled"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="controls controls_foot" ng-if="!isFormDisabled">
+                            <div class="actions">
+                                <a href="javascript:void(0)" ng-click="addResource()" ng-hide="isNonMHMR"><i class="fa fa-plus-circle"></i> Add Resource</a>&nbsp;
+                            </div>
+                            <div class="select">
+                                <a href="javascript:void(0)" title="previous month" class="prev" ng-click="changeCalander('left','month')"><i class="fa fa-caret-left"></i><span class="sr-only">previous month</span></a> {{currentMonthName}} <a href="javascript:void(0)" title="next month" class="next" ng-click="changeCalander('right','month')"><i class="fa fa-caret-right"></i><span class="sr-only">next month</span></a>
+                                <a href="javascript:void(0)" title="previous week" class="prev" ng-click="changeCalander('left','week')"><i class="fa fa-caret-left"></i><span class="sr-only">previous week</span></a> {{weekStartDate }} -{{weekEndDate }}  <a href="javascript:void(0)" class="next" ng-click="changeCalander('right','week')"><i class="fa fa-caret-right" title="next week"></i><span class="sr-only">next week</span></a>
+                                <a href="javascript:void(0)" title="previous year" class="prev" ng-click="changeCalander('left','year')"><i class="fa fa-caret-left"></i><span class="sr-only">previous year</span></a>{{selectedYear}} <a href="javascript:void(0)" title="next year" class="next" ng-click="changeCalander('right','year')"><i class="fa fa-caret-right"></i><span class="sr-only">next year</span></a>
+                            </div>
+                            <div class="legend">
+                                <span class="sr-only">Color legend</span><i class="fa fa-square fa-fw date_blocked"></i> Blocked <i class="fa fa-square fa-fw date_appt"></i> Appointment <i class="fa fa-square fa-fw date_avail"></i> Available
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row section-block">
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-5 padding-bottom-small">
+                                    <div id="dateOfAppointment" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.appointmentDate.$invalid && !ctrl.scheduleForm.appointmentDate.$pristine }">
+                                        <label for="appointmentDate">Date <sup>*</sup></label>
+                                        <mydatepicker opened="opened" id="appointmentDate" new-date="appointment.AppointmentDate" dob-name="appointmentDate" date-options="dateOptions" date-required="true" call-function-on-change="validateAppointmentDate()"></mydatepicker>
+                                        <p id="dateOfAppointmentError" ng-show="ctrl.scheduleForm.appointmentDate.$error.date" ng-cloak class="error-block">Please select a valid date.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 padding-bottom-small">
+                                    <div id="lengthOfAppointment" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.appointmentLength.$invalid &&  !ctrl.scheduleForm.appointmentLength.$pristine }">
+                                        <label for="AppointmentLength">Appointment Length</label>
+                                        <input type="text" data-ng-model="appointment.AppointmentLength" class="form-control" id="appointmentLength" ng-change="validateAppointmentLength()" name="appointmentLength" maxlength="6" />
+                                        <p id="lengthOfAppointmentError" ng-show="ctrl.scheduleForm.appointmentLength.$error.pattern" ng-cloak class="error-block">Please enter valid length.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 nopadding-right">
+                                    <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                                        <fieldset id="aptLengthPeriod">
+                                            <legend class="uppercase"><span class="sr-only">Select appointment length</span></legend>
+                                            <span><xen-radio-button data-ng-model="appointment.AppointmentLengthPeriod" data-radio-button-id="aptLengthPeriodMin" data-label="Min" data-ng-value='"min"' data-on-click="changeMinHour('min',appointment.AppointmentLengthPeriod=='hour')" /></span>
+                                            <span><xen-radio-button data-ng-model="appointment.AppointmentLengthPeriod" data-radio-button-id="aptLengthPeriodHour" data-label="Hour" data-ng-value='"hour"' data-on-click="changeMinHour('hour',appointment.AppointmentLengthPeriod=='min')" /></span>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div id="startTimeContainer" class="form-group-lg padding-bottom-small" ng-class="{'has-error':ctrl.scheduleForm.startTime.$invalid && !ctrl.scheduleForm.startTime.$pristine}">
+                                        <label for="StartTime">Start Time <sup>*</sup></label>
+                                        <input type="text" standard-time data-ng-model="appointment.AppointmentStartTime" ui-mask="99:99" ng-change="validateStandardTime(true)" placeholder="hh:mm" ng-required="true" class="form-control" id="startTime" name="startTime" ng-keyup="syncDateAndLength('starttime')" />
+                                        <p id="appointmentStartTimeError1" ng-show="ctrl.scheduleForm.startTime.$error.startTimeError" ng-cloak class="error-block">Please select valid start time.</p>
+                                        <p id="appointmentStartTimeError2" ng-show="ctrl.scheduleForm.startTime.$error.mask" ng-cloak class="error-block">Please select valid start time.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 nopadding-right">
+                                    <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                                        <fieldset id="aptStartDateAMPMF">
+                                            <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                            <span><xen-radio-button data-ng-model="appointment.StartAMPM" data-radio-button-id="aptStartAM" data-on-click="validateStartAppointmentTime()" data-label="AM" data-ng-value='"AM"' ng-keyup="syncDateAndLength('starttime')" /></span>
+                                            <span><xen-radio-button data-ng-model="appointment.StartAMPM" data-radio-button-id="aptStartPM" data-on-click="validateStartAppointmentTime()" data-label="PM" data-ng-value='"PM"' ng-keyup="syncDateAndLength('starttime')" /></span>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div id="endTimeContainer" class="form-group-lg padding-bottom-small" ng-class="{'has-error':ctrl.scheduleForm.endTime.$invalid && !ctrl.scheduleForm.endTime.$pristine}">
+                                        <label for="EndTime">End Time <sup>*</sup></label>
+                                        <input type="text" standard-time data-ng-model="appointment.AppointmentEndTime" ui-mask="99:99" ng-change="validateStandardTime(false)" placeholder="hh:mm" ng-required="true" class="form-control" id="endTime" name="endTime" ng-keyup="syncDateAndLength('endtime')" />
+                                        <p id="appointmentEndTimeError1" ng-show="ctrl.scheduleForm.endTime.$error.endTimeError" ng-cloak class="error-block">Please select valid end time.</p>
+                                        <p id="appointmentEndTimeError2" ng-show="ctrl.scheduleForm.endTime.$error.mask" ng-cloak class="error-block">Please select valid end time.</p>
+                                        <p id="appointmentEndTimeError3" ng-show="ctrl.scheduleForm.endTime.$error.endTimeValidError && !ctrl.scheduleForm.endTime.$error.endTimeError" ng-cloak class="error-block">End time should be greater than start time</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 nopadding-right">
+                                    <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                                        <fieldset id="aptDateAMPMF">
+                                            <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                            <span><xen-radio-button data-ng-model="appointment.AMPM" data-radio-button-id="aptDateAM" data-on-click="validateAppointmentTime()" data-label="AM" data-ng-value='"AM"' ng-keyup="syncDateAndLength('endtime')" /></span>
+                                            <span><xen-radio-button data-ng-model="appointment.AMPM" data-radio-button-id="aptDatePM" data-on-click="validateAppointmentTime()" data-label="PM" data-ng-value='"PM"' ng-keyup="syncDateAndLength('endtime')" /></span>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="nopadding">
+                                @* These are placeholders only. 'Some person' should populate with the name of the resource that has a
+                                time conflict. I've made this piece a list in case there are multiple resources who have conflicts. Each resource
+                                in conflict should be it's own <li>*@
+                                <div class="inset_alert" ng-show="conflicts.length > 0">
+                                    <div class="problem">
+                                        <h4><i class="fa fa-exclamation-circle text-danger"></i> <span class="uppercase">Schedule Conflict</span></h4>
+                                        <ul class="list-unstyled" ng-repeat="conflict in conflicts">
+                                            <li><strong>{{::conflict.resourceName}}</strong> is not available during the selected time.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="suggestion" ng-show="false">
+                                        <h4 class="uppercase">Suggested Appointment Time</h4>
+                                        @* This is the same concept as the conflict alert. I've made the date-time suggestion a list in case we
+                                        decide we want to display more than one suggested option. *@
+                                        <ul class="list-unstyled">
+                                            <li>Thursday - 10/08/2015 (<strong>1:00pm</strong>)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row padding-top-small">
+                        <div class="col-md-8 padding-bottom-small" ng-cloak>
+                            <xen-memobox label="Reason For Visit" rows="5" maxlength="4000" ng-model="appointment.ReasonForVisit" id="ReasonForVisit" name="ReasonForVisit"></xen-memobox>
+                        </div>
+                    </div>
+
+                    <div ng-show="IsRecurringAptEdit">
+                        @Html.Partial("../Shared/_Recurrence")
+                    </div>
+
+
+                    <div class="row padding-top-small">
+                        <div class="col-lg-6">
+                            <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <xen-submit id="save" name="save" value="SAVE" ng-class="{'prevent-disable':isCancel}" prevent-disable="isCancel" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="{{permissionKey}}" permission="{{resolvePermission(appointment.AppointmentID)}}"></xen-submit>
+                            <button ng-click="Goto('patientprofile.appointments', { ContactID: $stateParams.ContactID })" type="button" class="btn btn-default btn-lg prevent-disable" ng-if="isCancel" id="btnCancel" name="btnCancel" security permission-key="{{permissionKey}}" permission="delete">CANCEL</button>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </form>
+</div>

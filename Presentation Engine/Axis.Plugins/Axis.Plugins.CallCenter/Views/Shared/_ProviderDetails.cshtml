@@ -1,0 +1,54 @@
+﻿<div class="row section-block padding-top-small margin-bottom-xsmall" ng-form="takenDetailsForm">
+				<div class="col-md-3 padding-bottom-small form-group-lg">
+								<div class="form-group-lg padding-bottom-small">
+												<label for="Provider">Provider</label>
+												<select class="form-control" ng-required="true" ng-model="ctrl.providerDetail.ProviderBy" ng-disabled="true"
+																				name="Provider" id="Provider" auto-focus event-focus="autoFocus" ng-options="users.ID as users.Name for users in getLookupsByType('Users')">
+																<option value="" ng-selected="selected">Select</option>
+												</select>
+												<span class="select-btn"><i class="xen-select"></i></span>
+								</div>
+				</div>
+				<div id="datetd" class="col-md-3 padding-bottom-small form-group-lg">
+								<div class="form-group-lg padding-bottom-small">
+												<label for="ProviderDate">Date</label>
+												<xen-date-picker id="ProviderDate" is-disabled="true" ng-model="ctrl.providerDetail.ProviderDate"
+																													end-date="ctrl.endDate" name="ProviderDate" date-options="ctrl.dateOptions" start-date="ctrl.startDate" is-hidden="!ctrl.providerDetail.enableProviderDate"
+																													call-function-on-change="validateFutureDateTime()"></xen-date-picker>
+								</div>
+				</div>
+				<div id="StartTimetd" class="col-md-2 padding-bottom-small form-group-lg">
+								<div class="form-group-lg padding-bottom-small">
+												<label for="StartTime">Start Time</label>
+												<div class="bootstrap-timepicker timepicker">
+																<input type="text" ng-required="true" class="form-control ellipsis" ui-mask="99:99" placeholder="hh:mm" ng-model="ctrl.providerDetail.ProviderStartTime" ng-disabled="true" id="StartTime" name="StartTime" />
+												</div>
+								</div>
+				</div>
+				<div class="col-md-1 nopadding-right">
+								<div class="form-group-lg stackable padding-top-small padding-bottom-small">
+												<fieldset id="aptStartDateAMPMF">
+																<legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+																<span><xen-radio-button data-ng-model="ctrl.providerDetail.CallStartAMPM" data-radio-button-id="aptStartAM" data-label="AM" data-ng-value='"AM"' ng-disabled="!ctrl.providerDetail.enableProviderStartTime" /></span>
+																<span><xen-radio-button data-ng-model="ctrl.providerDetail.CallStartAMPM" data-radio-button-id="aptStartPM" data-label="PM" data-ng-value='"PM"' ng-disabled="!ctrl.providerDetail.enableProviderStartTime" /></span>
+												</fieldset>
+								</div>
+				</div>
+				<div id="EndTimetd" class="col-md-2 padding-bottom-small form-group-lg">
+								<div class="form-group-lg padding-bottom-small">
+												<label for="EndTime">End Time</label>
+												<div class="bootstrap-timepicker timepicker">
+																<input type="text" class="form-control ellipsis" ui-mask="99:99" placeholder="hh:mm" ng-model="ctrl.providerDetail.ProviderEndTime" ng-disabled="!ctrl.providerDetail.enableProviderEndTime" id="EndTime" name="EndTime" />
+												</div>
+								</div>
+				</div>
+				<div class="col-md-1 nopadding-right">
+								<div class="form-group-lg stackable padding-top-small padding-bottom-small">
+												<fieldset id="aptEndDateAMPMF">
+																<legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+																<span><xen-radio-button data-ng-model="ctrl.providerDetail.CallEndAMPM" data-radio-button-id="aptEndAM" data-label="AM" data-ng-value='"AM"' ng-disabled="!ctrl.providerDetail.enableProviderEndTime" /></span>
+																<span><xen-radio-button data-ng-model="ctrl.providerDetail.CallEndAMPM" data-radio-button-id="aptEndPM" data-label="PM" data-ng-value='"PM"' ng-disabled="!ctrl.providerDetail.enableProviderEndTime" /></span>
+												</fieldset>
+								</div>
+				</div>
+</div>

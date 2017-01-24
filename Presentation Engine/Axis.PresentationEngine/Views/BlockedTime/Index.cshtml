@@ -1,0 +1,154 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, false)" enter-key-stop="enterKeyStop" stop-next="stopNext" save-on-enter="saveOnEnter" stop-save="stopSave" permission-key="{{permissionKey}}" permission="{{resolvePermission(userBlockTimeID)}}"></keypress-events>
+@*<div class="row padding-left-small" ng-if="$state.includes('callcentersummary') || $state.includes('callcenter')">
+        <breadcrumbs min-breadcrumbs="2" goto="callcentersummary" />
+    </div>*@
+<form role="form" name="ctrl.scheduleForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" novalidate ng-submit="ctrl.scheduleForm.$valid" server-validate="ServerValidationErrors" bs-modifiable="true" set-form-status set-form-mode>
+    {{ctrl.scheduleForm.modified ? setform(true):setform(false)}}
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(userBlockTimeID)}}" permission-mode="readonly" dual-permission="true">
+                @*Reason (or type)*@
+                <div class="row section-block padding-top-small">
+                    <div class="col-md-6 padding-bottom-small" ng-cloak>
+                        <label for="Reason">Block Time For <sup>*</sup></label>
+                        <input type="text" ng-model="blockedTime.Reason" maxlength="50" ng-required="true" class="form-control" id="Reason" name="BlockTimeFor" data-validation-name="Block Time For" />
+                    </div>
+                </div>
+
+                @*Main Date/Time entry*@
+                <div class="row padding-top-small">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-4 padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.startDate.$invalid && !ctrl.scheduleForm.startDate.$pristine }">
+                                <div id="startDateContainer" class="form-group-lg padding-bottom-small">
+                                    <label for="startDateContainer">From Date <sup>*</sup></label>
+                                    <mydatepicker id="startDate" dob-name="startDate" new-date="blockedTime.StartDate" date-required="dateRequired" ng-model="blockedTime.StartDate" date-options="dateOptions" call-function-on-change="validateAppointmentDate()"></mydatepicker>
+                                    <p id="startdateOfAppointmentError" ng-show="ctrl.scheduleForm.startDate.$error.date" ng-cloak class="error-block">Please select a valid date.</p>
+                                </div>
+                                </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{'has-error':ctrl.scheduleForm.startTime.$invalid && !ctrl.scheduleForm.startTime.$pristine}">
+
+                                    <label for="startTime">From <span class="text-nowrap">Time <sup>*</sup></span></label>
+                                    <input type="text" data-ng-model="blockedTime.StartTime" ui-mask="99:99" ng-change="validateAppointmentTime()" placeholder="hh:mm" ng-required="true" class="form-control" id="startTime" name="startTime" data-validation-name="Start Time" />
+                                    <p id="appointmentStartTimeError1" ng-show="ctrl.scheduleForm.startTime.$error.startTimeError" ng-cloak class="error-block">Please select a valid start time.</p>
+                                    <p id="appointmentStartTimeError2" ng-show="ctrl.scheduleForm.startTime.$error.mask" ng-cloak class="error-block">Please select a valid start time.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 nopadding-right">
+                                <div class="form-group-lg stackable padding-top-small padding-bottom-small" ng-class="{'has-error':blockedTime.StartAmPm.$invalid && !ctrl.scheduleForm.startAMPM.$pristine}">
+                                    <fieldset id="startAMPM">
+                                        <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                        <span><xen-radio-button data-ng-model="blockedTime.StartAmPm" data-radio-button-id="startDateAM" data-on-click="validateAppointmentTime()" data-label="AM" data-ng-value='"AM"' name="Start Time AM/PM" ng-required="true" /></span>
+                                        <span><xen-radio-button data-ng-model="blockedTime.StartAmPm" data-radio-button-id="startDatePM" data-on-click="validateAppointmentTime()" data-label="PM" data-ng-value='"PM"' /></span>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="col-md-2 padding-bottom-small col-inline">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <xen-checkbox data-checkbox-id="allDay" data-ng-model="blockedTime.AllDay" data-label="All Day" data-on-click="onAllDayClick()" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 padding-bottom-small" ng-class="{ 'has-error' : ctrl.scheduleForm.endDate.$invalid && !ctrl.scheduleForm.endDate.$pristine }">
+                                <div id="endDateContainer" class="form-group-lg padding-bottom-small">
+                                    <label for="endDateContainer">To Date <sup>*</sup></label>
+                                    <mydatepicker id="endDate" dob-name="endDate" new-date="blockedTime.EndDate" ng-model="blockedTime.EndDate" date-required="dateRequired" date-options="dateOptions" call-function-on-change="validateAppointmentDate()" ng-disabled="isDisabled"></mydatepicker>
+                                    <p id="enddateOfAppointmentError" ng-show="ctrl.scheduleForm.endDate.$error.date" ng-cloak class="error-block">Please select a valid date.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{'has-error':ctrl.scheduleForm.endTime.$invalid && !ctrl.scheduleForm.endTime.$pristine}">
+
+                                    <label for="endTime">To <span class="text-nowrap">Time <sup>*</sup></span></label>
+                                    <input type="text" data-ng-model="blockedTime.EndTime" ui-mask="99:99" ng-change="validateAppointmentTime()" placeholder="hh:mm" ng-required="true" class="form-control" id="endTime" name="endTime" data-validation-name="End Time" />
+                                    <p id="appointmentEndTimeError1" ng-show="ctrl.scheduleForm.endTime.$error.startTimeError" ng-cloak class="error-block">Please select a valid end time.</p>
+                                    <p id="appointmentEndTimeError2" ng-show="ctrl.scheduleForm.endTime.$error.mask" ng-cloak class="error-block">Please select a valid end time.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 nopadding-right">
+                                <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                                    <fieldset id="endAMPM" ng-class="{'has-error':blockedTime.EndAmPm.$invalid && !ctrl.scheduleForm.endAMPM.$pristine}">
+                                        <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                        <span><xen-radio-button data-ng-model="blockedTime.EndAmPm" data-radio-button-id="endDateAM" data-on-click="validateAppointmentTime()" data-label="AM" data-ng-value='"AM"' name="End Time AM/PM" ng-required="true" /></span>
+                                        <span><xen-radio-button data-ng-model="blockedTime.EndAmPm" data-radio-button-id="endDatePM" data-on-click="validateAppointmentTime()" data-label="PM" data-ng-value='"PM"' /></span>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Comment*@
+                <div class="row padding-top-small margin-bottom-small">
+                    <div class="col-md-8 padding-bottom-small" ng-cloak>
+                        <label for="Comment">Comment <sup>*</sup></label>
+                        <input type="text" ng-model="blockedTime.Comment" maxlength="255" ng-required="true" class=" form-control" id="Comment" name="Comment" />
+                    </div>
+                </div>
+
+                @Html.Partial("../Shared/_Recurrence")
+            </div>
+
+            <div class="row padding-top-small margin-bottom-small">
+                <div class="col-lg-6">
+                    <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                </div>
+                <div class="col-lg-6 text-right">
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" security permission-key="{{permissionKey}}" permission="{{resolvePermission(userBlockTimeID)}}" name="btnSave" dual-permission="true">SAVE</button>
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, false)" id="btnNext" security permission-key="{{permissionKey}}" permission="read" name="btnNext">NEXT</button>
+                </div>
+            </div>
+
+            @*Plus button*@
+            <div class="row">
+                <plus-button title="New Blocked Time" permission-key="{{permissionKey}}" permission="create" data-ng-click="addNew()" table-id="tblBlockedTime"></plus-button>
+            </div>
+            @*Table*@
+            <div class="row padding-top-small table-responsive">
+                <table class="table table-bordered table-responsive" id="tblBlockedTime" name="tblBlockedTime">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>Start</th>
+                            <th>To</th>
+                            <th>End</th>
+                            <th>Type</th>
+                            <th>Occurrence</th>
+                            <th>Day</th>
+                            <th>Frequency</th>
+                            <th>End</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in blockedTimesList">
+                            <td data-ng-bind="item.BlockedTimeID" ng-show="false"></td>
+                            <td data-ng-bind="item.StartDate | toMMDDYYYYDate:'MM/DD/YY':'useLocal'"></td>
+                            <td data-ng-bind="item.StartTimeAmPm"></td>
+                            <td data-ng-bind="item.EndDate | toMMDDYYYYDate:'MM/DD/YY':'useLocal'"></td>
+                            <td data-ng-bind="item.EndTimeAmPm"></td>
+                            <td data-ng-bind="item.Reason"></td>
+                            <td data-ng-bind="item.NumberOfOccurences"></td>
+                            <td data-ng-bind="item.RecurrenceDay"></td>
+                            <td data-ng-bind="item.RecurrenceFrequency"></td>
+                            <td data-ng-bind="item.RecurrenceEndDate | toMMDDYYYYDate:'MM/DD/YY':'useLocal'"></td>
+                            <td>
+                                <a href="javascript:void(0)" security permission-key="{{permissionKey}}" permission="update"
+                                   id="editBlockedTime" name="editBlockedTime" ng-click="editBlockedTime(item)" title="Edit Facility Blocked Time">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+
+                                <a href="javascript:void(0)" ng-click="deleteBlockedTime(item.BlockedTimeID)" id="deleteBlockedTime" name="deleteBlockedTime" title="Delete"
+                                   security permission-key="{{permissionKey}}" permission="delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

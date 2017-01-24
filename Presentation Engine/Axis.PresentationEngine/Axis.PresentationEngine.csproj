@@ -1,0 +1,1496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3D030F7A-B068-45BB-9B0B-E04A7F95542F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Axis.PresentationEngine</RootNamespace>
+    <AssemblyName>Axis.PresentationEngine</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UseGlobalApplicationHostFile />
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <ApplicationInsightsResourceId>/subscriptions/9b965958-6351-4b13-a578-6565aeb36a48/resourcegroups/XenDev/providers/microsoft.insights/components/xendev</ApplicationInsightsResourceId>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDev|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseTest|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenDevWeb001|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenDevWeb002|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenDevWeb002Holding|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTrnWeb001|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTrnWeb002|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTstWeb001|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTstWeb002|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.Mvc5.3.3.4\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.1.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.1.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.1.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.1.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.1.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.1.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvcReportViewer, Version=0.8.5816.27247, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcReportViewer.0.8.3\lib\net45\MvcReportViewer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.8.18111, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Axis Libraries\Axis.Constant\ProviderFilterType.cs">
+      <Link>ProviderFilterType.cs</Link>
+    </Compile>
+    <Compile Include="ApiControllers\WorkflowHeaderController.cs" />
+    <Compile Include="ApiControllers\ClientAuditController.cs" />
+    <Compile Include="ApiControllers\ProvidersController.cs" />
+    <Compile Include="ApiControllers\PhotoController.cs" />
+    <Compile Include="ApiControllers\ServiceRecordingController.cs" />
+    <Compile Include="Areas\Account\Controllers\UserSchedulingController.cs" />
+    <Compile Include="Areas\Account\Controllers\UserDigitalSignature.cs" />
+    <Compile Include="Areas\Admin\Models\CoSignaturesViewModel.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\DivisionProgramController.cs" />
+    <Compile Include="Areas\Admin\Models\UserAdditionalDetailsViewModel.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\UserDirectReportsController.cs" />
+    <Compile Include="Areas\Admin\Models\UserIdentifierViewModel.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\UserPhotoController.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\UserAdditionalDetailsController.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\UserSchedulingController.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\StaffManagementController.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\JsonConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
+    <Compile Include="Areas\Account\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Account\Controllers\ForgotPasswordController.cs" />
+    <Compile Include="Areas\Account\Controllers\UserProfileController.cs" />
+    <Compile Include="Areas\Account\Model\ResetPasswordViewModel.cs" />
+    <Compile Include="Areas\Account\Model\UserProfileViewModel.cs" />
+    <Compile Include="Areas\Account\Repository\Account\IUserProfileRepository.cs" />
+    <Compile Include="Areas\Account\Repository\Account\UserProfileRepository.cs" />
+    <Compile Include="Areas\Account\Repository\ForgotPassword\ForgotPasswordRepository.cs" />
+    <Compile Include="Areas\Account\Repository\ForgotPassword\IForgotPasswordRepository.cs" />
+    <Compile Include="Areas\Account\Translator\AccountTranslator.cs" />
+    <Compile Include="Areas\Account\Model\UserViewModel.cs" />
+    <Compile Include="Areas\Account\Repository\Account\AccountRepository.cs" />
+    <Compile Include="Areas\Account\Repository\Account\IAccountRepository.cs" />
+    <Compile Include="Areas\Account\Translator\ForgotPasswordTranslator.cs" />
+    <Compile Include="Areas\Account\Translator\UserProfileTranslator.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\UserCredentialController.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\UserDetailController.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\UserHeaderController.cs" />
+    <Compile Include="Areas\Admin\ApiControllers\UserRoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DivisionProgramController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserBlockedTimeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserDirectReportsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserPhotoController.cs" />
+    <Compile Include="Areas\Account\Controllers\UserSecurityController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserAdditionalDetailsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserSchedulingController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StaffManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserCredentialController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserDetailController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserHeaderController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserRoleController.cs" />
+    <Compile Include="Areas\Account\Model\UserSecurityQuestionAnswerViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\DivisionProgramViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserDirectReportsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserPhotoViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserScheduling\UserFacilitySchedulingViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserScheduling\UserFacilityTimeSchedulingViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserScheduling\UserSchedulingBaseModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserScheduling\UserSchedulingViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\StaffManagementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserCredentialViewModel.cs" />
+    <Compile Include="Areas\Admin\Respository\Admin\AdminRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\Admin\IAdminRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\DivisionProgram\DivisionProgramRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\DivisionProgram\IDivisionProgramRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserDirectReports\IUserDirectReportsRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserDirectReports\UserDirectReportsRepository.cs" />
+    <Compile Include="Areas\Account\Repository\UserSecurity\IUserSecurityRepository.cs" />
+    <Compile Include="Areas\Account\Repository\UserSecurity\UserSecurityRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\Provider\IProvidersRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\Provider\ProvidersRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserScheduling\IUserSchedulingRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\StaffManagement\IStaffManagementRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserCredential\IUserCredentialRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserDetail\IUserDetailRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserHeader\IUserHeaderRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserRole\IUserRoleRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserPhoto\IUserPhotoRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserPhoto\UserPhotoRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserScheduling\UserSchedulingRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\StaffManagement\StaffManagementRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserCredential\UserCredentialRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserDetail\UserDetailRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserHeader\UserHeaderRepository.cs" />
+    <Compile Include="Areas\Admin\Respository\UserRole\UserRoleRepository.cs" />
+    <Compile Include="Areas\Admin\Translator\AdminTranslator.cs" />
+    <Compile Include="Areas\Admin\Translator\DivisionProgramTranslator.cs" />
+    <Compile Include="Areas\Admin\Translator\StaffManagementTranslator.cs" />
+    <Compile Include="Areas\Admin\Translator\UserDirectReportsTranslator.cs" />
+    <Compile Include="Areas\Admin\Translator\UserPhotoTranslator.cs" />
+    <Compile Include="Areas\Account\Translator\UserSecurityQuestionAnswerTranslator.cs" />
+    <Compile Include="Areas\Admin\Translator\UserSchedulingTranslator.cs" />
+    <Compile Include="Areas\Assessment\ApiControllers\AssessmentController.cs" />
+    <Compile Include="Areas\Assessment\AssessmentAreaRegistration.cs" />
+    <Compile Include="Areas\Assessment\Controllers\AssessmentController.cs" />
+    <Compile Include="Areas\Assessment\Models\AssessmentCacheViewModel.cs" />
+    <Compile Include="Areas\Assessment\Models\AssessmentQuestionLogicViewModel.cs" />
+    <Compile Include="Areas\Assessment\Models\AssessmentQuestionOptionViewModel.cs" />
+    <Compile Include="Areas\Assessment\Models\AssessmentQuestionViewModel.cs" />
+    <Compile Include="Areas\Assessment\Models\AssessmentResponseDetailsViewModel.cs" />
+    <Compile Include="Areas\Assessment\Models\AssessmentResponseViewModel.cs" />
+    <Compile Include="Areas\Assessment\Models\AssessmentSectionsViewModel.cs" />
+    <Compile Include="Areas\Assessment\Models\AssessmentViewModel.cs" />
+    <Compile Include="Areas\Assessment\Repository\AssessmentRepository.cs" />
+    <Compile Include="Areas\Assessment\Repository\IAssessmentRepository.cs" />
+    <Compile Include="Areas\Assessment\Translator\AssessmentTranslator.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\ProgramController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\DivisionController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\OrganizationStructureController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\ServiceDetailsController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\ServiceDefinitionController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\CompanyController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\ProgramUnitsController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\PayorsController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\ClientMergeController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\HealthRecordsController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\PlanAddressesController.cs" />
+    <Compile Include="Areas\BusinessAdmin\ApiControllers\PayorPlansController.cs" />
+    <Compile Include="Areas\BusinessAdmin\BusinessAdminAreaRegistration.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\BusinessAdminController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\ClientMergeController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\ConfigurationController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\HealthRecordsController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\MergedContactsController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\OrganizationStructureController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\ServiceConfigurationController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\PayorsConfigurationController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Controllers\PotentialMatchesController.cs" />
+    <Compile Include="Areas\BusinessAdmin\Models\ClientMergeViewModel.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\ClientMerge\ClientMergeRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\ClientMerge\IClientMergeRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\Division\DivisionRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\Division\IDivisionRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\HealthRecords\HealthRecordsRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\HealthRecords\IHealthRecordsRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\OrganizationStructure\IOrganizationStructureRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\OrganizationStructure\OrganizationStructureRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\ServiceDetails\IServiceDetailsRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\ServiceDetails\ServiceDetailsRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\ServiceDefinition\IServiceDefinitionRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\ServiceDefinition\ServiceDefinitionRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\Company\ICompanyRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\Company\CompanyRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\ProgramUnit\IProgramUnitsRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\ProgramUnit\ProgramUnitsRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\PlanAddresses\IPlanAddressesRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\PlanAddresses\PlanAddressesRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\PayorPlans\IPayorPlansRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\PayorPlans\PayorPlansRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\Payors\PayorsRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\Payors\IPayorsRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\Program\ProgramRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Respository\Program\IProgramRepository.cs" />
+    <Compile Include="Areas\BusinessAdmin\Translator\ClientMergeTranslator.cs" />
+    <Compile Include="Areas\Cache\CacheAreaRegistration.cs" />
+    <Compile Include="Areas\Cache\Controllers\CacheController.cs" />
+    <Compile Include="Areas\Cache\Repository\CacheRepository.cs" />
+    <Compile Include="Areas\Cache\Repository\ICacheRepository.cs" />
+    <Compile Include="Areas\Configuration\Controllers\LocationInfoController.cs" />
+    <Compile Include="Areas\Configuration\Controllers\LocationsController.cs" />
+    <Compile Include="Areas\Configuration\Controllers\ConfigController.cs" />
+    <Compile Include="Areas\Configuration\Controllers\RoomScheduleController.cs" />
+    <Compile Include="Areas\Consents\ApiControllers\ConsentsController.cs" />
+    <Compile Include="Areas\Consents\ConsentsAreaRegistration.cs" />
+    <Compile Include="Areas\Consents\Controllers\ConsentsController.cs" />
+    <Compile Include="Areas\Consents\Models\ConsentsViewModel.cs" />
+    <Compile Include="Areas\Consents\Repository\ConsentsRepository.cs" />
+    <Compile Include="Areas\Consents\Repository\IConsentsRepository.cs" />
+    <Compile Include="Areas\Consents\Translator\ConsentsTranslator.cs" />
+    <Compile Include="Areas\RecordedServices\Controllers\VoidServiceController.cs" />
+    <Compile Include="Areas\RecordedServices\Models\VoidServiceViewModel.cs" />
+    <Compile Include="Areas\RecordedServices\RecordedServicesAreaRegistration.cs" />
+    <Compile Include="Areas\RecordedServices\Repository\VoidService\VoidServiceRepository.cs" />
+    <Compile Include="Areas\RecordedServices\Repository\VoidService\IVoidServiceRepository.cs" />
+    <Compile Include="Areas\RecordedServices\Translator\VoidServiceTranslator.cs" />
+    <Compile Include="Areas\Security\ApiControllers\RoleManagementController.cs" />
+    <Compile Include="Areas\Security\Controllers\CredentialSecurityController.cs" />
+    <Compile Include="Areas\Security\Controllers\RoleManagementController.cs" />
+    <Compile Include="Areas\Security\Model\CredentialSecurityViewModel.cs" />
+    <Compile Include="Areas\Security\Model\UserPermissionViewModel.cs" />
+    <Compile Include="Areas\Security\Repository\IRoleManagementRepository.cs" />
+    <Compile Include="Areas\Security\Repository\RoleManagementRepository.cs" />
+    <Compile Include="Controllers\AssessmentGridController.cs" />
+    <Compile Include="Controllers\BlockedTimeController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\RecordingServiceController.cs" />
+    <Compile Include="Controllers\ServiceRecordingController.cs" />
+    <Compile Include="Controllers\DigitalSignatureController.cs" />
+    <Compile Include="Controllers\ServiceRecordingListController.cs" />
+    <Compile Include="Models\JsonViewModel.cs" />
+    <Compile Include="Models\RecurrenceViewModel.cs" />
+    <Compile Include="Models\SettingsViewModel.cs" />
+    <Compile Include="Repository\ClientAuditRepository.cs" />
+    <Compile Include="Repository\IClientAuditRepository.cs" />
+    <Compile Include="Repository\IPhotoRepository.cs" />
+    <Compile Include="Repository\PhotoRepository.cs" />
+    <Compile Include="Areas\Configuration\ConfigurationAreaRegistration.cs" />
+    <Compile Include="Areas\Configuration\Controllers\PluginsController.cs" />
+    <Compile Include="Areas\Configuration\Controllers\SettingsController.cs" />
+    <Compile Include="Areas\Configuration\Models\GetSettingsToCacheViewModel.cs" />
+    <Compile Include="Areas\Configuration\Models\SettingsViewModel.cs" />
+    <Compile Include="Areas\Configuration\Repository\ConfigurationRepository.cs" />
+    <Compile Include="Areas\Configuration\Repository\IConfigurationRepository.cs" />
+    <Compile Include="Areas\Configuration\Translator\ConfigurationTranslator.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Logging\LoggingAreaRegistration.cs" />
+    <Compile Include="Areas\Logging\Repository\LoggingRepository.cs" />
+    <Compile Include="Areas\Lookup\Controllers\LookupController.cs" />
+    <Compile Include="Areas\Lookup\LookupAreaRegistration.cs" />
+    <Compile Include="Areas\Lookup\Repository\LookupRepository.cs" />
+    <Compile Include="Areas\Security\Controllers\RoleSecurityController.cs" />
+    <Compile Include="Areas\Security\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Security\Model\FeatureViewModel.cs" />
+    <Compile Include="Areas\Security\Model\ModuleFeatureViewModel.cs" />
+    <Compile Include="Areas\Security\Model\ModuleViewModel.cs" />
+    <Compile Include="Areas\Security\Model\PermissionViewModel.cs" />
+    <Compile Include="Areas\Security\Model\RoleModuleViewModel.cs" />
+    <Compile Include="Areas\Security\Model\RolePermissionsViewModel.cs" />
+    <Compile Include="Areas\Security\Model\RoleSecurityViewModel.cs" />
+    <Compile Include="Areas\Security\Model\RoleViewModel.cs" />
+    <Compile Include="Areas\Security\Model\SecurityViewModel.cs" />
+    <Compile Include="Areas\Security\Model\UserRoleViewModel.cs" />
+    <Compile Include="Areas\Security\Repository\ISecurityRepository.cs" />
+    <Compile Include="Areas\Security\Repository\SecurityRepository.cs" />
+    <Compile Include="Areas\Security\SecurityAreaRegistration.cs" />
+    <Compile Include="Areas\Security\Translator\RoleTranslator.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\TilesController.cs" />
+    <Compile Include="DependencyInjection\AutoFacContainer.cs" />
+    <Compile Include="DependencyInjection\AutofacScopeContainer.cs" />
+    <Compile Include="DependencyInjection\DependencyRegistration.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\Axis Libraries\Axis.Constant\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Repository\ServiceRecording\IServiceRecordingRepository.cs" />
+    <Compile Include="Repository\ServiceRecording\ServiceRecordingRepository.cs" />
+    <Compile Include="Repository\WorkflowHeader\WorkflowHeaderRepository.cs" />
+    <Compile Include="Repository\WorkflowHeader\IWorkflowHeaderRepository.cs" />
+    <Compile Include="Service References\ReportServer\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+    <Compile Include="Translator\RecurrenceTranslator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\InstalledPlugins.txt" />
+    <Content Include="Areas\Account\Scripts\app\controllers\forgotPasswordController.js" />
+    <Content Include="Areas\Account\Scripts\app\controllers\myProfileNavigationController.js" />
+    <Content Include="Areas\Account\Scripts\app\controllers\profileHeaderController.js" />
+    <Content Include="Areas\Account\Scripts\app\controllers\userProfileController.js" />
+    <Content Include="Areas\Account\Scripts\app\controllers\userDigitalSignatureController.js" />
+    <Content Include="Areas\Account\Scripts\app\directives\profileBreadcrumbs.js" />
+    <Content Include="Areas\Account\Scripts\app\helpers\loginHelper.js" />
+    <Content Include="Areas\Account\Scripts\app\services\forgotPasswordService.js" />
+    <Content Include="Areas\Account\Scripts\app\services\userProfileService.js" />
+    <Content Include="Areas\Account\Scripts\unit test\forgotPasswordControllerTest.js" />
+    <Content Include="Areas\Account\Scripts\unit test\forgotPasswordControllerTestRunner.html" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\adminController.js" />
+    <Content Include="Areas\Account\Scripts\app\controllers\userSecurityController.js" />
+    <Content Include="Areas\Assessment\Scripts\app\controllers\assessmentController.js" />
+    <Content Include="Areas\Assessment\Scripts\app\directives\eAxisSignature.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\servicesNavigationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\serviceDefinitionController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\serviceDetailsController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\servicesController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\companyConfigurationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\divisionConfigurationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\programConfigurationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\programUnitConfigurationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\clientMergeNavigationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\compareRecordsController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\mergedContactsController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\organizationStructureNavigationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\potentialMatchesController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\clientMergeController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\configurationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\healthRecordsController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\payorPlansController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\payorsController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\payorsNavigationController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\planAddressController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\controllers\planAddressesController.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\directives\healthRecords.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\programConfigurationService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\divisionConfigurationService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\payorPlansService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\organizationStructureService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\serviceDetailsService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\serviceDefinitionService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\companyConfigurationService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\programUnitConfigurationService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\planAddressesService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\payorsService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\clientMergeService.js" />
+    <Content Include="Areas\BusinessAdmin\Scripts\app\services\healthRecordsService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\BusinessAdmin\Scripts\app\templates\HealthRecords.html" />
+    <Content Include="Areas\BusinessAdmin\Views\HealthRecords\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Consents\Scripts\app\controllers\consentDetailsController.js" />
+    <Content Include="Areas\Consents\Scripts\app\controllers\consentHIPAAController.js" />
+    <Content Include="Areas\Consents\Scripts\app\controllers\consentsNavigationController.js" />
+    <Content Include="Areas\Consents\Scripts\app\controllers\consentsController.js" />
+    <Content Include="Areas\Assessment\Scripts\app\services\assessmentPrintService.js" />
+    <Content Include="Areas\Consents\Scripts\app\services\consentsPrintService.js" />
+    <Content Include="Areas\Consents\Scripts\app\services\consentsService.js" />
+    <Content Include="Areas\RecordedServices\Scripts\app\services\recordingServicePrintService.js" />
+    <Content Include="Areas\Security\Scripts\app\controllers\roleManagementController.js" />
+    <Content Include="Areas\Security\Scripts\app\controllers\roleModulesController.js" />
+    <Content Include="Areas\Security\Scripts\app\controllers\RoleNavigationController.js" />
+    <Content Include="Areas\Security\Scripts\app\controllers\roleManagementController.js" />
+    <Content Include="Areas\Security\Scripts\app\services\credentialSecurityService.js" />
+    <Content Include="Areas\Security\Scripts\app\services\roleManagementService.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\userAdditionalDetailsController.js" />
+    <Content Include="Content\daterangepicker.css" />
+    <Content Include="Content\float-label.css" />
+    <Content Include="Content\checkbox-dropdown.css" />
+    <Content Include="Images\icon_group.svg" />
+    <Content Include="Scripts\ai.0.15.0-build58334.js" />
+    <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\app\controllers\assessmentsGridController.js" />
+    <Content Include="Scripts\app\controllers\raceDetailsController.js" />
+    <Content Include="Scripts\app\controllers\quickRegistrationController.js" />
+    <Content Include="Scripts\app\controllers\miniHeaderController.js" />
+    <Content Include="Scripts\app\controllers\baseFlyoutController.js" />
+    <Content Include="MvcReportViewer.aspx" />
+    <Content Include="MvcReportViewerErrorPage.html" />
+    <Content Include="Scripts\app\controllers\divisionProgramController.js" />
+    <Content Include="Scripts\app\controllers\baseContactController.js" />
+    <Content Include="Scripts\app\controllers\baseController.js" />
+    <Content Include="Scripts\app\controllers\recordingServiceController.js" />
+    <Content Include="Scripts\app\controllers\recordingServiceListController.js" />
+    <Content Include="Scripts\app\controllers\serviceRecordingController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Admin\Scripts\app\controllers\userBlockedTimeController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\userDirectReportsController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\userPhotoController.js" />
+    <Content Include="Areas\RecordedServices\Scripts\app\services\voidService.js" />
+    <Content Include="Scripts\app\controllers\userSchedulingController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\staffManagementController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\staffManagementNavigationController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\userCredentialController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\userDetailController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\userHeaderController.js" />
+    <Content Include="Areas\Admin\Scripts\app\controllers\userRoleController.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\adminService.js" />
+    <Content Include="Areas\Account\Scripts\app\services\userSecurityService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\userDirectReportsService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\userPhotoService.js" />
+    <Content Include="Areas\Account\Scripts\app\filters\excludeSelect.js" />
+    <Content Include="Scripts\app\directives\xenDateRangePicker.js" />
+    <Content Include="Scripts\app\directives\xenMultiSelectTypeahead.js" />
+    <Content Include="Scripts\app\directives\xenMultiSelect.js" />
+    <Content Include="Scripts\app\directives\serviceFlyout.js" />
+    <Content Include="Scripts\app\directives\xenTimePicker.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\directives\xenDigitalSignature.js" />
+    <Content Include="Scripts\app\directives\xenProviders.js" />
+    <Content Include="Scripts\app\directives\inputLabel.js" />
+    <Content Include="Scripts\app\directives\multiSelect.js" />
+    <Content Include="Scripts\app\directives\checkboxDropdown.js" />
+    <Content Include="Scripts\app\directives\onRowRemoved.js" />
+    <Content Include="Scripts\app\directives\password.js" />
+    <Content Include="Scripts\app\directives\quickRegistrationFlyout.js" />
+    <Content Include="Scripts\app\directives\flyoutRecordedServiceVoid.js" />
+    <Content Include="Scripts\app\directives\security.js" />
+    <Content Include="Scripts\app\directives\dynamicNavigation.js" />
+    <Content Include="Scripts\app\directives\flyoutContact.js" />
+    <Content Include="Scripts\app\directives\toolTip.js" />
+    <Content Include="Scripts\app\directives\xenFrame.js" />
+    <Content Include="Scripts\app\directives\xenCheckForm.js" />
+    <Content Include="Scripts\app\directives\xenLoader.js" />
+    <Content Include="Scripts\app\directives\xenReport.js" />
+    <Content Include="Scripts\app\directives\xenWorkflowAction.js" />
+    <Content Include="Scripts\app\directives\xenWorkflows.js" />
+    <Content Include="Scripts\app\directives\xenComment.js" />
+    <Content Include="Scripts\app\directives\xenDatePicker.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\directives\xenSignature.js" />
+    <Content Include="Scripts\app\directives\xenSubmit.js" />
+    <Content Include="Scripts\app\filters\commonFilters.js" />
+    <Content Include="Scripts\app\filters\securityFilter.js" />
+    <Content Include="Scripts\app\filters\filterBy.js" />
+    <Content Include="Scripts\app\helpers\enum.js" />
+    <Content Include="Scripts\app\helpers\enum_ScreenActionType.js" />
+    <Content Include="Scripts\app\providers\httpLoaderInterceptor.js" />
+    <Content Include="Scripts\app\services\workflowHeaderService.js" />
+    <Content Include="Scripts\app\services\helperService.js" />
+    <Content Include="Scripts\app\services\providersService.js" />
+    <Content Include="Scripts\app\services\dateTimeValidatorService.js" />
+    <Content Include="Scripts\app\services\lodashService.js" />
+    <Content Include="Scripts\app\services\assessmentsGridService.js" />
+    <Content Include="Scripts\app\services\cacheService.js" />
+    <Content Include="Scripts\app\services\contactSSNService.js" />
+    <Content Include="Scripts\app\filters\bitwiseFilters.js" />
+    <Content Include="Scripts\app\services\divisionProgramService.js" />
+    <Content Include="Scripts\app\services\scopesService.js" />
+    <Content Include="Scripts\app\services\serviceRecordingService.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\services\userSchedulingService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\staffManagementService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\userCredentialService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\userDetailService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\userHeaderService.js" />
+    <Content Include="Areas\Admin\Scripts\app\services\userRoleService.js" />
+    <Content Include="Areas\Assessment\Scripts\app\directives\assessmentSection.js" />
+    <Content Include="Areas\Configuration\Scripts\app\controllers\configController.js" />
+    <Content Include="Areas\Configuration\Scripts\app\controllers\locationInfoController.js" />
+    <Content Include="Areas\Configuration\Scripts\app\controllers\locationsController.js" />
+    <Content Include="Areas\Configuration\Scripts\app\controllers\locationsNavigationController.js" />
+    <Content Include="Areas\Configuration\Scripts\app\controllers\roomScheduleController.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\icon_crisis.svg" />
+    <Content Include="Images\icon_law.svg" />
+    <Content Include="Scripts\app\controllers\blockTimeController.js" />
+    <Content Include="Scripts\app\directives\auditOn.js" />
+    <Content Include="Scripts\app\directives\ngRepeatFinish.js" />
+    <Content Include="Scripts\app\directives\photoProfile.js" />
+    <Content Include="Scripts\app\directives\syncProgress.js" />
+    <Content Include="Scripts\app\directives\toTimeNoPad.js" />
+    <Content Include="Scripts\app\directives\workFlowsSet.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\directives\xenButtonCheckbox.js" />
+    <Content Include="Scripts\app\directives\xenLastElementFocus.js" />
+    <Content Include="Scripts\app\filters\xenUnique.js" />
+    <Content Include="Scripts\app\directives\xenMaxlength.js" />
+    <Content Include="Scripts\app\directives\setFormStatus.js" />
+    <Content Include="Scripts\app\services\auditService.js" />
+    <Content Include="Scripts\app\services\globalObjectsService.js" />
+    <Content Include="Scripts\app\services\photoService.js" />
+    <Content Include="Areas\Configuration\Scripts\app\controllers\settingsController.js" />
+    <Content Include="Areas\Configuration\Scripts\app\services\settingsService.js" />
+    <Content Include="Areas\Dashboard\Scripts\app\controllers\dashboardController.js" />
+    <Content Include="Areas\Dashboard\Scripts\app\services\dashboardService.js" />
+    <Content Include="Areas\Security\Scripts\app\controllers\roleController.js" />
+    <Content Include="Areas\Security\Scripts\app\services\roleService.js" />
+    <Content Include="Areas\Security\Scripts\app\unit test\roleControllerBackendTest.js" />
+    <Content Include="Areas\Security\Scripts\app\unit test\roleControllerBackendTestRunner.html" />
+    <Content Include="Areas\Security\Scripts\app\unit test\roleControllerTest.js" />
+    <Content Include="Areas\Security\Scripts\app\unit test\roleControllerTestRunner.html" />
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\datepicker.css" />
+    <Content Include="Content\style.min.css" />
+    <Content Include="Content\timepicker.css" />
+    <Content Include="Content\xenatix.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\xenatix.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\BgHead.png" />
+    <Content Include="Images\BgSearch.png" />
+    <Content Include="Images\BgThemeSprite.png" />
+    <Content Include="Images\bkg-gray.jpg" />
+    <Content Include="Images\bkg-green.jpg" />
+    <Content Include="Images\bkg-light-gray.jpg" />
+    <Content Include="Images\icon_caret_down_light.svg" />
+    <Content Include="Images\icon_caret_down_dark.svg" />
+    <Content Include="Images\icon_check_in.svg" />
+    <Content Include="Images\icon_referrals.svg" />
+    <Content Include="Images\icon_search.svg" />
+    <Content Include="Images\logo-footer.png" />
+    <Content Include="Images\logo-light.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\ph_avatar.png" />
+    <Content Include="Images\icon_search_plus_dark.svg" />
+    <Content Include="Images\icon_search_plus_light.svg" />
+    <Content Include="Images\profile_female.svg" />
+    <Content Include="Images\profile_male.svg" />
+    <Content Include="Images\icon_star.svg" />
+    <Content Include="Properties\PublishProfiles\DevWeb.pubxml.user" />
+    <Content Include="Scripts\app\anonymousApp.js" />
+    <Content Include="Scripts\app\app.js" />
+    <Content Include="Scripts\app\controllers\navigationController.js" />
+    <Content Include="Scripts\app\controllers\chartTileController.js" />
+    <Content Include="Scripts\app\directives\breadcrumbs.js" />
+    <Content Include="Scripts\app\directives\chartJs.js" />
+    <Content Include="Scripts\app\directives\loadView.js" />
+    <Content Include="Scripts\app\directives\number.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\directives\pdfMaker.js" />
+    <Content Include="Scripts\app\directives\plusButton.js" />
+    <Content Include="Scripts\app\directives\autoFocus.js" />
+    <Content Include="Scripts\app\directives\autoFocusModal.js" />
+    <Content Include="Scripts\app\directives\plusButtonGridClear.js" />
+    <Content Include="Scripts\app\directives\postalCode.js" />
+    <Content Include="Scripts\app\directives\inputMask.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\directives\tabAction.js" />
+    <Content Include="Scripts\app\directives\tileFlyout.js" />
+    <Content Include="Scripts\app\directives\toggleColumnView.js" />
+    <Content Include="Scripts\app\directives\toTime.js" />
+    <Content Include="Scripts\app\directives\typeahead.js" />
+    <Content Include="Scripts\app\directives\checkForm.js" />
+    <Content Include="Scripts\app\directives\workflowAction.js" />
+    <Content Include="Scripts\app\directives\bootstrapTable.js" />
+    <Content Include="Scripts\app\directives\calender.js" />
+    <Content Include="Scripts\app\directives\compareTo.js" />
+    <Content Include="Scripts\app\directives\pageShortcuts.js" />
+    <Content Include="Scripts\app\directives\mydatepicker.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\directives\serverValidate.js" />
+    <Content Include="Scripts\app\directives\toDateDirective.js" />
+    <Content Include="Scripts\app\directives\embeddedReport.js" />
+    <Content Include="Scripts\app\directives\xenMemoBox.js" />
+    <Content Include="Scripts\app\directives\xenRadioButton.js" />
+    <Content Include="Scripts\app\directives\xenCheckbox.js" />
+    <Content Include="Scripts\app\filters\timeFilters.js" />
+    <Content Include="Scripts\app\filters\toPhone.js" />
+    <Content Include="Scripts\app\providers\idleTimeout.js" />
+    <Content Include="Scripts\app\providers\indexedDb.js" />
+    <Content Include="Scripts\app\providers\offlineData.js" />
+    <Content Include="Scripts\app\providers\lazyLoader.js" />
+    <Content Include="Scripts\app\filters\boolFilters.js" />
+    <Content Include="Scripts\app\filters\toDateFilters.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\app\filters\toSSN.js" />
+    <Content Include="Scripts\app\helpers\common.js" />
+    <Content Include="Scripts\app\services\alertService.js" />
+    <Content Include="Scripts\app\services\formService.js" />
+    <Content Include="Scripts\app\services\commonService.js" />
+    <Content Include="Scripts\app\services\connectionState.js" />
+    <Content Include="Scripts\app\services\navigationService.js" />
+    <Content Include="Scripts\app\Template\DateRangePicker.html" />
+    <Content Include="Scripts\app\Template\MultiSelectTypeahead.html" />
+    <Content Include="Scripts\app\Template\MultiSelect.html" />
+    <Content Include="Scripts\app\Template\DigitalSignature.html" />
+    <Content Include="Scripts\app\Template\MultiSelectProviders.html" />
+    <Content Include="Scripts\app\Template\ServiceFlyout.html" />
+    <Content Include="Scripts\app\Template\TimePicker.html" />
+    <Content Include="Scripts\app\Template\SelectProviders.html" />
+    <Content Include="Scripts\app\Template\TypeaheadProviders.html" />
+    <Content Include="Scripts\app\Template\RegistrationProfile.html" />
+    <Content Include="Scripts\app\Template\Report.html" />
+    <Content Include="Scripts\app\Template\VoidService.html" />
+    <Content Include="Scripts\library\angular-ui-router\angular-ui-router.min.js" />
+    <Content Include="Scripts\library\angular-ui\ui-bootstrap-tpls-extended.js" />
+    <Content Include="Scripts\library\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\library\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\library\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\library\angular-ui\ui-bootstrap.min.js" />
+    <Content Include="Scripts\library\angular\angular-http-batch.min.js" />
+    <Content Include="Scripts\library\angular\angular.js" />
+    <Content Include="Scripts\library\angular\angular.min.js" />
+    <Content Include="Scripts\library\angular\ngMask.js" />
+    <Content Include="Scripts\library\angular\ngStorage.js" />
+    <Content Include="Scripts\library\angular\ui-mask.js" />
+    <Content Include="Scripts\library\bootstrap\daterangepicker.js" />
+    <Content Include="Scripts\library\bootstrap\bootbox.js" />
+    <Content Include="Scripts\library\bootstrap\bootstrap-table-all.js" />
+    <Content Include="Scripts\library\bootstrap\bootstrap-timepicker.js" />
+    <Content Include="Scripts\library\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\library\bootstrap\bootstrap.min.js" />
+    <Content Include="Areas\Account\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Account\Views\web.config" />
+    <Content Include="Content\toastr.less" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Areas\Cache\Views\Cache\Manifest.cshtml" />
+    <Content Include="Areas\Cache\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Security\Views\web.config" />
+    <Content Include="Areas\Security\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\web.config" />
+    <Content Include="Areas\Configuration\Views\Plugins\List.cshtml" />
+    <Content Include="Areas\Logging\Views\web.config" />
+    <Content Include="Areas\Dashboard\Views\web.config" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Edit.cshtml" />
+    <Content Include="Areas\Security\Views\Role\Edit.cshtml" />
+    <Content Include="Areas\Configuration\Views\Settings\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\Settings\Edit.cshtml" />
+    <Content Include="Areas\Account\Views\ForgotPassword\InitiateResetPassword.cshtml" />
+    <Content Include="Areas\Account\Views\ForgotPassword\SecurityQuestion.cshtml" />
+    <Content Include="Areas\Account\Views\ForgotPassword\SecondaryAuthentication.cshtml" />
+    <Content Include="Areas\Account\Views\ForgotPassword\ResetPassword.cshtml" />
+    <Content Include="Areas\Configuration\Views\Settings\GetSettingsToCache.cshtml" />
+    <Content Include="Areas\Lookup\Views\web.config" />
+    <Content Include="Areas\Lookup\Views\Lookup\GetLookupsToCache.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_SiteAdminNavigation.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\SiteAdminMain.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\SiteAdminIndex.cshtml" />
+    <Content Include="Fonts\fontawesome-webfont.eot" />
+    <Content Include="Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Fonts\fontawesome-webfont.woff" />
+    <Content Include="Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Areas\Assessment\Views\web.config" />
+    <Content Include="Areas\Lookup\Views\Lookup\GetReportsToCache.cshtml" />
+    <Content Include="Areas\Lookup\Views\Lookup\GetDrugsToCache.cshtml" />
+    <Content Include="Scripts\library\lodash\lodash.js" />
+    <Content Include="Scripts\library\lodash\lodash.min.js" />
+    <Content Include="Scripts\MvcReportViewer.js" />
+    <Content Include="Scripts\plugins\camera media\overlay.png" />
+    <Content Include="Scripts\plugins\camera media\shutter.mp3" />
+    <Content Include="Scripts\plugins\camera media\webcam.swf" />
+    <Content Include="Areas\Assessment\Views\Assessment\AssessmentService.cshtml" />
+    <Content Include="Areas\Assessment\Views\Assessment\_AssessmentSection.cshtml" />
+    <Content Include="Areas\Admin\Views\StaffManagement\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserDetail\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserRole\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserCredential\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_UserHeader.cshtml" />
+    <Content Include="Areas\Configuration\Views\Config\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\Locations\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\Config\Navigation.cshtml" />
+    <Content Include="Areas\Configuration\Views\LocationInfo\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserScheduling\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserPhoto\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\RoomSchedule\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Admin\Views\UserDirectReports\Index.cshtml" />
+    <Content Include="Areas\Configuration\Views\BlockedTime\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Account\Views\Shared\_MyProfileMain.cshtml" />
+    <Content Include="Areas\Account\Views\UserSecurity\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserBlockedTime\Index.cshtml" />
+    <Content Include="Areas\Account\Views\UserScheduling\Index.cshtml" />
+    <Content Include="Areas\RecordedServices\Views\web.config" />
+    <Content Include="Areas\RecordedServices\Views\Shared\_VoidService.cshtml" />
+    <Content Include="Areas\Admin\Views\DivisionProgram\Index.cshtml" />
+    <Content Include="Areas\Consents\Views\web.config" />
+    <Content Include="Areas\Consents\Views\Consents\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdditionalDetails\Index.cshtml" />
+    <Content Include="Areas\Consents\Views\Consents\HIPAAConsent.cshtml" />
+    <Content Include="Areas\Security\Views\Role\AssignModules.cshtml" />
+    <Content Include="Areas\Security\Views\Role\RoleDetails.cshtml" />
+    <Content Include="Areas\Security\Views\Role\RoleNavigation.cshtml" />
+    <Content Include="Areas\Security\Views\Role\AssignModuleDetails.cshtml" />
+    <Content Include="Areas\Security\Views\RoleManagement\Index.cshtml" />
+    <Content Include="Areas\Security\Views\RoleSecurity\GetUserRoleSecurity.cshtml" />
+    <Content Include="CodeMaps\AccountController.dgml" />
+    <Content Include="Areas\BusinessAdmin\Views\web.config" />
+    <Content Include="Areas\BusinessAdmin\Views\BusinessAdmin\Index.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\Shared\_BusinessAdminNavigation.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\ClientMerge\Index.cshtml" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Account\Views\UserDigitalSignature\Index.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\PayorsConfiguration\PayorPlan.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\PayorsConfiguration\Payors.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\PayorsConfiguration\PlanAddress.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\PayorsConfiguration\PlanDetails.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\MergedContacts\Index.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\PotentialMatches\CompareRecords.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\PotentialMatches\Index.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\Configuration\Index.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\OrganizationStructure\Company.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\OrganizationStructure\Division.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\OrganizationStructure\Programs.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\OrganizationStructure\ProgramUnits.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\OrganizationStructure\_ProgramUnit.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\OrganizationStructure\_Service.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\ServiceConfiguration\Services.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\ServiceConfiguration\ServiceDetails.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\ServiceConfiguration\ServiceDefinition.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\ServiceConfiguration\_ProgramUnit.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\OrganizationStructure\_Program.cshtml" />
+    <Content Include="Areas\BusinessAdmin\Views\OrganizationStructure\_ServiceWorkflow.cshtml" />
+    <None Include="Properties\PublishProfiles\XenDevWeb002Holding.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Areas\Account\Views\UserProfile\UserProfile.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_UserProfileNavigation.cshtml" />
+    <Content Include="Areas\Account\Views\UserProfile\UserProfileMain.cshtml" />
+    <None Include="Properties\PublishProfiles\XenDevWeb002.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\XenDevWeb001.pubxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\Axis.pubxml" />
+    <None Include="Properties\PublishProfiles\XenatixLocal.pubxml" />
+    <None Include="Properties\PublishProfiles\XenDevWeb003.pubxml" />
+    <None Include="Properties\PublishProfiles\XenTrnWeb001.pubxml" />
+    <None Include="Properties\PublishProfiles\XenTrnWeb002.pubxml" />
+    <None Include="Properties\PublishProfiles\XenTstWeb001.pubxml" />
+    <None Include="Properties\PublishProfiles\XenTstWeb003.pubxml" />
+    <None Include="Properties\PublishProfiles\XenTstWeb002.pubxml" />
+    <None Include="Scripts\library\jQuery\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\library\Chart.min.js" />
+    <Content Include="Scripts\library\jQuery\jquery-1.10.2.js" />
+    <Content Include="Scripts\library\jQuery\jquery-1.10.2.min.js" />
+    <None Include="Scripts\library\jQuery\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\library\jQuery\jquery.lazyload.js" />
+    <Content Include="Scripts\library\jQuery\jquery.validate.js" />
+    <Content Include="Scripts\library\jQuery\jquery.validate.min.js" />
+    <Content Include="Scripts\library\jQuery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\library\jQuery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\library\jQuery\jquery.waypoints.js" />
+    <Content Include="Scripts\library\jQuery\perfect-scrollbar.jquery.min.js" />
+    <Content Include="Scripts\library\pdfmake\pdfmake.min.js" />
+    <Content Include="Scripts\library\pdfmake\vfs_fonts.js" />
+    <Content Include="Scripts\library\sjcl.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\plugins\angular-input-modified.js" />
+    <Content Include="Scripts\plugins\detect.min.js" />
+    <Content Include="Scripts\plugins\enquire.min.js" />
+    <Content Include="Scripts\plugins\imageBuilder.js" />
+    <Content Include="Scripts\plugins\jquery.maskedinput.js" />
+    <Content Include="Scripts\plugins\md5.js" />
+    <Content Include="Scripts\plugins\moment-timezone-with-data.js" />
+    <Content Include="Scripts\plugins\moment-with-locales.js" />
+    <Content Include="Scripts\plugins\owl.carousel.js" />
+    <Content Include="Scripts\plugins\respondmore.min.js" />
+    <Content Include="Scripts\plugins\toastr\toastr.js" />
+    <Content Include="Scripts\plugins\toastr\toastr.min.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\plugins\webcam.js" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\url.js" />
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.DocumentMapNode.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ExecutionHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ExecutionInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ExecutionInfo2.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.Extension.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.FindStringResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.GetDocumentMapResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.GetExecutionInfo2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.GetExecutionInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.GetRenderResourceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ListRenderingExtensionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ListSecureMethodsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.LoadDrillthroughTarget2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.LoadDrillthroughTargetResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.LoadReport2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.LoadReportDefinition2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.LoadReportDefinitionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.LoadReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.LogoffResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.LogonUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.NavigateBookmarkResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.NavigateDocumentMapResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.Render2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.RenderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.RenderStreamResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ResetExecution2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ResetExecutionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ServerInfoHeader.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.SetExecutionCredentials2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.SetExecutionCredentialsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.SetExecutionParameters2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.SetExecutionParametersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.Sort2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.SortResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.ToggleItemResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ReportServer\Axis.PresentationEngine.ReportServer.Warning.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <None Include="Service References\ReportServer\configuration91.svcinfo" />
+    <None Include="Service References\ReportServer\configuration.svcinfo" />
+    <None Include="Service References\ReportServer\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Shared\_RecordedService.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Address.cshtml" />
+    <Content Include="Views\Shared\_Email.cshtml" />
+    <Content Include="Views\Shared\_Phone.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
+    <Content Include="Web.Local.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ReleaseDev.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ReleaseTest.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\Datepicker.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Shared\_ContactMethod.cshtml" />
+    <Content Include="Views\Shared\_PublicLayout.cshtml" />
+    <Content Include="Views\Home\Xenatix.cshtml" />
+    <Content Include="Views\Shared\_SecurityQuestion.cshtml" />
+    <None Include="Service References\ReportServer\ReportExecution2005.wsdl" />
+    <Content Include="Views\Shared\_TileInfo.cshtml" />
+    <Content Include="Views\Shared\_IdleTimeout.cshtml" />
+    <Content Include="Views\Photo\PhotoProfile.cshtml" />
+    <Content Include="Views\Shared\_CompactHeader.cshtml" />
+    <Content Include="Views\BlockedTime\Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\UserScheduling\_UserScheduling.cshtml" />
+    <Content Include="Views\Shared\_Recurrence.cshtml" />
+    <Content Include="Views\DivisionProgram\_DivisionProgram.cshtml" />
+    <Content Include="Views\Shared\_DigitalSignature.cshtml" />
+    <Content Include="Views\Shared\_MiniPatientHeader.cshtml" />
+    <Content Include="Views\Shared\CheckboxDropdown.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\AssessmentGrid\Index.cshtml" />
+    <Content Include="Views\ServiceRecordingList\Index.cshtml" />
+    <Content Include="Views\Shared\MultiSelect.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Web.Release.XenDevWeb001.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.XenDevWeb002.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.XenDevWeb002Holding.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.XenDevWeb003.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Release.XenTrnWeb001.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.XenTrnWeb002.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.XenTstWeb001.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.XenTstWeb002.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.XenTstWeb003.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Account\Content\" />
+    <Folder Include="Areas\Assessment\Views\Shared\" />
+    <Folder Include="Areas\Cache\Content\" />
+    <Folder Include="Areas\Cache\Model\" />
+    <Folder Include="Areas\Cache\Views\Shared\" />
+    <Folder Include="Areas\Configuration\Views\Shared\" />
+    <Folder Include="Areas\Consents\Views\Shared\" />
+    <Folder Include="Areas\Dashboard\Models\" />
+    <Folder Include="Areas\Dashboard\Views\Shared\" />
+    <Folder Include="Areas\Logging\Controllers\" />
+    <Folder Include="Areas\Logging\Model\" />
+    <Folder Include="Areas\Logging\Views\Shared\" />
+    <Folder Include="Areas\Lookup\Models\" />
+    <Folder Include="Areas\RecordedServices\Views\VoidService\" />
+    <Folder Include="Logs\" />
+    <Folder Include="Plugins\" />
+    <Folder Include="Scripts\app\unit test\" />
+    <Folder Include="Views\Report\" />
+    <Folder Include="Views\Tile\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\library\angular\angular.min.js.map" />
+    <Content Include="Scripts\library\jQuery\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Configuration\Axis.Configuration.csproj">
+      <Project>{94e342a4-d5dd-4f1c-a838-e453a28872cc}</Project>
+      <Name>Axis.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Constant\Axis.Constant.csproj">
+      <Project>{f3eab25a-9ffe-4dda-9236-71f76ffbd908}</Project>
+      <Name>Axis.Constant</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Helpers\Axis.Helpers.csproj">
+      <Project>{e04d495e-89a3-4d47-90c3-ffc97ba556c4}</Project>
+      <Name>Axis.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Logging\Axis.Logging.csproj">
+      <Project>{8f9be561-8e96-4c34-a25b-b2d44a1e008b}</Project>
+      <Name>Axis.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Account\Axis.Model.Account.csproj">
+      <Project>{539e2b21-5970-4cec-b479-7b560a2d407b}</Project>
+      <Name>Axis.Model.Account</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Address\Axis.Model.Address.csproj">
+      <Project>{d5ddba0d-9bf0-497b-976d-08d39b7fe976}</Project>
+      <Name>Axis.Model.Address</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Admin\Axis.Model.Admin.csproj">
+      <Project>{0e7ca3f1-0db1-4b38-8a29-663f710b0e0f}</Project>
+      <Name>Axis.Model.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.BusinessAdmin\Axis.Model.BusinessAdmin.csproj">
+      <Project>{98c863c5-af31-4a01-bff9-66c87ffff041}</Project>
+      <Name>Axis.Model.BusinessAdmin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Cache\Axis.Model.Cache.csproj">
+      <Project>{b5b75de0-5255-40ff-ba59-e7b94541e7aa}</Project>
+      <Name>Axis.Model.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Common\Axis.Model.Common.csproj">
+      <Project>{b217d868-9cab-4e0d-a0bc-d82423e64741}</Project>
+      <Name>Axis.Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Consents\Axis.Model.Consents.csproj">
+      <Project>{91ed20a5-822c-4e0c-a2be-5210ab97df7e}</Project>
+      <Name>Axis.Model.Consents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Email\Axis.Model.Email.csproj">
+      <Project>{9f6f9127-fe24-4f59-9e43-3ad252360ae1}</Project>
+      <Name>Axis.Model.Email</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Logging\Axis.Model.Logging.csproj">
+      <Project>{d623a2a2-b7ed-44f3-b1b2-6b0057ee40a9}</Project>
+      <Name>Axis.Model.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Phone\Axis.Model.Phone.csproj">
+      <Project>{b0a9f6e9-6648-484c-b213-8b15b80973d3}</Project>
+      <Name>Axis.Model.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Photo\Axis.Model.Photo.csproj">
+      <Project>{cbd7d40a-d0b3-41a0-9931-1cff51d000da}</Project>
+      <Name>Axis.Model.Photo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Recurrence\Axis.Model.Recurrence.csproj">
+      <Project>{3e900884-d562-4917-af79-0f0e9acf1029}</Project>
+      <Name>Axis.Model.Recurrence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.RecordedServices\Axis.Model.RecordedServices.csproj">
+      <Project>{ef878ea5-5fd6-48f4-825c-f58ef325ebc6}</Project>
+      <Name>Axis.Model.RecordedServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Registration\Axis.Model.Registration.csproj">
+      <Project>{d43d18cf-2ecf-4ede-866d-7cad9e1e0096}</Project>
+      <Name>Axis.Model.Registration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Scheduling\Axis.Model.Scheduling.csproj">
+      <Project>{b4701714-ef73-4d51-918e-886df6f36a8c}</Project>
+      <Name>Axis.Model.Scheduling</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Security\Axis.Model.Security.csproj">
+      <Project>{9bf54dd3-d68a-451a-a9ff-16d457ef4457}</Project>
+      <Name>Axis.Model.Security</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Models\Axis.Model.Setting\Axis.Model.Setting.csproj">
+      <Project>{798aafb3-6a50-4990-8c52-ede71c589fc8}</Project>
+      <Name>Axis.Model.Setting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.PluginsEngine\Axis.PluginsEngine.csproj">
+      <Project>{e3b24473-42c9-4666-a53c-c751dee09b52}</Project>
+      <Name>Axis.PluginsEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Axis Libraries\Axis.Service\Axis.Service.csproj">
+      <Project>{a6be9f68-da2a-48c1-a0c7-71a62b04c9d8}</Project>
+      <Name>Axis.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Axis.PresentationEngine.Helpers\Axis.PresentationEngine.Helpers.csproj">
+      <Project>{bfa7d2c0-4ccf-4a68-ac41-5c8692f21a09}</Project>
+      <Name>Axis.PresentationEngine.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ReportServer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenTstWeb003|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release.XenDevWeb003|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>7215</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:5050/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

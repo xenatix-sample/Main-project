@@ -1,0 +1,36 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(false, true)" on-cancel="cancel()" enter-key-stop="enterKeyStop" stop-next="stopNext" save-on-enter="saveOnEnter" permission-key="Clinical-Note-Note" permission="{{resolvePermission(noteDetails.NoteID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security permission-key="Clinical-Note-Note" permission="{{resolvePermission(noteDetails.NoteID)}}" permission-mode="readonly">
+            <form role="form" id="noteDetailForm" name="ctrl.noteDetailForm" check-form data-on-save="updateNoteDetails(isNext, isMandatory, hasErrors)" novalidate ng-submit="ctrl.noteDetailForm.$valid" bs-modifiable="true">
+                {{ctrl.noteDetailForm.modified ? setform(true):setform(false)}}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="NoteType">Note Type</label>
+                            <input type="text" class="form-control ellipsis" id="NoteType" ng-model="noteDetails.NoteType" data-ng-maxlength="400" ng-disabled="true" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="comment" class="sr-only">Enter note content</label>
+                            <textarea class="form-control" rows="30" id="comment" ng-model="noteDetails.Notes" autofocus="autofocus"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row padding-top-xsmall">
+            <div class="col-lg-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" id="noteSave" class="btn btn-default btn-lg" ng-click="safeSubmit(false, true)" security permission-key="Clinical-Note-Note" permission="{{resolvePermission(noteDetails.NoteID)}}" name="btnSave">SAVE</button>
+                <button type="button" id="noteNext" class="btn btn-default btn-lg" security permission-key="Clinical-Note-Note" permission="{{resolvePermission(noteDetails.NoteID)}}" name="btnNext" ng-click="safeSubmit(true, true)" ng-show="controlsVisible">NEXT</button>
+                <button type="button" id="noteESign" class="btn btn-default btn-lg" ng-click="" name="btnSave">E-Sign</button>
+            </div>
+        </div>
+    </div>
+</div>

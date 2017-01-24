@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}
+<div class="col-md-12">
+    <div class="row" ng-repeat="alias in aliasItems=(ContactAliases | filter : {IsActive:true}) track by $index" ng-form="contactAliasForm">
+        <!-- alias -->
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactAliasForm.AliasFirstName.$invalid &amp;&amp; !contactAliasForm.AliasFirstName.$pristine}">
+                <label for="AliasFirstName">Alias First</label>
+                <input ng-disabled="isReadOnlyForm" type="text" xen-last-element-focus="ContactAliases" name="AliasFirstName" id="AliasFirstName" class="form-control ellipsis" ng-model="alias.AliasFirstName" ng-trim="true" ng-maxlength="200">
+                <p ng-show="contactAliasForm.AliasFirstName.$error.maxlength" class="error-block ng-hide">Alias First Name is too long</p>
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactAliasForm.AliasLastName.$invalid &amp;&amp; !contactAliasForm.AliasLastName.$pristine}">
+                <label for="AliasLastName">Alias Last</label>
+                <input ng-disabled="isReadOnlyForm" type="text" name="AliasLastName" id="AliasLastName" ng-model="alias.AliasLastName" ng-maxlength="200" ng-trim="true" class="form-control ellipsis">
+                <p ng-show="contactAliasForm.AliasLastName.$error.maxlength" class="error-block ng-hide">Alias Last Name is too long</p>
+            </div>
+        </div>
+        <div class="col-md-2 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : contactAliasForm.AliasMiddle.$invalid &amp;&amp; !contactAliasForm.AliasMiddle.$pristine }">
+                <label for="AliasMiddle">Alias Middle</label>
+                <input ng-disabled="isReadOnlyForm" type="text" id="AliasMiddle" name="AliasMiddle" class="form-control" ng-model="alias.AliasMiddle" ng-maxlength="200">
+                <p ng-show="contactAliasForm.AliasMiddle.$error.maxlength" ng-cloak class="error-block">Alias Middle Name is too long</p>
+            </div>
+        </div>
+        <div class="col-md-2 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="suffix">Alias Suffix</label>
+                <select ng-disabled="isReadOnlyForm" ng-model="alias.SuffixID" id="suffix" class="form-control ellipsis" ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')"><option value="">Select</option><option value="0" label="I">I</option><option value="1" label="II">II</option><option value="2" label="III">III</option><option value="3" label="IV">IV</option><option value="4" label="Jr.">Jr.</option><option value="5" label="Sr.">Sr.</option></select>
+                <span class="select-btn"><i class="xen-select"></i></span>
+            </div>
+        </div>
+        <div class="col-md-2 actions nopadding padding-top-small">
+            <div class="form-group-lg padding-top-small text-right">
+                <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="alias.ShowPlusButton" ng-click="addNewAlias()" space-key-press>
+                    <i class="fa fa-plus-circle"><span class="sr-only">Add Alias</span></i>
+                </a>
+                <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="(alias.ShowMinusButton && aliasItems.length>1)" ng-click="removeAlias($index)" space-key-press>
+                    <i class="fa fa-minus-circle" on-row-removed><span class="sr-only">Remove Alias</span></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

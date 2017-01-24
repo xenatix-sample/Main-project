@@ -1,0 +1,107 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="{{permissionKey}}" permission="{{resolvePermission(userCredentialID)}}"></keypress-events>
+<div class="panel panel-main panel-light padding-xsmall padding-bottom-super">
+    <div class="panel-body">
+        <form role="form" name="ctrl.userCredentialForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+              bs-modifiable="true" set-form-mode>
+            <div class="row padding-top-small" security permission-key="{{permissionKey}}" permission="{{resolvePermission(userCredentialID)}}" permission-mode="readonly">
+                <!--bootstrap table-->
+                <div class="bootstrap-table flyout-margin">
+                    <div class="fixed-table-container">
+                        <div class="fixed-table-body">
+                            <table id="userCredentials" data-toggle="table"
+                                   data-show-columns="false"
+                                   data-search="true"
+                                   data-minimum-count-columns="2"
+                                   data-filter-control="false"
+                                   data-mobile-responsive="true"
+                                   data-advanced-search="false"
+                                   data-show-multi-sort="false"
+                                   class="table table-strip-borders combo-table form-group-lg"
+                                   grid-arrow-selector>
+                                <thead>
+                                    <tr>
+                                        @*<th data-field="CredentialState"
+                                data-sortable="false"></th>*@
+                                        <th data-field="CredentialName"
+                                            data-sortable="false">Credential Name</th>
+                                        <th data-field="Acronym"
+                                            data-sortable="false">Acronym</th>
+                                        <th data-field="LicenseNumber"
+                                            data-sortable="false">License Number</th>
+                                        <th data-field="StateIssuedByID"
+                                            data-sortable="false">State Issued</th>
+                                        <th data-field="EffectiveDate"
+                                            data-sortable="false">Effective Date</th>
+                                        <th data-field="ExpirationDate"
+                                            data-sortable="false">Expiration Date</th>
+                                        <th data-ng-show="!inProfile"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr data-ng-repeat="credential in user.Credentials track by $index">
+
+                                        <td>
+                                            <div class="input-group" id="inputgroup{{$index}}" data-ng-class="{ 'has-error' : ctrl.userCredentialForm.credentialName.$invalid && !ctrl.userCredentialForm.credentialName.$pristine }">
+                                                <input type="text" ng-change="typeaheadChange($index)" ng-model="credential.CredentialObj" id="credentialName{{$index}}" name="credentialName{{$index}}" data-validation-name="Credential Name for Row {{$index+1}}" class="form-control ellipsis input-min-width" typeahead-wait-ms="500"
+                                                       typeahead-editable="false" auto-focus event-focus="{{$first}}" typeahead-on-select="setAcronym($item, $index); asyncSelected = '';"
+                                                        typeahead-no-results="noResults"
+                                                       typeahead="Credential as Credential.CredentialName for Credential in getLookupsByType('Credential') | filter:$viewValue" typeahead-trigger data-ng-disabled="isReadOnlyForm || inProfile" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-info" ng-click="triggerTypeaheadCustom($index);" data-ng-disabled="isReadOnlyForm || inProfile">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+
+                                        </td>
+                                        <td>
+                                            <input type="text" data-ng-model="credential.Acronym" class="form-control" id="acronym{{index}}" name="acronym{{index}}" readonly="readonly" />
+                                        </td>
+                                        <td data-ng-class="{ 'has-error' : ctrl.userCredentialForm.licenseNumber.$invalid && !ctrl.userCredentialForm.licenseNumber.$pristine }">
+                                            <input type="text" data-ng-model="credential.LicenseNbr" class="form-control input-min-width" id="licenseNumber{{$index}}" name="licenseNumber" xen-maxlength="20" data-ng-disabled="isReadOnlyForm || inProfile" />
+                                            @*<p ng-show="ctrl.userCredentialForm.licenseNumber.$error.maxlength" class="error-block">License # is too long</p>*@
+                                        </td>
+                                        <td>
+                                            <select class="form-control ellipsis" data-ng-model="credential.StateIssuedByID"
+                                                    name="state" id="txtState" ng-options="state.ID as state.Code for state in getLookupsByType('StateProvince')"
+                                                    data-ng-disabled="isReadOnlyForm || inProfile">
+                                                <option value="" ng-selected="selected">Select</option>
+                                            </select>
+                                            @*<span class="select-btn"><i class="xen-select"></i></span>*@
+                                        </td>
+                                        <td data-ng-class="{ 'has-error' : ctrl.userCredentialForm.effectiveDate{{$index}}.$invalid && !ctrl.userCredentialForm.effectiveDate{{$index}}.$pristine }">
+                                            <mydatepicker ng-click="reposDatepicker('effectiveDate' + $index)" opened="openedEffectiveDate" id="effectiveDate{{$index}}" name="effectiveDate{{$index}}" new-date="credential.LicenseIssueDate" start-date="startDate" dob-name="effectiveDate{{$index}}"
+                                                          date-options="dateOptions" date-required="false" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index)" is-disabled="isReadOnlyForm || inProfile" apply-security></mydatepicker>
+                                            <span id="effectiveDateError" ng-cloak ng-show="ctrl.userCredentialForm.effectiveDate{{$index}}.$error.date" class="error-block">Invalid date</span>
+                                        </td>
+                                        <td data-ng-class="{ 'has-error' : ctrl.userCredentialForm.expirationDate{{$index}}.$invalid && !ctrl.userCredentialForm.expirationDate{{$index}}.$pristine }">
+                                            <mydatepicker ng-click="reposDatepicker('expirationDate' + $index)" opened="openedExpirationDate" id="expirationDate{{$index}}" name="expirationDate{{$index}}" new-date="credential.LicenseExpirationDate" start-date="startDate" dob-name="expirationDate{{$index}}"
+                                                          date-options="dateOptions" date-required="false" call-function-on-change="validateEffectiveDateLessThanExpirationDate($index)" is-disabled="isReadOnlyForm || inProfile" apply-security></mydatepicker>
+                                            <span id="expirationDateError" ng-cloak ng-show="ctrl.userCredentialForm.expirationDate{{$index}}.$error.date" class="error-block">Invalid date</span>
+                                        </td>
+                                        <td class="actions" data-ng-show="!inProfile">
+                                            <a href="javascript:void(0)" data-default-no-action id="addCredential" name="addCredential" title="Add Credential" ng-show="$last" ng-click="addRow($event);" security permission-key="{{permissionKey}}" permission="create" title="Add" space-key-press data-ng-disabled="isReadOnlyForm || !inProfile"><i class="fa fa-plus-circle margin-xsmall"></i></a>
+                                            <a href="javascript:void(0)" data-default-no-action id="deleteCredential" name="deleteCredential" title="Remove Credential" ng-show="setMinusButton" ng-click="deleteRow(credential, $event);" security permission-key="{{permissionKey}}" permission="delete" space-key-press data-ng-disabled="isReadOnlyForm || !inProfile"><i class="fa fa-minus-circle margin-xsmall" on-row-removed></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--bootstrap table-->
+            </div>
+        </form>
+        <div class="row padding-top-small">
+            <div class="col-lg-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="{{permissionKey}}" permission="{{resolvePermission(userCredentialID)}}" data-ng-if="!inProfile">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" id="btnNext" name="btnNext" security permission-key="{{permissionKey}}" permission="read">NEXT</button>
+            </div>
+        </div>
+    </div>
+</div>

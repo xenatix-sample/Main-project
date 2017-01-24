@@ -1,0 +1,50 @@
+﻿<div class="col-md-12">
+    <ng-form class="row" name="alternateIDForm" id="clientAlternativeContainer" bs-modifiable="true" set-form-status="child">
+        <div ng-repeat="alternateID in alternateIDItems=(ClientAlternateIDs | filter : {IsActive:true}) track by $index" security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionId)}}" permission-mode="readonly" dual-permission="true">
+            <div class="col-md-2 padding-bottom-small clear">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="ClientIdentifierType">Other ID Type</label>
+                    <select ng-disabled="alternateID.IsRequired ||isReadOnlyForm" xen-last-element-focus="ClientAlternateIDs" ng-model="alternateID.ClientIdentifierTypeID" id="ClientIdentifierType" name="ClientIdentifierType" class="form-control ellipsis" ng-model-options="{ debounce: 800 }"
+                            ng-options="clientIdentifierType.ID as clientIdentifierType.Name for clientIdentifierType in getLookupsByType('ClientIdentifierType')" ng-required="alternateID.IsRequired" ng-change="validateClientIdentifierTypeID(alternateID,ClientAlternateIDs)">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-2 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="AlternateID">Other ID Number</label>
+                    <input type="text" class="form-control ellipsis" id="AlternateID" name="AlternateID" ng-model="alternateID.AlternateID" ng-maxlength="25" ng-required="alternateID.IsRequired" ng-disabled="isReadOnlyForm" />
+                    <p ng-show="ctrl.contactForm.AlternateID.$error.maxlength" ng-cloak class="error-block">Max 25 chars</p>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small">
+                <div id="effectiveDateErrortd{{$index}}" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : alternateIDForm.effectiveDate{{$index}}.$invalid && !alternateIDForm.effectiveDate{{$index}}.$pristine}">
+                    <label for="effectiveDate{{$index}}">Effective Date</label>
+                    <xen-date-picker id="effectiveDate{{$index}}" data-validation-name="Effective Date" data-compare-element-name="expirationDate{{$index}}" ng-model="alternateID.EffectiveDate" end-date="alternateID.ExpirationDate" greater-than-date-validation="true" name="effectiveDate{{$index}}" date-options="dateOptions" ignore-time="true"></xen-date-picker>
+                    <p id="effectiveDateError{{$index}}" ng-cloak ng-show="alternateIDForm.effectiveDate{{$index}}.$error.date" class="error-block">Effective Date is invalid.</p>
+                    <p ng-show="alternateIDForm.effectiveDate{{$index}}.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small">
+                <div id="expirationDateErrorId{{$index}}" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : alternateIDForm.expirationDate{{$index}}.$invalid && !alternateIDForm.expirationDate{{$index}}.$pristine}">
+                    <label for="expirationDate{{$index}}">Expiration Date</label>
+                    <xen-date-picker id="expirationDate{{$index}}" data-validation-name="Expiration Date" data-compare-element-name="effectiveDate{{$index}}" ng-model="alternateID.ExpirationDate" start-date="alternateID.EffectiveDate" less-than-date-validation="true" name="expirationDate{{$index}}" date-options="dateOptions" call-function-on-change="validateClientIdentifierTypeID(ClientAlternateIDs[$index],ClientAlternateIDs)" ignore-time="true"></xen-date-picker>
+                    <p id="effectiveExpirationDateError{{$index}}" ng-cloak ng-show="alternateIDForm.expirationDate{{$index}}.$error.date" class="error-block">Expiration Date is invalid.</p>
+                    <p ng-show="alternateIDForm.expirationDate{{$index}}.$error.pastDate" ng-cloak class="error-block">Expiration date can't be past date.</p>
+                    <p ng-show="alternateIDForm.expirationDate{{$index}}.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                </div>
+            </div>
+            <div class="col-md-2 actions nopadding padding-top-small padding-bottom-small" ng-hide="isReadOnlyForm">
+                <div class="form-group-lg padding-top-small margin-right-small text-right">
+                    <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="alternateID.ShowPlusButton" ng-click="addNewAlternateID($index)" space-key-press>
+                        <i class="fa fa-plus-circle"><span class="sr-only">Add Other ID</span></i>
+                    </a>
+                    <a href="javascript:void(0);" class="font-size-xlarge" ng-if="(alternateID.ShowMinusButton && alternateIDItems.length>1 && !alternateID.IsRequired)" ng-click="removeAlternateID($index,$last)" space-key-press>
+                        <i class="fa fa-minus-circle" on-row-removed><span class="sr-only">Remove Other ID</span></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </ng-form>
+</div>

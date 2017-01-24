@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="col-md-12">
+    <div class="row" ng-form="presentingProblemForm">
+        <div class="col-md-3 padding-bottom-small clear">
+            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : presentingProblemForm.presentingProblem.$invalid && !presentingProblemForm.presentingProblem.$pristine }">
+                <label for="presentingProblem">Presenting Problem <sup>*</sup></label>
+                <select ng-disabled="isReadOnlyForm" ng-model="contactPresentingProblem.PresentingProblemTypeID" id="presentingProblem" name="presentingProblem" class="form-control ellipsis" ng-model-options="{ debounce: 800 }" auto-focus event-focus="autoFocus"
+                        data-validation-name="Presenting Problem" ng-required="true" ng-change="onChangePresentingProblem()" ng-options="presentingProblem.ID as presentingProblem.Name for presentingProblem in getLookupsByType('PresentingProblemType')">
+                    <option value="">Select</option>
+                </select>
+                <span class="select-btn"><i class="xen-select"></i></span>
+            </div>
+        </div>
+
+        <div class="col-md-3 padding-bottom-small">          
+            <div id="presentingProblemEffectiveDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : presentingProblemForm.presentingProblemEffectiveDate.$invalid && !presentingProblemForm.presentingProblemEffectiveDate.$pristine}">
+                <label for="presentingProblemEffectiveDate">Effective Date</label>
+                <xen-date-picker id="presentingProblemEffectiveDate" name="presentingProblemEffectiveDate" end-date="contactPresentingProblem.ExpirationDate" greater-than-date-validation="true" data-compare-element-name="presentingProblemExpirationDate" 
+                                 data-validation-name="Presenting Problem Effective Date" ng-model="contactPresentingProblem.EffectiveDate">        </xen-date-picker>
+                <p id="presentingProblemEffectiveDateError" ng-show="presentingProblemForm.presentingProblemEffectiveDate.$error.date" ng-cloak class="error-block">Please select valid effective date.</p>               
+                <p ng-show="presentingProblemForm.presentingProblemEffectiveDate.$error.greaterThanDate" ng-cloak class="error-block">Effective Date can't be greater than Expiration Date.</p>
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">          
+            <div id="presentingProblemExpirationDateErrorId" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : presentingProblemForm.presentingProblemExpirationDate.$invalid && !presentingProblemForm.presentingProblemExpirationDate.$pristine}">
+                <label for="presentingProblemExpirationDate">Expiration Date</label>
+                <xen-date-picker id="presentingProblemExpirationDate" name="presentingProblemExpirationDate" data-compare-element-name="presentingProblemEffectiveDate" start-date="contactPresentingProblem.EffectiveDate" less-than-date-validation="true" data-validation-name="Presenting Problem Expiration Date" ng-model="contactPresentingProblem.ExpirationDate">
+                </xen-date-picker>
+                <p id="presentingProblemExpirationDateError" ng-show="presentingProblemForm.presentingProblemExpirationDate.$error.date" ng-cloak class="error-block">Please select valid effective date.</p>
+                <p ng-show="presentingProblemForm.presentingProblemExpirationDate.$error.lessThanDate" ng-cloak class="error-block">Expiration Date can't be less than Effective Date.</p>
+            </div>
+        </div>
+    </div>
+</div>

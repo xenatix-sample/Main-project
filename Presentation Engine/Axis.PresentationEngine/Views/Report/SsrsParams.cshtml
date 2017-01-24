@@ -1,0 +1,85 @@
+﻿
+<div class="ssrs-params row">
+    <div class="col-lg-4 col-md-4 col-sm-4 margin-bottom-small" 
+        ng-repeat="param in params">
+        <div ng-switch on="param.ParameterTypeName">
+            <div ng-switch-when="Integer">
+                <div class="form-group-lg padding-bottom-small" 
+                     ng-if="!param.MultiValue && param.ValidValues && param.ValidValues.length > 0">
+                    <label class="description required">
+                        {{param.Prompt}}
+                        <span ng-if="param.Required"> *</span>
+                    </label>
+                    <select class="form-control" ng-model="param.Value" 
+                            ng-options="vv.Value as vv.Label for vv in param.ValidValues">
+                        <option value="">SELECT</option>
+                    </select>
+                </div>
+                <div class="form-group-lg padding-bottom-small" 
+                     ng-if="param.MultiValue && param.ValidValues && param.ValidValues.length > 0">
+                    <label class="description required">
+                        {{param.Prompt}}
+                        <span ng-if="param.Required"> *</span>
+                    </label>
+                    <multi-select name="param.Name"
+                                  items="param.ValidValues" 
+                                  selected="param.Values"
+                                  options="{ Fields: { Text: 'Label', Value: 'Value' } }">
+                    </multi-select>
+                </div>
+                <div class="form-group-lg padding-bottom-small" 
+                     ng-if="!param.ValidValues || param.ValidValues.length < 1">
+                    <label class="description required">
+                        {{param.Prompt}}
+                        <span ng-if="param.Required"> *</span>
+                    </label>
+                    <input type="number" class="form-control" 
+                        ng-model="param.Value" />
+                </div>
+            </div>
+            <div class="form-group-lg" ng-switch-when="DateTime">
+                <label class="description required">
+                    {{param.Prompt}}
+                    <span ng-if="param.Required"> *</span>
+                </label>
+                <mydatepicker new-date="param.Value" 
+                              dob-name="'param.Name'"
+                              date-options="Op.DateOptions" 
+                              required="param.Required" 
+                              ng-blur="ValidateParams();">
+                </mydatepicker>
+            </div>
+            <div class="form-group-lg" ng-switch-when="String">
+                <div ng-if="!param.ValidValues || param.ValidValues.length < 1">
+                    <label class="description required">
+                        {{param.Prompt}}
+                        <span ng-if="param.Required"> *</span>
+                    </label>
+                    <input type="text" class="form-control" 
+                           ng-model="param.Value" />
+                </div>
+                <div ng-if="!param.MultiValue && param.ValidValues && param.ValidValues.length > 0">
+                    <label class="description required">
+                        {{param.Prompt}}
+                        <span ng-if="param.Required"> *</span>
+                    </label>
+                    <select class="form-control" ng-model="param.Value" 
+                            ng-options="vv.Value as vv.Label for vv in param.ValidValues">
+                        <option value="">SELECT</option>
+                    </select>
+                </div>
+                <div ng-if="param.MultiValue && param.ValidValues && param.ValidValues.length > 0">
+                    <label class="description required">
+                        {{param.Prompt}}
+                        <span ng-if="param.Required"> *</span>
+                    </label>
+                    <multi-select name="param.Name"
+                                  items="param.ValidValues"
+                                  selected="param.Values"
+                                  options="{ Fields: { Text: 'Label', Value: 'Value' } }">
+                    </multi-select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

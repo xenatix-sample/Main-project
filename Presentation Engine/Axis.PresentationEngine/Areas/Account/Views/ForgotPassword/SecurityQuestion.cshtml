@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "SecurityQuestion";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="absolute-center">
+
+    <div ng-app="xenatixApp" ng-controller="forgotPasswordController" ng-init="verifyResetIdentifier()">
+
+        <div class="row">
+            <!-------------------------------------------------------------------------------------->
+            <div class="col-md-4 col-md-offset-4">
+                <h1 class="h2 text-center">
+                    Security Question
+                </h1>
+            </div>
+        </div>
+        <form role="form" id="securityQuestionForm" name="securityQuestionForm" novalidate ng-submit="securityQuestionForm.$valid">
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-4 padding-top-xsmall padding-bottom-xsmall">
+                        <label for="email">Security Question <sup>*</sup></label>
+                        <select class="form-control" autofocus="autofocus" ng-trim="true" ng-required="true" ng-model="resetPassword.SecurityQuestionID" name="securityQuestion" id="securityQuestion" ng-options="securityQuestion.SecurityQuestionID as securityQuestion.Question for securityQuestion in securityQuestions">
+                            <option value="" ng-selected="selected">Select</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-4 padding-top-xsmall padding-bottom-xsmall">
+                        <label for="email">Security Answer <sup>*</sup></label>
+                        <input type="password" class="form-control ellipsis" ng-required="true" id="securityAnswer" name="securityAnswer" ng-model="resetPassword.SecurityAnswer" />
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="false">
+                    <div class="col-md-4 col-md-offset-4 padding-top-xsmall padding-bottom-xsmall">
+                        <label for="email">Mobile Number <sup>*</sup></label>
+                        <input type="text" class="form-control ellipsis" name="mobileNumber" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-4 padding-top-xsmall padding-bottom-xsmall">
+
+                        <input type="submit" class="btn btn-default text-center width-100" ng-click="verifySecurityDetails()" value="Continue" ng-disabled="securityQuestionForm.$invalid" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/Areas/Account/Scripts/app/controllers/forgotPasswordController.js"></script>
+<script src="~/Areas/Account/Scripts/app/services/forgotPasswordService.js"></script>
+<script src="~/Scripts/app/services/alertService.js"></script>

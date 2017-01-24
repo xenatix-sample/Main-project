@@ -1,0 +1,14 @@
+﻿<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <form role="form" name="ctrl.programForm" novalidate server-validate="ServerValidationErrors" bs-modifiable="true">
+        {{ctrl.programForm.modified ? setform(true):setform(false)}}
+        <div class="row section-block card-select">
+            <h2 class="uppercase nomargin-left">Division <sup>*</sup>
+            </h2>
+            <div class="row padding-small padding-top-xxsmall">
+                <registration-navigator></registration-navigator>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        
+            <form role="form" name="ctrl.eligibilityForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" novalidate bs-modifiable="true">
+                <div security permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityID)}}" permission-mode="readonly">
+                    {{ setform(ctrl.eligibilityForm.modified, ctrl.eligibilityForm.name) }}
+                    <div class="col-md-12" ng-init="initHeader()">
+                        @Html.Partial("../Shared/_EligibilityHeader")
+                    </div>
+                </div>
+        <div class="row padding-top-small">
+            <div class="col-lg-5">
+                <p class="uppercase subtext">
+                    <sup>*</sup> Indicates a required field
+                </p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityID)}}">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" id="btnNext" name="btnNext" security permission-key="ECI-Eligibility-Eligibility" permission="{{resolvePermission(eligibilityID)}}">NEXT</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

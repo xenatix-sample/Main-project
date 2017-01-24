@@ -1,0 +1,45 @@
+﻿<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.eligibilityForm.eligibilityDateCalander.$invalid && !ctrl.eligibilityForm.eligibilityDateCalander.$pristine }">
+        <label for="eligibilityDate">Eligibility Date <sup>*</sup></label>
+        <mydatepicker opened="opened" id="eligibilityDate" name="EligibilityDate" new-date="eligibility.EligibilityDate" start-date="startDate" dob-name="'eligibilityDateCalander'"
+                      date-options="dateOptions" date-required="true" event-focus="true"></mydatepicker>
+        <p id="eligibilityDateError" ng-show="ctrl.eligibilityForm.eligibilityDateCalander.$invalid && !ctrl.eligibilityForm.eligibilityDateCalander.$pristine" class="error-block">Invalid date (MM/DD/YYYY)</p>
+    </div>
+    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.eligibilityForm.eligibilityType.$invalid && !ctrl.eligibilityForm.eligibilityType.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="eligibilityType">Eligibility Type <sup>*</sup></label>
+            <select class="form-control" ng-required="true" ng-model="eligibility.EligibilityTypeID" name="eligibilityType" id="eligibilityType"
+                    ng-options="eligibilityType.ID as eligibilityType.Name for eligibilityType in getLookupsByType('EligibilityType')">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.eligibilityForm.eligibilityDuration.$invalid && !ctrl.eligibilityForm.eligibilityDuration.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="eligibilityDuration">Duration <sup>*</sup></label>
+            <select class="form-control" ng-required="true" ng-model="eligibility.EligibilityDurationID" name="eligibilityDuration" id="eligibilityDuration"
+                    ng-options="eligibilityDuration.ID as eligibilityDuration.Name for eligibilityDuration in getLookupsByType('EligibilityDuration')">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.eligibilityForm.eligibilityCategory.$invalid && !ctrl.eligibilityForm.eligibilityCategory.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="eligibilityCategory">Eligibility Category <sup>*</sup></label>
+            <select class="form-control" ng-required="true" ng-model="eligibility.EligibilityCategoryID" name="eligibilityCategory" id="eligibilityCategory"
+                    ng-options="eligibilityCategory.ID as eligibilityCategory.Name for eligibilityCategory in getLookupsByType('EligibilityCategory')">
+                <option value="" ng-selected="selected">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-2 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.eligibilityForm.adjustedAge.$invalid && !ctrl.eligibilityForm.adjustedAge.$pristine }">
+        <label for="adjustedAge">Adjusted Age</label>
+        <input type="text" class="form-control ellipsis" clean="true" value="{{::header.DOB | toAdjustedAge}}" id="adjustedAge" name="adjustedAge" ng-disabled="true" />
+    </div>
+</div>
+@Html.Partial("../Shared/_TeamMember")

@@ -1,0 +1,43 @@
+﻿@model Axis.PresentationEngine.Models.JsonViewModel
+@{
+    Layout = null;
+}
+//<script>
+(function() {
+    angular.module('xenatixApp').factory('drugService', [
+        function() {
+            var data = @Html.Raw(Model.Json);
+
+            function getDrugData() {
+                return data['Drug'] || [];
+            };
+            
+            function getSelectedDrugById(selectedValue){
+                var result = getDrugData().filter(
+                    function(obj, value) {
+                        return(obj.ID == selectedValue);
+                    }
+                );
+                return result;
+            }
+
+            function getSelectedDrugByText(selectedText){
+                var result = getDrugData().filter(
+                    function(obj, value) {
+                        return(obj.Name.toLowerCase() === selectedText.toLowerCase());
+                    }
+                );
+                return result;
+            }
+
+            //TODO: Implement type-ahead search
+
+            return {
+                getDrugData: getDrugData,
+                getSelectedDrugById: getSelectedDrugById,
+                getSelectedDrugByText:getSelectedDrugByText
+            };
+        }
+    ]);
+}());
+//</script>

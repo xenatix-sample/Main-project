@@ -1,0 +1,58 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="SiteAdministration-StaffManagement-UserRoles" permission="{{resolvePermission(userRoleID)}}"></keypress-events>
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <form role="form" name="ctrl.userRoleForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+              bs-modifiable="true" set-form-mode>
+            {{ctrl.userRoleForm.modified ? setform(true):setform(false)}}
+            <div security permission-key="SiteAdministration-StaffManagement-UserRoles" permission="{{resolvePermission(userRoleID)}}" permission-mode="readonly">
+                <div class="row padding-top-small">
+                    <div class="bootstrap-table">
+                        <div class="fixed-table-container">
+                            <div class="fixed-table-body">
+                                <table id="userRoles" data-toggle="table"
+                                       data-show-columns="false"
+                                       data-search="true"
+                                       data-minimum-count-columns="2"
+                                       data-filter-control="false"
+                                       data-mobile-responsive="true"
+                                       data-advanced-search="false"
+                                       data-show-multi-sort="false"
+                                       class="table table-strip-borders combo-table form-group-sm"
+                                       grid-arrow-selector>
+                                    <thead>
+                                        <tr>
+                                            <th data-field="HasRole"
+                                                data-sortable="false">Select Role</th>
+                                            <th data-field="RoleName"
+                                                data-sortable="false">Role Name</th>
+                                            <th data-field="Description"
+                                                data-sortable="false">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="userRole in userRoles track by $index">
+                                            <td>
+                                                <xen-checkbox data-checkbox-id="{{'role-' + $index}}" on-click="toggleSelection(userRole.RoleID)" data-ng-model="userRole.HasRole" data-ng-disabled="userRole.Disabled" auto-focus event-focus="{{$first}}" />
+                                            </td>
+                                            <td><span class="fixed-width">{{userRole.Name}}</span></td>
+                                            <td><span class="fixed-width">{{userRole.Description}}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row padding-top-small">
+            <div class="col-lg-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="SiteAdministration-StaffManagement-UserRoles" permission="{{resolvePermission(userRoleID)}}">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" id="btnNext" name="btnNext" security permission-key="SiteAdministration-StaffManagement-UserRoles" permission="read">NEXT</button>
+            </div>
+        </div>
+    </div>
+</div>

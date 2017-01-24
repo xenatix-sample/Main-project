@@ -1,0 +1,640 @@
+﻿<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <form id="financialSummaryForm" name="ctrl.financialSummaryForm" xen-check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" is-default="true" data-on-print="initReport()" novalidate bs-modifiable="true" set-form-status>
+            <div security permission-key="Benefits-FinancialAssessment-FinancialAssessment" permission="{{resolvePermission(financialSummary.FinancialSummaryID)}}" permission-mode="readonly" is-disabled="{{isStaffSigned || isExpired}}">
+                <div class="row section-block">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div id="assessmentStartDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.financialSummaryForm.assessmentStartDate.$invalid && !ctrl.financialSummaryForm.assessmentStartDate.$pristine}">
+                            <label for="assessmentStartDate">Assessment Start Date</label>
+                            <xen-date-picker id="assessmentStartDate" event-focus="true" data-validation-name="Assessment Start Date" ng-model="financialSummary.EffectiveDate" data-compare-element-name="assessmentEndDate" end-date="financialSummary.AssessmentEndDate" greater-than-date-validation="true" name="assessmentStartDate" ignore-time="true"></xen-date-picker>
+                            <p id="assessmentStartDateError" ng-show="ctrl.financialSummaryForm.assessmentStartDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                            <p ng-show="ctrl.financialSummaryForm.assessmentStartDate.$error.greaterThanDate" ng-cloak class="error-block">Assessment Start Date date can't be greater than Assessment End Date.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div id="assessmentStartDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.financialSummaryForm.assessmentEndDate.$invalid && !ctrl.financialSummaryForm.assessmentEndDate.$pristine}">
+                            <label for="assessmentEndDate">Assessment End Date</label>
+                            <xen-date-picker id="assessmentEndDate" data-validation-name="Assessment End Date" ng-model="financialSummary.AssessmentEndDate" data-compare-element-name="assessmentStartDate" less-than-date-validation="true" start-date="financialSummary.EffectiveDate" name="assessmentEndDate" ignore-time="true"></xen-date-picker>
+                            <p ng-show="ctrl.financialSummaryForm.assessmentEndDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                            <p ng-show="ctrl.financialSummaryForm.assessmentEndDate.$error.lessThanDate" ng-cloak class="error-block">Assessment End Date can't be less than Assessment Start Date.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.financialSummaryForm.Company.$invalid && !ctrl.financialSummaryForm.Company.$pristine}">
+                            <label for="Company">Company</label>
+                            <select class="form-control" ng-required="true" ng-model="financialSummary.OrganizationID" ng-disabled="true"
+                                    name="Company" id="Company" ng-options="organization.ID as organization.Name for organization in getOrganizationByDataKey('Company') | securityFilter: 'Company' : 'ID': 'Benefits-FinancialAssessment-FinancialAssessment'">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row padding-top-small">
+                    <div class="col-md-2 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="familySize">Family Size </label>
+                            <input type="text" ng-disabled="true" id="familySize" name="familySize" class="form-control" auto-focus event-focus="autoFocus" ng-model="financialSummary.FinancialAssessment.FamilySize" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="employmentStatus">Employment Status</label>
+                            <select class="form-control" ng-model="financialSummary.EmploymentStatusID" id="employmentStatus" ng-disabled="true"
+                                    ng-options="employmentStatus.ID as employmentStatus.Name for employmentStatus in getLookupsByType('EmploymentStatus')">
+                                <option value="">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 padding-bottom-small" ng-cloak ng-show="financialSummary.EmploymentStatusID == unemployedOption">
+                        <div class="form-group-lg padding-bottom-small">
+                            <fieldset id="lookingForWorkFieldset">
+                                <legend class="uppercase">Are you currently looking for work?</legend>
+                                <span><xen-radio-button data-ng-model="financialSummary.LookingForWork" data-radio-button-id="lookingForWorkYes" ng-disabled="true" data-label="Yes" data-ng-value="true" /></span>
+                                &nbsp;&nbsp;&nbsp;
+                                <span><xen-radio-button data-ng-model="financialSummary.LookingForWork" data-radio-button-id="lookingForWorkNo" ng-disabled="true" data-label="No" data-ng-value="false" /></span>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                @* Financial Details *@
+                <h3 class="uppercase nomargin padding-xsmall border-top">Financial Details</h3>
+                <div class="row padding-top-small med-names">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="totalIncome">Income Total</label>
+                            <input type="text" id="totalIncome" readonly="readonly" class="form-control ellipsis" ng-value="financialSummary.FinancialAssessment.TotalIncome | currency" tabindex="-1" style="text-align: right;" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="totalExpenses">Expenses Total</label>
+                            <input type="text" id="totalExpenses" readonly="readonly" class="form-control ellipsis" ng-value="financialSummary.FinancialAssessment.TotalExpenses | currency" tabindex="-1" style="text-align: right;" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="totalExtraOrdinaryExpenses">Extraordinary Expenses Total</label>
+                            <input type="text" id="totalExtraOrdinaryExpenses" readonly="readonly" class="form-control ellipsis" ng-value="financialSummary.FinancialAssessment.TotalExtraOrdinaryExpenses | currency" tabindex="-1" style="text-align: right;" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="adjustedGrossIncome">Adjusted Gross Income</label>
+                            <input type="text" id="adjustedGrossIncome" readonly="readonly" class="form-control ellipsis" ng-value="financialSummary.FinancialAssessment.AdjustedGrossIncome | currency" tabindex="-1" style="text-align: right;" />
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-repeat="categoryType in categoryTypeLookups | orderBy : 'ID'">
+                    <div ng-repeat="financialSummary in financialSummary.FinancialAssessmentDetails | filter : { CategoryTypeID : categoryType.ID }">
+                        <div class="row section-block section-block-stagger margin-bottom-xsmall">
+                            <div class="col-md-12">
+                                <div class="row" ng-if="$index===0">
+                                    <div class="col-md-12 padding-bottom-small">
+                                        <h3>ALL {{categoryType.Name}}</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.categoryType.$invalid && !ctrl.financialSummaryForm.categoryType.$pristine }">
+                                            <label for="categoryType">Type</label>
+                                            <select ng-model="financialSummary.CategoryTypeID" id="categoryType" name="categoryType" class="form-control" ng-disabled="true"
+                                                    ng-options="categoryType.ID as categoryType.Name for categoryType in categoryTypeLookups | orderBy :'ID'">
+                                                <option value="">Select</option>
+                                            </select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.category.$invalid && !ctrl.financialSummaryForm.category.$pristine }">
+                                            <label for="category">Category</label>
+                                            <select ng-model="financialSummary.CategoryID" id="category" name="category" class="form-control" ng-disabled="true"
+                                                    ng-options="category.ID as category.Name for category in getLookupsByType('Category') | filter :{ CategoryTypeID :financialSummary.CategoryTypeID?financialSummary.CategoryTypeID:0 }">
+                                                <option value="">Select</option>
+                                            </select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.amount.$invalid && !ctrl.financialSummaryForm.amount.$pristine }">
+                                            <label for="amount">Amount</label>
+                                            <input type="text" id="amount" name="amount" readonly="readonly" class="form-control ellipsis" ng-value="financialSummary.Amount | currency" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 padding-bottom-small">
+                                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.frequency.$invalid && !ctrl.financialSummaryForm.frequency.$pristine }">
+                                            <label for="frequency">Frequency</label>
+                                            <select ng-model="financialSummary.FinanceFrequencyID" id="frequency" name="frequency" class="form-control" ng-disabled="true"
+                                                    ng-options="frequency.ID as frequency.Name for frequency in getLookupsByType('FinanceFrequency')">
+                                                <option value="">Select</option>
+                                            </select>
+                                            <span class="select-btn"><i class="xen-select"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Monthly Ability To Pay *@
+                <div class="row padding-top-small">
+                    <div class="col-md-12" ng-if="financialSummary.SelfPay && financialSummary.SelfPay.MonthlyAbilities.length>0">
+
+                        <h3 class="uppercase nomargin padding-xsmall border-top">Monthly Ability To Pay</h3>
+
+                        <div class="row">
+                            <div class="col-md-3 padding-bottom-small" ng-repeat="selfPay in financialSummary.SelfPay.MonthlyAbilities">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="mh">{{ (getOrganizationByDataKey('Division') | filter : { ID: selfPay.OrganizationDetailID } | securityFilter: 'Division' : 'ID': 'Benefits-FinancialAssessment-FinancialAssessment')[0].Name}}</label>
+                                    <input type="text" ng-disabled="true" name="amount" id="amount" class="form-control ellipsis" value="{{ (selfPay.IsPercent ? (selfPay.SelfPayAmount || ''| number : 2) + '%' : '$' + (selfPay.SelfPayAmount ||'' | number : 2)) }}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" ng-if="!financialSummary.SelfPay || financialSummary.SelfPay.MonthlyAbilities.length==0">
+
+                        <h3 class="uppercase nomargin padding-xsmall border-top">Monthly Ability To Pay</h3>
+
+                        <div class="row">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="mh">ECS</label>
+                                    <input type="text" ng-disabled="true" name="amount" id="amount" class="form-control ellipsis" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="mh">IDD</label>
+                                    <input type="text" ng-disabled="true" name="amount" id="amount" class="form-control ellipsis" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="mh">BH-MH</label>
+                                    <input type="text" ng-disabled="true" name="amount" id="amount" class="form-control ellipsis" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="mh">BH-SUD</label>
+                                    <input type="text" ng-disabled="true" name="amount" id="amount" class="form-control ellipsis" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Override Reasons *@
+                <div class="row padding-bottom-small">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 padding-bottom-xsmall">
+                                <h3>Override Reasons</h3>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="financialSummary.SelfPay.ISChildInConservatorship">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                    <xen-checkbox ng-disabled="true" data-ng-model="financialSummary.SelfPay.ISChildInConservatorship" data-checkbox-id="isChildInConservatorship" data-label="Child is in the Conservatorship of the State (Includes Foster Care)" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-xsmall" ng-if="financialSummary.SelfPay.IsNotAttested">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                    <xen-checkbox ng-disabled="true" data-ng-model="financialSummary.SelfPay.IsNotAttested" data-checkbox-id="isNotAttested" data-label="ECI Family Choice not to attest" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-xsmall" ng-if="financialSummary.SelfPay.IsEnrolledInPublicBenefits">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                    <xen-checkbox ng-disabled="true" data-ng-model="financialSummary.SelfPay.IsEnrolledInPublicBenefits" data-checkbox-id="isNotAttested" data-label="Enrolled Public Benefits: WIC, PHC, CSHCN, CIHCP, SKIP, Medic, CHIP, SNAP, TANF" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-xsmall" ng-if="financialSummary.SelfPay.IsRequestingReconsideration">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                    <xen-checkbox ng-disabled="true" data-ng-model="financialSummary.SelfPay.IsRequestingReconsideration" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Family Choice declining consent requesting reconsideration" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-xsmall" ng-if="financialSummary.SelfPay.IsNotGivingConsent">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                    <xen-checkbox ng-disabled="true" data-ng-model="financialSummary.SelfPay.IsNotGivingConsent" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Family Choice not to give consent" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-xsmall" ng-if="financialSummary.SelfPay.IsOtherChildEnrolled">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                    <xen-checkbox ng-disabled="true" data-ng-model="financialSummary.SelfPay.IsOtherChildEnrolled" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Family has 2nd Child Enrolled in ECI Services with a Family Cost Share Amount" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-xsmall" ng-if="financialSummary.SelfPay.IsApplyingForPublicBenefits">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                    <xen-checkbox ng-disabled="true" data-ng-model="financialSummary.SelfPay.IsApplyingForPublicBenefits" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Family will apply for public benefits" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-xsmall" ng-if="financialSummary.SelfPay.IsReconsiderationOfAdjustment">
+                            <div class="col-md-12">
+                                <div class="form-group-lg padding-bottom-small form-inline">
+                                    <xen-checkbox ng-disabled="true" data-ng-model="financialSummary.SelfPay.IsReconsiderationOfAdjustment" data-checkbox-id="IsApplyingForPublicBenefits" data-label="Reconsideration of Adjustment Made by Program" class="xencheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Payor / Insurance Information *@
+                <div ng-repeat="financialSummary in financialSummary.Payors">
+                    <h3 class="uppercase nomargin padding-xsmall border-top">{{$index + 1}}. PAYOR/INSURANCE INFORMATION</h3>
+                    <div class="row padding-top-small">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="policyHolder">Policy Holder</label>
+                                <input type="text" class="form-control ellipsis" ng-model="financialSummary.PolicyHolderName" ng-disabled="true" id="policyHolder" name="policyHolder" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.relationshipPolicyHolder.$invalid && !ctrl.financialSummaryForm.relationshipPolicyHolder.$pristine}">
+                                <label for="relationshipPolicyHolder">Policy Holder Relationship</label>
+                                <input type="text" name="relationshipPolicyHolder" id="relationshipPolicyHolder" ng-disabled="true" class="form-control ellipsis" value="{{ (getLookupsByType('RelationshipType') | filter : {ID : financialSummary.RelationshipTypeID} : true)[0].Name }}" ng-trim="true" ng-maxlength="200" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="policyHolder">POLICY ID/ELIGIBILITY ID</label>
+                                <input type="text" class="form-control ellipsis" ng-model="financialSummary.PolicyID" ng-disabled="true" id="policyId" name="policyId" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row section-block">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.effectiveDate.$invalid && !ctrl.financialSummaryForm.effectiveDate.$pristine }">
+                                <label for="effectiveDateCalander">Effective Date</label>
+                                <mydatepicker class="datepicker" id="effectiveDate" dob-name="effectiveDate" opened="effectiveOpened" is-disabled="true" is-hidden="true" new-date="financialSummary.EffectiveDate" date-options="dateOptions" call-function-on-change="checkExpiration()"></mydatepicker>
+                                <p id="doberror" ng-cloak ng-show="ctrl.financialSummaryForm.effectiveDate.$error.date" class="error-block">Date is invalid</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.expirationDateCalander.$invalid && !ctrl.financialSummaryForm.expirationDateCalander.$pristine }">
+                                <label for="expirationDateCalander">Expiration Date</label>
+                                <mydatepicker class="datepicker" id="expirationDateCalander" opened="ExpirationOpened" is-disabled="true" is-hidden="true" new-date="financialSummary.ExpirationDate" date-options="dateOptions" dob-name="expirationDateCalander" min-date="expirationStartDate" call-function-on-change="checkExpiration()"></mydatepicker>
+                                <p id="doberror" ng-cloak ng-show="ctrl.financialSummaryForm.expirationDateCalander.$error.date" class="error-block">Date is invalid</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.Payor.$invalid && !ctrl.financialSummaryForm.Payor.$pristine }">
+                                <label for="payorId">Name of Payor </label>
+                                <div class="input-group">
+                                    <input type="text" ng-model="financialSummary.PayorName" id="payorId"
+                                           name="Payor"
+                                           class="form-control"
+                                           typeahead-wait-ms="500"
+                                           typeahead-no-results="noResults" typeahead-select-on-blur="true" ng-disabled="true"
+                                           data-ng-required="true" typeahead-trigger
+                                           typeahead="Payor as Payor.Name for Payor in payors | filter:$viewValue:comparatorOnEmptyOrMatch" />
+                                    @* Added button. *@
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-disabled="true" class="btn btn-info" ng-click="triggerTypeahead('Payor');">
+                                            <i class="fa xn-search-add" />
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row padding-top-small">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.GroupName.$invalid && !ctrl.financialSummaryForm.GroupName.$pristine }">
+                                <label for="groupName">Group Name <sup></sup></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control ellipsis"
+                                           typeahead-wait-ms="500" typeahead-select-on-blur="true" ng-disabled="true"
+                                           ng-model="financialSummary.GroupName"
+                                           typeahead="grpPlan as grpPlan.GroupName for grpPlan in groupsPlanList | filter:$viewValue:comparatorOnEmptyOrMatch"
+                                           name="GroupName" id="groupName" typeahead-trigger />
+                                    @* Added button. *@
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-disabled="true" class="btn btn-info" ng-click="triggerTypeahead('GroupName');">
+                                            <i class="fa xn-search-add" />
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="groupId">Group ID</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control ellipsis"
+                                           typeahead-wait-ms="500"
+                                           ng-model="financialSummary.GroupID" typeahead-select-on-blur="true" ng-disabled="true"
+                                           typeahead="grpPlan as grpPlan.GroupID for grpPlan in groupsPlanList | filter:$viewValue:comparatorOnEmptyOrMatch"
+                                           name="GroupId"
+                                           typeahead-trigger />
+                                    @* Added button. *@
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-disabled="true" class="btn btn-info" ng-click="triggerTypeahead('GroupId');">
+                                            <i class="fa xn-search-add" />
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="planName">Plan Name</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control ellipsis"
+                                           ng-model="financialSummary.PlanName"
+                                           typeahead-wait-ms="500" typeahead-select-on-blur="true" ng-disabled="true"
+                                           typeahead-trigger
+                                           typeahead="plans as plans.PlanName for plans in payorPlans | filter:$viewValue:comparatorOnEmptyOrMatch"
+                                           name="PlanName" id="planName" />
+                                    @* Added button. *@
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-disabled="true" class="btn btn-info" ng-click="triggerTypeahead('PlanName');">
+                                            <i class="fa xn-search-add" />
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="planId">Plan ID</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control ellipsis"
+                                           typeahead-wait-ms="500" typeahead-select-on-blur="true" ng-disabled="true"
+                                           ng-model="financialSummary.PlanID"
+                                           typeahead="plans as plans.PlanID for plans in payorPlans | filter:$viewValue:comparatorOnEmptyOrMatch"
+                                           typeahead-trigger
+                                           name="PlanId" />
+                                    @* Added button. *@
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-disabled="true" class="btn btn-info" ng-click="triggerTypeahead('PlanId');">
+                                            <i class="fa xn-search-add" />
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="!financialSummary.Payors || financialSummary.Payors.length==0">
+                    <h3 class="uppercase nomargin padding-xsmall border-top">1. PAYOR/INSURANCE INFORMATION</h3>
+                    <div class="row padding-top-small">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="policyHolder">Policy Holder</label>
+                                <input type="text" class="form-control ellipsis" ng-disabled="true" id="policyHolder" name="policyHolder" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.relationshipPolicyHolder.$invalid && !ctrl.financialSummaryForm.relationshipPolicyHolder.$pristine}">
+                                <label for="relationshipPolicyHolder">Policy Holder Relationship</label>
+                                <input type="text" name="relationshipPolicyHolder" id="relationshipPolicyHolder" ng-disabled="true" class="form-control ellipsis" ng-trim="true" ng-maxlength="200" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row section-block">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.effectiveDate.$invalid && !ctrl.financialSummaryForm.effectiveDate.$pristine }">
+                                <label for="effectiveDateCalander">Effective Date</label>
+                                <mydatepicker class="datepicker" id="effectiveDate" dob-name="effectiveDate" opened="effectiveOpened" is-disabled="true" is-hidden="true" date-options="dateOptions" call-function-on-change="checkExpiration()"></mydatepicker>
+                                <p id="doberror" ng-cloak ng-show="ctrl.financialSummaryForm.effectiveDate.$error.date" class="error-block">Date is invalid</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.expirationDateCalander.$invalid && !ctrl.financialSummaryForm.expirationDateCalander.$pristine }">
+                                <label for="expirationDateCalander">Expiration Date</label>
+                                <mydatepicker class="datepicker" id="expirationDateCalander" opened="ExpirationOpened" is-disabled="true" is-hidden="true" date-options="dateOptions" dob-name="expirationDateCalander" min-date="expirationStartDate" call-function-on-change="checkExpiration()"></mydatepicker>
+                                <p id="doberror" ng-cloak ng-show="ctrl.financialSummaryForm.expirationDateCalander.$error.date" class="error-block">Date is invalid</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.Payor.$invalid && !ctrl.financialSummaryForm.Payor.$pristine }">
+                                <label for="payorId">Name of Payor </label>
+                                <input type="text" class="form-control" ng-disabled="true" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row padding-top-small">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.financialSummaryForm.GroupName.$invalid && !ctrl.financialSummaryForm.GroupName.$pristine }">
+                                <label for="groupName">Group Name <sup></sup></label>
+                                <input type="text" class="form-control" ng-disabled="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="groupId">Group ID</label>
+                                <input type="text" class="form-control" ng-disabled="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="planName">Plan Name</label>
+                                <input type="text" class="form-control" ng-disabled="true" />
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="planId">Plan ID</label>
+                                <input type="text" class="form-control" ng-disabled="true" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Confirmation Paragraph *@
+                <div class="row padding-top-small">
+                    <div ng-repeat="confirmationStatementGroups in getLookupsByType('ConfirmationStatementGroup')">
+                        <div class="col-md-12">
+                            <h3 class="uppercase nomargin padding-xsmall border-top">{{confirmationStatementGroups.Name | uppercase}}</h3>
+                            <div class="padding-top-small" ng-repeat="confirmationStatement in confirmationStatements | filter:{ ConfirmationStatementGroupID: confirmationStatementGroups.ID }">
+                                <p>{{confirmationStatement.Name}}</p>
+                                <div ng-if="confirmationStatement.IsSignatureRequired">
+                                    <div class="row padding-bottom-small">
+                                        <e-signature data-topaz-model="initialsSignature[confirmationStatement.ID]" data-topaz-ready="isTopazReady" data-sign-button-text="INITIAL" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="uppercase nomargin padding-xsmall border-top">Contact</h3>
+                <div class="row">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="StaffName">Staff Name</label>
+
+                            <input type="text" tabindex="-1" id="staffName" name="staffName" ng-model="financialSummary.FAStaffName" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="Credential">Credential</label>
+                            <input type="text" id="Credential" name="Credential" ng-model="financialSummary.FAStaffCredential" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="phone">Phone</label>
+                            <input type="text" id="Phone" name="Phone" ng-model="financialSummary.FAStaffPhone" ui-mask="999-999-9999" clean="true" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row section-block margin-bottom-xsmall" ng-show="financialSummary.FinancialSummaryID != undefined && financialSummary.FinancialSummaryID != 0 ">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 padding-bottom-xsmall">
+                                <h3>Last Completed Assessment</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="CompletedBy">Completed By</label>
+                                    <input type="text" tabindex="-1" id="clientName" name="clientName" value="{{(getLookupsByType('Users') | filter:{ ID: financialSummary.UserID } :true)[0].Name}}" readonly="readonly" class="form-control ellipsis" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="Credential">Credential</label>
+                                    <input type="text" id="Credential" name="Credential" value="{{(getLookupsByType('Credential') | filter:{ CredentialID: financialSummary.CredentialID } :true)[0].CredentialName}}" readonly="readonly" class="form-control ellipsis" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div id="lastAssessmentDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.financialSummaryForm.lastAssessmentDate.$invalid && !ctrl.financialSummaryForm.lastAssessmentDate.$pristine}">
+                                    <label for="lastAssessmentDate">Date</label>
+                                    <mydatepicker id="lastAssessmentDate" new-date="lastCompletedFADate" end-date="endDate" is-disabled="true" is-hidden="true" start-date="startDate" dob-name="lastAssessmentDate" date-options="dateOptions"></mydatepicker>
+                                    <p id="lastAssessmentDateError" ng-show="ctrl.financialSummaryForm.lastAssessmentDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Client Signature*@
+                <div class="row padding-top-small">
+                    <div class="col-md-5 col-sm-5">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="AuthorizedBy">Client Name</label>
+                            <input type="text" tabindex="-1" id="clientName" name="clientName" ng-model="clientSignature.ClientName" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div id="clientEffectiveDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.financialSummaryForm.clientEffectiveDate.$invalid && !ctrl.financialSummaryForm.clientEffectiveDate.$pristine}">
+                            <label for="clientEffectiveDate">Date</label>
+                            <mydatepicker id="clientEffectiveDate" is-disabled="true" new-date="clientSignature.ModifiedOn" end-date="endDate" start-date="startDate" dob-name="clientEffectiveDate" date-options="dateOptions"></mydatepicker>
+                            <p id="clientEffectiveDateError" ng-show="ctrl.financialSummaryForm.clientEffectiveDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding-bottom">
+                    <e-signature data-topaz-model="clientSignature" data-topaz-ready="isTopazReady" validation-name="Client Signature or LAR Signature" signature-required="staffSignature.b64ImageData && !legalAuthRepresentativeSignature.b64ImageData && !clientSignature.b64ImageData" />
+                </div>
+                @* Legally Authorized Representeative Signature *@
+                <div class="row">
+                    <div class="col-md-5 col-sm-5">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.financialSummaryForm.legalAuthRepresentativeName.$invalid && !ctrl.financialSummaryForm.legalAuthRepresentativeName.$pristine}">
+                            <label for="AuthorizedBy">Printed Name Of Legally Authorized Representative</label>
+                            <input type="text"
+                                   tabindex="-1"
+                                   id="legalAuthRepresentativeName"
+                                   data-validation-name="Legal Authorized Representative"
+                                   name="legalAuthRepresentativeName"
+                                   ng-disabled="isReadOnlyLegalAuthRepresentative"
+                                   ng-model="legalAuthRepresentativeSignature.EntityName"
+                                   ng-maxlength="200"
+                                   ng-required="legalAuthRepresentativeSignature.b64ImageData"
+                                   class="form-control ellipsis" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div id="legalAuthRepresentativeDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.financialSummaryForm.legalAuthRepresentativeDate.$invalid && !ctrl.financialSummaryForm.legalAuthRepresentativeDate.$pristine}">
+                            <label for="legalAuthRepresentativeDate">Date</label>
+                            <mydatepicker id="legalAuthRepresentativeDate" is-disabled="true" new-date="legalAuthRepresentativeSignature.ModifiedOn" end-date="endDate" start-date="startDate" dob-name="legalAuthRepresentativeDate" date-options="dateOptions"></mydatepicker>
+                            <p id="legalAuthRepresentativeDateError" ng-show="ctrl.financialSummaryForm.legalAuthRepresentativeDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="padding-bottom-small">
+                        <e-signature data-topaz-model="legalAuthRepresentativeSignature" data-topaz-ready="isTopazReady" />
+                    </div>
+                </div>
+                @*Staff Signature*@
+                <div class="row padding-top-small">
+                    <div class="col-md-5 col-sm-5">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="staffName">Staff Name</label>
+                            <input type="text" tabindex="-1" id="staffName" name="staffName" value="{{(getLookupsByType('Users') | filter:{ ID: staffSignaturedUserID}: true)[0].Name }}" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div id="clientEffectiveDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.financialSummaryForm.staffEffectiveDate.$invalid && !ctrl.financialSummaryForm.staffEffectiveDate.$pristine}">
+                            <label for="staffEffectiveDate">Date</label>
+                            <mydatepicker id="staffEffectiveDate" is-disabled="true" new-date="staffSignature.ModifiedOn" end-date="endDate" start-date="startDate" dob-name="staffEffectiveDate" date-options="dateOptions"></mydatepicker>
+                            <p id="clientEffectiveDateError" ng-show="ctrl.financialSummaryForm.staffEffectiveDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row padding-bottom">
+                    <e-signature data-topaz-model="staffSignature" data-topaz-ready="isTopazReady" />
+                </div>
+            <div class="row padding-top-small">
+                <div class="col-lg-6 col-md-6">
+                    <p class="uppercase subtext">
+                        <sup>*</sup> Indicates a required field
+                    </p>
+                </div>
+                <div class="col-lg-6 col-md-6 text-right">
+                    <xen-submit id="save" name="save" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="Benefits-FinancialAssessment-FinancialAssessment" permission="{{resolvePermission(financialSummary.FinancialSummaryID)}}"></xen-submit>
+                        <xen-submit id="print" name="print" value="PRINT" is-next="false" mandatory="false" style="btn btn-default btn-lg no-security" is-print="true" permission-key="Benefits-FinancialAssessment-FinancialAssessment" permission="read"></xen-submit>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="financialSummaryReportModal" role="dialog" aria-labelledby="reportModal" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header" style="margin-top: 1px;">
+                <button type="button" id="closePopup" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="roleHeader">{{ reportModel.ReportHeader }}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-show="!reportModel.HasLoaded">
+                    <div class="loading text-center padding-top padding-bottom">
+                        <i class="fa fa-spinner fa-spin"><span class="sr-only">Report is loading</span></i>
+                    </div>
+                </div>
+                <div ng-if="reportModel.HasLoaded" style="height: 800px;">
+                    <pdf-maker report-id="financialSummaryReport" report-name="{{ reportModel.ReportName }}" report-data="reportModel" report-width="100%" report-height="100%" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

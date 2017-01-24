@@ -1,0 +1,33 @@
+﻿<div class="container-fluid nomargin nopadding">
+    <div class="site-admin">
+        <div class="col-md-12">
+            <div class="col-lg-9 col-md-9 nopadding-left nopadding-right">
+                <div class="panel nopadding profile" ng-cloak>
+                    <div class="panel-body nopadding-top nopadding-right">
+                        <div class="row margin-bottom-small padding-right-small" ui-view="header">
+                        </div>
+                        <div class="row">
+                            <breadcrumbs min-breadcrumbs="2" />
+                        </div>
+                        <div class="row padding-right-small" ui-view>
+
+                            <div class="panel panel-main panel-light padding-xsmall">
+                                <div class="panel-heading padding-top-small">
+                                    <h3 class="panel-title">Business Administration</h3>
+                                </div>
+                                <div class="panel-body">
+                                    This page will contain business specific performance indicators.<br />
+                                    <i class="fa fa-bar-chart fa-5x"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 right-nav" ui-view="navigation">
+                @Html.Partial("../Shared/_BusinessAdminNavigation")
+            </div>
+        </div>
+    </div>
+</div>

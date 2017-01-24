@@ -1,0 +1,366 @@
+﻿<!-- school district -->
+<div class="row">
+    <div class="col-md-5 padding-bottom-small" data-ng-show="age <= schoolDistrictAgeLimit">
+        <div class="form-group-lg padding-bottom-small" ng-cloak ng-class="{ 'has-error' : ctrl.additionalDemographicForm.schoolDistrict.$invalid && !ctrl.additionalDemographicForm.schoolDistrict.$pristine }">
+            <label for="FirstName">School District </label>
+            <div class="input-group">
+                <input type="text" ng-model="additionalDemographic.SchoolDistrict" id="schoolDistrict" name="schoolDistrict"
+                       class="form-control"
+                       typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                       typeahead-trigger
+                       typeahead="school as school.Name for school in getLookupsByType('SchoolDistrict')
+                       | filter:$viewValue:comparatorOnEmptyOrMatch | orderBy:orderByPriority"
+                       typeahead-editable="false"
+                       typeahead-no-results="noResults" auto-focus event-focus="autoFocusSchool" data-validation-name="School District" />
+                @* Added button. *@
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" ng-click="triggerTypeahead('schoolDistrict');">
+                        <i class="fa fa-search" />
+                    </button>
+                </span>
+
+
+            </div>
+            <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+        </div>
+    </div>
+</div>
+
+<!-- ethnicity + language -->
+<div class="row section-block">
+    <div class="col-md-6 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" id="raceErrorBlock">
+            <label for="race">Race <sup>*</sup></label>
+            <div class="input-group">
+                <input type="text" ng-model="raceDetail" id="race" name="race" class="form-control ellipsis" typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                       typeahead-on-select="selectRaceDetail($item); asyncSelected = '';" typeahead-editable="false" typeahead-no-results="noRaceDetailResults"
+                       typeahead="RaceDetail as RaceDetail.Name for RaceDetail in raceLookUpData | filter:$viewValue:comparatorOnEmptyOrMatch" typeahead-trigger />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" ng-click="triggerTypeahead('race');ctrl.additionalDemographicForm.raceDetail.$invalid=false;ctrl.additionalDemographicForm.raceDetail.$valid=true">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+            <p ng-show="noRaceDetailResults" ng-cloak class="error-block">No Results Found!</p>
+        </div>
+        <div class="row pod-group pod-group-sm">
+            <div class="pod" ng-repeat="RaceDetail in selectedRaceDetails | filter: { IsActive : true }" ng-show="{{RaceDetail.RaceID > 0}}">
+                <div>
+                    <p><strong>{{RaceDetail.Race}}</strong></p>
+                </div>
+                <a class="text-info close" href="javascript:void(0)" ng-click="removeRaceDetail(RaceDetail)" security permission-key="{{permissionKey}}" permission="{{resolvePermission(additionalDemographic.AdditionalDemographicID)}}" title="Remove Race" space-key-press><span class="sr-only"></span>x</a>
+            </div>
+            <div ng-hide="true">
+                <input type="text" class="form-control" ng-model="selectedRaceName" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.additionalDemographicForm.ethnicity.$invalid && !ctrl.additionalDemographicForm.ethnicity.$pristine}">
+            <label for="ethnicity">Ethnicity <sup>*</sup></label>
+            <select name="ethnicity" class="form-control" id="ethnicity" ng-model="additionalDemographic.EthnicityID"
+                    ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/"
+                    ng-options="ethnicity.ID as ethnicity.Name for ethnicity in getLookupsByType('Ethnicity')" data-validation-name="Ethnicity">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.EthnicityID == otherEthnicityOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherEthnicity">Enter Other Ethnicity</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherEthnicity" class="form-control" id="otherEthnicity" name="otherEthnicity" />
+        </div>
+    </div>
+</div>
+
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="legalStatus">Legal Status</label>
+            <select class="form-control" ng-model="additionalDemographic.LegalStatusID" id="legalStatus" name="legalStatus"
+                    ng-pattern="/^[a-zA-Z0-9]*$/"
+                    ng-options="legalStatus.ID as legalStatus.Name for legalStatus in getLookupsByType('LegalStatus')| orderBy : 'Name'">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.LegalStatusID == otherLegalstatusOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherLegalStatus">Enter Other Legal Status</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherLegalstatus" class="form-control" id="otherLegalStatus" name="otherLegalStatus" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="maritalStatus">Marital Status</label>
+            <select class="form-control" ng-model="additionalDemographic.MaritalStatusID" id="maritalStatus" name="maritalStatus"
+                    ng-pattern="/^[a-zA-Z0-9]*$/"
+                    ng-options="maritalStatus.ID as maritalStatus.Name for maritalStatus in getLookupsByType('MaritalStatus')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+
+</div>
+
+<div class="row padding-bottom-small">
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="primaryLanguage">Preferred Language</label>
+            <select class="form-control" ng-model="additionalDemographic.PrimaryLanguageID" id="primaryLanguage"
+                    ng-options="primaryLanguage.ID as primaryLanguage.Name for primaryLanguage in getLookupsByType('Language')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.PrimaryLanguageID == otherLanguagesOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherPreferredLanguage">Enter Other Preferred Language</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherPreferredLanguage" class="form-control" id="otherPreferredLanguage" name="otherPreferredLanguage" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="secondaryLanguage">Secondary Language</label>
+            <select class="form-control" ng-model="additionalDemographic.SecondaryLanguageID" id="secondaryLanguage"
+                    ng-options="secondaryLanguage.ID as secondaryLanguage.Name for secondaryLanguage in getLookupsByType('Language')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.SecondaryLanguageID == otherLanguagesOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherSecondaryLanguage">Enter Other Secondary Language</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherSecondaryLanguage" class="form-control" id="otherSecondaryLanguage" name="otherSecondaryLanguage" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small col-inline" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-checkbox data-ng-model="additionalDemographic.InterpreterRequired" data-checkbox-id="interpreterRequired" data-label="Interpreter Required" />
+        </div>
+    </div>
+
+</div>
+
+<div class="row section-block">
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="citizenship">Citizenship</label>
+            <select class="form-control" ng-model="additionalDemographic.CitizenshipID" id="citizenship"
+                    ng-options="citizenship.ID as citizenship.Name for citizenship in getLookupsByType('Citizenship')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.CitizenshipID == otherCitizenshipOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherCitizenship">Enter Other Citizenship</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherCitizenship" class="form-control" id="otherCitizenship" name="otherCitizenship" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="livingArrangement">Living Arrangement</label>
+            <select class="form-control" ng-model="additionalDemographic.LivingArrangementID" id="livingArrangement"
+                    ng-options="livingArrangement.ID as livingArrangement.Name for livingArrangement in getLookupsByType('LivingArrangement')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.LivingArrangementID == otherLivingArrangementOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherLivingArrangement">Enter Other Living Arrangement</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherLivingArrangement" class="form-control" id="otherLivingArrangement" name="otherLivingArrangement" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="veteranStatus">Military Status</label>
+            <select class="form-control" ng-model="additionalDemographic.VeteranStatusID" id="veteranStatus"
+                    ng-options="veteran.ID as veteran.Name for veteran in getLookupsByType('VeteranStatus')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.VeteranStatusID == otherVeteranStatusOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherVeteranStatus">Other Military Status</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherVeteranStatus" class="form-control" id="otherVeteranStatus" name="otherVeteranStatus" />
+        </div>
+    </div>
+</div>
+
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="employmentStatus">Employment Status</label>
+            <select class="form-control" ng-model="additionalDemographic.EmploymentStatusID" id="employmentStatus"
+                    ng-options="employmentStatus.ID as employmentStatus.Name for employmentStatus in getLookupsByType('EmploymentStatus')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.EmploymentStatusID == otherEmploymentStatusOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherEmploymentStatus">Enter Other Employment Status</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherEmploymentStatus" class="form-control" id="otherEmploymentStatus" name="otherEmploymentStatus" />
+        </div>
+    </div>
+    <div class="col-md-6 padding-bottom-small" ng-cloak ng-show="additionalDemographic.EmploymentStatusID == unemployedOption">
+        <div class="form-group-lg padding-bottom-small">
+            @*<label for="lookingForWorkFieldset">Are you currently looking for work?</label>*@
+            <fieldset id="lookingForWorkFieldset">
+                <legend class="uppercase">Are you currently looking for work?</legend>
+                <span><xen-radio-button data-ng-model="additionalDemographic.LookingForWork" data-radio-button-id="lookingForWorkYes" data-label="Yes" data-ng-value="true" /></span>
+                &nbsp;&nbsp;&nbsp;
+                <span><xen-radio-button data-ng-model="additionalDemographic.LookingForWork" data-radio-button-id="lookingForWorkNo" data-label="No" data-ng-value="false" /></span>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-5 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="primaryPlaceOfEmployment">Last / Primary Place of Employment</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.PlaceOfEmployment" class="form-control" id="primaryPlaceOfEmployment" name="primaryPlaceOfEmployment" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div id="employmentBeginDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.additionalDemographicForm.EmploymentBeginDate.$invalid && !ctrl.additionalDemographicForm.EmploymentBeginDate.$pristine}">
+            <label for="EmploymentBeginDate">Begin Date</label>
+            <xen-date-picker id="EmploymentBeginDate" data-compare-element-name="EmploymentEndDate" data-validation-name="Employment Begin Date" ng-model="additionalDemographic.EmploymentBeginDate" name="EmploymentBeginDate" end-date="additionalDemographic.EmploymentEndDate" greater-than-date-validation="true" ignore-time="true"></xen-date-picker>
+            <p class="error-block" ng-show="ctrl.additionalDemographicForm.EmploymentBeginDate.$error.date">Please select valid begin date.</p>
+            <p ng-show="ctrl.additionalDemographicForm.EmploymentBeginDate.$error.greaterThanDate" ng-cloak class="error-block">Begin Date can't be greater than End Date.</p>
+
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div id="employmentEndDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.additionalDemographicForm.EmploymentEndDate.$invalid && !ctrl.additionalDemographicForm.EmploymentEndDate.$pristine}">
+            <label for="EmploymentEndDate">End Date</label>
+            <xen-date-picker id="EmploymentEndDate" name="EmploymentEndDate" data-validation-name="Employment End Date" data-compare-element-name="EmploymentBeginDate" ng-model="additionalDemographic.EmploymentEndDate" start-date="additionalDemographic.EmploymentBeginDate" less-than-date-validation="true" ignore-time="true"></xen-date-picker>
+            <p id="isValidError" ng-cloak ng-show="ctrl.additionalDemographicForm.EmploymentEndDate.$error.date" class="error-block">Please select valid end date.</p>
+            <p ng-show="ctrl.additionalDemographicForm.EmploymentEndDate.$error.lessThanDate" ng-cloak class="error-block">End Date can't be less than Start Date.</p>
+
+        </div>
+    </div>
+</div>
+<div class="row section-block">
+    <div class="col-md-5 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="schoolAttended">Last School Attended</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.SchoolAttended" class="form-control" id="schoolAttended" name="schoolAttended" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div id="beginDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.additionalDemographicForm.BeginDate.$invalid && !ctrl.additionalDemographicForm.BeginDate.$pristine}">
+            <label for="BeginDate">Begin Date</label>
+            <xen-date-picker id="BeginDate" data-validation-name="Begin Date" data-compare-element-name="EndDate" ng-model="additionalDemographic.SchoolBeginDate" name="BeginDate" end-date="additionalDemographic.SchoolEndDate" greater-than-date-validation="true" ignore-time="true"></xen-date-picker>
+            <p class="error-block" ng-show="ctrl.additionalDemographicForm.BeginDate.$error.date">Please select valid begin date.</p>
+            <p ng-show="ctrl.additionalDemographicForm.BeginDate.$error.greaterThanDate" ng-cloak class="error-block">Begin Date can't be greater than End Date.</p>
+       </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div id="endDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.additionalDemographicForm.EndDate.$invalid && !ctrl.additionalDemographicForm.EndDate.$pristine}">
+            <label for="EndDate">End Date</label>
+            <xen-date-picker id="EndDate" name="EndDate" data-validation-name="End Date" data-compare-element-name="BeginDate" ng-model="additionalDemographic.SchoolEndDate" start-date="additionalDemographic.SchoolBeginDate" less-than-date-validation="true" ignore-time="true"></xen-date-picker>
+            <p id="isValidError" ng-cloak ng-show="ctrl.additionalDemographicForm.EndDate.$error.date" class="error-block">Please select valid end date.</p>
+            <p ng-show="ctrl.additionalDemographicForm.EndDate.$error.lessThanDate" ng-cloak class="error-block">End Date can't be less than Start Date.</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="education">Highest Education</label>
+            <select class="form-control" ng-model="additionalDemographic.EducationStatusID" id="education"
+                    ng-options="education.ID as education.Name for education in getLookupsByType('EducationStatus')| orderBy : 'ID'">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.EducationStatusID == otherEducationOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherEducation">Enter Other Education</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherEducation" class="form-control" id="otherEducation" name="otherEducation" />
+        </div>
+    </div>
+</div>
+
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="religion">Religion</label>
+            <select class="form-control" ng-model="additionalDemographic.ReligionID" id="religion"
+                    ng-options="religion.ID as religion.Name for religion in getLookupsByType('Religion')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" ng-cloak data-ng-show="additionalDemographic.ReligionID == otherReligionOption">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="otherReligion">Enter Other Religion</label>
+            <input type="text" style="margin-top:4px;" data-ng-model="additionalDemographic.OtherReligion" class="form-control" id="otherReligion" name="otherReligion" />
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="SmokingStatusID">Smoking Status</label>
+            <select ng-model="additionalDemographic.SmokingStatusID" class="form-control" id="SmokingStatusID" name="SmokingStatusID"
+                    ng-options="smokingStatus.ID as smokingStatus.Name for smokingStatus in getLookupsByType('SmokingStatus')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>
+
+<div class="row padding-bottom-small">
+    <div class="col-md-3 padding-bottom-small" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="FullCodeDNR">Advanced Directive</label>
+            <span><xen-radio-button data-ng-model="additionalDemographic.AdvancedDirective" data-radio-button-id="fullCodeDnr" data-label="YES" data-ng-value='true' /></span>
+            <span><xen-radio-button data-ng-model="additionalDemographic.AdvancedDirective" data-radio-button-id="fullCodeDnr" data-label="NO" data-ng-value='false' /></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" data-ng-show="additionalDemographic.AdvancedDirective">
+            <label for="SmokingStatusID">Directive Type</label>
+            <select ng-model="additionalDemographic.AdvancedDirectiveTypeID" class="form-control" id="DirectiveTypeID" name="DirectiveTypeID"
+                    ng-options="directiveType.ID as directiveType.Name for directiveType in getLookupsByType('AdvancedDirectiveType')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small col-inline" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="livingWill">Living Will</label>
+            <select data-ng-model="additionalDemographic.LivingWill" class="form-control" id="livingWill" name="livingWill">
+                <option value="">Select</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small col-inline" data-ng-hide="ProgramID == eciProgram">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="powerOfAttorney">Power Of Attorney</label>
+            <select data-ng-model="additionalDemographic.PowerOfAttorney" class="form-control" id="powerOfAttorney" name="powerOfAttorney">
+                <option value="">Select</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>

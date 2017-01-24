@@ -1,0 +1,92 @@
+﻿<div class="modal fade" id="consentFormModal" name="consentFormModal" role="dialog" aria-labelledby="consentFormModal" aria-hidden="true" data-backdrop="static" data-keyboard="true" tabindex="-1" permission-key="Registration-Registration-Demographics" permission="create">
+    <div class="modal-dialog modalInCenter">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" ng-click="$event.stopPropagation();closePrintModal();"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Print Preview</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-main panel-light padding-xsmall consent">
+    <div class="panel-body" ng-show="DisplayForm">
+        <div permission-key="Registration-Registration-Demographics" permission="create" permission-mode="readonly">
+            <form role="form" name="consentForm" novalidate>
+                <div class="row" id="contactsection">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="">Name</label>
+                            <input type="text" tabindex="-1" id="name" name="name" ng-model="ContactName" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="">Date Of Birth</label>
+                            <input type="text" tabindex="-1" id="name" name="name" value="{{ContactDateofBirth | toMMDDYYYYDate:'MM/DD/YYYY'}}" placeholder="MM/dd/yyyy" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                    <div class="print">
+                        <a href="javascript:void(0)" ng-click="openPrintModal()" class="printPreview plain pull-right font-size-xlarge" role="button" title="Consent Form Print Preview - Opens in Modal" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#consentFormModal"><i class="fa fa-print fa-fw"></i><span class="hidden-lg hidden-md hidden-sm visible-xs"> Print Consent Form</span></a>
+                    </div>
+                </div>
+                <div class="row padding-bottom-small" id="consentsection">
+                    <div class="col-md-12">
+                        <div class="padding-small">
+                            <h1>Health Insurance Portability and Accountability Act (HIPAA)</h1>
+                            <p>I understand that I have certain rights to privacy, regarding my protected health information. I understand that this information can and will be used to:</p>
+                            <ul>
+                                <li>Conduct, plan and direct my treatment and follow-up among the multiple healthcare providers who may be involved in that treatment directly and indirectly.</li>
+                                <li>Obtain payment from third-party payers.</li>
+                                <li>Conduct normal healthcare operations such as quality assessments and physician certifications.</li>
+                            </ul>
+                            <p>I have received the <strong><insert agency name></strong> <span class="uppercase">NOTICE OF PRIVACY PRACTICES</span>. I understand that <strong><insert agency name></strong> has the right to change its <span class="uppercase">NOTICE OF PRIVACY PRACTICES</span> from time to time and that I may contact this organization at any time to obtain a current copy of the <span class="uppercase">NOTICE</span>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="AuthorizedBy">Authorized By</label>
+                            <input type="text" tabindex="-1" id="AuthorizedBy" name="AuthorizedBy" value="{{AuthorizedBy}}" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="EffectiveDate">Effective Date</label>
+                            <input type="text" tabindex="-1" id="EffectiveDate" name="EffectiveDate" value="{{ModifiedOn | toMMDDYYYYDate:'MM/DD/YYYY h:mm a':'useLocal' }}" placeholder="mm/dd/yyyy" readonly="readonly" class="form-control ellipsis" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <img ng-if="topazModel.b64ImageData.length > 1" ng-src="data:image/png;base64, {{topazModel.b64ImageData}}" alt="signature" style="vertical-align: middle;" />
+                    </div>
+                </div>
+                <div class="row" ng-show="topazModel.modelNumber != '' && topazModel.b64ImageData === ''">
+                    <div class="col-md-7 col-sm-12">
+                        <strong ng-bind="topazModel.modelNumber"></strong>
+                        <div class="row padding-bottom" security permission-key="Registration-Registration-Demographics" permission="create">
+                            <topaz-signature data-topaz-model="topazModel" data-topaz-ready="isTopazReady" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-if="topazModel.modelNumber === '' && topazModel.b64ImageData === ''">
+                    <div class="col-md-4 col-sm-4">
+                        <span class="error-block" ng-bind="topazModel.DeviceMessage"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div ng-hide="topazModel.DisplayForm" class="row padding">
+        <div class="col-md-6 col-sm-6">
+            <span class="error-block" ng-bind="errmsg"></span>
+        </div>
+    </div>
+</div>
+<div  style="display: none;">
+    <pdf-maker report-id="consentReport" report-name="HIPAA Consent" report-data="reportModel" report-width="550px" report-height="700px" report-preview="true" />
+</div>

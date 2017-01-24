@@ -1,0 +1,82 @@
+﻿<keypress-events close-modal="true" permission-key="{{vs.voidModel.PermissionKey}}" permission="{{vs.PERMISSION}}"></keypress-events>
+<form name="vs.voidServiceForm" data-ng-submit="vs.voidServiceForm.$valid" xen-check-form data-on-save="vs.voidService(isNext, isMandatory, hasErrors)" permission-key="{{vs.voidModel.PermissionKey}}" permission="{{vs.PERMISSION}}" novalidate bs-modifiable="true" set-form-status>
+    <div class="sidebar-offcanvas">
+        <div class="panel panel-default nomargin-top padding-bottom-small">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="col-md-12 col-sm-12 col-xs-12 border-top border-bottom padding-xsmall nopadding-right margin-bottom-small">
+                        <h3 class="nomargin padding-left-small pull-left">Void Service</h3>
+                        <a href="javascript:void(0)" alt="Close Panel" ng-click="vs.closeFlyout()" class="pull-right nomargin-right">
+                            <div class="btn-group">
+                                <i class="fa fa-times-circle">
+                                    <span class="sr-only">Close Section and Return</span>
+                                </i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body nopadding-top" id="panel-last-accessed">
+                <div class="panel-body panel-scroll ps-container ps-active-y">
+                    <div class="row">
+                        <div class="col-lg-11 col-md-7 col-sm-11 col-xs-12 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : vs.voidServiceForm.voidReason.$invalid && !vs.voidServiceForm.voidReason.$pristine }">
+                                <label for="voidReason">Reason <sup>*</sup> </label>
+                                <select ng-model="vs.voidModel.ServiceRecordingVoidReasonID" id="voidReason" class="form-control" auto-focus event-focus="voidFocus" required
+                                        ng-change="vs.changeVoidedReason()" ng-options="voidReason.ID as voidReason.Name for voidReason in vs.voidRecordedServiceReasons" data-validation-name="Void Reason" name="voidReason">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="vs.voidModel.ServiceRecordingVoidReasonID === vs.reasonStatusDataEntry">
+                        <div class="col-lg-11 col-md-7 col-sm-12 col-xs-12 padding-bottom-small nopadding-right">
+                            <div class="form-inline form-compact margin-right-small">
+                                <div class="col-md-12 nopadding-right nopadding-left margin-bottom-small vertical-scrollbox">
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectOrganization" data-checkbox-id="IncorrectOrganization" data-label="Incorrect Program Unit" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectServiceType" data-checkbox-id="IncorrectServiceType" data-label="Incorrect Service Type" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectServiceItem" data-checkbox-id="IncorrectServiceItem" data-label="Incorrect Service Item" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectServiceStatus" data-checkbox-id="IncorrectServiceStatus" data-label="Incorrect Service Status" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectSupervisor" data-checkbox-id="IncorrectSupervisor" data-label="Incorrect Supervising Provider" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectAdditionalUser" data-checkbox-id="IncorrectAdditionalUser" data-label="Incorrect Co-Provider" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectAttendanceStatus" data-checkbox-id="IncorrectAttendanceStatus" data-label="Incorrect Attendance Status" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectTrackingField" data-checkbox-id="IncorrectTrackingField" data-label="Incorrect Tracking Field" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectStartDate" data-checkbox-id="IncorrectStartDate" data-label="Incorrect Date" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectStartTime" data-checkbox-id="IncorrectStartTime" data-label="Incorrect Start Time" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectEndTime" data-checkbox-id="IncorrectEndTime" data-label="Incorrect End Time" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectDeliveryMethod" data-checkbox-id="IncorrectDeliveryMethod" data-label="Incorrect Delivery Method" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectServiceLocation" data-checkbox-id="IncorrectServiceLocation" data-label="Incorrect Place of service" /></div>
+                                    <div><xen-checkbox data-ng-model="vs.voidModel.IncorrectRecipientCode" data-checkbox-id="IncorrectRecipientCode" data-label="Incorrect Recipient" /></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" data-ng-hide="vs.voidModel.IsCreateCopyToEditHide">
+                        <div class="col-lg-11 col-md-9 col-sm-9 padding-bottom-small">
+                            <div class="form-group-lg form-inline">
+                                <xen-checkbox data-ng-model="vs.voidModel.IsCreateCopyToEdit" data-checkbox-id="createCopyToEdit" data-label="Create Copy to Edit" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-11 col-md-12 col-sm-12 col-xs-12 padding-bottom-small">
+                            <div class="form-group-lg" ng-class="{ 'has-error' : vs.voidServiceForm.Comments.$invalid && !vs.voidServiceForm.Comments.$pristine }">
+                                <xen-memobox label="Comments *" rows="5" maxlength="500" ng-model="vs.voidModel.Comments" name="Comments" ng-required="true"></xen-memobox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer nopadding-top">
+                <div class="col-lg-12 nopadding-left text-right">
+                    <button type="button" id="voidClose" name="voidClose" class="btn btn-info-alt uppercase btn-lg" ng-click="vs.closeFlyout()">CANCEL</button>
+                    <xen-submit name="voidSave" value="VOID" permission-key="{{vs.voidModel.PermissionKey}}" permission="{{vs.PERMISSION}}" is-next="false" mandatory="true" data-style="btn btn-default uppercase btn-lg"></xen-submit>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer" data-spy="affix" data-offset-top="10" data-offset-bottom="0">
+        </div>
+    </div>
+</form>

@@ -1,0 +1,39 @@
+﻿<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Potential Matches</h2>
+                <p>Please note, only two records can be merged at a time.</p>
+            </div>
+        </div>
+        <div class="row padding-top-xxsmall">
+            <div class="col-md-12">
+                <table id="potentialMatchesTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="potentialMatchTableOptions" grid-arrow-selector></table>
+            </div>
+        </div>
+        <div class="row table-footer-buttons">
+            <div class="col-md-6 col-sm-6 padding-top-xsmall">
+                <button type="button" class="btn btn-default btn-sm ng-isolate-scope" ng-click="navigateToCompareRecord()" security permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read">
+                    <i class="fa fa-search"></i> Compare Records
+                </button>
+            </div>
+
+            <div class="col-md-6 col-sm-6 padding-top-xsmall text-right">
+                <button type="button" class="btn btn-default btn-sm pull-right" ng-click="getRefreshPotentialMatches()" security permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read">
+                    <span class="icon-Approvals"><i class="fa fa-refresh" id="refreshIcon"></i> Refresh</span>
+                </button>
+                <p class="font-size-12 pull-right clear padding-top-xsmall"> Last Refresh : {{MergeContactLastRun | formatDate:'MM/DD/YYYY'}}</p>
+            </div>
+        </div>
+    </div>
+</div>

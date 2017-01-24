@@ -1,0 +1,33 @@
+﻿<keypress-events on-save="safeSubmit(false, false)" on-next="safeSubmit(true, false)" enter-key-stop="stopEnter" permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read"></keypress-events>
+<div class="panel panel-main panel-light padding-xsmall nopadding-top">
+    <div class="panel-body">
+        <div security permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read" permission-mode="readonly">
+            <div class="row header-compact">
+                <div class="col-md-12">
+                    <h1>Client Merge</h1>
+                    <p>Review and merge potential matches. Unmerge contacts that have not yet been edited.</p>
+                </div>
+            </div>
+
+            <div class="row tile-view tile-small">
+                <div class="col-md-3 padding-top-small nopadding-right">
+                    <div class="section-group" security permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read" ui-sref="businessadministration.clientmerge.clientmergeNavigation.potentialmatches">
+                        <div class="content">
+                            <h2>Potential Matches</h2>
+                            <p class="count">{{clientMergeCounts.PotentialContactMatchCount}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 padding-top-small nopadding-right">
+                    <div class="section-group" security permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read" ui-sref="businessadministration.clientmerge.clientmergeNavigation.mergedContacts">
+                        <div class="content">
+                            <h2>Merged Contacts</h2>
+                            <p class="count">{{clientMergeCounts.MergedContactCount}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

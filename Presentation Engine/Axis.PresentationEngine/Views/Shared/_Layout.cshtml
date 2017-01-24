@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<!--[if IEMobile 7 ]>   <html lang="en-US" prefix="og: http://ogp.me/ns#" class="no-js iem7"> <![endif]-->
+<!--[if (gte IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!-->
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns#">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <link rel="shortcut icon" href="~/favicon.ico" />
+
+    <link href="/Content/css" rel="stylesheet" />
+
+    <script src="/bundles/modernizr"></script>
+    <script src="/bundles/jquery"></script>
+    <script src="/bundles/angular?v12"></script>
+    <script src="/bundles/angular-ui"></script>
+    <script src="/bundles/lodash"></script>
+    <script src="/bundles/resize"></script>
+    <script src="/bundles/bootstrap"></script>
+    <script src="/bundles/site"></script>
+    <script src="/bundles/offline?v12"></script>
+    <script src="/bundles/pdfmake"></script>
+    <script src="/bundles/httpLoader"></script>
+    
+    @RenderSection("scripts", required: false)
+
+    <script src="~/Home/Settings"></script>
+    @*We cannot remove the following offline cache, causes failure in applications*@
+    <script src="~/Lookup/Lookup/GetLookupsToCache"></script>
+    @*We cannot remove the following offline cache, causes pdf to not work even in online mode in application*@
+    <script src="~/Lookup/Lookup/GetReportsToCache"></script>
+    <script src="~/Configuration/Settings/GetSettingsToCache"></script>
+    @*<script src="~/Lookup/Lookup/GetDrugsToCache"></script>
+    <script src="~/Plugins/Scheduling/Resource/GetResourcesToCache"></script>*@
+    <script src="~/Security/RoleSecurity/GetUserRoleSecurity"></script>
+    <script src="~/Assessment/Assessment/AssessmentService"></script>
+    <script src="~/Scripts/app/directives/password.js"></script>
+
+    @*Add Files Below to Help in Debuging the code and remove them before checking in your changes*@
+    
+    @*Add Files Above to Help in Debuging the code and remove them before checking in your changes*@
+
+    @*Canonical is useful to use. Not sure if we'll need the feed. Leaving it in for now. (rwq)*@
+    @*<link rel="canonical" href="http://xenatix.cloudapp.net">*@
+    @*<link rel="alternate" type="application/rss+xml" title="XenatiX" href="http://xenatix.cloudapp.net/feed.xml" />*@
+
+    @*The below code is for Application Insight*@
+    <script type="text/javascript">
+          var appInsights=window.appInsights||function(config){
+            function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
+            }({
+                //instrumentationKey:"b678dfe4-3939-49de-b85f-0f4eeabc2ea2"
+                instrumentationKey: "@System.Web.Configuration.WebConfigurationManager.AppSettings["AppInsightsKey"]"
+            });
+
+            window.appInsights=appInsights;
+    </script>
+</head>
+
+<body ng-app="xenatixApp" class="dark" ng-class="{ 'dark' : useDarkTheme, 'light' : !useDarkTheme }" data-spy="scroll" data-target="#patientHeader">
+    <div id="main-container" class="main-container-outer" ng-controller="navigationController">
+        @{
+            var daystoExpire = "";
+            if(Session["DaysToExpire"] != null)
+            {
+                daystoExpire = Session["DaysToExpire"].ToString();
+                Session.Remove("DaysToExpire");
+            }
+        }
+        <div class="row main-row" ng-init="ShowDaystoExpire(@daystoExpire)">
+            <!-- begin: header -->
+            <nav class="navbar navbar-default navbar-fixed-top" id="navigationBar">
+                <div class="container-fluid padding-left-2x padding-right-2x">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" ng-click="Goto('contacts')"><span class="bug" ng-class="{'success': connectivityStatus.IsOnline, 'danger': !connectivityStatus.IsOnline, 'warning': connectivityStatus.IsSynching }"></span><span class="logotype">XenatiX</span></a> @*Logo- linked to home*@
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse text-center">
+                        <ul class="nav navbar-nav yamm text-center primary-nav">
+                            @* DASHBOARD *@
+                            @*<li ng-class="{active: $state.includes('dashboard')}">
+                                  <a ng-click="Goto('dashboard')" href="javascript:void(0)">
+                                    <span class="visible-md visible-sm">
+                                        <i class="fa fa-home font-size-xlarge"><span class="sr-only">Dashboard</span></i>
+                                    </span>
+                                    <span class="hidden-md hidden-sm">Dashboard</span>
+                                  </a>
+                                </li>*@
+                            <li ng-class="{active: $state.includes('contacts')||$state.includes('patientprofile')}">
+                                <a ng-click="Goto('contacts')" href="javascript:void(0)">
+                                    <span class="visible-md visible-sm">
+                                        <i class="fa fa-users font-size-xlarge"><span class="sr-only">Contacts</span></i>
+                                    </span>
+                                    <span class="hidden-md hidden-sm">Contacts</span>
+                                </a>
+                            </li>
+                            <li ng-class="{active: $state.includes('referrals') || $state.includes('referralsearch')}" security permission-key="Referrals-Referral-Referrer" permission="read">
+                                <a ng-click="Goto('referralsearch','',true)" href="javascript: void(0)" class="referral">
+                                    <span class="visible-md visible-sm">
+                                        <i class="fa xen-referral font-size-xlarge"><span class="sr-only">Referrals</span></i>
+                                    </span>
+                                    <span class="hidden-md hidden-sm">Referrals</span>
+                                </a>
+                            </li>
+                            <li ng-class="{active: $state.includes('program') || $state.includes('registration') || $state.includes('eciregistration')}" security modules="Registration|ECI" permission="create|update">
+                                @*<a ui-sref="registration" ui-sref-opts="{reload: true}">Registration</a>*@
+                                <a ng-click="Goto('program','',true)" href="javascript:void(0)">
+                                    <span class="visible-md visible-sm">
+                                        <i class="fa fa-sign-in font-size-xlarge"><span class="sr-only">Registration</span></i>
+                                    </span>
+                                    <span class="hidden-md hidden-sm">Registration</span>
+                                </a>
+                            </li>
+
+                            @* CALL CENTER *@
+                            <li ng-class="{active: $state.includes('lawliaison') || $state.includes('callcenter.lawliaison')}" security permission-key="LawLiaison-LawLiaison-LawLiaison" permission="read" class="law-liaison">
+                                <a ng-click="Goto('lawliaison','',true)" href="javascript:void(0)">
+                                    <span class="visible-md visible-sm">
+                                        <i class="fa xen-law-plain font-size-xlarge"><span class="sr-only">Law Liaison</span></i>
+                                    </span>
+                                    <span class="hidden-md hidden-sm">Law Liaison</span>
+                                </a>
+                            </li>
+                            <li ng-class="{active: $state.includes('crisisline') || $state.includes('callcenter.crisisline')}" security permission-key="CrisisLine-CrisisLine-CrisisLine" permission="read" class="crisis-line">
+                                <a ng-click="Goto('crisisline','',true)" href="javascript:void(0)">
+                                    <span class="visible-md visible-sm">
+                                        <i class="fa fa-phone font-size-xlarge"><span class="sr-only">Crisis Line</span></i>
+                                    </span>
+                                    <span class="hidden-md hidden-sm">Crisis Line</span>
+                                </a>
+                            </li>
+                            <li ng-class="{active: $state.includes('scheduling')}" security permission-key="Scheduling-Appointment-SingleAppointment" permission="read">
+                                <a ng-click="Goto('scheduling','',true)" href="javascript:void(0)">
+                                    <span class="visible-md visible-sm">
+                                        <i class="fa fa-calendar font-size-xlarge"><span class="sr-only">Schedule</span></i>
+                                    </span>
+                                    <span class="hidden-md hidden-sm">Schedule</span>
+                                </a>
+                            </li>
+                            <li class="dropdown yamm-fw" security permission-key="Registration-Registration-Demographics|ECI-Registration-Demographics|LawLiaison-LawLiaison-LawLiaison|CrisisLine-CrisisLine-CrisisLine|Referrals-Referral-Referrer" permission="create">
+                                <a href="javascript:void(0)" class="dropdown-toggle plain font-size-xlarge" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <span class="hidden-sm hidden-md hidden-lg">Add</span>
+                                    <i class="fa fa-plus-circle"></i>
+                                </a>
+                                <ul class="dropdown-menu add-item nopadding">
+                                    <li>
+                                        <div class="yamm-content nopadding-top">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-3 nopadding" security permission-key="Registration-Registration-Demographics|ECI-Registration-Demographics" permission="create">
+                                                    <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                        <i class="fa fa-user fa-5x text-success"></i>
+                                                        <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small text-success">New Registration</span>
+                                                        <button class="btn btn-default btn-lg" ui-sref="program" ui-sref-opts="{reload: true}">Add</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 nopadding" security permission-key="LawLiaison-LawLiaison-LawLiaison" permission="create">
+                                                    <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                        <i class="fa xen-law-plain fa-5x"></i>
+                                                        <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small text-success">Law Liaison</span>
+                                                        <button class="btn btn-default btn-lg" href="javascript:void(0);" ui-sref-opts="{reload: true}" ui-sref="callcenter.lawliaison.initlawenforcement({ReadOnly:'edit'})">Add</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 nopadding" security permission-key="CrisisLine-CrisisLine-CrisisLine" permission="create">
+                                                    <div class="card card-crisis text-center padding background-theme-dark margin-xxsmall">
+                                                        <i class="fa fa-phone fa-5x text-success"></i>
+                                                        <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small text-success">Crisis Line</span>
+                                                        <button class="btn btn-default btn-lg" href="javascript:void(0);" ui-sref-opts="{reload: true}" ui-sref="callcenter.crisisline.initialcallerinformation({ReadOnly:'edit'})">Add</button>
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-lg-3 col-md-3 col-sm-3 nopadding">
+                                                        <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                            <i class="fa xen-referral"></i>
+                                                            <span class="center-block font-size-large uppercase padding-top-small padding-bottom-small text-success">New Referral</span>
+                                                            <button class="btn btn-default btn-lg" href="javascript:void(0);" security permission-key="Referrals-Referral-Referrer" permission="create" ui-sref="referrals.main({ReadOnly:'edit'})">Add</button>
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav yamm navbar-nav navbar-right">
+                            <li class="dropdown yamm-fw user-actions">
+                                <a href="javascript:void(0)" class="dropdown-toggle avatar padding-top-xxsmall padding-bottom-xxsmall nopadding-right" data-toggle="dropdown" role="button" area-haspopup="true" aria-expanded="false">
+                                    <span class="text hidden-sm"><span>{{UserFullName}}</span><span class="role">{{UserRolePrimary}}</span></span>
+                                    <img id="userPhoto" src="~/Images/ph_avatar.png" alt="{{UserFullName}}" />
+                                    <span class="badge pulse">21</span> @*The number of alerts*@
+                                </a>
+                                <ul class="dropdown-menu nopadding">
+                                    <li>
+                                        <div class="yamm-content nopadding-top">
+                                            <div class="row">
+                                                <div class="col-md-9 col-sm-12">
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            @*<div class="col-lg-4 col-md-4 col-sm-4 nopadding">
+                                                                <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                                    <div class="block">
+                                                                        <button class="block-top">
+                                                                            <span class="center-block font-size-base padding-bottom-xsmall">{{ (connectivityStatus.LastSync).toLocaleTimeString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) }}</span>
+                                                                            <i ng-class="{'rotate text-warning': connectivityStatus.IsSynching, 'text-success': connectivityStatus.IsOnline, 'text-danger' : !connectivityStatus.IsOnline }" class="fa fa-refresh fa-5x text-success"></i>
+                                                                        </button>
+                                                                        <span class="center-block font-size-large uppercase padding-top-small padding-bottom-xsmall">Sync Status: <span ng-class="{'text-warning': connectivityStatus.IsSynching, 'text-success': connectivityStatus.IsOnline, 'text-danger': !connectivityStatus.IsOnline }" class="font-size-large notext-transform">{{ connectivityStatus.IsOnline ? "Online" : "Offline" }}</span></span>
+                                                                    </div>
+                                                                    <button ng-class="{disabled: !connectivityStatus.IsOnline || connectivityStatus.IsSynching }" ng-click="syncNow();" class="btn btn-default btn-lg">Sync Now</button>
+                                                                </div>
+                                                            </div>*@
+                                                            <div class="col-lg-3 col-md-3 col-sm-3 nopadding" ng-if="false">
+                                                                <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                                    <div class="block">
+                                                                        <button class="block-top padding-top" disabled="disabled">
+                                                                            <i class="fa fa-user-md fa-5x"></i>
+                                                                            <span class="badge badge-lg">7</span>
+                                                                        </button>
+                                                                        <span class="center-block font-size-large uppercase padding-top-small">Labs</span>
+                                                                    </div>
+                                                                    <button class="btn btn-default btn-lg" disabled="disabled">View</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-3 nopadding" ng-if="false">
+                                                                <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                                    <div class="block">
+                                                                        <button class="block-top padding-top" disabled="disabled">
+                                                                            <i class="fa fa-list-alt fa-5x"></i>
+                                                                            <span class="badge badge-lg">7</span>
+                                                                        </button>
+                                                                        <span class="center-block font-size-large uppercase padding-top-small">Registrations</span>
+                                                                    </div>
+                                                                    <button class="btn btn-default btn-lg" disabled="disabled">View</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-3 nopadding" ng-if="false">
+                                                                <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                                    <div class="block">
+                                                                        <button class="block-top padding-top" disabled="disabled">
+                                                                            <i class="fa fa-warning fa-5x"></i>
+                                                                            <span class="badge badge-lg">7</span>
+                                                                        </button>
+                                                                        <span class="center-block font-size-large uppercase padding-top-small">Alerts</span>
+                                                                    </div>
+                                                                    <button class="btn btn-default btn-lg" disabled="disabled">View</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4 nopadding" security modules="Reports" permission="read">
+                                                                <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                                    <div class="block">
+                                                                        <button class="block-top padding-top" data-ng-click="Goto('ssrs')" security modules="Reports" permission="read">
+                                                                            <i class="fa fa-pie-chart fa-5x"></i>
+                                                                            <span class="badge badge-lg">7</span>
+                                                                        </button>
+                                                                        <span class="center-block font-size-large uppercase padding-top-small">Reports</span>
+                                                                    </div>
+                                                                    <button class="btn btn-default btn-lg" data-ng-click="Goto('ssrs')" security modules="Reports" permission="read">View</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4 nopadding" ng-if="applicationSettings.enableSsrsTest">
+                                                                <div class="card text-center padding background-theme-dark margin-xxsmall">
+                                                                    <div class="block">
+                                                                        <button class="block-top padding-top" data-ng-click="Goto('Reports')">
+                                                                            <i class="fa fa-pie-chart fa-5x"></i>
+                                                                            <span class="badge badge-lg">7</span>
+                                                                        </button>
+                                                                        <span class="center-block font-size-large uppercase padding-top-small">SSRS Test</span>
+                                                                    </div>
+                                                                    <button class="btn btn-default btn-lg" data-ng-click="Goto('Reports')">View</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12 nopadding">
+                                                    @* theme toggle *@
+                                                    <ul class="list-group text-uppercase text-right col-sm-12">
+                                                        @*<li class="list-group-item"><a href="">Your Preferences <i class="fa fa-fw pull-right fa-th-list"></i></a></li>*@
+                                                        <li class="list-group-item"><a ng-click="Goto('myprofile.nav.profile')">My Profile <i class="fa fa-fw pull-right fa-briefcase"></i></a></li>
+                                                        <li class="list-group-item" security modules="Site Administration" permission="read"><a ng-click="Goto('siteadministration')">Site Administration <i class="fa fa-fw pull-right fa-globe"></i></a></li>
+                                                        <li class="list-group-item" security modules="Business Administration" permission="read"><a ng-click="Goto('businessadministration')">Business Administration <i class="fa fa-fw pull-right fa-briefcase"></i></a></li>
+                                                        <!-- 
+                                                        <li class="list-group-item"><a href="">Help <i class="fa fa-fw pull-right fa-question-circle"></i></a></li>
+                                                        <li class="list-group-item"><a href="">Switch to Light Theme <i class="fa fa-fw pull-right fa-sun-o"></i></a></li>
+                                                        <li class="list-group-item"><a href="">Switch to Dark Theme <i class="fa fa-fw pull-right fa-moon-o"></i></a></li>
+                                                        -->
+                                                        <li class="list-group-item"><a ng-click="Goto('logout')">Logout <i class="fa fa-fw pull-right fa-power-off"></i></a></li>
+                                                    </ul>
+                                                    <div class="flip-switch padding-bottom">
+                                                        <button ng-click="toggleTheme('Light')">Light</button> <button ng-click="toggleTheme('Dark')">Dark</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="search-form-tool">
+                                <ul class="list-inline">
+                                    <li>
+                                        <form class="navbar-form search-form form-horizontal" role="search">
+                                            <div class="form-group slider">
+                                                <div class="padding-xsmall">
+                                                    <input type="text" class="form-control padding-top-small padding-bottom-small text-right" placeholder="Search">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </li>
+                                    @*<li>
+                                            <a href="javascript:void(0);" class="btn-link font-size-xlarge"><i class="fa fa-search"></i></a>
+                                        </li>*@
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                @* This are needs to be uncommented when we readd the offline functionality
+                <div class="progress_indicator" title="offline availability" ng-show="progressStatus < 1">
+                    <span class="status" style="width:{{progressPctComplete}}%;"><span class="sr-only">loading status</span> {{progressPctComplete}}%</span>
+                    <span class="bar" ng-class="{'bg-danger': progressStatus === -1 }" style="width:{{progressPctComplete}}%;"></span>
+                </div>
+                *@
+            </nav>
+            <!-- end: header -->
+
+            <div class="container-outer">
+                <div class="container-fluid padding-left padding-right" id="content" role="main">
+                    <div class="row" ui-view>
+                        <!-- begin: content -->
+                        @RenderBody()
+
+                        <!-- end: content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("../Shared/_IdleTimeout")
+    </div>
+    <div class="navbar-fixed-bottom">
+        <div class="container">
+            Copyright © @DateTime.Now.Year, aXis -- v@(typeof(Axis.PresentationEngine.Startup).Assembly.GetName().Version.ToString(3))
+        </div>
+    </div>
+    <xen-loader time-to-live="10"></xen-loader>
+</body>
+
+</html>
+

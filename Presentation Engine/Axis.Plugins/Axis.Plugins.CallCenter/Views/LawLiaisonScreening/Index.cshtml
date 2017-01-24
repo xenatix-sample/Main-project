@@ -1,0 +1,165 @@
+﻿<keypress-events close-modal="true" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="{{resolvePermission(assessmentResponeID)}}"></keypress-events>
+<!--data entry-->
+<div class="row padding-left-small">
+    <breadcrumbs min-breadcrumbs="2" goto="lawliaison" />
+</div>
+<div class="row padding-right-small padding-left-small margin-bottom-xsmall">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <div security permission-key="LawLiaison-LawLiaison-LawLiaison" permission="{{resolvePermission(assessmentResponeID)}}" permission-mode="readonly" credential-key="{{credentialKey}}" is-disabled="{{ isReadOnly || isFollowup || isScreeningSigned}}">
+                <form role="form" id="lawLiaisonScreening" name="ctrl.lawLiaisonScreeningForm" xen-check-form is-default="true" data-on-save="saveLawLiaisonScreening(isNext, isMandatory, hasErrors, keepForm)" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="{{resolvePermission(assessmentResponeID)}}" is-read-only="{{ hasQMHPPermission || isFollowup }}" data-on-print="ctrl.initReport(isNext, isMandatory, hasErrors, keepForm)" novalidate bs-modifiable="true" set-form-status>
+                    <!--Taken Details-->
+                    <ng-form name="ctrl.callerInformationForm.takenDetailsForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row section-block padding-top-small margin-bottom-small">
+                            <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.callerInformationForm.takenDetailsForm.Provider.$invalid && !ctrl.callerInformationForm.takenDetailsForm.Provider.$pristine }">
+                                <label for="teamMember">Provider<sup> *</sup></label>
+                                <div class="input-group">
+                                    <input type="text" ng-model="ctrl.providerDetail.Provider" name="Provider" class="form-control ellipsis" typeahead-wait-ms="500" ng-required="true" auto-focus event-focus="autoFocus"
+                                           typeahead-select-on-blur="true" typeahead-on-select="ctrl.selectProvider($item); asyncSelected = '';" typeahead-no-results="ctrl.noProviderResults" typeahead="provider as provider.Name for provider in ctrl.getLookupsByType('Users') | filter:$viewValue" typeahead-trigger ng-disabled="true" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-info" ng-click="triggerTypeahead('Provider');" ng-disabled="true">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <p ng-show="ctrl.noProviderResults" ng-cloak class="error-block">No Results Found!</p>
+                            </div>
+                            <div id="providerDateErrortd" class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.callerInformationForm.takenDetailsForm.dateCrisisReceived.$invalid && !ctrl.callerInformationForm.takenDetailsForm.dateCrisisReceived.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="dateCrisisReceived">Date Crisis Received<sup> *</sup></label>
+                                    <xen-date-picker id="dateCrisisReceived" future-date-validate="true" data-validation-name="dateCrisisReceived" is-disabled="isReadOnlyForm" ng-model="ctrl.providerDetail.ProviderDate" end-date="ctrl.endDate" date-required="true" name="dateCrisisReceived" date-options="ctrl.dateOptions" is-hidden="isReadOnlyForm" call-function-on-change="validateFutureDateTime()"></xen-date-picker>
+                                    <p id="providerDateError" ng-show="ctrl.callerInformationForm.takenDetailsForm.dateCrisisReceived.$error.date" class="error-block">Please select valid date.</p>
+                                    <p id="providerTimeFutureError" ng-show="ctrl.callerInformationForm.takenDetailsForm.dateCrisisReceived.$error.futureDate" class="error-block">Start date can't be future Date.</p>
+                                </div>
+                            </div>
+                            <div id="startTimeErrortd" class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.callerInformationForm.takenDetailsForm.StartTime.$invalid && !ctrl.callerInformationForm.takenDetailsForm.StartTime.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="StartTime">Start Time<sup> *</sup></label>
+                                    <div class="bootstrap-timepicker timepicker">
+                                        <input type="text" class="form-control ellipsis" ng-change="validateFutureDateTime()" data-validation-name="Start Time" ng-model="ctrl.providerDetail.ProviderStartTime" ui-mask="99:99" placeholder="hh:mm" id="StartTime" name="StartTime" ng-required="true" />
+                                    </div>
+                                    <p id="startTimeError" data-ng-show="ctrl.callerInformationForm.takenDetailsForm.StartTime.$error.pattern" data-ng-cloak class="error-block">Please select a valid time.</p>
+                                    <p id="startTimeFutureError" ng-show="ctrl.takenDetailsForm.StartTime.$error.date" ng-cloak class="error-block">Start Time can't be future.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-1 nopadding-right">
+                                <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                                    <fieldset id="aptStartDateAMPMF">
+                                        <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                        <span><xen-radio-button data-ng-model="ctrl.providerDetail.CallStartAMPM" on-change="validateFutureDateTime()" data-radio-button-id="aptStartAM" data-label="AM" data-ng-value='"AM"' /></span>
+                                        <span><xen-radio-button data-ng-model="ctrl.providerDetail.CallStartAMPM" on-change="validateFutureDateTime();" data-radio-button-id="aptStartPM" data-label="PM" data-ng-value='"PM"' /></span>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    <!--Caller-->
+                    <h3 class="uppercase nomargin padding-xsmall border-top">Caller</h3>
+                    <ng-form name="ctrl.callerDetailsForm.callerForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row padding-top-small">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerDetailsForm.callerForm.CallerFirstName.$invalid && !ctrl.callerDetailsForm.callerForm.CallerFirstName.$pristine}">
+                                    <label for="FirstName">First Name<sup> *</sup></label>
+                                    <input ng-disabled="isReadOnlyForm" type="text" name="CallerFirstName" id="CallerFirstName" ng-model="ctrl.callerInformation.FirstName" ng-change="ctrl.UpdateClientDetails()"
+                                           class="form-control ellipsis" ng-trim="true" ng-maxlength="200" ng-required="true" data-validation-name="First Name">
+                                    <p ng-show="ctrl.callerDetailsForm.callerForm.CallerFirstName.$error.maxlength" class="error-block ng-hide">First Name is too long (Max Allowed 200)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerDetailsForm.callerForm.CallerLastName.$invalid && !ctrl.callerDetailsForm.callerForm.CallerLastName.$pristine}">
+                                    <label for="LastName">Last Name<sup> *</sup></label>
+                                    <input ng-disabled="isReadOnlyForm" type="text" name="CallerLastName" id="CallerLastName" ng-required="true" ng-model="ctrl.callerInformation.LastName" ng-maxlength="200" ng-change="ctrl.UpdateClientDetails()"
+                                           ng-trim="true" class="form-control ellipsis" data-validation-name="Last Name">
+                                    <p ng-show="ctrl.callerDetailsForm.callerForm.CallerLastName.$error.maxlength" class="error-block ng-hide">Last Name is too long (Max Allowed 200)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-cloak ng-class="{ 'has-error' : ctrl.callerDetailsForm.callerForm.ReferralAgency.$invalid && !ctrl.callerDetailsForm.callerForm.ReferralAgency.$pristine }">
+                                    <label for="ReferralAgency">Referral Agency <sup>&nbsp;*</sup></label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                               ng-model="ctrl.callerDetails.ReferralAgencyName"
+                                               id="ReferralAgency"
+                                               name="ReferralAgency"
+                                               data-validation-name="Referral Agency"
+                                               ng-required="true"
+                                               class="form-control"
+                                               ng-change="changeAgency()"
+                                               typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                                               typeahead-on-select="checkOther($item)"
+                                               validation-name="Referral Agency"
+                                               typeahead-trigger
+                                               typeahead="referralAgency as referralAgency.Name for referralAgency in getLookupsByType('ReferralAgency')
+                                               | filter:{Name: $viewValue}:comparatorOnEmptyOrMatch | orderBy:orderByPriority"
+                                               typeahead-editable="false"
+                                               typeahead-no-results="noResults"
+                                               auto-focus
+                                               event-focus="autoFocusReferralAgency" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-info" ng-click="triggerTypeahead('ReferralAgency');">
+                                                <i class="fa fa-search" />
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <p ng-show="noResults" ng-cloak class="error-block">No Results Found!</p>
+                                </div>                            
+                            </div>
+                            <div class="col-md-3 padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerDetailsForm.callerForm.otherReferralAgency.$invalid && !ctrl.callerDetailsForm.callerForm.otherReferralAgency.$pristine}" ng-cloak data-ng-show="ctrl.callerDetails.ReferralAgencyID == ctrl.otherReferralAgency">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="otherReferralAgency">Other Referral Agency <sup>*</sup></label>
+                                    <input type="text" style="margin-top:4px;" data-ng-model="ctrl.callerDetails.OtherReferralAgency" ng-required="ctrl.callerDetails.ReferralAgencyID == ctrl.otherReferralAgency" class="form-control" id="otherReferralAgency" name="otherReferralAgency" />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    <ng-form name="ctrl.callerInformationForm.phoneForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <!--Phone-->
+                        <div class="row section-block margin-bottom-small">
+                            @Html.Partial("../Shared/_ProviderPhone")
+                        </div>
+                    </ng-form>
+
+                    <ng-form name="ctrl.callerInformationForm.lawLiaisonForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row padding-top-small">
+                            <div class="col-md-3 padding-bottom-small">
+                                <div id="dateOfIncidentErrortd" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerInformationForm.lawLiaisonForm.dateOfIncident.$invalid && !ctrl.callerInformationForm.lawLiaisonForm.dateOfIncident.$pristine }">
+                                    <label for="dateOfIncident">Date of Incident<sup> *</sup></label>
+                                    <xen-date-picker id="dateOfIncident" future-date-validate="true" data-validation-name="Date of Incident" is-disabled="isReadOnlyForm" ng-model="ctrl.callerDetails.DateOfIncident" end-date="ctrl.endDate" date-required="true" name="dateOfIncident" date-options="ctrl.dateOptions" is-hidden="isReadOnlyForm"></xen-date-picker>
+                                    <p id="dateOfIncidentError" ng-show="ctrl.callerInformationForm.lawLiaisonForm.dateOfIncident.$error.date || ctrl.callerInformationForm.lawLiaisonForm.dateOfIncident.$error.futureDate" ng-cloak class="error-block">Please select valid date.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerInformationForm.lawLiaisonForm.ReasonCalled.$invalid && !ctrl.callerInformationForm.lawLiaisonForm.ReasonCalled.$pristine }">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <xen-memobox label="Reason Called" rows="5" maxlength="4000" ng-model="ctrl.callerDetails.ReasonCalled" id="ReasonCalled" name="ReasonCalled"></xen-memobox>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+
+                    <ng-form name="ctrl.assessmentForm" novalidate bs-modifiable="true" set-form-status>
+                        <div class="row padding-top-small">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <assessment-section permission-key="LawLiaison-LawLiaison-LawLiaison" data-return-state="" on-post-assessment-response="postAssessmentReponseDetails" />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    @*Signature*@
+
+                    <!-- Save and Next -->
+                    <div class="row padding-top-small">
+                        <div class="col-lg-6 col-md-6">
+                            <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                            <xen-submit id="callCenterSave" name="callCenterSave" is-disabled="isReadOnlyForm" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="{{resolvePermission(assessmentResponeID)}}" is-disabled=" isReadOnly || isFollowup"></xen-submit>
+                            <xen-submit id="callCenterNext" name="callCenterNext" is-hidden="noNext" value="NEXT" is-next="true" mandatory="false" style="btn btn-default btn-lg no-security" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="read"></xen-submit>
+                            <xen-submit id="printAssessment" name="printAssessment" value="PRINT" is-next="false" mandatory="false" is-print="true" style="btn btn-default btn-lg no-security" permission-key="LawLiaison-LawLiaison-LawLiaison" permission="read"></xen-submit>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

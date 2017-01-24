@@ -1,0 +1,25 @@
+﻿<div class="container-fluid">
+    <div class="ng-cloak container-fluid row row-offcanvas row-offcanvas-left row-onscreen height-fix">
+        <quick-registration-flyout></quick-registration-flyout>
+        @Html.Partial("../Shared/_DuplicateContact")
+        <div class="col-md-12">
+            <div class="col-lg-9 col-md-9 nopadding-left nopadding-right ng-cloak">
+                <div class="row padding-right-small tiles">
+                    @Html.Partial("../Shared/_MiniPatientHeader")
+                </div>
+                <div class="row padding-right-small tiles" ui-view>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3 right-nav">
+                <xen-workflows work-flow-options="callCenterWorkFlowOptions" work-flow-model="workFlowModel">
+                    <div class="button-controls">
+                        <button type="button" id="convertToRegistration" class="btn btn-default btn-lg" ng-disabled="isCallCenterConvertToRegistration || isReadOnly" name="convertToRegistration" ng-click="openFlyout()">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            Convert To Registration
+                        </button>
+                    </div>
+                </xen-workflows>
+            </div>
+        </div>
+    </div>
+</div>

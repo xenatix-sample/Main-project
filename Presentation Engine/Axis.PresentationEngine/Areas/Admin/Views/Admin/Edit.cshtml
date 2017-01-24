@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "User Details";
+    Layout = null;
+}
+
+<!-- Modal -->
+
+<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" on-cancel="cancel();" close-modal="true" stop-save="stopSave" enter-key-stop="enterKeyStop" on-add="add();setShortCutKeys(false);" permission-key="SiteAdministration-StaffManagement-UserDetails" permission="{{resolvePermission(newUser.UserID)}}"></keypress-events>
+<div class="modal fade" id="adminModel" name="adminModel" role="dialog" aria-labelledby="adminModel" aria-hidden="true" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-lg modalInCenter">
+        <div class="modal-content" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="{{resolvePermission(newUser.UserID)}}" permission-mode="readonly">
+            <form role="form" id="ctrl.userForm" name="ctrl.userForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" data-ng-submit="ctrl.userForm.$valid" bs-modifiable="true" autocomplete="off" novalidate>
+                {{ctrl.userForm.modified ? setform(true):setform(false)}}
+                <div class="modal-header">
+                    <button type="button" class="close" aria-label="Close" ng-click="$event.stopPropagation();cancel();"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">User Details</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active" id="defaulttabheader">
+                            <a href="#userdetails" id="#userDetails" aria-controls="userdetails" role="tab" data-toggle="tab"
+                               ng-click="setAction('userdetails');autoFocusEdit[userNameIndex] = true;">User Details</a>
+                        </li>
+                        <li>
+                            <a href="#roles" id="#roles" aria-controls="roles" role="tab" data-toggle="{{ userId == 0 ? '' : 'tab' }}" ng-show="userroles.length > 0"
+                               ng-click="setAction('roles');autoFocusEdit[rolesIndex] = true;">Roles</a>
+                        </li>
+                        <li>
+                            <a href="#credentials" id="#credentials" aria-controls="credentials" role="tab" data-toggle="{{ userId == 0 ? '' : 'tab' }}"
+                               ng-click="setAction('credentials');autoFocusEdit[crediantialsIndex] = true;">
+                                Credentials
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content padding-top-small">
+                        <div class="tab-pane active" id="userdetails">
+
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userForm.username.$invalid && !ctrl.userForm.username.$pristine }">
+                                <label for="username">User Name <sup>*</sup></label>
+                                <input type="text" name="username" class="form-control ellipsis" id="username" ng-model="newUser.UserName" ng-minlength="3"
+                                       ng-maxlength="100" ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/" auto-focus-modal event-focus="autoFocusEdit[userNameIndex]" />
+
+                                <p ng-show="ctrl.userForm.username.$error.minlength" class="error-block">User Name is too short</p>
+                                <p ng-show="ctrl.userForm.username.$error.maxlength" class="error-block">User Name is too long</p>
+                                <p ng-show="ctrl.userForm.username.$error.pattern" class="error-block">User Name only allows alphanumeric characters with no spaces</p>
+                            </div>
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userForm.firstname.$invalid && !ctrl.userForm.firstname.$pristine }">
+                                <label for="firstname">First Name <sup>*</sup></label>
+                                <input type="text" name="firstname" class="form-control ellipsis" id="firstname" ng-model="newUser.FirstName" ng-minlength="2"
+                                       ng-maxlength="50" ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z\s]*$/" />
+                                <p ng-show="ctrl.userForm.firstname.$error.minlength" class="error-block">First Name is too short</p>
+                                <p ng-show="ctrl.userForm.firstname.$error.maxlength" class="error-block">First Name is too long</p>
+                                <p ng-show="ctrl.userForm.firstname.$error.pattern" class="error-block">First Name only allows alpha characters and spaces.</p>
+                            </div>
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userForm.lastname.$invalid && !ctrl.userForm.lastname.$pristine }">
+                                <label for="lastname">Last Name <sup>*</sup></label>
+                                <input type="text" name="lastname" class="form-control ellipsis" id="lastname" ng-model="newUser.LastName" ng-minlength="2"
+                                       ng-maxlength="50" ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z\s]*$/" />
+                                <p ng-show="ctrl.userForm.lastname.$error.minlength" class="error-block">Last Name is too short</p>
+                                <p ng-show="ctrl.userForm.lastname.$error.maxlength" class="error-block">Last Name is too long</p>
+                                <p ng-show="ctrl.userForm.lastname.$error.pattern" class="error-block">Last Name only allows alpha characters and spaces.</p>
+                            </div>
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userForm.email.$invalid && !ctrl.userForm.email.$pristine }">
+                                <label for="email">Email <sup>*</sup></label>
+                                <input type="text" name="email" class="form-control ellipsis" id="email" ng-model="newUser.PrimaryEmail" ng-trim="true" ng-required="true" ng-pattern="emailPattern" />
+                                <p ng-show="ctrl.userForm.email.$error.pattern" class="error-block">Invalid email format</p>
+                            </div>
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="isactive">Active</label>
+                                <input type="checkbox" id="isactive" ng-model="newUser.IsActive" />
+                            </div>
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userForm.effectivetodate.$invalid && !ctrl.userForm.effectivetodate.$pristine }">
+                                <label for="effectivetodate">Expiration Date</label>
+                                <mydatepicker opened="opened" id="effectivetodate" new-date="newUser.EffectiveToDate" max-date="'2099-12-30'" date-options="dateOptions"></mydatepicker>
+                                <p id="doberror" ng-show="ctrl.userForm.effectivetodate.$invalid && !ctrl.userForm.effectivetodate.$pristine" class="error-block">Invalid date (MM/DD/YYYY)</p>
+                            </div>
+                        </div>
+
+                        <div id="roles" class="tab-pane">
+                            <table class="table table-striped table-bordered table-style" id="tblroles" name="tblroles">
+                                <thead>
+                                    <tr>
+                                        <th>Select Role</th>
+                                        <th>Role Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="userrole in userroles" >
+                                        <td>
+                                            <input type="checkbox" value="{{ userrole.RoleID }}" ng-model="userrole.IsActive" ng-checked="{{ userrole.UserID > 0 ? true : false}}"
+                                                   ng-click="toggleSelection(userrole.RoleID)" ng-attr-auto-focus-modal="{{$index == 0? '':undefined}}" event-focus="autoFocusEdit[rolesIndex]" />
+                                        </td>
+                                        <td>{{ userrole.Name }}</td>
+                                        <td>{{ userrole.Description }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="credentials" class="tab-pane">
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userForm.$invalid }">
+                                        <label for="credentialName">Credential Name<sup>*</sup></label>
+                                        <div class="input-group">
+                                            <input type="text" ng-model="userCredential.Name" id="credentialName" name="credentialName" class="form-control ellipsis" typeahead-wait-ms="500"
+                                                   typeahead-on-select="selectCredential($item)" typeahead-editable="false" typeahead-select-on-blur="true"
+                                                   typeahead="Credential as Credential.CredentialName for Credential in getLookupsByType('Credential') | filter:$viewValue" typeahead-trigger />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-info" ng-click="triggerTypeahead('credentialName');">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <span ng-show="userCredential.credentialID.$error.required" class="error-block">Please select a Credential.</span>
+                                        <div ng-model="userCredential.UserCredentialID"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="licenseNbr">License Number<sup id="licenseNbrRequired" name="licenseNbrRequired" ng-show="{{ userCredential.LicenseRequired }}">*</sup></label>
+                                        <input type="text" id="licenseNbr" name="licenseNbr" class="form-control ellipsis" ng-model="userCredential.LicenseNbr" />
+                                        <span ng-show="userCredential.LicenseRequired && userCredential.LicenseNbr.$error.required" class="error-block">Credential selected requires a License Number.</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : userCredential.effectiveDateCalander.$invalid
+                                     && !userCredential.effectiveDateCalander.$pristine }">
+                                        <label for="effectiveDate">Effective Date</label>
+                                        <mydatepicker class="datepicker" ng-model="userCredential.EffectiveDate" id=" effectivedate" dob-name="'effectiveDateCalander'" opened="effectiveOpened" new-date="userCredential.EffectiveDate"
+                                                      date-options="dateOptions"></mydatepicker>
+                                        <span id="effectiveDateError" ng-cloak ng-show="userCredential.effectiveDateCalander.$error.date" class="error-block">Effective Date is invalid.</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : userCredential.expirationDateCalander.$invalid
+                                     && !userCredential.expirationDateCalander.$pristine }">
+                                        <label for="expirationDate">Expiration Date</label>
+                                        <mydatepicker class="datepicker" ng-model="userCredential.ExpirationDate" id="expirationDate" dob-name="'expirationDateCalander'" opened="expirationOpened" new-date="userCredential.ExpirationDate"
+                                                      date-options="dateOptions"></mydatepicker>
+                                        <span id="expirationDateError" ng-cloak ng-show="userCredential.expirationDateCalander.$error.date" class="error-block">Expiration Date is invalid.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-1 col-md-1">
+                                    <h2>
+                                        <a href="javascript:void(0)" class="plain font-size-xlarge" role="button" title="Add Credential" aria-haspopup="true" aria-expanded="false"
+                                           security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="{{resolvePermission(newUser.UserID)}}" id="btnAddUserCredential" name="btnAddUserCredential"
+                                           data-toggle="modal" ng-click="addUserCredential()" data-target="#adminModel">
+                                            <i class="fa fa-plus-circle"></i>
+                                        </a>
+                                    </h2>
+                                </div>
+                            </div>
+                            <table class="table table-striped table-bordered table-style" id="tblCredentials" name="tblCredentials">
+                                <thead>
+                                    <tr>
+                                        <th>Credential</th>
+                                        <th>License Number</th>
+                                        <th>Effective Date</th>
+                                        <th>Expiration Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in userCredentials">
+                                        <td data-ng-bind="item.UserCredentialID" ng-show="false"></td>
+                                        <td data-ng-bind="item.Name"></td>
+                                        <td data-ng-bind="item.LicenseNbr"></td>
+                                        <td data-ng-bind="item.EffectiveDate | toMMDDYYYYDate:'MM/DD/YYYY'"></td>
+                                        <td data-ng-bind="item.ExpirationDate | toMMDDYYYYDate:'MM/DD/YYYY'"></td>
+                                        <td>
+                                            <a href="javascript:void(0)" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="update"
+                                               id="eUserCredential" name="eUserCredential" data-toggle="modal" data-target="#adminModel" ng-click="editUserCredential(item)"
+                                               title="Edit User Credential">
+                                                <i class="glyphicon glyphicon-pencil"></i>
+                                            </a>
+
+                                            <a href="javascript:void(0)" ng-click="removeUserCredential(item.UserCredentialID)" id="deleteUserCredential" name="deleteUserCredential" title="Delete"
+                                               ng-hide="{{ user.IsActive == false }}" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="delete">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row padding-top-small">
+                        <div class="col-lg-6">
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <button type="button" class="btn btn-success btn-lg" id="btnsave" data-ng-controller="navigationController" ng-click="safeSubmit(false)" ng-disabled="ctrl.userForm.$invalid" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="{{resolvePermission(newUser.UserID)}}">SAVE</button>
+
+                            <button type="button" class="btn btn-success btn-lg" id="next" ng-click="safeSubmit(true, true)" ng-disabled="ctrl.userForm.$invalid" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="{{resolvePermission(newUser.UserID)}}">{{ currentWizardStep > 1 && currentWizardStep === wizardSteps.length ? 'FINISH' : 'NEXT' }}</button>
+
+                            <button type="button" class="btn btn-default btn-lg" id="close" ng-click="cancel()">CLOSE</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-bottom-small"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿<div class="row padding-top-small" ng-form="callerForm">
+    <div class="col-md-5 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : callerForm.FirstName.$invalid && !callerForm.FirstName.$pristine}">
+            <label for="FirstName">First Name</label>
+            <input type="text" name="FirstName" id="FirstName" ng-model="ctrl.callerInformation.FirstName" ng-disabled="ctrl.disableControl"
+                   class="form-control ellipsis" ng-trim="true" ng-maxlength="200" data-validation-name="First Name">
+            <p ng-show="callerForm.FirstName.$error.maxlength" class="error-block ng-hide">First Name is too long (Max Allowed 200)</p>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : callerForm.CallerLastName.$invalid && !callerForm.CallerLastName.$pristine}">
+            <label for="LastName">Last Name</label>
+            <input type="text" name="CallerLastName" id="CallerLastName" ng-model="ctrl.callerInformation.LastName" ng-disabled="ctrl.disableControl" ng-maxlength="200" ng-trim="true" class="form-control ellipsis" data-validation-name="Last Name">
+            <p ng-show="callerForm.CallerLastName.$error.maxlength" class="error-block ng-hide">Last Name is too long (Max Allowed 200)</p>
+        </div>
+    </div>
+    @*<div class="col-md-2 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <xen-checkbox ng-model="callerForm.IsCallerClientSame" data-checkbox-id="IsCallerClientSame" data-label="Is Caller Same as Client ?" />
+        </div>
+    </div>*@
+</div>
+<div class="row section-block margin-bottom-small">
+    <!--Phone-->
+    @Html.Partial("../Shared/_ProviderPhone")
+</div>

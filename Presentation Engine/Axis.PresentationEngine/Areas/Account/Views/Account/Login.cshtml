@@ -1,0 +1,110 @@
+﻿@model Axis.PresentationEngine.Areas.Account.Model.UserViewModel
+@using Axis.Constant
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+@Scripts.Render("~/bundles/login")
+<script src="~/Scripts/plugins/detect.min.js"></script>
+<div class="container height=100" id="content" role="main">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin" }))
+    {
+        @Html.ValidationSummary(true)
+        if (ViewBag.LoginError != null)
+        {
+            <div class="alert alert-danger alert-dismissable" id="loginResponse">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                @if (ViewBag.PromptMessageCode != null)
+                {
+                    if (ViewBag.PromptMessageCode == (int)ErrorCode.InActive)
+                    {
+                        <p><strong>Access Denied!</strong></p>
+                        <p>Not a currently active user.  Please contact your administrator.</p>
+                    }
+                    else if (ViewBag.PromptMessageCode == (int)ErrorCode.MaxLoginAttempts)
+                    {
+                        <p><strong>Access Denied!</strong></p>
+                        <p>Maximum Unsuccessful Login Attempts Reached.  Please Contact your administrator.</p>
+                    }
+                    else if (ViewBag.PromptMessageCode == (int)ErrorCode.EffectiveDateError)
+                    {
+                        <p><strong>Access Denied!</strong></p>
+                        <p>Not an authorized user.  Please contact your administrator.</p>
+                    }
+                    else if (ViewBag.PromptMessageCode == (int)ErrorCode.NoRoleAssigned)
+                    {
+                        <p><strong>Access Denied!</strong></p>
+                        <p>You are not assigned a role. Please contact your administrator.</p>
+                    }
+                    else if (ViewBag.PromptMessageCode == (int)ErrorCode.ADCommFail)
+                    {
+                        <p><strong>Access Denied!</strong></p>
+                        <p>Communication to Active Directory issue - Either Communication Failure or Incorrect Username and Password.  Please contact your administrator.</p>
+                    }
+                    else if (ViewBag.PromptMessageCode == (int)ErrorCode.ADWrongGroup)
+                    {
+                        <p><strong>Access Denied!</strong></p>
+                        <p>You are not assigned to the correct Active Directory Group.  Please contact your administrator.</p>
+                    }
+                    else
+                    {
+                        <p><strong>Access Denied!</strong></p>
+                        <p>Invalid user name and password.  Please contact your administrator.</p>
+                    }
+                }
+            </div>
+        }
+        <div class="container-fluid">
+            <div class="absolute-center">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <h1 class="h2 text-center">User Log In <a href="#" class="pull-right"><i class="fa fa-question-circle"></i></a></h1>
+                    </div>
+                </div>
+                <div class="text-center form row">
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4 padding-top-xsmall padding-bottom-xsmall">
+                            <label for="UserName" class="pull-left">User Name</label>
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control text-center", @autofocus = "autofocus", @onkeydown = "validateUserName(event)" })
+                            @Html.ValidationMessageFor(m => m.UserName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4 padding-top-xsmall padding-bottom-xsmall">
+                            <label for="Password" class="pull-left">Password</label>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control text-center", @onkeypress = "capLock(event)" })
+                            @Html.ValidationMessageFor(m => m.Password)
+                            <div id="divCapsCheck" style="visibility:hidden">Caps Lock is on.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4 text-center padding-top-xsmall padding-bottom-xsmall">
+                            <button type="submit" name="Send" value="Send" id="Send" class="btn btn-default text-center width-100">Log In</button>
+                            <p class="small text-center padding-top-small padding-bottom-small" id="forgetPasswordLink">
+                                <a href="~/Account/ForgotPassword/InitiateResetPassword">Forgotten Your Password?</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    var ua = detect.parse(navigator.userAgent);
+    if ((ua.browser.family.indexOf("Chrome") === -1) || ((ua.browser.family.indexOf("Chrome") != -1) && parseInt(ua.browser.version) < 50)) {
+        var toastr = window.toastr;
+        angular.element("form :input").prop("disabled", true);
+        angular.element("#forgetPasswordLink").html("Forgotten Your Password?")
+        toastr.options = {
+            "closeButton": false,
+            "newestOnTop": true,
+            "positionClass": "toast-top-center",
+            "timeOut": "0",
+            "extendedTimeOut": "0",
+            "hideMethod": "none"
+        };
+        toastr.error('Please use your Google Chrome browser (version 50 or higher) to enter aXis.', "This browser is not supported.");
+
+    }
+</script>

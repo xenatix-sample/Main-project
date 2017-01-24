@@ -1,0 +1,29 @@
+﻿<div ng-form="membersForm" class="padding-bottom-small">
+    <div class="row padding-top-small">
+        <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : membersForm.teamMember.$invalid && !membersForm.teamMember.$pristine }">
+            <label for="teamMember">Team Member <sup>*</sup></label>
+            <div class="input-group">
+                <input type="text" ng-model="Members[0].Name" id="teamMember" name="teamMember" class="form-control ellipsis" typeahead-wait-ms="500" typeahead-select-on-blur="true"
+                       typeahead-on-select="selectMemberName($item); asyncSelected = '';" typeahead-editable="false" typeahead-no-results="noTeamMemberResults"
+                       typeahead="teamMember as teamMember.Name for teamMember in getLookupsByType('Users') | filter:$viewValue" typeahead-trigger />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" ng-click="triggerTypeahead('teamMember');">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+            <p ng-show="noTeamMemberResults" ng-cloak class="error-block">No Results Found!</p>
+        </div>
+    </div>
+    <div class="row pod-group padding-top-small">
+        <div class="pod" ng-repeat="member in selectedMembers" ng-show="{{member.UserID > 0}}">
+            <div>
+                <p><strong>{{member.Name}}</strong></p>
+                <ul class="list-unstyled">
+                    <li ng-show="{{member.CredentialAbbreviation != null}}"><i class="fa fa-fw fa-angle-double-right"></i>{{member.CredentialAbbreviation}}</li>
+                </ul>
+            </div>
+            <a class="text-info close" href="javascript:void(0)" ng-click="removeMember(member)" title="Remove Member" space-key-press><span class="sr-only"></span>x</a>
+        </div>
+    </div>
+</div>

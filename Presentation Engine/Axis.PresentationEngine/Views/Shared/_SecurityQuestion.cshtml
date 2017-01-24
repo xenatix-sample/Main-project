@@ -1,0 +1,37 @@
+﻿@{  
+    Layout = null;
+}
+
+<div class="row section-block margin-bottom">
+    <div class="col-lg-12">
+        <div>
+            <div class="col-lg-8 col-md-8 padding-bottom-small">
+                <div class="row padding-top-small" ng-repeat="question in securityQuestions track by $index">
+                    <div class="col-lg-6 col-md-6 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userSecurityForm.secQuestion{{$index+1}}.$invalid && !ctrl.userSecurityForm.secQuestion{{$index+1}}.$pristine }">
+                            <label for="secQuestion{{$index+1}}">Security Question {{$index+1}} <sup ng-show="!enableSecurityQuestionButton">*</sup></label>
+                            <select class="form-control" ng-required="true" ng-model="question.SecurityQuestionID" name="secQuestion{{$index+1}}" id="secQuestion{{$index+1}}" ng-init="question" data-validation-name="Security question {{$index+1}}" ng-options="securityQuestion.ID as securityQuestion.Name for securityQuestion in getLookupsByType('SecurityQuestion') | excludeSelect:securityQuestions:question" ng-disabled="enableSecurityQuestionButton" ng-selected="securityQuestion.ID==question.UserSecurityQuestionID">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userSecurityForm.secAnswer{{$index+1}}.$invalid && !ctrl.userSecurityForm.secAnswer{{$index+1}}.$pristine }">
+                            <label for="secondAnswer{{$index+1}}">Security Answer {{$index+1}} <sup ng-show="!enableSecurityQuestionButton">*</sup></label>
+                            <input type="text" class="form-control ellipsis" ng-required="true" id="secAnswer{{$index+1}}" name="secAnswer{{$index+1}}" ng-model="question.SecurityAnswer" data-validation-name="Security answer {{$index+1}}"
+                                   ng-disabled="enableSecurityQuestionButton" ng-minlength="2" ng-maxlength="250" />
+                            <p ng-show="ctrl.userSecurityForm.secAnswer{{$index+1}}.$error.minlength" class="error-block">Field must contain at least 2 characters</p>
+                            <p ng-show="ctrl.userSecurityForm.secAnswer{{$index+1}}.$error.maxlength" class="error-block">Field cannot be longer than 250 characters</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 padding-bottom-small" ng-disabled="enableChangeSecurityQuestionButton">
+                <div class="form-group-lg padding-bottom-small">
+                    <button type="button" class="btn btn-default btn-inline btn-sm" ng-click="enableSecurityQuestions()" id="btnchangeSecQuestions" name="btnchangeSecQuestions" ng-disabled="enableChangeSecurityQuestionButton">Update Security Questions</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

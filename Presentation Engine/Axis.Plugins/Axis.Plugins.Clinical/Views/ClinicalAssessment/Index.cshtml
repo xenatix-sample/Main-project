@@ -1,0 +1,66 @@
+﻿<keypress-events on-save="safeSubmit(false, false, false)" on-next="safeSubmit(true, true, true)" enter-key-stop="enterkeystop" on-add="newAssessment()" permission-key="Clinical-Assessment-Assessment" permission="{{resolvePermission(clinicalAssessment.ClinicalAssessmentID)}}"></keypress-events>
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security permission-key="Clinical-Assessment-Assessment" permission="{{resolvePermission(clinicalAssessment.ClinicalAssessmentID)}}" permission-mode="readonly">
+            <form id="assForm" role="form" name="ctrl.assForm" check-form data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" novalidate data-ng-submit="ctrl.assForm.$valid" bs-modifiable="true">
+                {{ setform(ctrl.assForm.modified, ctrl.assForm.name) }}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Partial("../Shared/_TakenDetails")
+                    </div>
+                </div>
+                <div class="row padding-top-small">
+                    <div class="col-md-3 padding-bottom-small">
+                        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.assForm.AssessmentName.$invalid && !ctrl.assForm.AssessmentName.$pristine }">
+                            <label for="Assessment">Assessment Name <sup>*</sup></label>
+                            <select name="AssessmentName" class="form-control" id="AssessmentName" ng-model="clinicalAssessment.AssessmentID" auto-focus event-focus="autoFocus"
+                                    ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9]*$/"
+                                    ng-options="assessmentList.ID as assessmentList.Name for assessmentList in getLookupsByType('ClinicalAssessment')" ng-disabled="clinicalAssessment.ClinicalAssessmentID > 0">
+                                <option value="" ng-selected="selected" auto-focus event-focus="autoFocus">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row padding-top-small">
+            <div class="col-lg-6 col-md-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 col-md-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, false)" security permission-key="Clinical-Assessment-Assessment" permission="{{resolvePermission(clinicalAssessment.ClinicalAssessmentID)}}" id="btnSave" name="btnSave">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" security permission-key="Clinical-Assessment-Assessment" permission="{{resolvePermission(clinicalAssessment.ClinicalAssessmentID)}}" id="btnNext" name="btnNext">NEXT</button>
+            </div>
+        </div>
+
+        <div class="add_me">
+            <plus-button tabindex="0" title="New Assessment" permission-key="Clinical-Assessment-Assessment" permission="create" save="safeSubmit(false, false)" reset="newAssessment()" table-id="assessmentTable"></plus-button>
+        </div>
+        <div class="row padding-top-small padding-bottom-small">
+            <div class="col-md-12">
+                <table id="assessmentTable" data-toggle="table"
+                       data-show-columns="true"
+                       data-search="true"
+                       data-minimum-count-columns="2"
+                       data-filter-control="false"
+                       data-mobile-responsive="true"
+                       data-filter-bar
+                       data-advanced-search="false"
+                       data-show-multi-sort="true"
+                       data-classes="table table-stripe-borders"
+                       bootstrap-table="tableoptions" grid-arrow-selector>
+                    <thead>
+                        <tr>
+                            <th data-field="AssessmentID" data-sortable="true">Assessment Name</th>
+                            <th data-field="AssessmentDate" data-sortable="true">Assessment Date</th>
+                            <th data-field="TakenBy" data-sortable="true">Owner</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

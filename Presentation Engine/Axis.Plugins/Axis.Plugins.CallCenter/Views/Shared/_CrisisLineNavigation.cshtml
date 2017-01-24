@@ -1,0 +1,41 @@
+﻿<div class="container-fluid">
+    <div class="ng-cloak container-fluid row row-offcanvas row-offcanvas-left row-onscreen height-fix">
+        <quick-registration-flyout></quick-registration-flyout>
+        @Html.Partial("../Shared/_DuplicateContact")
+        <div class="col-md-12">
+            <div class="col-lg-9 col-md-9 nopadding-left nopadding-right ng-cloak">
+                <div class="row padding-right-small tiles">
+                    @Html.Partial("../Shared/_MiniPatientHeader")
+                </div>
+                <div class="row padding-right-small tiles" ui-view>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3 right-nav">
+                <xen-workflows work-flow-options="callCenterWorkFlowOptions" work-flow-model="workFlowModel">
+                    <div class="button-controls border-bottom padding-bottom-xsmall" ng-show="isApprovalWorkflow">
+                        <div class="approve-it" security permission-key="CrisisLine-CrisisLine-CrisisLine" permission="update" >
+                            <p>{{currentApprovalItem}} of {{totalApprovalItems}} total reviews</p>
+                            <xen-button-checkbox data-ng-model="isApproved"
+                                                 data-button-id="btn-approve"
+                                                 data-on-click="approve()"
+                                                 data-label="Approve" ng-disabled="isApproved">
+                            </xen-button-checkbox>
+                            <div class="approve-nav">
+                                <button type="button" class="btn btn-default btn-sm" ng-click="changeApprovalItem('next')" security permission-key="CrisisLine-CrisisLine-CrisisLine" permission="read" ng-disabled="!isNextEnabled"><i class="fa fa-caret-right"></i> Next</button>
+                                <button type="button" class="btn btn-default btn-sm" ng-click="changeApprovalItem('back')" security permission-key="CrisisLine-CrisisLine-CrisisLine" permission="read" ng-disabled="!isBackEnabled">Back <i class="fa fa-caret-left"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-controls padding-top-small">
+                        <button type="button" id="convertToRegistration" class="btn btn-default btn-lg" ng-disabled="isCallCenterConvertToRegistration || !(isManager || isCreator) || isFollowUpCall" name="convertToRegistration" ng-click="openFlyout()">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            Convert To Registration
+                        </button>
+                        <button type="button" ng-disabled="isCallCenterEndCall || isReadOnlyForm || !(isManager || isCreator)" class="btn btn-default btn-lg" security permission-key="CrisisLine-CrisisLine-CrisisLine" permission="update" ng-click="callCenterEndCall()"><i class="fa fa-phone" aria-hidden="true"></i>End Call</button>
+                    </div>
+                </xen-workflows>
+            </div>
+        </div>
+    </div>
+</div>
+<xen-report on-print-report="printCrisisLineReport()" ng-if="loadReport" on-close-report="closeReport()" />

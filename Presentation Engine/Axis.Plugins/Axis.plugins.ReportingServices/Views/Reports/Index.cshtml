@@ -1,0 +1,61 @@
+﻿
+
+<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="row padding-top-small vertical-cols">
+            <div class="col-md-3 section-block section-block-nested">
+                <h2>Agency</h2>
+                <ul class="padding-bottom-small">
+                    <li><a href="">Benefits Assistance Statistics Report</a></li>
+                    <li>Benefits Assistance Tracking Report</li>
+                    <li>Caseload Report</li>
+                    <li>No Show and Appointment Cancellation Report</li>
+                    <li>Recorded Service Error Report</li>
+                    <li>Recorded Service Report</li>
+                    <li>Referral Report</li>
+                    <li>Referral Request Summary Report</li>
+                    <li>Voided Service Report</li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h2>Call Center</h2>
+                <ul>
+                    <li>Crisis Call Log Report</li>
+                    <li>MH Law Liaison Report</li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                @* additional column for future *@
+            </div>
+            <div class="col-md-3">
+                @* additional column for future *@
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="panel panel-light padding-xsmall">
+    <div class="panel-body">
+        @Html.Partial("../Shared/_DuplicateContact")
+        <form role="form" name="ctrl.contactForm" novalidate check-form" server-validate="ServerValidationErrors"
+              bs-modifiable="true" set-form-status>
+            <ng-form name="ctrl.contactForm.contactDemographicsForm" novalidate bs-modifiable="true" set-form-status="child">
+                @Html.Partial("_ContactDemographics")
+            </ng-form>
+            <ng-form name="ctrl.contactForm.registrationAddressForm" novalidate bs-modifiable="true" set-form-status="child">
+                <div class="row padding-top-small">
+                    @Html.Partial("../Shared/_Address")
+                </div>
+            </ng-form>
+            <div class="row section-block padding-bottom-small">
+                <ng-form name="ctrl.contactForm.registrationPhoneForm" novalidate bs-modifiable="true" set-form-status="child">
+                    @Html.Partial("../Shared/_Phone")
+                </ng-form>
+                <ng-form name="ctrl.contactForm.registrationEmailForm" novalidate bs-modifiable="true" set-form-status="child">
+                    @Html.Partial("../Shared/_Email")
+                </ng-form>
+            </div>
+        </form>
+       
+    </div>
+</div>*@

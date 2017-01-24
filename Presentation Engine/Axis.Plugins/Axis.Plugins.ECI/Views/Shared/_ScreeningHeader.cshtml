@@ -1,0 +1,71 @@
+﻿
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.screeningsForm.InitialContactDateCalendar.$invalid && !ctrl.screeningsForm.InitialContactDateCalendar.$pristine }">
+        <label for="initialContactDate">Initial Contact Date <sup>*</sup></label>
+        <mydatepicker opened="InitialContactDateOpened" id="initialContactDate" name="initialContactDate" dob-name="'InitialContactDateCalendar'" new-date="screening.InitialContactDate"
+                        date-options="dateOptions" date-required="true" event-focus="autoFocus"></mydatepicker>
+        <p id="initialContactDateError" ng-show="ctrl.screeningsForm.InitialContactDateCalendar.$error.date && !ctrl.screeningsForm.InitialContactDateCalendar.$pristine"
+            class="error-block">Invalid date (MM/DD/YYYY)</p>
+    </div>
+
+
+    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.screeningsForm.initialServiceCoordinator.$invalid && !ctrl.screeningsForm.initialServiceCoordinator.$pristine }">
+        <label for="initialServiceCoordinator">Initial Service Coordinator</label>
+        <div class="input-group">
+            <input type="text" ng-model="screening.InitialServiceCoordinator" id="initialServiceCoordinator" name="initialServiceCoordinator" class="form-control ellipsis" typeahead-wait-ms="500"
+                   typeahead-on-select="selectInitialCoordinator($item); asyncSelected = '';" typeahead-editable="false" typeahead-no-results="noInitialCoordinatorResults" typeahead-select-on-blur="true"
+                   typeahead="coordinator as coordinator.Name for coordinator in getLookupsByType('Users') | filter:$viewValue" typeahead-trigger />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="triggerTypeahead('initialServiceCoordinator');">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <p ng-show="noInitialCoordinatorResults" ng-cloak class="error-block">No Results Found!</p>
+    </div>
+
+    <div class="col-md-4 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.screeningsForm.primaryServiceCoordinator.$invalid && !ctrl.screeningsForm.primaryServiceCoordinator.$pristine }">
+        <label for="primaryServiceCoordinator">Primary Service Coordinator</label>
+        <div class="input-group">
+            <input type="text" ng-model="screening.PrimaryServiceCoordinator" id="primaryServiceCoordinator" name="primaryServiceCoordinator" class="form-control ellipsis" typeahead-wait-ms="500"
+                   typeahead-on-select="selectPrimaryCoordinator($item); asyncSelected = '';" typeahead-editable="false" typeahead-no-results="noPrimaryCoordinatorResults" typeahead-select-on-blur="true"
+                   typeahead="coordinator as coordinator.Name for coordinator in getLookupsByType('Users') | filter:$viewValue" typeahead-trigger />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="triggerTypeahead('primaryServiceCoordinator');">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <p ng-show="noPrimaryCoordinatorResults" ng-cloak class="error-block">No Results Found!</p>
+    </div>
+
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.screeningsForm.ScreeningDateCalander.$invalid && !ctrl.screeningsForm.ScreeningDateCalander.$pristine }">
+        <label for="screeningDate">Screening Date <sup>*</sup></label>
+        <mydatepicker opened="ScreeningDateOpened" id="screeningDate" name="screeningDate" dob-name="'ScreeningDateCalander'" new-date="screening.ScreeningDate"
+                        date-options="dateOptions" date-required="true"></mydatepicker>
+        <p id="screeningDateError" ng-show="ctrl.screeningsForm.ScreeningDateCalander.$error.date && !ctrl.screeningsForm.ScreeningDateCalander.$pristine"
+            class="error-block">Invalid date (MM/DD/YYYY)</p>
+    </div>
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.screeningsForm.screeningType.$invalid && !ctrl.screeningsForm.screeningType.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="screeningType">Screening Type <sup>*</sup></label>
+            <select ng-model="screening.ScreeningTypeID" id="screeningType" name="screeningType" ng-disabled="screening.ScreeningID != 0" class="form-control ellipsis" ng-change="screeningTypeSelected()" 
+                    ng-required="true" ng-options="screeningType.ID as screeningType.Name for screeningType in screeningTypeLookups">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small form-group-lg" ng-class="{ 'has-error' : ctrl.screeningsForm.screeningName.$invalid && !ctrl.screeningsForm.screeningName.$pristine }">
+        <div class="form-group-lg padding-bottom-small">
+            <label for="screeningName">Screening Name <sup>*</sup></label>
+            <select ng-model="screening.AssessmentID" id="screeningName" name="screeningName" ng-disabled="screening.ScreeningID != 0" class="form-control ellipsis" ng-required="true"
+                    ng-options="screeningName.ID as screeningName.Name for screeningName in screeningNameLookups | filter :{ ScreeningTypeID : screening.ScreeningTypeID } : true">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+﻿Group: Axis.RuleEngine.Plugins.Registration
+FriendlyName: Axis.RuleEngine.Plugins.Registration
+SystemName: Axis.RuleEngine.Plugins.Registration
+Version: 1.00
+SupportedVersions: 1.0
+Author: axis team
+DisplayOrder: 1
+FileName: Axis.RuleEngine.Plugins.Registration.dll

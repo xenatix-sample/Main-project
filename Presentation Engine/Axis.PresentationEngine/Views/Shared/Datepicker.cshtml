@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Phone";
+    Layout = null;
+}
+<div class="datepicker" ng-class="{ 'input-group' : !isHidden}">
+    <input type="text" class="form-control datepicker_cal input-min-width" datepicker-popup="MM/dd/yyyy" min-date="startDate" ng-change="change()" auto-focus event-focus="{{eventFocus}}" name="{{dobName}}" max-date="endDate" ng-model="newDate" is-open="opened" datepicker-options="dateOptions" ng-required="dateRequired" ng-click="opencalendar($event)" on-open-focus="false" input-mask="{mask: '99/99/9999'}" ng-disabled="isDisabled" />
+    <span class="input-group-btn" style="">
+        <button type="button" class="btn btn-info" ng-click="opencalendar($event)" tabindex="-1" title="Calendar" ng-disabled="isDisabled" ng-hide="isHidden"><i class="fa fa-calendar"></i></button>
+    </span>
+</div>

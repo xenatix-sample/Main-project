@@ -1,0 +1,41 @@
+-------------------------------------------------------------------------------------------------------------------------
+---- Procedure:	Synch.usp_UpdateGUIDsADSyncService
+---- Author:		Sumana Sangapu
+---- Date:		03/02/2016
+----
+---- Purpose:		Convert the GUIDs from varbinary to varchar Used in ADUserSync SSIS package.
+----
+---- Notes:		n/a (or any additional notes)
+----
+---- Depends:		n/a (or any dependencies such as other procs or functions)
+----
+---- REVISION HISTORY ---------------------------------------------------------------------------------------------------
+---- 03/01/2016	Sumana Sangapu	Initial creation.
+---- 06/09/2016	Sumana Sangapu  TFS#11411 - Refactor SSIS to move Staging tables to Synch schema
+---- 09/03/2016	Rahul Vats		Review the proc -- This process is no longer needed.
+-------------------------------------------------------------------------------------------------------------------------
+--CREATE PROCEDURE Synch.usp_UpdateGUIDsADSyncService
+--	@ResultCode INT OUTPUT,
+--	@ResultMessage NVARCHAR(500) OUTPUT
+--AS
+--BEGIN
+--	-- SET NOCOUNT ON added to prevent extra result sets from
+--	-- interfering with SELECT statements.
+--	SET NOCOUNT ON;
+
+--	SELECT @ResultCode = 0,
+--		   @ResultMessage = 'executed successfully';
+	
+--	BEGIN TRY	
+--		UPDATE u
+--		SET 	UserGUID = Substring(( MASTER.dbo.fn_varbintohexstr(UserGUID) ), 1, 2) + Substring(Upper(MASTER.dbo.fn_varbintohexstr(UserGUID)), 3, 8000),
+--				ManagerGUID = Substring(( MASTER.dbo.fn_varbintohexstr(ManagerGUID) ), 1, 2) + Substring(Upper(MASTER.dbo.fn_varbintohexstr(ManagerGUID)), 3, 8000)
+--		FROM	Synch.ADUserStage  u
+--	END TRY
+
+--	BEGIN CATCH
+--		SELECT @ResultCode = ERROR_SEVERITY(),
+--				@ResultMessage = ERROR_MESSAGE()
+--	END CATCH
+--END
+--GO

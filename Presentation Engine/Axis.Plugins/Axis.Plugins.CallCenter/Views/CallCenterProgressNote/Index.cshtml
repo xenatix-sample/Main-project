@@ -1,0 +1,193 @@
+﻿<keypress-events enter-key-stop="stopEnter" stop-next="stopNext" close-modal="true" on-cancel="CancelCallerInformation()" permission-key="{{permissionKey}}" permission="{{resolvePermission(pageDisableSecurity)}}"></keypress-events>
+<!--data entry-->
+<div class="row padding-left-small">
+    <breadcrumbs min-breadcrumbs="2" goto="{{ $state.current.name.indexOf('crisisline') > -1 ? 'crisisline' : 'lawliaison' }}" />
+</div>
+<div class="row padding-right-small padding-left-small margin-bottom-xsmall">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            @*<assessment-section data-return-state="" on-print-report="initReport" />*@
+            <form role="form" id="callCenterProgressNote" name="ctrl.callCenterProgressNoteForm" xen-check-form is-default="true" data-on-save="saveProgressNote(isNext, isMandatory, hasErrors, keepForm)" is-read-only="{{ isReadOnly || isPageDisable }}" stop-save="stopSave" stop-next="stopNext" permission-key="{{permissionKey}}" permission="{{resolvePermission(pageDisableSecurity)}}" novalidate bs-modifiable="true" set-form-status set-form-mode data-on-print="ctrl.initReport(isNext, isMandatory, hasErrors, keepForm)">
+                <!--Taken Details-->
+                <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(pageDisableSecurity)}}" permission-mode="readonly" is-disabled="{{isReadOnly || isPageDisable}}" has-permission="hasPermission">
+                    <!--Taken Details-->
+                    <ng-form name="ctrl.takenDetails" novalidate bs-modifiable="true" set-form-status="child">
+                        @Html.Partial("../Shared/_ProviderDetails")
+                    </ng-form>
+
+                    <div class="row padding-top-xsmall" ng-if="false">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerDetailsForm.THSAID.$invalid && !ctrl.callerDetailsForm.THSAID.$pristine}">
+                                <label for="THSAID">THSA ID</label>
+                                <input ng-disabled="true" type="text" name="THSAID" id="THSAID" ng-model="ctrl.clientDetails.THSAID"
+                                       class="form-control ellipsis" auto-focus event-focus="autoFocus" ng-trim="true" ng-maxlength="200">
+                                <p ng-show="ctrl.callerDetailsForm.THSAID.$error.maxlength" class="error-block ng-hide">THSA ID is too long</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Client-->
+                    <ng-form name="ctrl.headerDetailsForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div class="row padding-top-small" data-ng-if="isCrisisLine">
+                            <div class="form-group-lg padding-bottom-small">
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerDetailsForm.ClientStatus.$invalid && !ctrl.callerDetailsForm.ClientStatus.$pristine }">
+                                        <label for="ClientStatus">Contact Status</label>
+                                        <select ng-disabled="true" ng-model="ctrl.ProgressNoteDetails.ClientStatusID" id="ClientStatus" name="ClientStatus" class="form-control"
+                                                ng-options="status.ID as status.Name for status in getLookupsByType('ClientStatus')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerInformationForm.callerInfo.ProgramUnit.$invalid && !ctrl.callerInformationForm.callerInfo.ProgramUnit.$pristine }">
+                                        <label for="ProgramUnit">Program Unit</label>
+                                        <select ng-disabled="true" ng-model="ctrl.callerDetails.ProgramUnitID" id="ProgramUnit" name="ProgramUnit" class="form-control"
+                                                ng-options="ProgramUnit.ID as ProgramUnit.Name for ProgramUnit in getLookupsByType('ProgramUnit') |securityFilter :'ProgramUnit': 'ID': '{{permissionKey}}'">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-3 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerInformationForm.ClientID.$invalid && !ctrl.callerInformationForm.ClientID.$pristine }">
+                                <label for="clientID">Contact ID </label>
+                                <select ng-disabled="true" ng-model="ctrl.clientDetails.ContactTypeID" id="ClientID" class="form-control"
+                                        ng-options="clientID.ID as clientID.Name for clientID in getLookupsByType('ContactTypeCallCenter')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                            </div>*@
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.callerDetailsForm.ClientProvider.$invalid && !ctrl.callerDetailsForm.ClientProvider.$pristine }">
+                                        <label for="ClientProvider">Contact's Provider</label>
+                                        <select ng-disabled="true" ng-model="ctrl.callerDetails.ProviderID" id="ClientProvider" name="ClientProvider" class="form-control"
+                                                ng-options="client.ID as client.Name for client in getLookupsByType('Users')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <label for="County">County of Residence</label>
+                                    <select ng-disabled="true" ng-model="ctrl.callerDetails.CountyID" id="County" class="form-control" ng-options="County.ID as County.Name for County in getLookupsByType('County')">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="(ctrl.callerDetails.CallCenterTypeID == ctrl.lawLiaisonType)">
+                            @Html.Partial("../Shared/_TypeofPhoneCall")
+                            <div class="row padding-xsmall padding-bottom-small border-top">
+                                <div class="col-md-4 col-sm-12">
+                                    <h3 class="uppercase nomargin">Correspondent</h3>
+                                </div>
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="form-group-lg form-inline pull-right">
+                                        <xen-checkbox ng-model="ctrl.ProgressNoteDetails.IsCallerSame" ng-disabled="(isReadOnly || isPageDisable || !ctrl.LawContactExists) " data-checkbox-id="IsCallerSame" data-label="{{isCrisisLine ? 'IS CALLER SAME AS LAW ENFORCEMENT CONTACT?': 'IS CORRESPONDENT SAME AS LAW ENFORCEMENT CONTACT?' }}" data-on-click="GetLawEnforcementContact(ctrl.ProgressNoteDetails.IsCallerSame,true,false)" />
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.Partial("../Shared/_CallerInformation")
+                            <h3 class="uppercase nomargin padding-xsmall border-top">Progress Note</h3>
+                        </div>
+                        <div class="row section-block">
+                            <div class="col-md-3 padding-bottom-small" ng-if="(ctrl.callerDetails.CallCenterTypeID == ctrl.lawLiaisonType)">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.behaviourForm.BehaviorCategory.$invalid && !ctrl.behaviourForm.BehaviorCategory.$pristine }">
+                                    <label for="BehaviorCategory">Behavior Category</label>
+                                    <select ng-model="ctrl.ProgressNoteDetails.BehavioralCategoryID" id="BehaviorCategory" name="BehaviorCategory" class="form-control"
+                                            ng-options="bCat.ID as bCat.Name for bCat in getLookupsByType('BehavioralCategory')">
+                                        <option value="">Select</option>
+                                    </select>
+                                    <span class="select-btn"><i class="xen-select"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-12 padding-bottom-small" ng-if="ctrl.callCenterTypeID == ctrl.crisisCallType">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <xen-memobox label="Nature of Phone call" rows="5" maxlength="4000" ng-model="ctrl.ProgressNoteDetails.NatureofCall" name="PhoneCallNature"></xen-memobox>
+                                </div>
+                            </div>
+                            <div class="col-md-12 padding-bottom-small" ng-if="ctrl.callCenterTypeID == ctrl.lawLiaisonType">
+                                <div class="form-group-lg padding-bottom-small">
+                                    @* class-name="{{ isPageDisable?'no-security':'' }}" prevents the control from getting disabled *@
+                                    <xen-comment label="{{isCrisisLine ? 'Nature of Phone call': 'Nature of Service'}}" class-name="{{ isPageDisable?'no-security':'' }}" data-comment-model="ctrl.ProgressNoteDetails.newNatureofCall" data-history-model="ctrl.ProgressNoteDetails.preNatureofCall" rows="5" maxlength="4000" name="PhoneCallNature" id="PhoneCallNature" dont-need-toggle="true"></xen-comment>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    <ng-form name="ctrl.assessmentForm" novalidate bs-modifiable="true" set-form-status>
+                        <div class="row padding-top-small">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <assessment-section permission-key="{{permissionKey}}" data-return-state="" pkid="{{pageDisableSecurity}}" on-post-assessment-response="onPostAssessmentResponse" />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                    <ng-form name="ctrl.footerDetailsForm" novalidate bs-modifiable="true" set-form-status="child">
+                        <div ng-if="(ctrl.callerDetails.CallCenterTypeID == ctrl.crisisCallType)">
+                            @Html.Partial("../Shared/_TypeofPhoneCall")
+                        </div>
+                        <div class="row padding-top-small" ng-hide="ctrl.callCenterTypeID == ctrl.lawLiaisonType">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <xen-memobox label="Disposition" ng-model="ctrl.callerDetails.Disposition" rows="5" maxlength="4000" name="Comments" is-disabled="true" id="Comments"></xen-memobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row section-block" ng-if="ctrl.callCenterTypeID == ctrl.crisisCallType">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <xen-memobox label="Follow-up Plan" rows="5" maxlength="4000" ng-model="ctrl.ProgressNoteDetails.FollowupPlan" name="FollowupPlan"></xen-memobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row section-block" ng-if="ctrl.callCenterTypeID == ctrl.lawLiaisonType">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <xen-comment label="Plan of Action" class-name="{{ isPageDisable?'no-security':''}}" data-comment-model="ctrl.ProgressNoteDetails.newFollowupPlan" data-history-model="ctrl.ProgressNoteDetails.preFollowupPlan" rows="5" maxlength="4000" name="FollowupPlan" id="FollowupPlan" dont-need-toggle="true"></xen-comment>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row padding-top-small">
+                            <div class="col-md-12 padding-bottom-small">
+                                <div class="form-group-lg padding-bottom-small" ng-class="">
+                                    <xen-comment label="Comments" class-name="{{ (!isReadOnly || isPageDisable) ?'no-security':''}}" is-disabled="((!(isManager || isCreator || hasUpdatePrivillege) || disableComments))" data-comment-model="ctrl.callerDetails.newComment" data-history-model="ctrl.callerDetails.preComments" rows="5" maxlength="4000" name="Comments" id="Comments" dont-need-toggle="true"></xen-comment>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Caller-->
+                        <div ng-if="(ctrl.callerDetails.CallCenterTypeID == ctrl.crisisCallType)">
+                            <div class="row padding-xsmall padding-bottom-small border-top">
+                                <div class="col-md-7">
+                                    <h3 class="uppercase nomargin">Caller</h3>
+                                </div>
+                            </div>
+                            @Html.Partial("../Shared/_CallerInformation")
+                        </div>
+                        <div class="row section-block">
+                            <xen-signature></xen-signature>
+                        </div>
+                    </ng-form>
+
+                    <!-- Save and Next -->
+                    <div class="row padding-top-small">
+                        <div class="col-lg-6 col-md-6">
+                            <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                            <p class="uppercase subtext" data-ng-if="isCrisisLine"><sup>†</sup>  INDICATES FIELD IS REQUIRED CONDITIONALLY </p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                            <xen-submit id="callCenterSave" name="callCenterSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg {{ isPageDisable || disableComments ?'no-security prevent-disable':''}}" is-disabled="!(isManager || isCreator) || isReadOnly || disableComments" permission-key="{{permissionKey}}" permission="{{resolvePermission(pageDisableSecurity)}}"></xen-submit>
+                            <xen-submit id="callCenterNext" name="callCenterNext" value="NEXT" is-next="true" mandatory="false" ng-if="!stopNext" style="btn btn-default btn-lg no-security prevent-disable" permission-key="{{permissionKey}}" permission="read"></xen-submit>
+                            <xen-submit id="printAssessment" name="printAssessment" value="PRINT" is-next="false" mandatory="false" is-print="true" style="btn btn-default btn-lg no-security prevent-disable" permission-key="{{permissionKey}}" permission="read"></xen-submit>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+﻿@{
+    Layout = null;
+}
+<form role="form" id="historyLogForm" name="ctrl.historyLogForm" xen-check-form is-default="true" stop-save="stopSave" stop-next="stopNext"
+      permission-key="{{permissionKey}}" permission="{{resolvePermission(contactID)}}" novalidate bs-modifiable=novalidate bs-modifiable="true" set-form-status set-form-mode>
+    <div class="panel panel-light">
+        <div class="panel-body">
+            <div class="row ">
+                <div class="breadcrumb_nav padding-xsmall" min-breadcrumbs="3">
+                    <ul class="breadcrumb ng-scope">
+                        <li><a href="javascript:void(0)" ng-click="Goto('patientprofile.general', {ContactID: contactID})" ng-bind-template="{{UserName}}" class="ng-binding">{{UserName}}</a></li>
+                        <li><a href="javascript:void(0)" ng-click="Goto('patientprofile.general', {ContactID: contactID})" ng-bind-template="General" class="ng-binding">General</a></li>
+                        <li><a href="javascript:void(0)" ng-click="Goto(isECI ? 'patientprofile.general.ecidemographics': 'patientprofile.general.demographics', {ContactID: contactID})" ng-bind-template="Demographics" class="ng-binding">Demographics</a></li>
+                        <li class="current ng-binding" ng-bind-template="Demographics Change Log">Demographics Change Log</li>
+                    </ul>
+                    <span class="ng-scope">&#8203;</span>
+                    <a class="pull-right close close-view ng-scope">
+                        <i class="fa fa-times-circle padding-small" href="javascript:void(0)" ng-click="Goto(isECI ? 'patientprofile.general.ecidemographics': 'patientprofile.general.demographics', {ContactID: contactID})"><span class="sr-only">Close Section and Return</span></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active" id="defaulttabheader">
+                            <a href="#demographicshistory" id="#demographicshistory" aria-controls="demographicshistory" role="tab" data-toggle="tab"
+                               ng-click="setAction('demographicshistory');autoFocusEdit[demographyIndex] = true;">Full Demographics</a>
+                        </li>
+                        <li>
+                            <a href="#aliashistory" id="#aliashistory" aria-controls="aliashistory" role="tab" data-toggle="tab"
+                               ng-click="setAction('alias');autoFocusEdit[aliasIndex] = true;">Alias</a>
+                        </li>
+                        <li>
+                            <a href="#idhistory" id="#idhistory" aria-controls="idhistory" role="tab" data-toggle="tab"
+                               ng-click="setAction('id');autoFocusEdit[idIndex] = true;">ID</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content padding-top-small">
+                        <div class="tab-pane active padding-bottom-small" id="demographicshistory">
+                            <table id="demographicsTable" data-toggle="table"
+                            data-show-columns="true"
+                            data-search="true"
+                            data-minimum-count-columns="2"
+                            data-filter-control="false"
+                            data-mobile-responsive="true"
+                            data-advanced-search="false"
+                            data-show-multi-sort="false"
+                            data-classes="table table-stripe-borders"
+                            bootstrap-table="demotableoptions" grid-arrow-selector>
+                            <thead>
+                            </thead>
+                            </table>
+                        </div>
+
+                        <div id="aliashistory" class="tab-pane padding-bottom-small">
+                            <table id="aliasTable" data-toggle="table"
+                                   data-show-columns="true"
+                                   data-search="true"
+                                   data-minimum-count-columns="2"
+                                   data-filter-control="false"
+                                   data-advanced-search="false"
+                                   data-show-multi-sort="false"
+                                   data-classes="table table-stripe-borders"
+                                   bootstrap-table="aliastableoptions" grid-arrow-selector>
+                                <thead>
+                                </thead>
+                            </table>
+                        </div>
+
+                        <div id="idhistory" class="tab-pane padding-bottom-small">
+                            <table id="idTable" data-toggle="table"
+                                   data-show-columns="true"
+                                   data-search="true"
+                                   data-minimum-count-columns="2"
+                                   data-filter-control="false"
+                                   data-mobile-responsive="true"
+                                   data-advanced-search="false"
+                                   data-show-multi-sort="false"
+                                   data-classes="table table-stripe-borders"
+                                   bootstrap-table="idtableoptions" grid-arrow-selector>
+                                <thead>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,106 @@
+﻿@{
+    Layout = null;
+}
+
+@* Filter Box & View Toggle *@
+<div class="row filter-box pull-right">
+    <div class="form-group-lg" ng-show="true">
+        <label for="filterContent"><span class="sr-only">Filter content by keyword</span></label>
+        <div class="input-group">
+            <input type="text" id="filterContent" name="filterContent" class="form-control ng-pristine ng-invalid ng-invalid-required ng-not-modified ng-touched" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-info" ng-click="">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <a class="btn tile-toggle" toggle-column-view><i class="fa fa-fw fa-list-ul"></i></a>
+        @* "fa-list-ul" needs to change to "fa-th" when the link is clicked *@
+    </div>
+</div>
+
+@* Tiles or List View *@
+<div class="row padding-right-small padding-top-small tile-view">
+    @* "tile-view" should swap with "list-view" when the toggle link above this is clicked *@
+    @* important: the mobile view (anything under 992px) should ONLY get to see the "tile-view" version. *@
+    <div ng-repeat="section in Sections" class="clear">
+        <div class="col-lg-12 col-md-12">
+            <h2 class="uppercase">{{section.SectionName}}</h2>
+        </div>
+
+        @* Tile Block *@
+        <div class="col-lg-4 col-md-4 padding-bottom-small nopadding-right" ng-repeat="tile in section.TileInfo">
+            <div class="section-group">
+                <div class="header border-bottom">
+                    <h3 title="Go to {{tile.TileName}}" ui-sref="{{tile.tileDefaultUrl?tile.tileDefaultUrl:tile.Url}}">{{tile.TileName}}</h3>
+                    <div class="icons">
+                        <i class="fa fa-exclamation-triangle text-warning" ng-show="tile.TileDetails.length==0"><span class="sr-only">Something in {{tile.TileName}} requires your attention.</span></i>
+                        @* the class name for alerts should change depending on the type of alert
+                            high priority   = fa-exclamation-circle text-danger
+                            medium priority = fa-exclamation-triangle text-warning  *@
+                        <a href="" class="bookmark_me"><i class="fa fa-bookmark-o" ng-show="true"><span class="sr-only">Bookmark {{tile.Url}} - make available in your secondary navigation</span></i></a>
+                        @* when the bookmark is selected(clicked) the class name should change
+                            not select = fa-bookmark-o
+                            selected   = fa-bookmark
+                            it also needs to be able to remember what the user has selected. if they bookmarked the tile,
+                            it should stay marked bookmark even if they log out and log back in. *@
+                    </div>
+                </div>
+                <div class="content" ui-sref="{{tile.tileDefaultUrl?tile.tileDefaultUrl:tile.Url}}">
+                    <div ng-show="tile.IsLoaded==false" class="loading text-center padding-top padding-bottom">
+                        <!-- only show the loader until the content is ready, then hide the loader -->
+                        <i class="fa fa-spinner fa-spin"><span class="sr-only">Content is loading</span></i>
+                    </div>
+
+                    <p ng-if="tile.TileDetails.length==0 && tile.IsLoaded==true"><em>{{tile.TileName}} has not been provided.</em></p>
+                    <div ng-repeat="obj in tile.TileDetails" ng-if="tile.TileDetails.length>0">
+                        <dl title="{{tile.TileName}} Preview" ng-if="obj.CustomMessage==undefinded||obj.CustomMessage==''">
+                            <dt class="uppercase">{{obj.Label}}</dt>
+                            <dd class="ellipsis">{{obj.LookUpType!=undefined && obj.LookUpType!=''? getText(obj.LookUpType,obj.Value): obj.Value}}</dd>
+                        </dl>
+                        <p ng-if="obj.CustomMessage!=undefinded && obj.CustomMessage!=''"><em>{{obj.CustomMessage}}</em></p>
+                    </div>
+                </div>
+                <div class="footer border-top tile-flyout" security permission-key="{{tile.PermissionKey| lowercase}}" permission="{{tile.Permission| lowercase}}">
+                    <div class="col-lg-6 col-md-6">
+                        <div ng-if="tile.TileDetails.length>0">
+                            <a ng-show="tile.ShowShortcuts && tile.EditDetails.length>1" tile-flyout="#editInset_{{tile.TileName.replaceAll(' ','').replaceAll('/','')}}" title="Edit {{tile.TileName}}"><i class="fa fa-pencil"></i></a>
+                            <a ng-show="!tile.ShowShortcuts && tile.EditDetails.length==0 && !tile.HideEdit" ui-sref="{{tile.Url}}" title="Edit {{tile.TileName}}"><i class="fa fa-pencil"></i></a>
+                            <a ng-show="tile.ShowShortcuts && tile.EditDetails.length==1" ng-click="showTileDetails(tile.EditDetails[0].state,tile.EditDetails[0].contactID,tile.EditDetails[0].id,tile.EditDetails[0].params)" title="Edit {{tile.TileName}}"><i class="fa fa-pencil"></i></a>
+
+                            <div class="inset_menu inset_edit collapse" id="editInset_{{tile.TileName.replaceAll(' ','').replaceAll('/','')}}">
+                                <p ng-if="tile.EditDetails.length==0"><em>{{tile.TileName}} has not been provided.</em></p>
+                                <ul ng-if="tile.EditDetails.length>0">
+                                    <li class="ng-scope" ng-repeat="editDetail in tile.EditDetails | limitTo: listLimit"><a ng-click="showTileDetails(editDetail.state,editDetail.contactID,editDetail.id,editDetail.params)"><span>{{editDetail.modifiedDate}} :</span> {{editDetail.LookUpType!=undefined && editDetail.LookUpType!=''? getText(editDetail.LookUpType,editDetail.item):editDetail.item}}</a></li>
+                                </ul>
+                                <ul ng-if="tile.EditDetails.length>listLimit">
+                                    <li class="show_more"><a ui-sref="{{tile.Url}}"><i class="fa fa-bars"></i> Show More</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6" ng-if="tile.ShowShortcuts">
+                        <a tile-flyout="#addInset_{{tile.TileName.replace(' ','')}}" class="text-right" title="Add {{tile.TileName}}" ng-if="tile.TileAddDetails.length>0">
+                            <i class="fa fa-plus-circle"></i>
+                        </a>
+                        <a ui-sref="{{tile.Url}}" class="text-right" title="Add {{tile.TileName}}" ng-if="tile.TileAddDetails.length==0 && !tile.hideShortCutKeys">
+                            <i class="fa fa-plus-circle"></i>
+                        </a>
+                        <div class="inset_menu inset_add collapse" id="addInset_{{tile.TileName.replace(' ','')}}" ng-if="tile.TileAddDetails.length>0">
+                            <ul>
+                                <li class="ng-scope" ng-repeat="addDetail in tile.TileAddDetails">
+                                    <a
+                                        ng-click="changeState(addDetail.State,addDetail.Params)"
+                                        href="javascript:void(0)"
+                                    >
+                                        <span>{{addDetail.Label}}</span> {{addDetail.Value}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

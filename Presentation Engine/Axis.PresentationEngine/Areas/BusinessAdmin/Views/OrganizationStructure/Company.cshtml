@@ -1,0 +1,201 @@
+﻿<div class="row padding-right-small margin-bottom-xsmall padding-left-small">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form role="form" id="companyForm" name="companyForm" xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" permission-key="BusinessAdministration-Configuration-Company" permission="{{resolvePermission(pageSecurity)}}" novalidate bs-modifiable="true" set-form-status set-form-mode>
+                <div security permission-key="BusinessAdministration-Configuration-Company" permission="{{resolvePermission(pageSecurity)}}" permission-mode="readonly">
+                    <h3 class="uppercase nomargin padding-xsmall border-top">COMPANY DEFINITION</h3>
+                    <ng-form name="companyForm" novalidate bs-modifiable="true" set-form-status="child">
+
+                        @* COMPANY *@
+                        <div class="row section-block margin-top-small margin-bottom-xsmall">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : companyForm.CompanyName.$invalid && !companyForm.CompanyName.$pristine }">
+                                        <label for="CompanyName">COMPANY NAME <sup>&nbsp*</sup></label>
+                                        <input type="text" ng-model="companyDetails.Company.Name" id="CompanyName" name="CompanyName" ng-maxlength="100" class="form-control" data-validation-name="Company Name" ng-required="true" ng-disabled="true"/>
+                                        <p data-ng-show="companyForm.CompanyName.$error.maxlength" class="error-block">Maximum 100 characters are allowed.</p>
+                                    </div>
+
+                                    <div class="col-md-3 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : companyForm.companyAcronyn.$invalid && !companyForm.companyAcronyn.$pristine }">
+                                        <label for="companyAcronyn">COMPANY ACRONYM</label>
+                                        <input type="text" ng-model="companyDetails.Company.Acronym" id="companyAcronyn" name="companyAcronyn" ng-maxlength="20" class="form-control" data-validation-name="Company Acronym" ng-disabled="true"/>
+                                        <p data-ng-show="companyForm.companyAcronyn.$error.maxlength" class="error-block">Maximum 20 characters are allowed.</p>
+                                    </div>
+
+                                    <div class="col-md-3 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : companyForm.CompanyCode.$invalid && !companyForm.CompanyCode.$pristine }">
+                                        <label for="companyCode">COMPANY CODE</label>
+                                        <input type="text" ng-model="companyDetails.Company.Code" id="CompanyCode" name="CompanyCode" ng-maxlength="20" class="form-control" data-validation-name="Company Code" ng-disabled="true" />
+                                        <p data-ng-show="companyForm.CompanyCode.$error.maxlength" class="error-block">Maximum 20 characters are allowed.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : companyForm.companyEffectiveDate.$invalid && !companyForm.companyEffectiveDate.$pristine }">
+                                        <label for="companyEffectiveDate">EFFECTIVE DATE <sup>&nbsp*</sup></label>
+                                        <xen-date-picker id="companyEffectiveDate"
+                                                         name="companyEffectiveDate"
+                                                         data-validation-name="Effective Date"
+                                                         ng-model="companyDetails.Company.EffectiveDate"
+                                                         past-date-validate="true"
+                                                         is-disabled="true"                                                         
+                                                         greater-than-date-validation="true"
+                                                         ignore-time="true"
+                                                         end-date="companyDetails.Company.ExpirationDate"
+                                                         data-compare-element-name="companyExpirationDate">
+                                        </xen-date-picker>
+                                        <p ng-show="companyForm.companyEffectiveDate.$error.pastDate && !companyForm.companyEffectiveDate.$pristine" ng-cloak class="error-block">Effective date can't be Past Date.</p>
+                                        <p ng-cloak ng-show="companyForm.companyEffectiveDate.$error.date && !payorDetailsForm.companyExpirationDate.$pristine" class="error-block">Effective Date is invalid.</p>
+                                        <p ng-show="companyForm.companyEffectiveDate.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                                    </div>
+                                    <div class="col-md-3 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : companyForm.companyExpirationDate.$invalid && !companyForm.companyExpirationDate.$pristine }">
+                                        <label for="ExpirationDate">EXPIRATION DATE</label>
+                                        <xen-date-picker id="companyExpirationDate"
+                                                         name="companyExpirationDate"
+                                                         data-validation-name="Expiration Date"
+                                                         ng-model="companyDetails.Company.ExpirationDate"
+                                                         past-date-validate="true"
+                                                         is-disabled="true"                                                         
+                                                         less-than-date-validation="true"
+                                                         start-date="companyDetails.Company.EffectiveDate"
+                                                         ignore-time="true"
+                                                         data-compare-element-name="companyEffectiveDate">
+                                        </xen-date-picker>
+                                        <p ng-show="companyForm.companyExpirationDate.$error.pastDate && !companyForm.companyExpirationDate.$pristine" ng-cloak class="error-block">Expiration date can't be Past Date.</p>
+                                        <p ng-cloak ng-show="companyForm.companyExpirationDate.$error.date && !payorDetailsForm.companyExpirationDate.$pristine" class="error-block">Expiration Date is invalid.</p>
+                                        <p ng-show="companyForm.companyExpirationDate.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* UNIT TYPE & COMPANY *@
+                        <div class="row padding-top-small">
+                            <div class="col-md-5">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : companyForm.companyInternal.$invalid && !payorDetailsForm.companyInternal.$pristine }">
+                                    <label for="AuthorizedBy">COMPANY TYPE <sup>&nbsp*</sup></label>
+                                    <span><xen-radio-button data-ng-model="companyDetails.Company.IsExternal" data-radio-button-id="companyInternal" data-label="Internal" data-ng-value="false" ng-required="true" name="companyInternal" data-validation-name="Company Type" /></span>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <span><xen-radio-button data-ng-model="companyDetails.Company.IsExternal" data-radio-button-id="companyExternal" data-label="External" name="companyExternal" data-validation-name="Company Type" data-ng-value="true" /></span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : companyForm.companyStatus.$invalid && !companyForm.companyStatus.$pristine }">
+                                    <xen-checkbox data-ng-model="companyDetails.Company.IsActive" data-checkbox-id="companyStatus" data-label="Status" />
+                                </div>
+                            </div>
+                        </div>
+
+                        @* ADDRESS *@
+                        <div class="row section-block margin-bottom">
+                            <div class="col-md-12">
+                                <ng-form name="addressForm" novalidate bs-modifiable="true" set-form-status="child">
+                                    @Html.Partial("../Shared/_Address")
+                                </ng-form>
+                            </div>
+                        </div>
+
+                        @* COMPANY IDENTIFIERS *@
+                        <h3 class="uppercase nomargin padding-xsmall border-top">Company Identifiers</h3>
+                        <!--Table start-->
+                        <div class="row padding-top-xsmall">
+                            <div class="col-md-12">
+                                <div class="bootstrap-table">
+                                    <div class="fixed-table-container">
+                                        <div class="fixed-table-body">
+                                            <table data-toggle="table"
+                                                   data-show-columns="false"
+                                                   data-search="true"
+                                                   data-minimum-count-columns="2"
+                                                   data-filter-control="false"
+                                                   data-mobile-responsive="true"
+                                                   data-advanced-search="false"
+                                                   class="table table-strip-borders combo-table form-group-lg"
+                                                   grid-arrow-selector>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Company Identifier</th>
+                                                        <th>Number</th>
+                                                        <th>Effective Date</th>
+                                                        <th>Expiration Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="identifier in companyDetails.CompanyIdentifiers">
+                                                        <td>
+                                                            {{ identifier.OrganizationIdentifierType }}
+                                                        </td>
+                                                        <td>
+                                                            <div ng-class="{ 'has-error' : companyForm.companyIdentifierName{{$index}}.$invalid && !companyForm.companyIdentifierName{{$index}}.$pristine }">
+                                                                <input type="text" ng-maxlength="{{ identifier.maxLength }}" ng-pattern="identifier.pattern" ng-model="identifier.OrganizationIdentifier" id="companyIdentifierName{{$index}}" name="companyIdentifierName{{$index}}" class="form-control input-min-width" data-validation-name="{{ identifier.OrganizationIdentifierType }}" />
+                                                                <p class="error-block" data-ng-show="companyForm.companyIdentifierName{{$index}}.$error.pattern || companyForm.companyIdentifierName{{$index}}.$error.maxlength">
+                                                                    <span data-ng-show="companyForm.companyIdentifierName{{$index}}.$error.pattern">Numeric only.</span>
+                                                                    <span data-ng-show="companyForm.companyIdentifierName{{$index}}.$error.maxlength">Maximum {{ identifier.maxLength }} characters are allowed.</span>
+                                                                </p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-class="{ 'has-error' : companyForm.companyIdentifierEffective{{$index}}.$invalid && !companyForm.companyIdentifierEffective{{$index}}.$pristine }">
+                                                                <xen-date-picker id="companyIdentifierEffective{{$index}}"
+                                                                                 name="companyIdentifierEffective{{$index}}"
+                                                                                 ng-click="repositionDatepicker('companyIdentifierEffective' + $index)"
+                                                                                 ng-model="identifier.EffectiveDate"
+                                                                                 data-validation-name="Company Effective Date for row {{$index+1}}"
+                                                                                 greater-than-date-validation="true"
+                                                                                 ignore-time="true"
+                                                                                 end-date="identifier.ExpirationDate"
+                                                                                 data-compare-element-name="companyIdentifierExpiration{{$index}}"
+                                                                                 past-date-validate="true">
+                                                                </xen-date-picker>
+                                                                <p class="error-block" ng-show="companyForm.companyIdentifierEffective{{$index}}.$error.pastDate || companyForm.companyIdentifierEffective{{$index}}.$error.greaterThanDate">
+                                                                    <span ng-show="companyForm.companyIdentifierEffective{{$index}}.$error.pastDate" ng-cloak>Effective date can't be Past Date.</span>
+                                                                    <span ng-show="companyForm.companyIdentifierEffective{{$index}}.$error.greaterThanDate" ng-cloak>Effective date can't be greater than Expiration date.</span>
+                                                                </p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-class="{ 'has-error' : companyForm.companyIdentifierExpiration{{$index}}.$invalid && !companyForm.companyIdentifierExpiration{{$index}}.$pristine }">
+                                                                <xen-date-picker id="companyIdentifierExpiration{{$index}}"
+                                                                                 name="companyIdentifierExpiration{{$index}}"
+                                                                                 ng-click="repositionDatepicker('companyIdentifierExpiration' + $index)"
+                                                                                 ng-model="identifier.ExpirationDate"
+                                                                                 data-validation-name="Company Expiration Date for row {{$index+1}}"
+                                                                                 less-than-date-validation="true"
+                                                                                 start-date="identifier.EffectiveDate"
+                                                                                 ignore-time="true"
+                                                                                 data-compare-element-name="companyIdentifierEffective{{$index}}"
+                                                                                 past-date-validate="true">
+                                                                </xen-date-picker>
+                                                                <p class="error-block" ng-show="companyForm.companyIdentifierExpiration{{$index}}.$error.pastDate || companyForm.companyIdentifierExpiration{{$index}}.$error.lessThanDate">
+                                                                    <span ng-show="companyForm.companyIdentifierExpiration{{$index}}.$error.pastDate" ng-cloak>Expiration date can't be Past Date.</span>
+                                                                    <span ng-show="companyForm.companyIdentifierExpiration{{$index}}.$error.lessThanDate" ng-cloak>Expiration date can't be less than Effective date.</span>
+                                                                </p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr ng-if="companyDetails.CompanyIdentifiers.length==0">
+                                                        <td colspan="4" style="text-align:center;font-size:large">
+                                                            No data currently available
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Table end-->
+                    </ng-form>
+                    @* * BUTTONS *@
+                    <div class="row padding-top">
+                        <div class="col-lg-6 col-md-6">
+                            <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                            <xen-submit id="btnSave" name="btnSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" ></xen-submit>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

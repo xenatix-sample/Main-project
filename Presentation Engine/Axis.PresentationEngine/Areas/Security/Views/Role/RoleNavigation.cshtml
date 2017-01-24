@@ -1,0 +1,5 @@
+﻿<ul class="list-group text-uppercase">
+    <li ng-class="{active: $state.is('siteadministration.rolemanagement.role.roledetails',{ RoleId: $stateParams.RoleId })}" security permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="read" class="list-group-item"><a ng-click="Goto('siteadministration.rolemanagement.role.roledetails', { RoleId: $stateParams.RoleId,ReadOnly: $stateParams.ReadOnly  })">Role Details<i ng-class="{'fa-pencil': $state.is('siteadministration.rolemanagement.role.roledetails')}" class="fa fa-fw pull-right" /></a></li>
+    <li ng-class="{active: $state.is('siteadministration.rolemanagement.role.assignmodules', { RoleId: $stateParams.RoleId })}" security permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="read" class="list-group-item"><a ng-click="GotoNext('siteadministration.rolemanagement.role.assignmodules' ,  { RoleId: $stateParams.RoleId,ReadOnly: $stateParams.ReadOnly  })">Assign Modules<i ng-class="{'fa-pencil': $state.is('siteadministration.rolemanagement.role.assignmodules')}" class="fa fa-fw pull-right" /></a></li>
+
+</ul>

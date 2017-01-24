@@ -1,0 +1,224 @@
+﻿<div class="row padding-right-small margin-bottom-xsmall padding-left-small">
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <form role="form" id="divisionForm" name="divisionForm" xen-check-form is-default="true" data-on-save="save(isNext, isMandatory, hasErrors, keepForm)" permission-key="BusinessAdministration-Configuration-Division" permission="{{resolvePermission(pageSecurity)}}" novalidate bs-modifiable="true" set-form-status set-form-mode>
+                <div security permission-key="BusinessAdministration-Configuration-Division" permission="{{resolvePermission(pageSecurity)}}" permission-mode="readonly" dual-permission="true">
+                    <h3 class="uppercase nomargin padding-xsmall border-top">DIVISION DEFINITION</h3>
+                    <ng-form name="divisionForm" novalidate bs-modifiable="true" set-form-status="child">
+
+                        @* DIVISION *@
+                        <div class="row section-block margin-top-small margin-bottom-xsmall">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : divisionForm.DivisionName.$invalid && !divisionForm.DivisionName.$pristine }">
+                                        <label for="DivisionName">DIVISION NAME <sup>&nbsp*</sup></label>
+                                        <input type="text" ng-model="divisionDetails.Division.Name" id="DivisionName" name="DivisionName" ng-maxlength="100" class="form-control" data-validation-name="Program Unit Name" ng-required="true" ng-disabled="true"/>
+                                        <p data-ng-show="divisionForm.DivisionName.$error.maxlength" class="error-block">Maximum 100 characters are allowed.</p>
+                                    </div>
+
+                                    <div class="col-md-3 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : divisionForm.divisionAcronyn.$invalid && !divisionForm.divisionAcronyn.$pristine }">
+                                        <label for="divisionAcronyn">DIVISION ACRONYM</label>
+                                        <input type="text" ng-model="divisionDetails.Division.Acronym" id="divisionAcronyn" name="divisionAcronyn" ng-maxlength="20" class="form-control" data-validation-name="Division Acronym" ng-disabled="true"/>
+                                        <p data-ng-show="divisionForm.divisionAcronyn.$error.maxlength" class="error-block">Maximum 20 characters are allowed.</p>
+                                    </div>
+
+                                    <div class="col-md-3 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : divisionForm.DivisionCode.$invalid && !divisionForm.DivisionCode.$pristine }">
+                                        <label for="divisionCode">DIVISION CODE</label>
+                                        <input type="text" ng-model="divisionDetails.Division.Code" id="DivisionCode" name="DivisionCode" ng-maxlength="20" class="form-control" data-validation-name="Division Code" ng-disabled="true"/>
+                                        <p data-ng-show="divisionForm.DivisionCode.$error.maxlength" class="error-block">Maximum 20 characters are allowed.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : divisionForm.effectiveDate.$invalid && !divisionForm.effectiveDate.$pristine }">
+                                        <label for="effectiveDate">EFFECTIVE DATE <sup>&nbsp*</sup></label>
+                                        <xen-date-picker id="effectiveDate"
+                                                         name="effectiveDate"
+                                                         data-validation-name="Effective Date"
+                                                         ng-model="divisionDetails.Division.EffectiveDate"
+                                                         past-date-validate="true"
+                                                         date-required="true"
+                                                         is-disabled="true"
+                                                         greater-than-date-validation="true"
+                                                         ignore-time="true"
+                                                         end-date="divisionDetails.Division.ExpirationDate"
+                                                         data-compare-element-name="expirationDate">
+                                        </xen-date-picker>
+                                        <p ng-show="divisionForm.effectiveDate.$error.pastDate && !divisionForm.effectiveDate.$pristine" ng-cloak class="error-block">Effective date can't be Past Date.</p>
+                                        <p ng-cloak ng-show="divisionForm.effectiveDate.$error.date && !payorDetailsForm.expirationDate.$pristine" class="error-block">Effective Date is invalid.</p>
+                                        <p ng-show="divisionForm.effectiveDate.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                                    </div>
+                                    <div class="col-md-3 form-group-lg padding-bottom-small" ng-class="{ 'has-error' : divisionForm.expirationDate.$invalid && !divisionForm.expirationDate.$pristine }">
+                                        <label for="ExpirationDate">EXPIRATION DATE</label>
+                                        <xen-date-picker id="expirationDate"
+                                                         name="expirationDate"
+                                                         data-validation-name="Expiration Date"
+                                                         ng-model="divisionDetails.Division.ExpirationDate"
+                                                         past-date-validate="true"
+                                                         is-disabled="true"
+                                                         less-than-date-validation="true"
+                                                         start-date="divisionDetails.Division.EffectiveDate"
+                                                         ignore-time="true"
+                                                         data-compare-element-name="effectiveDate">
+                                        </xen-date-picker>
+                                        <p ng-show="divisionForm.expirationDate.$error.pastDate && !divisionForm.expirationDate.$pristine" ng-cloak class="error-block">Expiration date can't be Past Date.</p>
+                                        <p ng-cloak ng-show="divisionForm.expirationDate.$error.date && !payorDetailsForm.expirationDate.$pristine" class="error-block">Expiration Date is invalid.</p>
+                                        <p ng-show="divisionForm.expirationDate.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row padding-top-small padding-bottom-small">
+                            <div class="col-md-5">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="COMPANY">COMPANY <sup>&nbsp*</sup></label>
+                                    <select ng-model="company.DetailID" id="Company" name="Company" class="form-control" ng-required="true" data-validation-name="Company"
+                                            ng-options="companyDetails.ID as companyDetails.Name for companyDetails in companies" ng-disabled="true">
+                                        <option value="">Select</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="FromDate">EFFECTIVE DATE<sup> &nbsp*</sup></label>
+                                    <xen-date-picker id="companyEffectiveDate"
+                                                     name="companyEffectiveDate"
+                                                     ng-model="company.EffectiveDate"
+                                                     is-disabled="true">
+                                    </xen-date-picker>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group-lg padding-bottom-small">
+                                    <label for="ToDate">EXPIRATION DATE</label>
+                                    <xen-date-picker id="companyExpirationDate"
+                                                     name="companyExpirationDate"
+                                                     ng-model="company.ExpirationDate"
+                                                     is-disabled="true">
+                                    </xen-date-picker>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* HIERARCHY *@
+                        <h3 class="uppercase nomargin padding-xsmall border-top">HIERARCHY ASSIGNMENTS</h3>
+                        <!--Table start-->
+                        <div class="row padding-top-xsmall">
+                            <div class="col-md-12">
+                                <div class="bootstrap-table">
+                                    <div class="fixed-table-container">
+                                        <div class="fixed-table-body">
+                                            <table data-toggle="table"
+                                                   data-show-columns="false"
+                                                   data-search="true"
+                                                   data-minimum-count-columns="2"
+                                                   data-filter-control="false"
+                                                   data-mobile-responsive="true"
+                                                   data-advanced-search="false"
+                                                   class="table table-strip-borders combo-table form-group-lg"
+                                                   grid-arrow-selector>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Programs</th>
+                                                        <th>Effective Date</th>
+                                                        <th>Expiration Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="hierarchy in divisionDetails.DivisionHierarchies">
+                                                        <td>
+                                                            {{ hierarchy.ProgramName }}
+                                                        </td>
+                                                        <td>
+                                                            <div ng-class="{ 'has-error' : divisionForm.divisionHierarchyEffective{{$index}}.$invalid && !divisionForm.divisionHierarchyEffective{{$index}}.$pristine }">
+                                                                <xen-date-picker id="divisionHierarchyEffective{{$index}}"
+                                                                                 name="divisionHierarchyEffective{{$index}}"
+                                                                                 ng-click="repositionDatepicker('divisionHierarchyEffective' + $index)"
+                                                                                 ng-model="hierarchy.EffectiveDate"
+                                                                                 data-validation-name="Program Unit Effective Date for row {{$index+1}}"
+                                                                                 greater-than-date-validation="true"
+                                                                                 ignore-time="true"
+                                                                                 is-disabled="true"
+                                                                                 end-date="hierarchy.ExpirationDate"
+                                                                                 data-compare-element-name="divisionHierarchyExpiration{{$index}}"
+                                                                                 past-date-validate="true">
+                                                                </xen-date-picker>
+                                                                <p ng-show="divisionForm.divisionHierarchyEffective{{$index}}.$error.pastDate" ng-cloak class="error-block">Effective date can't be Past Date.</p>
+                                                                <p ng-show="divisionForm.divisionHierarchyEffective{{$index}}.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <div ng-class="{ 'has-error' : divisionForm.divisionHierarchyExpiration{{$index}}.$invalid && !divisionForm.divisionHierarchyExpiration{{$index}}.$pristine }">
+                                                                <xen-date-picker id="divisionHierarchyExpiration{{$index}}"
+                                                                                 name="divisionHierarchyExpiration{{$index}}"
+                                                                                 ng-click="repositionDatepicker('divisionHierarchyExpiration' + $index)"
+                                                                                 ng-model="hierarchy.ExpirationDate"
+                                                                                 data-validation-name="Program Unit Expiration Date for row {{$index+1}}"
+                                                                                 less-than-date-validation="true"
+                                                                                 start-date="hierarchy.EffectiveDate"
+                                                                                 ignore-time="true"
+                                                                                 is-disabled="true"
+                                                                                 data-compare-element-name="divisionHierarchyEffective{{$index}}"
+                                                                                 past-date-validate="true">
+                                                                </xen-date-picker>
+                                                                <p ng-show="divisionForm.divisionHierarchyExpiration{{$index}}.$error.pastDate" ng-cloak class="error-block">Expiration date can't be Past Date.</p>
+                                                                <p ng-show="divisionForm.divisionHierarchyExpiration{{$index}}.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr ng-if="divisionDetails.DivisionHierarchies.length==0">
+                                                        <td colspan="4" style="text-align:center;font-size:large">
+                                                            No data currently available
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Table end-->
+                    </ng-form>
+                    @* * BUTTONS *@
+                    <div class="row padding-top">
+                        <div class="col-lg-6 col-md-6">
+                            <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 text-right nopadding-left">
+                            <xen-submit id="btnSave" name="btnSave" value="SAVE" is-next="false" mandatory="true" style="btn btn-default btn-lg" is-disabled="true" ></xen-submit>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            @* HISTORY GRID *@
+            <div class="row padding-top-small">
+                <div class="col-md-12">
+                    <table id="divisionsTable" data-toggle="table"
+                           data-sort-order="desc"
+                           data-show-columns="true"
+                           data-search="true"
+                           data-minimum-count-columns="2"
+                           data-filter-control="false"
+                           data-mobile-responsive="true"
+                           data-filter-bar
+                           data-advanced-search="false"
+                           data-show-multi-sort="true"
+                           data-classes="table table-stripe-borders"
+                           bootstrap-table="tableoptions" grid-arrow-selector>
+                        <thead>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

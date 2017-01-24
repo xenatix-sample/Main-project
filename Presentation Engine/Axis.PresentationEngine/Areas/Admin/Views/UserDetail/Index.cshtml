@@ -1,0 +1,119 @@
+﻿<keypress-events on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="SiteAdministration-StaffManagement-UserDetails" permission="{{resolvePermission(userID)}}"></keypress-events>
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="{{resolvePermission(userID)}}" permission-mode="readonly">
+            <form role="form" name="ctrl.userDetailForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+                  bs-modifiable="true" set-form-mode>
+                {{ctrl.userDetailForm.modified ? setform(true):setform(false)}}
+                <div class="row padding-top-small">
+                    <div class="col-md-3 padding-bottom-small form-group-lg" data-ng-class="{ 'has-error' : ctrl.userDetailForm.userName.$invalid && !ctrl.userDetailForm.userName.$pristine }">
+                        <label for="userName">User Name <sup>*</sup></label>
+                        <input type="text" class="form-control ellipsis" clean="true" data-ng-model="userDetail.UserName" id="userName" name="userName"
+                               data-ng-minlength="3" data-ng-maxlength="100" data-ng-pattern="/^[^[\]:;|=+*?<>/\\,]+$/" auto-focus event-focus="autoFocus"
+                               data-ng-disabled="isReadOnlyForm || disableFields" data-ng-required="true" />
+                        <p ng-show="ctrl.userDetailForm.userName.$error.minlength" class="error-block">User Name is too short</p>
+                        <p ng-show="ctrl.userDetailForm.userName.$error.maxlength" class="error-block">User Name is too long</p>
+                        <p ng-show="ctrl.userDetailForm.userName.$error.pattern" class="error-block">User Name is invalid</p>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small form-group-lg">
+                        <div class="padding-bottom-small form-group-lg">
+                            <label for="txtGender">Gender</label>
+                            <select class="form-control" data-ng-model="userDetail.GenderID"
+                                    name="gender" id="txtGender" ng-options="gender.ID as gender.Name for gender in getLookupsByType('Gender')"
+                                    data-ng-disabled="isReadOnlyForm || disableFields">
+                                <option value="" ng-selected="selected">Select</option>
+                            </select>
+                            <span class="select-btn"><i class="xen-select"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 padding-bottom-small form-group-lg">
+                        <xen-checkbox data-ng-model="userDetail.IsActive" data-checkbox-id="IsActive" data-label="Active" data-ng-disabled="disableFields" />
+                    </div>
+                    @*<div class="col-md-3 padding-bottom-small form-group-lg" data-ng-class="{ 'has-error' : ctrl.userDetailForm.expirationDateCalander.$invalid && !ctrl.userDetailForm.expirationDateCalander.$pristine }">
+                            <label for="expirationDate">Expiration Date</label>
+                            <mydatepicker opened="opened" id="expirationDate" name="expirationDate" new-date="userDetail.EffectiveToDate" start-date="startDate" dob-name="'expirationDateCalander'"
+                                          date-options="dateOptions" date-required="false" is-disabled="disableFields"></mydatepicker>
+                            <p id="expirationDateError" ng-show="ctrl.userDetailForm.expirationDateCalander.$invalid && !ctrl.userDetailForm.expirationDateCalander.$pristine" class="error-block">Invalid date (MM/DD/YYYY)</p>
+                        </div>*@
+                </div>
+                <div class="row section-block margin-bottom-xsmall">
+                    <div class="col-md-3 padding-bottom-small form-group-lg" data-ng-class="{ 'has-error' : ctrl.userDetailForm.firstName.$invalid && !ctrl.userDetailForm.firstName.$pristine }">
+                        <label for="firstName">First Name <sup>*</sup></label>
+                        <input type="text" class="form-control ellipsis" clean="true" data-ng-model="userDetail.FirstName" id="firstName" name="firstName"
+                               data-ng-minlength="2" data-ng-maxlength="50" data-ng-trim="true" data-ng-required="true" 
+                               data-ng-disabled="isReadOnlyForm || disableFields" />
+                        <p data-ng-show="ctrl.userDetailForm.firstName.$error.minlength" class="error-block">First Name is too short</p>
+                        <p data-ng-show="ctrl.userDetailForm.firstName.$error.maxlength" class="error-block">First Name is too long</p>
+                       
+                    </div>
+                    <div class="col-md-3 padding-bottom-small form-group-lg" data-ng-class="{ 'has-error' : ctrl.userDetailForm.lastName.$invalid && !ctrl.userDetailForm.lastName.$pristine }">
+                        <label for="lastName">Last Name <sup>*</sup></label>
+                        <input type="text" class="form-control ellipsis" clean="true" data-ng-model="userDetail.LastName" id="lastName" name="lastName"
+                               data-ng-minlength="2" data-ng-maxlength="50" data-ng-trim="true" data-ng-required="true" 
+                               data-ng-disabled="isReadOnlyForm || disableFields" />
+                        <p data-ng-show="ctrl.userDetailForm.lastName.$error.minlength" class="error-block">Last Name is too short</p>
+                        <p data-ng-show="ctrl.userDetailForm.lastName.$error.maxlength" class="error-block">Last Name is too long</p>
+                       
+                    </div>
+                    <div class="col-md-3 padding-bottom-small form-group-lg" data-ng-class="{ 'has-error' : ctrl.userDetailForm.middleName.$invalid && !ctrl.userDetailForm.middleName.$pristine }">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" class="form-control ellipsis" clean="true" data-ng-model="userDetail.MiddleName" id="middleName" name="middleName" data-ng-pattern="/^[a-zA-Z\s-.]*$/"
+                               data-ng-disabled="isReadOnlyForm || disableFields" />
+                        <p data-ng-show="ctrl.userDetailForm.middleName.$error.pattern" class="error-block">Middle Name must be non-numeric</p>
+                    </div>
+                </div>
+                <div class="row padding-top-small">
+                    <div class="col-md-4 padding-bottom-small form-group-lg" data-ng-class="{ 'has-error' : ctrl.userDetailForm.email.$invalid && !ctrl.userDetailForm.email.$pristine }">
+                        <label for="email">Email <sup>*</sup></label>
+                        <input type="text" class="form-control ellipsis" clean="true" data-ng-model="userDetail.PrimaryEmail" id="email" name="email"
+                               data-ng-trim="true" data-ng-required="true" data-ng-pattern="emailPattern" />
+                        <p data-ng-show="ctrl.userDetailForm.email.$error.pattern" class="error-block">Invalid email format</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group-lg padding-bottom-small input-group" ng-class="{ 'has-error' : ctrl.userDetailForm.EffectiveFromDate.$invalid
+                                     && !ctrl.userDetailForm.EffectiveFromDate.$pristine }">
+                            <label for="EffectiveFromDate">Effective Date <sup>*</sup></label>
+                            <mydatepicker apply-security id="EffectiveFromDate" name="EffectiveFromDate" class="datepicker" data-ng-model="userDetail.EffectiveFromDate" opened="effectiveFromOpened" new-date="userDetail.EffectiveFromDate"
+                                          date-options="dateOptions" call-function-on-change="validateEffectiveDateLessThanExpirationDate()" data-ng-required="true"></mydatepicker>
+                            <span id="effectiveDateError" ng-cloak ng-show="ctrl.userDetailForm.EffectiveFromDate.$error.date" class="error-block">Effective Date is invalid.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group-lg padding-bottom-small input-group" ng-class="{ 'has-error' : ctrl.userDetailForm.effectiveDateCalander.$invalid
+                                     && !userDetail.effectiveDateCalander.$pristine }">
+                            <label for="effectiveDate">Expiration Date</label>
+                            <mydatepicker apply-security class="datepicker" data-ng-model="userDetail.EffectiveToDate" id="effectivedate" opened="effectiveOpened" new-date="userDetail.EffectiveToDate"
+                                          date-options="dateOptions" call-function-on-change="validateEffectiveDateLessThanExpirationDate()"></mydatepicker>
+                            <span id="effectiveDateError" ng-cloak ng-show="userDetail.effectiveDateCalander.$error.date" class="error-block">Expiration Date is invalid.</span>
+                        </div>
+                    </div>
+
+                    @*To be put back in lace, per PBI 10081 *@
+                    @*<div class="col-md-3">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.userDetailForm.expirationDateCalander.$invalid
+                                             && !userCredential.expirationDateCalander.$pristine }">
+                                <label for="expirationDate">Expiration Date</label>
+                                <mydatepicker class="datepicker" ng-model="userCredential.ExpirationDate" id="expirationDate" dob-name="'expirationDateCalander'" opened="expirationOpened" new-date="userCredential.ExpirationDate"
+                                              date-options="dateOptions"></mydatepicker>
+                                <span id="expirationDateError" ng-cloak ng-show="userCredential.expirationDateCalander.$error.date" class="error-block">Expiration Date is invalid.</span>
+                            </div>
+                        </div>*@
+                </div>
+            </form>
+        </div>
+        <div class="row padding-top-2x">
+            <div class="col-lg-6">
+                <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, true)" id="btnSave" name="btnSave" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="{{resolvePermission(userID)}}">SAVE</button>
+                <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, true)" id="btnNext" name="btnNext" security permission-key="SiteAdministration-StaffManagement-UserDetails" permission="read">NEXT</button>
+            </div>
+        </div>
+        <br />
+        <br /><br />
+        <br />
+    </div>
+</div>

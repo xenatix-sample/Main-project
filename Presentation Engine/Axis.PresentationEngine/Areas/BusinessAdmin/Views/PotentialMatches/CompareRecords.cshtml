@@ -1,0 +1,242 @@
+﻿<keypress-events ignore-enter="true" permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read"></keypress-events>
+
+<div class="panel panel-main panel-light padding-xsmall">
+    <div class="panel-body">
+        <div class="row padding-bottom-xsmall padding-top-xsmall header-compact header-intro">
+            <div class="col-md-5">
+                <h1>Compare Records </h1>
+                <p>Should these records be merged?</p>
+
+            </div>
+            <div class="col-md-7 padding-top-small">
+                <button type="button" security permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read" class="btn btn-info-alt pull-right" id="btnSave" ng-click="notMatchRecord()" name="btnSave"><i class="fa fa-times"></i> NOT A MATCH</button>
+                <button type="button" security permission-key="BusinessAdministration-ClientMerge-ClientMerge" permission="read" class="btn btn-default pull-right" id="btnSave" name="btnSave" ng-click="mergeClient()"><i class="fa fa-compress"></i> MERGE RECORDS</button>
+            </div>
+        </div>
+        <div class="row padding-top-xsmall">
+            <div class="padding-right-small col-md-6" data-ng-repeat="contact in contactDetails">
+                <div class="panel panel-light padding-xsmall  border-right">
+                    <div class="panel-body padding-top-xsmall compare">
+                        <div class="row padding-bottom-xsmall border-bottom margin-bottom-xsmall">
+                            <div class="col-md-12 nopadding-left">
+                                <span><xen-radio-button data-ng-model="isMaster" class="text-nowrap" data-label="Set as master" data-ng-value="($first)?false:true" data-on-click="selectMasterCallback(($first)?false:true)" /></span>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="row padding-bottom-xsmall padding-top-xsmall header-compact header-intro nomargin-top">
+
+                            <div class="col-md-3 col-sm-3 border-right">
+                                <dl>
+                                    <dt>MRN</dt>
+                                    <dd> {{ contact[0].DataItems[0].MRN }}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <dl>
+                                    <dt>NAME</dt>
+                                    <dd>{{contact[0].DataItems[0].FirstName}} {{contact[0].DataItems[0].Middle}} {{contact[0].DataItems[0].LastName}}</dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <dl>
+                                    <dt>GENDER</dt>
+                                    <dd>{{contact[0].DataItems[0].GenderID===1 ? 'Male' : (contact[0].DataItems[0].GenderID===2 ? 'Female' : 'Unknown')}}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="vertical-scrollbox vertical-scrollbox-tall padding-left-small margin-bottom-small padding-top-xsmall">
+                            <div class="row padding-top-xsmall">
+                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                    <dl>
+                                        <dt>DATE OF BIRTH</dt>
+                                        <dd>{{contact[0].DataItems[0].DOB | formatDate:'MM/DD/YYYY'}}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                    <dl>
+                                        <dt>AGE</dt>
+                                        <dd>{{contact[0].DataItems[0].DOB | ageToShow:DeceasedDate}}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                    <dl>
+                                        <dt>SSN</dt>
+                                        <dd>{{contact[0].DataItems[0].SSN | toMaskSSN }}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="row padding-top-xsmall padding-bottom-xsmall">
+                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                    <dl>
+                                        <dt>MEDICAID</dt>
+                                        <dd>{{contact[5]}}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                    <dl>
+                                        <dt>DRIVER LICENSE</dt>
+                                        <dd>{{contact[0].DataItems[0].DriverLicense}}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                    <dl>
+                                        <dt>DRIVER LICENSE STATE</dt>
+                                        <dd>{{contact[0].DataItems[0].DriverLicenseStateID ? getText("StateProvince",contact[0].DataItems[0].DriverLicenseStateID): ""}}</dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Addresses -->
+                        <h3 class="uppercase nomargin padding-xsmall border-top margin-right-small padding-bottom-small">Address </h3>
+                        <div class="vertical-scrollbox vertical-scrollbox-tall padding-left-small margin-bottom-small padding-top-xsmall">
+                            <div class="row section-block margin-bottom-xsmall margin-right-small " data-ng-repeat="address in contact[1].DataItems">
+                                <div class="col-md-4 col-sm-4">
+                                    <dl>
+                                        <dt>Address Type</dt>
+                                        <dd>{{address.AddressTypeID ? (getText("AddressType",address.AddressTypeID)).replace("/"," / ") : ""}}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                    <dl>
+                                        <dt>Address</dt>
+                                        <dd>
+                                            {{ address.Line1 ? address.Line1 + ", " : ""}} {{ address.Line2 ? address.Line2 +", " : "" }} {{address.City? address.City + ", " : ""}}
+                                            {{address.StateProvince ? getText("StateProvince", address.StateProvince) : ", "  + ""}} {{address.Zip? address.Zip : ""}}
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Phone Numbers -->
+                        <h3 class="uppercase nomargin padding-xsmall border-top padding-bottom-small">Phone</h3>
+                        <div class="vertical-scrollbox vertical-scrollbox-tall padding-left-small margin-bottom-small padding-top-xsmall">
+                            <div class="row margin-bottom-xsmall section-block margin-right-small" data-ng-repeat="phone in contact[2].DataItems track by $index ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                            <dl>
+                                                <dt>Phone Type</dt>
+                                                <dd>{{phone.PhoneTypeID ? getText("PhoneType", phone.PhoneTypeID) : ""}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-7">
+                                            <dl>
+                                                <dt>Phone #</dt>
+                                                <dd>{{phone.Number ? (phone.Number | toPhone) : ""}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-5">
+                                            <dl>
+                                                <dt>Ext</dt>
+                                                <dd>{{phone.Extension}}</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                            <dl>
+                                                <dt>Permission</dt>
+                                                <dd>{{phone.PhonePermissionID ? getText('PhonePermission', phone.PhonePermissionID): ""}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <dl>
+                                                <dt>Effective</dt>
+                                                <dd>{{phone.EffectiveDate ? (phone.EffectiveDate | formatDate:'MM/DD/YYYY') : ""}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <dl>
+                                                <dt>Expiration</dt>
+                                                <dd>{{phone.ExpirationDate ? (phone.ExpirationDate| formatDate:'MM/DD/YYYY'): ""}}</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Email Addresses -->
+                        <h3 class="uppercase nomargin padding-xsmall border-top padding-bottom-small">Email</h3>
+                        <div class="vertical-scrollbox vertical-scrollbox-tall padding-left-small margin-bottom-small padding-top-xsmall">
+                            <div class="row margin-bottom-xsmall section-block margin-right-small" data-ng-repeat="email in contact[3].DataItems track by $index ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <dl>
+                                                <dt>Email</dt>
+                                                <dd class="break-word">{{email.Email}}</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                            <dl>
+                                                <dt>Permission</dt>
+                                                <dd>{{email.EmailPermissionID ? (getText('EmailPermission',email.EmailPermissionID)) : ""}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <dl>
+                                                <dt>Effective</dt>
+                                                <dd>{{email.EffectiveDate ? (email.EffectiveDate | formatDate:'MM/DD/YYYY') : ""}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <dl>
+                                                <dt>Expiration</dt>
+                                                <dd>{{email.ExpirationDate ? (email.ExpirationDate | formatDate:'MM/DD/YYYY') : ""}}</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Collateral -->
+                        <h3 class="uppercase nomargin padding-xsmall border-top padding-bottom-small">Collateral</h3>
+                        <div class="vertical-scrollbox vertical-scrollbox-tall padding-left-small margin-bottom-small padding-top-xsmall">
+                            <div class="row margin-bottom-xsmall section-block margin-right-small" data-ng-repeat="collateral in contact[4].DataItems track by $index ">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-8">
+                                            <dl>
+                                                <dt>NAME</dt>
+                                                <dd>{{collateral.FirstName}} {{collateral.Middle}} {{collateral.LastName}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4">
+                                            <dl>
+                                                <dt>Date of Birth</dt>
+                                                <dd>{{collateral.DOB ? (collateral.DOB | formatDate:'MM/DD/YYYY') : ""}}</dd>
+                                            </dl>
+                                        </div>
+                                    </div><div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                            <dl>
+                                                <dt>Collateral Type</dt>
+                                                <dd>{{collateral.RelationshipGroupID ? (getCollateralType('CollateralType',collateral.RelationshipGroupID)) : ""}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <dl>
+                                                <dt>Gender</dt>
+                                                <dd>{{collateral.GenderID===1 ? 'Male' : (collateral.GenderID===2 ? 'Female' : 'Unknown')}}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4 col-xs-6">
+                                            <dl>
+                                                <dt>SSN</dt>
+                                                <dd>{{collateral.SSN ? (collateral.SSN | toMaskSSN) : "" }}</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

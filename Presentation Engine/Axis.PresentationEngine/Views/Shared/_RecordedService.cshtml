@@ -1,0 +1,396 @@
+﻿<div data-ng-if="isVoidedShown">
+    <h3 class="uppercase padding-xsmall padding-bottom-small nomargin border-top">Void Details</h3>
+    <div class="row">
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="voidDate">Void Date</label>
+                <input type="text" ng-disabled="true" data-ng-model="voidModel.VoidDate" class="form-control prevent-disable" name="VoidDate" />
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="voidTime">Void Time</label>
+                <input type="text" ng-disabled="true" data-ng-model="voidModel.VoidTime" class="form-control prevent-disable" name="voidTime" />
+
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <label for="submittedBy">Submitted by</label>
+                <input type="text" ng-disabled="true" data-ng-model="voidModel.UserName" class="form-control prevent-disable" name="submittedBy" />
+
+            </div>
+        </div>
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg padding-bottom-small">
+                <div class="form-group-lg">
+                    <xen-checkbox data-ng-model="voidModel.IsCreateCopyToEdit" class="prevent-disable" ng-disabled="true" data-checkbox-id="createCopyToEdit" data-label="Create Copy to Edit" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 padding-bottom-small">
+            <div class="form-group-lg">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="voidReason">Reason </label>
+                    <select ng-model="voidModel.ServiceRecordingVoidReasonID" ng-disabled="true" id="voidReason" class="form-control prevent-disable"
+                            ng-options="voidReason.ID as voidReason.Name for voidReason in voidRecordedServiceReasons" name="voidReason">
+                        <option value="">Select</option>
+
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 checkbox-set padding-bottom-small">
+            <div class="form-inline" data-ng-if="voidModel.ServiceRecordingVoidReasonID==voidModel.DataEntryErrorID">
+                <xen-checkbox data-ng-model="voidModel.DataEntryErrorCheck" class="prevent-disable" ng-disabled="true" data-label="{{k}}" ng-repeat="(k,v) in filterDataEntryReasons(voidModel)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom">
+        <div class="col-md-12">
+            <div class="form-group-lg ">
+
+                <div class="form-group-lg">
+                    <xen-memobox label="Comments" rows="5" maxlength="500" is-disabled="true" ng-model="voidModel.Comments" name="Comments"></xen-memobox>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="uppercase padding-xsmall padding-bottom-small nomargin border-top">Service Details</h3>
+</div>
+
+<div class="row section-block margin-bottom-xsmall">
+    <div class="padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3 padding-bottom-xsmall" ng-if="false">
+                        <div id="divProvider" class="form-group-lg padding-bottom-small">
+                            <label for="Provider">Provider</label>
+                            <input type="text" class="form-control prevent-disable" id="startDate" name="startDate" ng-trim="true" ng-model="serviceRecording.Provider.UserFullName" ng-disabled="true" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-bottom-xsmall" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.recordingServiceStartDate.$invalid && !ctrl.serviceRecordingForm.recordingServiceStartDate.$pristine }">
+                        <div id="startDate" class="form-group-lg padding-bottom-small">
+                            <label for="startDate">Start Date <sup data-ng-if="bapnScreen || isCrisisLine">&nbsp &#134</sup> <sup data-ng-if="isLawLiaison">*</sup> </label>
+                            <xen-date-picker id="recordingServiceStartDate" future-date-validate="true" date-required="(bapnScreen && validateSignature()) || isLawLiaison || (isCrisisLine && signatureVerified) || serviceRecording.CallStartTime || serviceRecording.CallEndDate" data-validation-name="Start Date"
+                                             is-disabled="isReadOnlyForm || !(isLawLiaison || bapnScreen || isManager)" ng-model="serviceRecording.CallStartDate" end-date="serviceRecording.CallEndDate" start-date="CallMinStartDate" name="{{'recordingServiceStartDate'}}"
+                                             greater-than-date-validation="true" date-options="dateOptions" data-compare-element-name="recordingServiceEndDate" call-function-on-change="validateRequiredCallStartDate()"></xen-date-picker>
+                            <p id="dateOfIncidentError" ng-show="ctrl.serviceRecordingForm.recordingServiceStartDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                            <p id="dateOfIncidentError" ng-show="!bapnScreen && ctrl.serviceRecordingForm.recordingServiceStartDate.$error.futureDate" ng-cloak class="error-block">Start date can not be in the future.</p>
+                            <p id="dateOfIncidentMinDateError" ng-cloak ng-show="ctrl.serviceRecordingForm.recordingServiceStartDate.$error.lessThanMinValidDate" class="error-block">Start date should be greater than 1/1/1970</p>
+                        </div>
+                    </div>
+                    <div id="startTimeContainer" class="col-md-4 padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.startTime.$invalid && !ctrl.serviceRecordingForm.startTime.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="startTime">Start Time <sup data-ng-if="bapnScreen || isCrisisLine">&nbsp &#134</sup> <sup data-ng-if="isLawLiaison">*</sup>  </label>
+                            <input type="text" data-ng-model="serviceRecording.CallStartTime" ng-required="(bapnScreen && validateSignature()) || isLawLiaison || (isCrisisLine && signatureVerified)" ng-disabled="isReadOnlyForm || !(isLawLiaison || bapnScreen || isManager)" ng-change="calcDuration()"
+                                   ui-mask="99:99" placeholder="hh:mm" class="form-control" id="startTime" name="startTime" data-validation-name="Start Time" />
+                            <p id="startTimeError" ng-show="ctrl.serviceRecordingForm.startTime.$error.pattern" ng-cloak class="error-block">Please enter valid start time.</p>
+                            <p id="startTimeFutureError" ng-show="ctrl.serviceRecordingForm.startTime.$error.date" ng-cloak class="error-block">Start Time can not be in the future.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 nopadding-right">
+                        <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                            <fieldset id="aptStartDateAMPMF">
+                                <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                <span><xen-radio-button data-ng-model="serviceRecording.CallStartAMPM" on-change="calcDuration();" ng-disabled="isReadOnlyForm || !(isLawLiaison || bapnScreen || isManager)" data-radio-button-id="aptStartAM" data-label="AM" data-ng-value='"AM"' /></span>
+                                <span><xen-radio-button data-ng-model="serviceRecording.CallStartAMPM" on-change="calcDuration();" ng-disabled="isReadOnlyForm || !(isLawLiaison || bapnScreen || isManager)" data-radio-button-id="aptStartPM" data-label="PM" data-ng-value='"PM"' /></span>
+                            </fieldset>
+                        </div>
+                        <div ng-hide="true">
+                            <input type="text" class="form-control" ng-model="serviceRecording.CallStartAMPM" id="CallStartAMPMHidden" name="CallStartAMPMHidden" data-validation-name="Start Time AM/PM" ng-required="serviceRecording.CallStartTime || (bapnScreen && validateSignature()) || (isLawLiaison && signatureVerified) || (isCrisisLine && signatureVerified)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4 padding-bottom-xsmall" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.recordingServiceEndDate.$invalid && !ctrl.serviceRecordingForm.recordingServiceEndDate.$pristine }">
+                        <div id="endDate" class="form-group-lg padding-bottom-small">
+                            <label for="EndDate">End Date <sup>&nbsp &#134</sup></label>
+                            <xen-date-picker id="recordingServiceEndDate" start-date="serviceRecording.CallStartDate" date-required="(bapnScreen && validateSignature()) || signatureVerified || (!bapnScreen && serviceRecording.CallEndTime) || serviceRecording.CallEndTime" less-than-date-validation="true"
+                                             future-date-validate="true" data-validation-name="End Date" is-disabled="isReadOnlyForm || !(isLawLiaison || bapnScreen || isManager)" ng-model="serviceRecording.CallEndDate"
+                                             name="{{'recordingServiceEndDate'}}" date-options="dateOptions" data-compare-element-name="recordingServiceStartDate" call-function-on-change="validateRequiredCallEndDate()"></xen-date-picker>
+                            <p id="dateOfIncidentError" ng-show="ctrl.serviceRecordingForm.recordingServiceEndDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+                            <p ng-show="!bapnScreen && ctrl.serviceRecordingForm.recordingServiceEndDate.$error.futureDate" ng-cloak class="error-block">End date can not be in the future.</p>
+                            <p ng-show="ctrl.serviceRecordingForm.recordingServiceEndDate.$error.lessThanDate" ng-cloak class="error-block">End date can not be less than start date.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding-bottom-small" id="endTimeContainer" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.endTime.$invalid && !ctrl.serviceRecordingForm.endTime.$pristine }">
+                        <div class="form-group-lg padding-bottom-small">
+                            <label for="endTime">End Time <sup>&nbsp &#134</sup></label>
+                            <input type="text" ng-required="(bapnScreen && validateSignature()) || (signatureVerified)" ng-disabled="isReadOnlyForm || !(isLawLiaison || bapnScreen || isManager)" data-ng-model="serviceRecording.CallEndTime" ng-change="calcDuration()"
+                                   ui-mask="99:99" placeholder="hh:mm" class="form-control" id="endTime" name="endTime" data-validation-name="End Time" />
+                            <p id="endTimeError" ng-show="ctrl.serviceRecordingForm.endTime.$error.pattern" ng-cloak class="error-block">Please enter valid end time.</p>
+                            <p id="endTimeFutureError" ng-show="!bapnScreen && ctrl.serviceRecordingForm.endTime.$error.date" ng-cloak class="error-block">End Time can not be in the future.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 nopadding-right">
+                        <div class="form-group-lg stackable padding-top-small padding-bottom-small">
+                            <fieldset id="aptStartDateAMPMF">
+                                <legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+                                <span><xen-radio-button data-ng-model="serviceRecording.CallEndAMPM" on-change="calcDuration()" ng-disabled="isReadOnlyForm || !(isLawLiaison || bapnScreen || isManager)" data-radio-button-id="aptEndAM" data-label="AM" data-ng-value='"AM"' /></span>
+                                <span><xen-radio-button data-ng-model="serviceRecording.CallEndAMPM" on-change="calcDuration()" ng-disabled="isReadOnlyForm || !(isLawLiaison || bapnScreen || isManager)" data-radio-button-id="aptEndPM" data-label="PM" data-ng-value='"PM"' /></span>
+                            </fieldset>
+                            <div ng-hide="true">
+                                <input type="text" class="form-control" ng-model="serviceRecording.CallEndAMPM" id="CallEndAMPMHidden" name="CallEndAMPMHidden" data-validation-name="End Time AM/PM" ng-required="serviceRecording.CallEndTime || (bapnScreen && validateSignature()) || (signatureVerified)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-5 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.ProgramUnit.$invalid && !ctrl.serviceRecordingForm.ProgramUnit.$pristine }">
+            <label for="ProgramUnit">Program Unit <sup>{{bapnScreen ?  '*' : '&nbsp &#134'}}</sup> </label>
+            <select ng-disabled="isLawLiaison" ng-model="organizationDetails" id="ProgramUnit" data-validation-name="Program Unit" name="ProgramUnit" class="form-control" ng-required="bapnScreen || (!bapnScreen && signatureVerified)"
+                    ng-options="progUnit as progUnit.Name for progUnit in programUnits | orderBy:'Name'" ng-change="onProgramUnitChanged(organizationDetails)" auto-focus event-focus="autoFocus">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.ServiceType.$invalid && !ctrl.serviceRecordingForm.ServiceType.$pristine }">
+            <label for="ServiceType">Service Type <sup>&nbsp &#134</sup></label>
+            <select ng-disabled="isReadOnlyForm" ng-model="serviceRecording.ServiceTypeID" id="ServiceType" name="ServiceType" data-validation-name="Service Type" class="form-control" ng-required="signatureVerified || validateSignature()"
+                    ng-options="progUnit.ID as progUnit.Name for progUnit in getLookupsByType('ServiceType')">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.Service.$invalid && !ctrl.serviceRecordingForm.Service.$pristine }">
+            <label for="Service">Service <sup>&nbsp &#134</sup></label>
+            <select ng-disabled="isReadOnlyForm" ng-model="serviceRecording.ServiceItemID" id="Service" name="Service" data-validation-name="Service@*{{bapnScreen? ' Item' : ''}}*@" class="form-control" ng-required="signatureVerified || validateSignature()"
+                    ng-options="serviceItem.ServiceID as serviceItem.ServiceName for serviceItem in activeRecordingServices | orderBy: 'ServiceName'" ng-change="onServiceItemChanged(serviceRecording.ServiceItemID); clearServiceStatus()">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small"  ng-if="!bapnScreen && serviceRecording.ServiceItemID == crisisServiceID">
+        <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(pageSecurity)}}" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.ServiceStatus.$invalid && !ctrl.serviceRecordingForm.ServiceStatus.$pristine }">
+            <label for="ServiceStatus">Service Status<sup>*</sup></</label>
+            <select ng-disabled="isReadOnlyForm" ng-model="serviceRecording.ServiceStatusID" id="ServiceStatus" name="ServiceStatus" data-validation-name="Service Status" class="form-control"  ng-required="true"
+                    ng-options="serviceStatus.ID as serviceStatus.Name for serviceStatus in activeServiceStatusList | filter: {ServiceID: serviceRecording.ServiceItemID ? serviceRecording.ServiceItemID : -1} : true | orderBy: 'Name'">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>
+<div class="row section-block margin-bottom-xsmall">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.AttendanceStatus.$invalid && !ctrl.serviceRecordingForm.AttendanceStatus.$pristine }">
+                    <label for="AttendanceStatus">Attendance Status <sup>&nbsp &#134</sup></label>
+                    <select ng-disabled="isReadOnlyForm" ng-model="serviceRecording.AttendanceStatusID" id="AttendanceStatus" name="AttendanceStatus" data-validation-name="Attendance Status" ng-required="signatureVerified || validateSignature()"
+                            class="form-control" ng-options="attendanceStatus.ID as attendanceStatus.Name for attendanceStatus in activeAttendanceStatusList | filter: {ServiceID: serviceRecording.ServiceItemID ? serviceRecording.ServiceItemID : -1} : true | orderBy: 'Name'">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-show="bapnScreen && !hideTracking">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.TrackingField.$invalid && !ctrl.serviceRecordingForm.TrackingField.$pristine }">
+                    <label for="TrackingField">Tracking Field </label>
+                    <select ng-disabled="isReadOnlyForm" ng-model="serviceRecording.TrackingFieldID" id="TrackingField" name="TrackingField" data-validation-name="Tracking Field" class="form-control"
+                            ng-options="TrackingField.ID as TrackingField.Name for TrackingField in activeTrackingFieldList | filter: {ServiceID: serviceRecording.ServiceItemID ? serviceRecording.ServiceItemID : -1} : true | orderBy: 'Name'">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.recipient.$invalid && !ctrl.serviceRecordingForm.recipient.$pristine }">
+                    <label for="recipientCode">Recipient <sup>&nbsp &#134</sup></label>
+                    <select ng-disabled="isReadOnlyForm" ng-required="signatureVerified || validateSignature()" data-validation-name="Recipient" ng-model="serviceRecording.RecipientCodeID" id="recipient" name="recipient" class="form-control"
+                        ng-options="recipientCode.ID as recipientCode.Name for recipientCode in (activeRecordingRecipientCodeList | filter: { ServiceID: serviceRecording.ServiceItemID ? serviceRecording.ServiceItemID : -1 } : true | orderBy:'Name')">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-if="false">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.recipientCode.$invalid && !ctrl.serviceRecordingForm.recipientCode.$pristine }">
+                    <label for="recipientCode">Recipient #</label>
+                    <input type="text" class="form-control" id="RecipientCode" name="recipientCode" ng-pattern="/^[0-9]{1,3}$/" ng-model="serviceRecording.RecipientCode" ng-trim="true" data-validation-name="Recipient Code" />
+                    <p ng-show="ctrl.serviceRecordingForm.recipientCode.$error.pattern" class="error-block">Recipient code only allows numeric characters upto 3 digits</p>
+                </div>
+            </div>
+            <div class="col-md-6 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-cloak>
+                    <label for="WhoAttended">Who Attended</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-disabled="isReadOnlyForm" id="WhoAttended" name="WhoAttended" ng-model="WhoAttended" ng-trim="true" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" ng-disabled="isReadOnlyForm" ng-click="addWhoAttendedToList();">
+                                <i class="fa fa-plus-circle" />
+                            </button>
+                        </span>
+                    </div>
+                    <p ng-show="noResultsWhoAttended" ng-cloak class="error-block">No Results Found!</p>
+                </div>
+                <div class="row pod-group pod-group-sm">
+                    <div class="pod" ng-repeat="attended in serviceRecording.AttendedList | filter: { IsActive : true } track by $index">
+                        <div>
+                            <p><strong>{{attended.Name}}</strong></p>
+                        </div>
+                        <a class="text-info close" href="javascript:void(0)" ng-click="!isReadOnlyForm && removeAttendee(attended)" title="Remove Attendee" space-key-press><span class="sr-only"></span>x</a>
+                    </div>
+                    <div ng-hide="true">
+                        {{attendedName=(serviceRecording.AttendedList | filter: { IsActive : true }| map:'Name').join(',')}}
+                        <input type="text" class="form-control" ng-model="attendedName" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row padding-top-small">
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.DeliveryMethod.$invalid && !ctrl.serviceRecordingForm.DeliveryMethod.$pristine }">
+            <label for="DeliveryMethod">Delivery Method <sup>&nbsp &#134</sup></label>
+            <select ng-disabled="isReadOnlyForm" ng-model="serviceRecording.DeliveryMethodID" id="DeliveryMethod" data-validation-name="Delivery Method" name="DeliveryMethod" ng-required="signatureVerified || validateSignature()" class="form-control"
+                    ng-options="deliveryMethod.ID as deliveryMethod.Name for deliveryMethod in (activeRecordingDeliveryMethodList | filter:{DataKey: permissionKey, ServiceID: serviceRecording.ServiceItemID ? serviceRecording.ServiceItemID : -1 } : true)  | orderBy:'Name'">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3 padding-bottom-small">
+        <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.PlacesofService.$invalid && !ctrl.serviceRecordingForm.PlacesofService.$pristine }">
+            <label for="PlacesofService">Place of Service <sup>&nbsp &#134</sup></label>
+            <select ng-disabled="isReadOnlyForm" ng-model="serviceRecording.ServiceLocationID" id="PlacesofService" data-validation-name="Place Of Service" name="PlacesofService" class="form-control" ng-required="signatureVerified || validateSignature()"
+                    ng-options="serviceLocation.ID as serviceLocation.Name for serviceLocation in (activeRecordingServiceLocationList | filter: {DataKey: permissionKey, ServiceID: serviceRecording.ServiceItemID ? serviceRecording.ServiceItemID : -1 } : true) | orderBy:'Name'">
+                <option value="">Select</option>
+            </select>
+            <span class="select-btn"><i class="xen-select"></i></span>
+        </div>
+    </div>
+</div>
+<div class="row section-block margin-bottom-xsmall">
+		<div class="col-md-12">
+				<div class="row" ng-if="false">
+						<div class="col-md-3 padding-bottom-small">
+								<div id="doberrortd" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.serviceRecordingForm.ServiceDate.$invalid && !ctrl.serviceRecordingForm.ServiceDate.$pristine}">
+										<label for="ServiceDate">Service Date </label>
+										<mydatepicker opened="opened" id="ServiceDate" new-date="serviceRecording.ServiceStartDate" end-date="endDate" start-date="startDate" dob-name="ServiceDate" date-options="dateOptions"></mydatepicker>
+										<p id="doberror" ng-show="ctrl.serviceRecordingForm.ServiceDate.$error.date" ng-cloak class="error-block">Please select valid date.</p>
+								</div>
+						</div>
+						<div class="col-md-2 padding-bottom-small">
+								<div class="form-group-lg padding-bottom-small">
+										<label for="ServiceStartTime">Start Time</label>
+										<input type="text" class="form-control" id="ServiceStartTime" name="ServiceStartTime" ng-trim="true" ng-model="serviceRecording.ServiceStartTime" ng-change="calcDuration()" />
+								</div>
+						</div>
+						<div class="col-md-2 nopadding-right">
+								<div class="form-group-lg stackable padding-top-small padding-bottom-small">
+										<fieldset id="aptDateAMPMF">
+												<legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+												<span><xen-radio-button data-ng-model="serviceRecording.ServiceStartAMPM" data-radio-button-id="serviceStartDateAM" data-on-click="calcDuration()" data-label="AM" data-ng-value='"AM"' /></span>
+												<span><xen-radio-button data-ng-model="serviceRecording.ServiceStartAMPM" data-radio-button-id="serviceEndDatePM" data-on-click="calcDuration()" data-label="PM" data-ng-value='"PM"' /></span>
+										</fieldset>
+								</div>
+						</div>
+						<div class="col-md-2 padding-bottom-small">
+								<div class="form-group-lg padding-bottom-small">
+										<label for="ServiceEndTime">End Time</label>
+										<input type="text" class="form-control" id="ServiceEndTime" name="ServiceEndTime" ng-trim="true" ng-model="serviceRecording.ServiceEndTime" ng-change="calcDuration()" />
+								</div>
+						</div>
+						<div class="col-md-2 nopadding-right">
+								<div class="form-group-lg stackable padding-top-small padding-bottom-small">
+										<fieldset id="aptDateAMPMF">
+												<legend class="uppercase"><span class="sr-only">Select time frame</span></legend>
+												<span><xen-radio-button data-ng-model="serviceRecording.ServiceEndAMPM" data-radio-button-id="serviceEndDateAM" data-on-click="calcDuration()" data-label="AM" data-ng-value='"AM"' /></span>
+												<span><xen-radio-button data-ng-model="serviceRecording.ServiceEndAMPM" data-radio-button-id="serviceEndDatePM" data-on-click="calcDuration()" data-label="PM" data-ng-value='"PM"' /></span>
+										</fieldset>
+								</div>
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-md-3 padding-bottom-small">
+								<div class="form-group-lg padding-bottom-small">
+										<label for="SentToCMHC">Sent To CMHC</label>
+										<input type="text" ng-disabled="true" class="form-control prevent-disable" id="SentToCMHC" name="SentToCMHC" ng-trim="true" ng-model="serviceRecording.SentToCMHCDate" />
+
+								</div>
+						</div>
+						<div class="col-md-3 padding-bottom-small">
+								<div class="form-group-lg padding-bottom-small">
+										<label for="Duration">Duration</label>
+										<input type="text" ng-disabled="true" class="form-control prevent-disable" id="Duration" name="Duration" ng-trim="true" ng-model="serviceRecording.Duration" />
+								</div>
+						</div>
+				</div>
+		</div>
+</div>
+<div class="row padding-top-small">
+		<div class="col-md-3 padding-bottom-small">
+				<div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.ProviderOfService.$invalid && !ctrl.serviceRecordingForm.ProviderOfService.$pristine }">
+						<label for="ProviderOfService">Provider Of Service <sup>{{bapnScreen ?  '*' : '&nbsp &#134'}}</sup></label>
+						<xen-providers provider-model="serviceRecording.UserID"
+																					primary-key="pageSecurity"
+																					element-name="ProviderOfService"
+																					element-id="ProviderOfService"
+																					element-class="ellipsis prevent-disable"
+																					validation-name="Provider Of Service"
+																					is-disabled="true"
+																					is-required="(!bapnScreen && signatureVerified)"
+																					filter-criteria="{{providerKey}}"
+																					element-type="typeahead">
+						</xen-providers>
+				</div>
+		</div>
+		<div class="col-md-3 padding-bottom-small">
+				<div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.serviceRecordingForm.SupervisingProvider.$invalid && !ctrl.serviceRecordingForm.SupervisingProvider.$pristine }">
+						<label for="SupervisingProvider">Supervising Provider</label>
+						<xen-providers provider-model="serviceRecording.SupervisorUserID"
+																					primary-key="pageSecurity"
+																					element-name="SupervisingProvider"
+																					element-id="SupervisingProvider"
+																					element-class="ellipsis prevent-disable"
+																					validation-name="Supervising Provider"
+																					is-disabled="isReadOnlyForm"
+																					is-required="!bapnScreen"
+																					filter-criteria="{{supervisorproviderKey}}"
+																					element-type="typeahead">
+						</xen-providers>
+				</div>
+		</div>
+</div>
+<div class="row padding-top-small">
+		<div class="col-md-3 padding-bottom-small form-group-lg ">
+				<div ng-class="{ 'has-error' : ctrl.serviceRecordingForm.CoProvider.$invalid && !ctrl.serviceRecordingForm.CoProvider.$pristine }">
+						<label for="CoProvider">Co-Provider</label>
+						<xen-providers provider-model="serviceRecording.CoProvider"
+																					provider-lists="serviceRecording.AdditionalUserList"
+																					primary-key="pageSecurity"
+																					element-name="CoProvider"
+																					element-id="CoProvider"
+																					element-class="ellipsis"
+																					validation-name="CoProvider"
+																					is-disabled="isReadOnlyForm || noAccess"
+																					filter-criteria="{{providerKey}}"
+																					element-type="multiselect">
+						</xen-providers>
+				</div>
+		</div>
+</div>

@@ -1,0 +1,296 @@
+﻿<keypress-events on-save="safeSubmit(false, false)" on-next="safeSubmit(true, false)" on-cancel="cancel()" on-add="reset()" enter-key-stop="enterKeyStop" table-id="contactsTable" stop-next="stopNext" save-on-enter="saveOnEnter" permission-key="{{permissionKey}}" permission="{{resolvePermission(collateral.ContactRelationshipID)}}"></keypress-events>
+<div>
+    <div class="jumbotron">
+        <form class="form-inline" name="searchForm" data-ng-submit="searchForm.$valid">
+            <div class="container-fluid padding-small">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 text-center search-box form-group-lg" security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionId)}}" permission-mode="readonly" dual-permission="true">
+                        <input type="text" name="ClientSearch" id="txtClientSearch" ng-model="searchText" auto-focus event-focus="autoFocus"
+                               placeholder="Search for Collateral" tabindex="0" class="form-control" ng-keydown="($event.which === 13)?EnableDisableEnterKey(searchText,true):0" />
+                        @* added icon as button *@
+                        <span class="input-group-btn">
+                            <button type="submit" ng-click="EnableDisableEnterKey(searchText,true)" class="btn btn-link">
+                                <i class="fa fa-search fa-fw"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel panel-light padding-xsmall">
+        <div class="panel-body">
+            <div class="modal fade" id="contactListModel" tabindex="-1" role="dialog" aria-labelledby="contactListModel" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" aria-label="Close" ng-click="cancelModel();"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Contacts</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table id="contactsTable" data-toggle="table"
+                                   data-show-columns="true"
+                                   data-search="true"
+                                   data-minimum-count-columns="2"
+                                   data-filter-control="false"
+                                   data-mobile-responsive="true"
+                                   data-filter-bar
+                                   data-advanced-search="false"
+                                   data-show-multi-sort="true"
+                                   data-classes="table table-stripe-borders"
+                                   bootstrap-table="tableoptions" grid-arrow-selector>
+                                <thead>
+                                    <tr>
+                                        <th data-field="fName"
+                                            data-sortable="true">First Name</th>
+                                        <th data-field="lName"
+                                            data-sortable="true">Last Name</th>
+                                        <th data-field="mname"
+                                            data-sortable="true">Middle Name</th>
+                                        <th data-field="birthdate"
+                                            data-sortable="true">Date Of Birth</th>
+                                        <th data-field="gender"
+                                            data-sortable="true">Gender</th>
+                                        <th data-field="ssn"
+                                            data-sortable="true">SSN</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionId)}}" permission-mode="readonly" dual-permission="true">
+                <form role="form" name="ctrl.contactForm" check-form data-on-save="save(isNext, isMandatory, hasErrors)" ng-submit="ctrl.contactForm.$valid" bs-modifiable="true"
+                      server-validate="ServerValidationErrors" set-form-status bs-modifiable="true">
+                    <div class="row section-block margin-bottom-small">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.contactForm.FirstName.$invalid && !ctrl.contactForm.FirstName.$pristine}">
+                                <label for="FirstName">First Name <sup>*</sup></label>
+                                <input type="text" class="form-control ellipsis" id="FirstName" autofocus="autofocus" data-ng-model="collateral.FirstName" auto-focus event-focus="autoFocusEdit"
+                                       data-ng-trim="true" data-ng-required="true" name="FirstName" data-ng-maxlength="400" data-validation-name="First Name" />
+                                <p data-ng-show="ctrl.contactForm.FirstName.$error.maxlength" data-ng-cloak class="error-block">First Name is too long</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.contactForm.lastname.$invalid && !ctrl.contactForm.lastname.$pristine}">
+                                <label for="lastname">Last Name <sup>*</sup></label>
+                                <input type="text" name="lastname" id="lastname" data-ng-model="collateral.LastName" data-ng-maxlength="400" data-ng-trim="true" data-ng-required="true"
+                                       class="form-control ellipsis" data-validation-name="Last Name" />
+                                <p data-ng-show="ctrl.contactForm.LastName.$error.maxlength" data-ng-cloak class="error-block">Error Here</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.contactForm.Middle.$invalid && !ctrl.contactForm.Middle.$pristine}">
+                                <label for="Middle">Middle Name</label>
+                                <input type="text" id="Middle" name="Middle" class="form-control" data-ng-model="collateral.Middle" ng-maxlength="200" />
+                                <p ng-show="ctrl.contactForm.Middle.$error.maxlength" ng-cloak class="error-block">Middle Name is too long</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="suffix">Suffix</label>
+                                <select data-ng-model="collateral.SuffixID" id="suffix" class="form-control" data-ng-options="suffix.ID as suffix.Name for suffix in getLookupsByType('Suffix')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.contactForm.Gender.$invalid && !ctrl.contactForm.Gender.$pristine}">
+                                <label for="Gender">Gender</label>
+                                <select data-ng-model="collateral.GenderID" id="Gender" name="Gender" class="form-control" data-ng-options="gender.ID as gender.Name for gender in getLookupsByType('Gender')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small" id="doberrortd" ng-class="{ 'has-error' : ctrl.contactForm.dob.$invalid && !ctrl.contactForm.dob.$pristine}">
+                                <label for="dob">Date of Birth</label>
+                                <mydatepicker opened="opened" id="dob" new-date="collateral.DOB" end-date="endDate" start-date="startDate" dob-name="dob" date-options="dateOptions" call-function-on-change="calculateAge()"></mydatepicker>
+                                <p id="doberror" data-ng-show="ctrl.contactForm.dob.$error.date" data-ng-cloak class="error-block">Please select valid date</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="age">Age</label>
+                                <input type="text" tabindex="-1" id="age" name="age" value="{{ collateral.DOB | ageToShow:collateral.DeceasedDate }}" readonly="readonly" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <ng-form name="ctrl.contactForm.ContactRelationshipForm" novalidate bs-modifiable="true" set-form-status="child">
+                        @Html.Partial("../Shared/_ContactRelationship")
+                    </ng-form>
+                    <div class="row section-block padding-top-small margin-bottom long-names">
+                        <div class="col-md-3 padding-bottom-small col-inline">
+                            <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.contactForm.LivingWithCollateral.$invalid && !ctrl.contactForm.LivingWithCollateral.$pristine}">
+                                <label for="LivingWithCollateral">Living with <span class="text-nowrap">Contact <sup>*</sup></span></label>
+                                <select data-ng-model="collateral.LivingWithClientStatus" data-ng-required="true" id="LivingWithCollateral" name="LivingWithCollateral" class="form-control" ng-change="isChecked = collateral.LivingWithClientStatus === 'false' ? false : isChecked;"
+                                        data-validation-name="Living With Contact">
+                                    <option value="">Select</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="ReceiveCorrespondence">RECEIVE CORRESPONDENCE </label>
+                                <select data-ng-model="collateral.ReceiveCorrespondenceID" id="ReceiveCorrespondence" name="ReceiveCorrespondence" class="form-control" data-ng-options="ReceiveCorrespondence.ID as ReceiveCorrespondence.Name for ReceiveCorrespondence in getLookupsByType('ReceiveCorrespondence')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="employmentStatus">Employment Status</label>
+                                <select class="form-control" ng-model="collateral.EmploymentStatusID" id="employmentStatus"
+                                        ng-options="employmentStatus.ID as employmentStatus.Name for employmentStatus in getLookupsByType('EmploymentStatus')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <label for="veteranStatus">Military Status</label>
+                                <select class="form-control" ng-model="collateral.VeteranStatusID" id="veteranStatus"
+                                        ng-options="veteran.ID as veteran.Name for veteran in getLookupsByType('VeteranStatus')">
+                                    <option value="">Select</option>
+                                </select>
+                                <span class="select-btn"><i class="xen-select"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="uppercase nomargin padding-xsmall border-top">Identification</h3>
+                    <p class="instructional">At least one form of unique identification is required: Driver License, Phone Number or Email</p>
+
+                    <div class="row section-block margin-bottom-small">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small" data-ng-class="{ 'has-error' : ctrl.contactForm.SSN.$invalid && !ctrl.contactForm.SSN.$pristine }">
+                                        <label for="SSN">SSN</label>
+                                        <input type="text" class="form-control ellipsis" ui-mask="999-99-9999" clean="true" ng-model="collateral.SSN" id="SSN" name="SSN" />
+                                        <p data-ng-show="ctrl.contactForm.SSN.$error.mask" data-ng-cloak class="error-block">Invalid SSN.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="DL">Driver License</label>
+                                        <input type="text" data-ng-model="collateral.DriverLicense" class="InputB form-control ellipsis" id="DL" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3 padding-bottom-small">
+                                    <div class="form-group-lg padding-bottom-small">
+                                        <label for="DriverLicenseState">Driver License State</label>
+                                        <select ng-model="collateral.DriverLicenseStateID" id="DriverLicenseState" name="DriverLicenseState" class="form-control"
+                                                ng-options="driverLicenseState.ID as driverLicenseState.Name for driverLicenseState in getLookupsByType('StateProvince')">
+                                            <option value="">Select</option>
+                                        </select>
+                                        <span class="select-btn"><i class="xen-select"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.Partial("../Shared/_ClientIdentifier")
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row padding-top-small">
+                        <div class="col-md-4 col-sm-6 col-xs-6 no-security">
+                            <div class="form-group-lg padding-bottom-small">
+                                <xen-copy-address data-ng-checked="isChecked" data-is-disabled="collateral.LivingWithClientStatus" data-form-name="ctrl.contactForm" data-checkbox-id="copyAddress" data-label="Link Contact Address" data-disable-address="disableAddress" dirty-address="dirtyAddress" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-6 padding-bottom-small">
+                            <div class="form-group-lg padding-bottom-small">
+                                <xen-checkbox data-ng-model="collateral.EmergencyContact" data-checkbox-id="EmergencyContactID" data-label="Emergency Contact" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row section-block margin-bottom-xsmall {{isChecked?'no-security':''}}" disable-address-div disable-address="disableAddress">
+                        @Html.Partial("../Shared/_Address")
+                    </div>
+                    <div class="row padding-top-small">
+                        @Html.Partial("../Shared/_Phone")
+                    </div>
+                    <div class="row section-block padding-bottom-small margin-bottom-xsmall">
+                        @Html.Partial("../Shared/_Email")
+                    </div>
+                    <div class="row padding-top-small padding-bottom-small">
+                        <div class="col-md-3 padding-bottom-small">
+                            <div id="effectiveDateErrortd" class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.contactForm.effectiveDate.$invalid && !ctrl.contactForm.effectiveDate.$pristine}">
+                                <label for="effectiveDate">Collateral Effective Date</label>
+                                <xen-date-picker id="effectiveDate" data-validation-name="Effective Date" data-compare-element-name="expirationDate" ng-model="collateral.CollateralEffectiveDate" end-date="collateral.CollateralExpirationDate" future-date-validate="true" greater-than-date-validation="true" name="effectiveDate" date-options="dateOptions" ignore-time="true"></xen-date-picker>
+                                <p id="effectiveDateError" ng-cloak ng-show="ctrl.contactForm.effectiveDate.$error.date" class="error-block">Effective Date is invalid.</p>
+                                <p ng-show="ctrl.contactForm.effectiveDate.$error.futureDate" ng-cloak class="error-block">Effective date can't be future date.</p>
+                                <p ng-show="ctrl.contactForm.effectiveDate.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 padding-bottom-small">
+                            <div id="expirationDateErrorId" class="form-group-lg padding-bottom-small" ng-class="{'has-error' : ctrl.contactForm.expirationDate.$invalid && !ctrl.contactForm.expirationDate.$pristine}">
+                                <label for="expirationDate">Collateral Expiration Date</label>
+                                <xen-date-picker id="expirationDate" data-validation-name="Expiration Date" data-compare-element-name="effectiveDate" ng-model="collateral.CollateralExpirationDate" start-date="collateral.CollateralEffectiveDate" less-than-date-validation="true" name="expirationDate" date-options="dateOptions" call-function-on-change="expireCollateral()" ignore-time="true"></xen-date-picker>
+                                <p id="effectiveExpirationDateError" ng-cloak ng-show="ctrl.contactForm.expirationDate.$error.date" class="error-block">Expiration Date is invalid.</p>
+                                <p ng-show="ctrl.contactForm.expirationDate.$error.lessThanDate" ng-cloak class="error-block">Expiration date can't be less than Effective date.</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row padding-top-small">
+                <div class="col-lg-6 col-md-6">
+                    <p class="uppercase subtext"><sup>*</sup> Indicates a required field</p>
+                    <p class="uppercase subtext"><sup>†</sup>  INDICATES FIELD IS REQUIRED CONDITIONALLY </p>
+                </div>
+                <div class="col-lg-6 col-md-6 text-right">
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(false, false)" id="btnSave" name="brnSave" security permission-key="{{permissionKey}}" permission="{{resolvePermission(permissionId)}}" dual-permission="true">SAVE</button>
+                    <button type="button" class="btn btn-default btn-lg" data-ng-click="safeSubmit(true, false)" id="btnNext" name="btnNext" security permission-key="{{permissionKey}}" permission="read" ng-show="controlsVisible">NEXT</button>
+                </div>
+            </div>
+            <div class="add_me">
+                <plus-button tabindex="0" title="New Collateral" save="safeSubmit(false, false)" reset="reset()" table-id="collateralsTable" permission-key="{{permissionKey}}" permission="create"></plus-button>
+            </div>
+            <div class="row padding-top-small padding-bottom-small">
+                <div class="col-md-12">
+                    <table id="collateralsTable" data-toggle="table" tabindex="0"
+                           data-show-columns="true"
+                           data-search="true"
+                           data-minimum-count-columns="2"
+                           data-filter-control="false"
+                           data-mobile-responsive="true"
+                           data-filter-bar
+                           data-advanced-search="false"
+                           data-show-multi-sort="true"
+                           data-classes="table table-stripe-borders"
+                           bootstrap-table="collateralTableoptions" grid-arrow-selector>
+                        <thead>
+                            <tr>
+                                <th data-field="fName"
+                                    data-sortable="true">First Name</th>
+                                <th data-field="lName"
+                                    data-sortable="true">Last Name</th>
+                                <th data-field="mname"
+                                    data-sortable="true">Middle Name</th>
+                                <th data-field="birthdate"
+                                    data-sortable="true">Date Of Birth</th>
+                                <th data-field="gender"
+                                    data-sortable="true">Gender</th>
+                                <th data-field="ssn"
+                                    data-sortable="true">SSN</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

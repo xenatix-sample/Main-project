@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Phone";
+    Layout = null;
+}
+<div class="col-md-12">
+    <div ng-repeat="phone in phoneItems=(Phones | filter :(EnableFilter||'') && {IsActive:true}) track by $index" ng-form="phoneForm" apply-security>
+        <div class="row">
+            <!-- phone -->
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : phoneForm.type{{$index}}.$invalid && !phoneForm.type{{$index}}.$pristine }">
+                    <label for="phoneType">Phone Type<sup data-ng-if="(PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.ConditionalRequired)  && (PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.Type)">&nbsp &#134</sup><sup data-ng-if="(PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.Required)  && (PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.Type)">*</sup></label>
+                    <select ng-model="phone.PhoneTypeID" id="phoneType" xen-last-element-focus="Phones" class="form-control" auto-focus event-focus="autoContactPhoneFocus" ng-disabled="isReadOnlyForm" name="type{{$index}}"
+                            ng-options="phoneType.ID as phoneType.Name for phoneType in getLookupsByType('PhoneType')" ng-required="PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.Type" data-validation-name="Phone Type">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : phoneForm.PhoneNumber{{$index}}.$invalid && !phoneForm.PhoneNumber{{$index}}.$pristine }">
+                    <label for="phoneNum">Phone Number<sup data-ng-if="PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.ConditionalRequired ">&nbsp &#134</sup><sup data-ng-if="PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.Required">*</sup></label>
+                    <input type="text" id="phoneNum{{$index}}" name="PhoneNumber{{$index}}" ng-model="phone.Number" ng-required="!ShowPhoneDaggerOnly && (PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.Number)" ui-mask="999-999-9999" clean="true" ng-disabled="isReadOnlyForm" class="form-control ellipsis" data-validation-name="Phone Number" />
+                    <p ng-show="phoneForm.PhoneNumber{{$index}}.$error.mask" ng-cloak class="error-block">Invalid phone number.</p>
+                </div>
+            </div>
+            <div class="col-md-3 padding-bottom-small" ng-hide="phone.HidePhoneExtension">
+                <div class="form-group-lg padding-bottom-small" ng-show="phone.Number.length == 10">
+                    <label for="phoneExt">
+                        Extension<!-- ngIf: PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.ConditionalRequired --><!-- ngIf: PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.Required --><!-- end ngIf: PhoneAccessCode | bitwiseAnd: PHONE_ACCESS.Required -->
+                    </label>
+                    <input type="text" id="phoneExt{{$index}}" name="phoneExt{{$index}}" ng-pattern="/^[0-9]{1,10}$/" ng-model="phone.Extension" clean="true" ng-disabled="isReadOnlyForm"  class="form-control ellipsis ng-empty ng-invalid ng-invalid-required ng-not-modified ng-valid-mask ng-dirty ng-valid-parse ng-touched" data-validation-name="Phone Extension" maxlength="10" />
+                    <p ng-show="phoneForm.phoneExt{{$index}}.$error.pattern" ng-cloak class="error-block">Invalid phone extension.</p>
+                </div>
+            </div>
+            <div class="col-md-2 padding-bottom-small" data-ng-show="ShowPrimaryCheckbox">
+                <div class="form-group-lg padding-bottom-small">
+                    <xen-checkbox ng-model="phone.IsPrimary" data-checkbox-id="phoneIsPrimary{{$index}}" data-label="Primary" name="isPrimary{{$index}}" />
+                </div>
+            </div>
+            <div class="col-md-2 actions nopadding padding-top-small padding-bottom-small">
+                <div class="form-group-lg padding-top-small margin-right-small text-right">
+                    <a href="javascript:void(0);" class="font-size-xlarge padding-right-small" ng-if="phone.ShowPlusButton" ng-click="addNewPhone()" space-key-press>
+                        <i class="fa fa-plus-circle"><span class="sr-only">Add Phone Number</span></i>
+                    </a>
+                    <a href="javascript:void(0);" class="font-size-xlarge" ng-if="(phone.ShowMinusButton && phoneItems.length>1)" ng-click="removePhone($index)" space-key-press>
+                        <i class="fa fa-minus-circle" on-row-removed security permission-key="{{permissionKey}}" permission="delete"><span class="sr-only">Remove Phone Number</span></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @* Effective/Expiration Dates *@
+        <div class="row" >
+             <div class="col-md-3 padding-bottom-small">
+                <div class="form-group-lg padding-bottom-small">
+                    <label for="phonePermission">Phone Permissions</label>
+                    <select ng-model="phone.PhonePermissionID" id="phonePermission{{$index}}" name="phonePermission{{$index}}" class="form-control" ng-disabled="isReadOnlyForm"
+                            ng-options="phonePermission.ID as phonePermission.Name for phonePermission in getLookupsByType('PhonePermission')">
+                        <option value="">Select</option>
+                    </select>
+                    <span class="select-btn"><i class="xen-select"></i></span>
+                </div>
+            </div>
+            <div class="col-md-3" ng-if="ShowPhoneExpirationDates">
+                <div class="form-group-lg padding-bottom-small" id="effectiveDateError" ng-class="{ 'has-error' : phoneForm.effectiveDateCalander{{$index}}.$invalid && !phoneform.effectivedatecalander{{$index}}.$pristine }">
+                    <label for="effectiveDate">Effective Date</label>
+                    <xen-date-picker id="phoneeffectivedate{{$index}}" name="effectiveDateCalander{{$index}}" data-validation-name="Effective Date" data-compare-element-name="expirationDateCalander{{$index}}" ng-model="phone.EffectiveDate" end-date="phone.ExpirationDate" greater-than-date-validation="true" date-options="dateOptions"></xen-date-picker>
+                    <p id="isEffectiveDateValidError" ng-cloak ng-show="phoneForm.effectiveDateCalander{{$index}}.$error.date" class="error-block">Effective Date is invalid.</p>
+                    <p ng-show="phoneForm.effectiveDateCalander{{$index}}.$error.greaterThanDate" ng-cloak class="error-block">Effective date can't be greater than Expiration date.</p>
+                </div>
+            </div>
+            <div class="col-md-3" ng-if="ShowPhoneExpirationDates">
+                <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : phoneForm.expirationDateCalander{{$index}}.$invalid && !phoneform.expirationdatecalander{{$index}}.$pristine }">
+                    <label for="expirationDate">Expiration Date</label>
+                    <xen-date-picker id="phoneexpirationDate{{index}}" name="expirationDateCalander{{$index}}" data-validation-name="Expiration Date" data-compare-element-name="effectiveDateCalander{{$index}}" ng-model="phone.ExpirationDate" start-date="phone.EffectiveDate" less-than-date-validation="true" date-options="dateOptions"></xen-date-picker>
+                    <p id="isValidError" ng-cloak ng-show="phoneForm.expirationDateCalander{{$index}}.$error.date" class="error-block">Expiration Date is invalid.</p>
+                    <p ng-cloak ng-show="phoneForm.expirationDateCalander{{$index}}.$error.pastDate" class="error-block">Expiration date can't be past date.</p>
+                    <p ng-cloak ng-show="phoneForm.expirationDateCalander{{$index}}.$error.lessThanDate" class="error-block">Expiration date can't be less than Effective date.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

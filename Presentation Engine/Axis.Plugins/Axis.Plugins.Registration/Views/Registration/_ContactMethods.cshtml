@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Contact Methods";
+    Layout = null;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 AllCenter" accesskey="" style="margin-bottom:30px;">
+            <div class="Pageheading-section PageHeading" style="padding-left:12px;">
+                <table width="100%" border="0" cellpadding="4" cellspacing="4" class="FormTable" style="min-width:700px;">
+
+                    <tr>
+                        <td align="left" width="50%"><h4>Contact Methods</h4></td>
+                        <td align="left" width="50%"><h4>Contact Method Permissions</h4></td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 AllCenter" accesskey="" style="margin-bottom:30px;">
+            <table width="100%" border="0" cellpadding="4" cellspacing="4" class="FormTable" style="min-width:700px;">
+
+                <tr>
+                    <td align="left" >Contact Method :</td>
+                    <td>
+                        <select ng-model="newDemography.ContactMethodID" class="form-control" id="ContactMethod" name="ContactMethod"
+                                ng-options="contactMethod.ContactMethodID as contactMethod.ContactMethod for contactMethod in newDemography.ContactMethod">
+                            <option value="">Select</option>
+                        </select>
+                    </td>
+                    <td align="left" >Email :</td>
+                    <td><input type="text" class="InputB form-control" ng-model="newDemography.Email" /></td>
+                    <td align="left" >US Mail Permission :	</td>
+                    <td>
+                        <select ng-model="newDemography.MailPermission" class="form-control">
+                            <option value="">Select</option>
+                            <option value=true>Allow</option>
+                            <option value=false>NotAllow</option>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">Preferred Phone :</td>
+                    <td><input type="text" class="InputB form-control" ng-model="newDemography.Phones[0].PreferredPhone" /></td>
+                    <td align="left" >Preferred Phone Permissions :</td>
+                    <td>
+                        <select ng-model="newDemography.PreferredPhonePermissionID" class="form-control" id="PreferredPhonePermissions" name="PreferredPhonePermissions"
+                                ng-options="preferredPhonePermission.PhonePermissionID as preferredPhonePermission.PhonePermission for preferredPhonePermission in newDemography.PhonePermission">
+                            <option value="">Select</option>
+                        </select>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" >Alternate Phone :</td>
+                    <td><input type="text" class="InputB form-control" ng-model="newDemography.Phones[0].AlternatePhone" class="form-control" /></td>
+                    <td align="left">Alternate Phone Permissions:	</td>
+                    <td>
+                        <select ng-model="newDemography.AlternatePhonePermissionID" class="form-control" id="AlternatePhonePermission" name="AlternatePhonePermission"
+                                ng-options="alternatePhonePermission.PhonePermissionID as alternatePhonePermission.PhonePermission for alternatePhonePermission in newDemography.PhonePermission">
+                            <option value="">Select</option>
+                        </select>
+
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

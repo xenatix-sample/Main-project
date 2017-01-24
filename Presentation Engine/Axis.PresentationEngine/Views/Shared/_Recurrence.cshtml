@@ -1,0 +1,237 @@
+﻿
+<h3 class="uppercase nomargin padding-xsmall border-top">Recurrence</h3>
+
+@* Recurrence Trigger (checkbox) *@
+<div class="row padding-top-small padding-bottom-small">
+    <div class="col-md-3 form-inline">
+        <xen-checkbox data-checkbox-id="chkRecurrence" data-label="Recurrence" ng-model="Recurrence.IsRecurring" ng-click="recurrenceChanged();" />
+    </div>
+</div>
+
+<div class="row section-block no-security">
+    <div class="recurrence">
+        @* recurrence frequency *@
+        <div class="frequency" id="left">
+            <span><xen-radio-button ng-disabled="!Recurrence.IsRecurring" name="rbFrequency" data-validation-name="Recurrence Frequency" ng-required="Recurrence.IsRecurring" ng-model="Recurrence.Frequency" data-radio-button-id="rbFrequency" data-label="Daily" data-ng-value="1" data-on-click="Recurrence.MonthlyFrequency = null; Recurrence.YearlyFrequency = null; Recurrence.WeeklyRecurrence = null; Recurrence.WeekDayMon = null; Recurrence.WeekDayTue = null; Recurrence.WeekDayWed = null; Recurrence.WeekDayThur = null; Recurrence.WeekDayFri = null; Recurrence.WeekDaySat = null; Recurrence.WeekDaySun = null;Recurrence.MonthlyDay = null; Recurrence.DayMonths = null; Recurrence.TheMonths = null; Recurrence.WeekOfMonthID = null; Recurrence.DayOfWeekID = null; Recurrence.YearlyRecurrence = null; Recurrence.YearlyMonthID = null; Recurrence.DayOfMonth = null; Recurrence.WeekOfMonthID = null; Recurrence.DayOfWeekID = null; Recurrence.YearlyMonthID = null;" /></span>
+            <span><xen-radio-button ng-disabled="!Recurrence.IsRecurring" ng-model="Recurrence.Frequency" data-radio-button-id="rbFrequencyWeekly" data-label="Weekly" data-ng-value="2" data-on-click="Recurrence.DailyFrequency = null; Recurrence.MonthlyFrequency = null; Recurrence.YearlyFrequency = null;  Recurrence.DailyDays = null; Recurrence.MonthlyDay = null; Recurrence.DayMonths = null; Recurrence.TheMonths = null; Recurrence.WeekOfMonthID = null; Recurrence.DayOfWeekID = null; Recurrence.YearlyRecurrence = null; Recurrence.YearlyMonthID = null; Recurrence.DayOfMonth = null; Recurrence.WeekOfMonthID = null; Recurrence.DayOfWeekID = null; Recurrence.YearlyMonthID = null;" /></span>
+            <span><xen-radio-button ng-disabled="!Recurrence.IsRecurring" ng-model="Recurrence.Frequency" data-radio-button-id="rbFrequencyMonthly" data-label="Monthly" data-ng-value="3" data-on-click="Recurrence.DailyFrequency = null; Recurrence.YearlyFrequency = null;  Recurrence.DailyDays = null; Recurrence.WeeklyRecurrence = null; Recurrence.WeekDayMon = null; Recurrence.WeekDayTue = null; Recurrence.WeekDayWed = null; Recurrence.WeekDayThur = null;Recurrence.WeekDayFri = null; Recurrence.WeekDaySat = null; Recurrence.WeekDaySun = null; Recurrence.YearlyRecurrence = null; Recurrence.YearlyMonthID = null; Recurrence.DayOfMonth = null; Recurrence.WeekOfMonthID = null; Recurrence.DayOfWeekID = null; Recurrence.YearlyMonthID = null;" /></span>
+            <span><xen-radio-button ng-disabled="!Recurrence.IsRecurring" ng-model="Recurrence.Frequency" data-radio-button-id="rbFrequencyYearly" data-label="Yearly" data-ng-value="4" data-on-click="Recurrence.DailyFrequency = null; Recurrence.MonthlyFrequency = null; Recurrence.DailyDays = null; Recurrence.WeeklyRecurrence = null; Recurrence.WeekDayMon = null; Recurrence.WeekDayTue = null; Recurrence.WeekDayWed = null; Recurrence.WeekDayThur = null;Recurrence.WeekDayFri = null; Recurrence.WeekDaySat = null; Recurrence.WeekDaySun = null;Recurrence.MonthlyDay = null; Recurrence.DayMonths = null; Recurrence.TheMonths = null; Recurrence.WeekOfMonthID = null; Recurrence.DayOfWeekID = null;" /></span>
+        </div>
+        <div class="recurrence-panel">
+
+            @* recurrence details (swaps out)*@
+            <div class="recurrence-details" id="middle">
+
+                @* Option 1 - DAILY *@
+                <div ng-show="Recurrence.Frequency == 1">
+                    <h4 class="uppercase padding-top-xsmall padding-bottom-xsmall border-top">Recurrence Control</h4>
+                    <div class="col-md-3">
+                        <span><xen-radio-button ng-disabled="!Recurrence.IsRecurring" name="rbDaily" data-validation-name="Recurrence Daily" ng-required="Recurrence.Frequency == 1" ng-model="Recurrence.DailyFrequency" data-radio-button-id="rbDaily" data-label="Daily" data-ng-value="1" /></span>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" id="txtDaily" type="number" name="txtDaily" data-validation-name="Daily" ng-required="Recurrence.DailyFrequency == 1" ng-disabled="!Recurrence.IsRecurring || Recurrence.DailyFrequency != 1" ng-model="Recurrence.DailyDays" min="1" max="999">
+                    </div>
+                    <div class="col-md-2 padding-top-xsmall border-right">
+                        <label for="txtDaily">Day(s)</label>
+                    </div>
+                    <div class="col-md-4 padding-top-xsmall">
+                        <span><xen-radio-button ng-disabled="!Recurrence.IsRecurring" ng-model="Recurrence.DailyFrequency" data-on-click="Recurrence.DailyDays = null" data-radio-button-id="rbEveryWeekday" data-label="Every Weekday" data-ng-value="2" /></span>
+                    </div>
+                </div>
+
+                @* Option 2 - WEEKLY *@
+                <div ng-show="Recurrence.Frequency == 2">
+                    <h4 class="uppercase padding-top-xsmall padding-bottom-xsmall border-top">Recurrence Control</h4>
+                    <div class="col-md-4">
+                        <label for="txtWeeklyRecurrence">Recurs Every (# Weeks)</label>
+                        <input type="number" data-ng-model="Recurrence.WeeklyRecurrence" name="Recurrence Control Fields" ng-required="Recurrence.Frequency == 2" class="form-control" id="txtWeeklyRecurrence" ng-disabled="!Recurrence.IsRecurring" min="1" max="99" />
+                    </div>
+                    @*<span>Week(s) on</span>*@
+                    <div class="col-md-1 padding-top-xsmall col-inline">
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-checkbox ng-model="Recurrence.WeekDayMon" data-checkbox-id="Monday" data-label="MON" ng-disabled="!Recurrence.IsRecurring" />
+                        </div>
+                    </div>
+                    <div class="col-md-1 padding-top-xsmall col-inline">
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-checkbox ng-model="Recurrence.WeekDayTue" data-checkbox-id="Tuesday" data-label="TUE" ng-disabled="!Recurrence.IsRecurring" />
+                        </div>
+                    </div>
+                    <div class="col-md-1 padding-top-xsmall col-inline">
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-checkbox ng-model="Recurrence.WeekDayWed" data-checkbox-id="Wednesday" data-label="WED" ng-disabled="!Recurrence.IsRecurring" />
+                        </div>
+                    </div>
+                    <div class="col-md-1 padding-top-xsmall col-inline">
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-checkbox ng-model="Recurrence.WeekDayThur" data-checkbox-id="Thursday" data-label="THU" ng-disabled="!Recurrence.IsRecurring" />
+                        </div>
+                    </div>
+                    <div class="col-md-1 padding-top-xsmall col-inline">
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-checkbox ng-model="Recurrence.WeekDayFri" data-checkbox-id="Friday" data-label="FRI" ng-disabled="!Recurrence.IsRecurring" />
+                        </div>
+                    </div>
+                    <div class="col-md-1 padding-top-xsmall col-inline">
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-checkbox ng-model="Recurrence.WeekDaySat" data-checkbox-id="Saturday" data-label="SAT" ng-disabled="!Recurrence.IsRecurring" />
+                        </div>
+                    </div>
+                    <div class="col-md-1 padding-top-xsmall col-inline">
+                        <div class="form-group-lg padding-bottom-small">
+                            <xen-checkbox ng-model="Recurrence.WeekDaySun" data-checkbox-id="Sunday" data-label="SUN" ng-disabled="!Recurrence.IsRecurring" />
+                        </div>
+                    </div>
+                </div>
+
+                @* Option 3 - MONTHLY *@
+                <div ng-show="Recurrence.Frequency == 3">
+                    <h4 class="uppercase padding-top-xsmall padding-bottom-xsmall border-top">Recurrence Control</h4>
+                    <div class="col-md-12">
+                        <div class="row padding-bottom-xsmall">
+                            <div class="col-md-2">
+                                <span><xen-radio-button data-on-click="Recurrence.WeekOfMonthID = null; Recurrence.DayOfWeekID = null; Recurrence.TheMonths = null;" name="Recurrence Control Fields" ng-required="Recurrence.Frequency == 3" data-ng-model="Recurrence.MonthlyFrequency" data-radio-button-id="rbDay" data-label="Day" data-ng-value="1" ng-disabled="!Recurrence.IsRecurring" /></span>
+                            </div>
+                            <div class="col-md-2">
+                                <input class="form-control" id="txtDay" type="number" name="txtDay" data-validation-name="Day" ng-required="Recurrence.MonthlyFrequency == 1" ng-disabled="!Recurrence.IsRecurring || Recurrence.MonthlyFrequency != 1" ng-model="Recurrence.MonthlyDay" min="1" max="999">
+                            </div>
+                            <div class="col-md-2 padding-top-small">
+                                <label for="txtDayMonthlyRecurrence">Of every</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="txtDayMonthlyRecurrence" data-validation-name="Day Monthly Recurrence" ng-required="Recurrence.MonthlyFrequency == 1" data-ng-model="Recurrence.DayMonths" class="form-control" id="txtDayMonthlyRecurrence" ng-disabled="!Recurrence.IsRecurring || Recurrence.MonthlyFrequency != 1" min="1" max="99" />
+                            </div>
+                            <div class="col-md-3 padding-top-small">
+                                <label for="txtDayMonthlyRecurrence">Month(s)</label>
+                            </div>
+                        </div>
+                        <div class="row padding-bottom-xsmall">
+                            <div class="col-md-2">
+                                <span><xen-radio-button data-on-click="Recurrence.MonthlyDay = null; Recurrence.DayMonths = null;" data-ng-model="Recurrence.MonthlyFrequency" data-radio-button-id="rbThe" data-label="The" data-ng-value="2" ng-disabled="!Recurrence.IsRecurring" /></span>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="monthlyWeek" class="sr-only">Week of Month</label>
+                                <select data-ng-model="Recurrence.WeekOfMonthID" data-validation-name="Monthly Week" name="monthlyWeek" ng-required="Recurrence.MonthlyFrequency == 2" class="form-control" id="monthlyWeek" ng-options="week.ID as week.Name for week in getLookupsByType('WeekOfMonth')" ng-disabled="!Recurrence.IsRecurring || Recurrence.MonthlyFrequency != 2">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="monthlyDayOfWeek" class="sr-only">Day of Week</label>
+                                <select data-ng-model="Recurrence.DayOfWeekID" name="monthlyDayOfWeek" data-validation-name="Monthly Day Of Week" ng-required="Recurrence.MonthlyFrequency == 2" class="form-control" id="monthlyDayOfWeek" ng-options="day.ID as day.Name for day in getLookupsByType('DayOfWeek')" ng-disabled="!Recurrence.IsRecurring || Recurrence.MonthlyFrequency != 2">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-2 padding-top-small">
+                                <label for="txtTheMonthlyRecurrence">Of every</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="txtTheMonthlyRecurrence" data-validation-name="Monthly Recurrence" ng-required="Recurrence.MonthlyFrequency == 2" data-ng-model="Recurrence.TheMonths" class="form-control" id="txtTheMonthlyRecurrence" ng-disabled="!Recurrence.IsRecurring || Recurrence.MonthlyFrequency != 2" min="1" max="99" />
+                            </div>
+                            <div class="col-md-3 padding-top-small">
+                                <label>Month(s)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Option 4 - YEARLY *@
+                <div ng-show="Recurrence.Frequency == 4">
+                    <h4 class="uppercase padding-top-xsmall border-top">Recurrence Control</h4>
+                    <div class="col-md-12">
+                        <div class="row padding-bottom-xsmall">
+                            <div class="col-md-3 padding-top-xsmall">
+                                <label for="txtRecursEvery">Recurs every</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" data-ng-model="Recurrence.YearlyRecurrence" class="form-control" id="txtRecursEvery" ng-disabled="!Recurrence.IsRecurring" min="1" max="9" />
+                            </div>
+                            <div class="col-md-2 padding-bottom-xsmall">
+                                <label for="txtRecursEvery">Year(s)</label>
+                            </div>
+                        </div>
+                        <div class="row padding-bottom-xsmall">
+                            <div class="col-md-3">
+                                <span><xen-radio-button data-on-click="Recurrence.WeekOfMonthID = null; Recurrence.DayOfWeekID = null; Recurrence.YearlyMonthID = null;" name="Recurrence Control Fields" ng-required="Recurrence.Frequency == 4" data-ng-model="Recurrence.YearlyFrequency" data-radio-button-id="rbOn" data-label="On" data-ng-value="1" ng-disabled="!Recurrence.IsRecurring" /></span>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="month" class="sr-only">Recurrence Month</label>
+                                <select name="month"  data-validation-name="Month" ng-required="Recurrence.YearlyFrequency == 1" data-ng-model="Recurrence.YearlyMonthID" class="form-control" id="month" ng-options="month.ID as month.Name for month in getLookupsByType('Month')" ng-disabled="!Recurrence.IsRecurring || Recurrence.YearlyFrequency != 1">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="txtDayOfMonth" class="sr-only">Day of the Month</label>
+                                <input type="number" name="txtDayOfMonth" data-validation-name="The Day Of Month" ng-required="Recurrence.YearlyFrequency == 1" data-ng-model="Recurrence.DayOfMonth" class="form-control" id="txtDayOfMonth" ng-disabled="!Recurrence.IsRecurring || Recurrence.YearlyFrequency != 1" min="1" max="31" />
+                            </div>
+                        </div>
+                        <div class="row padding-bottom-xsmall">
+                            <div class="col-md-3">
+                                <span><xen-radio-button data-on-click="Recurrence.YearlyMonthID = null; Recurrence.DayOfMonth = null;" data-ng-model="Recurrence.YearlyFrequency" data-radio-button-id="rbOnThe" data-label="On the" data-ng-value="2" ng-disabled="!Recurrence.IsRecurring" /></span>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="weekOfMonth" class="sr-only">Week</label>
+                                <select name="weekOfMonth" data-validation-name="Week Of Month" ng-required="Recurrence.YearlyFrequency == 2" data-ng-model="Recurrence.WeekOfMonthID" class="form-control" id="weekOfMonth" ng-options="week.ID as week.Name for week in getLookupsByType('WeekOfMonth')" ng-disabled="!Recurrence.IsRecurring || Recurrence.YearlyFrequency != 2">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="" class="sr-only">Day of Week</label>
+                                <select name="yearlyDayOfWeek" data-validation-name="Yearly Day Of Week" ng-required="Recurrence.YearlyFrequency == 2" data-ng-model="Recurrence.DayOfWeekID" class="form-control" id="yearlyDayOfWeek" ng-options="day.ID as day.Name for day in getLookupsByType('DayOfWeek')" ng-disabled="!Recurrence.IsRecurring || Recurrence.YearlyFrequency != 2">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-md-1 padding-top-xsmall">
+                                <label for="monthOfYear">Of</label>
+                            </div>
+                            <div class="col-md-3">
+                                <select name="monthOfYearOnThe" data-validation-name="Month Of Year On" ng-required="Recurrence.YearlyFrequency == 2" data-ng-model="Recurrence.YearlyMonthOnTheID" class="form-control" id="monthOfYearOnThe" ng-options="month.ID as month.Name for month in getLookupsByType('Month')" ng-disabled="!Recurrence.IsRecurring || Recurrence.YearlyFrequency != 2">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* range of recurrence (remains on screen)*@
+            <div class="recurrence-range clear" id="bottom">
+                <h4 class="uppercase padding-top-xsmall border-top">Range of recurrence</h4>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div id="divStartDate" class="form-group-lg padding-bottom-small">
+                                <label for="dpStartDate">Start Date</label>
+                                <mydatepicker name="dpStartDate"  id="dpStartDate" dob-name="dpStartDate" data-validation-name="Recurrence Start Date" new-date="Recurrence.StartDate" ng-required="true" date-options="dateOptions" date-required="true" is-disabled="!Recurrence.IsRecurring" pastdatevalidate="!isFormDisabled"></mydatepicker>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="divEndDate" class="form-group-lg padding-bottom-small">
+                                <label for="dpEendDAte">End Date</label>
+                                <mydatepicker name="dpendDate"  id="dpendDate" dob-name="dpendDate" data-validation-name="Recurrence End Date" new-date="Recurrence.EndDate" date-options="dateOptions" date-required="Recurrence.Ending == 3" is-disabled="!Recurrence.IsRecurring || Recurrence.Ending != 3" pastdatevalidate="!isFormDisabled"></mydatepicker>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="txtEndAfter">Occurrences</label>
+                            <input class="form-control" id="txtEndAfter" data-validation-name="Occurrences" type="text" name="txtEndAfter" ng-required="Recurrence.Ending == 2" ng-model="Recurrence.EndAfter" ng-disabled="!Recurrence.IsRecurring || Recurrence.Ending != 2">
+                        </div>
+                    </div>
+                    <div class="row padding-bottom-xsmall">
+                        <div class="col-md-3">
+                            <span><xen-radio-button data-on-click="Recurrence.EndAfter = null;" ng-required="Recurrence.IsRecurring && (Recurrence.Ending == 0 || Recurrence.Ending == null)" ng-disabled=" !Recurrence.IsRecurring" data-ng-model="Recurrence.Ending" data-radio-button-id="rbEndBy" name="rbEndBy" data-validation-name="End By" data-label="End By" data-ng-value="3" /></span>
+                        </div>
+                        <div class="col-md-3">
+                            <span><xen-radio-button data-on-click="Recurrence.EndDate = null;" ng-disabled="!Recurrence.IsRecurring" data-ng-model="Recurrence.Ending" data-radio-button-id="rbEndAfter" name="rbEndAfter" data-label="End After" data-validation-name="End After" data-ng-value="2" /></span>
+                        </div>
+                        <div class="col-md-3">
+                            <span><xen-radio-button data-on-click="Recurrence.EndAfter = null;  Recurrence.EndDate = null;" ng-disabled="!Recurrence.IsRecurring" data-ng-model="Recurrence.Ending" name="rbNoEndDate" data-radio-button-id=" rbnoenddate" data-label="No End Date" data-ng-value="1" data-validation-name="No End Date" /></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

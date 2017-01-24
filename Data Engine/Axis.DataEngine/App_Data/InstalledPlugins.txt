@@ -1,0 +1,7 @@
+Axis.DataEngine.Plugins.Registration
+Axis.DataEngine.Plugins.ECI
+Axis.DataEngine.Plugins.Scheduling
+Axis.DataEngine.Plugins.ESignature
+Axis.DataEngine.Plugins.Clinical
+Axis.DataEngine.Plugins.CallCenter
+Axis.DataEngine.Plugins.ReportingServices

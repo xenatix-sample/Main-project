@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "RoleDetails";
+}
+<keypress-events enter-key-stop="stopEnter" on-save="safeSubmit(false, true)" on-next="safeSubmit(true, true)" permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="{{resolvePermission(newRole.RoleID)}}"></keypress-events>
+
+<div class="panel panel-main panel-light padding-xsmall" ng-init="initrole()">
+
+    @*<form role="form" name="ctrl.roleForm" novalidate check-form on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status bs-modifiable="true" set-form-mode>*@
+    <form role="form" name="ctrl.roleForm" novalidate check-form data-on-save="save(isNext, isMandatory, hasErrors)" server-validate="ServerValidationErrors" set-form-status
+          bs-modifiable="true" set-form-mode>
+        {{ctrl.roleForm.modified ? setform(true):setform(false)}}
+        <div class="panel-body">
+            <div security permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="{{resolvePermission(newRole.RoleID)}}" permission-mode="readonly">
+
+                <h4 class="modal-title" id="roleHeader">ROLE DETAILS</h4>
+                <div class="col-md-12 padding-bottom-small"></div>
+
+                <div class="col-md-4">
+                    <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.roleForm.name.$invalid && !ctrl.roleForm.name.$pristine }">
+                        <label for="race">Role Name <sup>*</sup></label>
+                        <input type="text" name="name" class="form-control ellipsis" id="name" data-validation-name="Role Name" ng-model="newRole.Name" ng-minlength="3" auto-focus-modal event-focus="autoFocusEdit[detailsIndex]"
+                               ng-maxlength="100" ng-trim="true" ng-required="true" ng-pattern="/^[a-zA-Z0-9\s]*$/" autofocus />
+                        <span ng-show="ctrl.roleForm.name.$error.minlength" class="error-block">Role Name is too short</span>
+                        <span ng-show="ctrl.roleForm.name.$error.maxlength" class="error-block">Role Name is too long</span>
+                        <span ng-show="ctrl.roleForm.name.$error.pattern" class="error-block">Role Name only allows alphanumeric characters with no spaces</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group-lg padding-bottom-small">
+                        <label for="ethnicity">Description</label>
+                        <input type="text" name="description" class="form-control ellipsis" id="description" ng-model="newRole.Description" />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.roleForm.effectivedate.$invalid
+                                     && !ctrl.roleForm.effectivedate.$pristine }">
+                                <label for="effectiveDate">Effective Date</label>
+                                <mydatepicker class="datepicker" data-ng-model="newRole.EffectiveDate" lower-than="newRole.ExpirationDate" id="effectivedate" opened="effectiveOpened" new-date="newRole.EffectiveDate"
+                                              date-options="dateOptions" apply-security></mydatepicker>
+                                <span id="effectiveDateError" ng-cloak ng-show="ctrl.roleForm.effectivedate.$error.date" class="error-block">Effective Date is invalid.</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group-lg padding-bottom-small" ng-class="{ 'has-error' : ctrl.roleForm.expirationdate.$invalid
+                                     && !ctrl.roleForm.expirationdate.$pristine }">
+                                <label for="expirationDate">Expiration Date</label>
+                                <mydatepicker class="datepicker" data-ng-model="newRole.ExpirationDate" id="expirationdate" opened="expirationOpened" new-date="newRole.ExpirationDate"
+                                              date-options="dateOptions" ng-click="test()" apply-security></mydatepicker>
+                                <span id="expirationDateError" ng-cloak ng-show="ctrl.roleForm.expirationdate.$error.date" class="error-block">Expiration Date is invalid.</span>
+                                <span id="expirationDateError1" ng-show="newRole.ExpirationDate && endDateValidError" ng-cloak class="error-block">Expiration Date should be greater than Effective Date.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-bottom-small"></div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="row padding-top-small">
+                    <div class="col-lg-6">
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <button type="button" class="btn btn-default btn-lg" id="save" ng-click="safeSubmit(false, true)" security permission-key="SiteAdministration-RoleManagement-RoleDetails" permission="{{resolvePermission(newRole.RoleID)}}">SAVE</button>
+                        <button type="button" class="btn btn-default btn-lg" id="next" ng-click="safeSubmit(true, false)" security permission-key="SiteAdministration-RoleManagement-Assignmodules" permission="read">NEXT</button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+    </form>
+</div>
